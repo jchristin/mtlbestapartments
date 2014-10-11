@@ -1,1 +1,57 @@
-Hey!
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+    </style>
+    
+    
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">google.load("feeds", "1");</script>
+    
+    <script type="text/javascript" src="script.js"></script>
+
+    </head>
+    <body>
+
+        <div id="container">
+
+            <div id="menu" style="text-align:center; background-color:#F8F5F5;width=10%;height=100%;float:right;">
+                <font FACE="verdana">
+                    <input type="button" value="Add location" onclick="addSearchLocation();"></input>
+                    <form>
+
+                        <p> Travel mode: 
+                            <select id="TravelMode" onchange="update();">
+                                <option value="DRIVING">Driving</option>
+                                <option value="WALKING">Walking</option>
+                                <option value="BICYCLING">Bicycling</option>
+                                <option value="TRANSIT">Transit</option>
+                            </select>
+                        </p>
+
+                        <p> Time (minute): <input type="text" id="inputMinuteDelayText" value="5" size="5"></input> </p>
+                        <p> Minimum = <input type="text" id="inputMinimumText" value="0" size="5"></input> $ </p>
+                        <p> Maximum = <input type="text" id="inputMinimumText" value="0" size="5"></input> $ </p>
+                        
+                        <input type="checkbox" id="CheckBoxHide" onClick="update();"/> Hide not valid flat
+
+                    </form>
+                </font>
+            </div>
+
+            <div id="map-canvas"></div>    
+
+        </div>
+
+    </body>
+</html>
