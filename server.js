@@ -10,20 +10,74 @@ var path = require("path"),
 
 // Enable logging for development environment
 if (process.env.NODE_ENV === "development") {
-	server.use(morgan({immediate: true, format: "dev"}));
+	server.use(morgan({
+		immediate: true,
+		format: "dev"
+	}));
 }
 
 server.use(express.query());
 
 server.use(bodyParser.json());
 
-server.use(favicon(path.join(__dirname, "public/img/favicon.ico"), { maxAge: cacheMaxAge }));
+server.use(favicon(path.join(__dirname, "public/img/favicon.ico"), {
+	maxAge: cacheMaxAge
+}));
 
-server.use(express.static(path.join(__dirname, "public"), { maxAge: cacheMaxAge }));
+server.use(express.static(path.join(__dirname, "public"), {
+	maxAge: cacheMaxAge
+}));
 
-server.use(express.static(path.join(__dirname, "bower_components"), { maxAge: cacheMaxAge }));
+server.use(express.static(path.join(__dirname, "bower_components"), {
+	maxAge: cacheMaxAge
+}));
+
+server.get("/api/flats", function(req, res) {
+	res.json([{
+		lat: 45.53041450000001,
+		long: -73.591927
+	}, {
+		lat: 45.52768,
+		long: -73.55053939999999
+	}, {
+		lat: 45.5274703,
+		long: -73.58015280000001
+	}, {
+		lat: 45.5297022,
+		long: -73.56527169999998
+	}, {
+		lat: 45.5353704,
+		long: -73.58885040000001
+	}, {
+		lat: 45.5301959,
+		long: -73.55272130000003
+	}, {
+		lat: 45.5293799,
+		long: -73.58002199999999
+	}, {
+		lat: 45.5301959,
+		long: -73.55272130000003
+	}, {
+		lat: 45.5257413,
+		long: -73.57483580000002
+	}, {
+		lat: 45.5275615,
+		long: -73.54819929999996
+	}, {
+		lat: 45.528307,
+		long: -73.58557659999997
+	}, {
+		lat: 45.5238026,
+		long: -73.54989560000001
+	}, {
+		lat: 45.5279698,
+		long: -73.57404540000005
+	}, {
+		lat: 45.5358178,
+		long: -73.55851899999999
+	}]);
+});
 
 // Start server
 server.listen(port);
 console.log("Listening on " + port);
-
