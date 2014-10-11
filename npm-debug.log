@@ -1,0 +1,27 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'start' ]
+2 info using npm@1.4.23
+3 info using node@v0.10.31
+4 verbose node symlink /usr/bin/node
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart montreal@1.0.0
+7 info start montreal@1.0.0
+8 verbose unsafe-perm in lifecycle true
+9 info montreal@1.0.0 Failed to exec start script
+10 error montreal@1.0.0 start: `node server.js`
+10 error Exit status 8
+11 error Failed at the montreal@1.0.0 start script.
+11 error This is most likely a problem with the montreal package,
+11 error not with npm itself.
+11 error Tell the author that this fails on your system:
+11 error     node server.js
+11 error You can get their info via:
+11 error     npm owner ls montreal
+11 error There is likely additional logging output above.
+12 error System Linux 3.8.11
+13 error command "/usr/bin/node" "/usr/bin/npm" "start"
+14 error cwd /home/julien/GitHub/montreal
+15 error node -v v0.10.31
+16 error npm -v 1.4.23
+17 error code ELIFECYCLE
+18 verbose exit [ 1, true ]
