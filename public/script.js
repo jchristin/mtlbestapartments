@@ -140,7 +140,15 @@ function fSetAMarkerOnMap(oLatLng, url, image, eType, isDragable) {
             if (url != null)
             {
                 google.maps.event.addListener(oMarker, 'click', function() {
-                    infowindow.setContent(url);
+                    infowindow.setContent(
+                            '<div style="width:300px; height:325px">'                                                      +
+                                '<div align="center">'                                                                                +
+                                    '<img src="' + image + '" width="225" height="300" ALIGN="middle" />'   +
+                                '</div>'                                                                                                    +
+                                '<div align="center">'                                                                                +
+                                    '<a href="' + url + '">' + ''+ url + '</a> '                                                +
+                                '</div>'                                                                                                    +
+                            '</div>');
                     infowindow.open(map, this);
                 });
             }
