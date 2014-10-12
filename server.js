@@ -65,7 +65,7 @@ server.get("/api/flats", function(req, res) {
         price: 2100,
 	}, {
 		lat: 45.5301959,
-		long: -73.55272130000003,
+		long: -73.555445,
         url: "http://montreal.craigslist.ca/apa/4673658359.html",
         image: "http://images.craigslist.org/00J0J_kgvw2FfsepN_600x450.jpg",
         price: 875,
