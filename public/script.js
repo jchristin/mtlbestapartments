@@ -12,7 +12,7 @@ var uiSearchPointAddressIndex       = 0;
 // var rssFeed  = 'http://montreal.kijiji.ca/f-SearchAdRss?AdType=2&CatId=214&Keyword=village&Location=1700281';
 // var rssFeed  = 'http://www.kijiji.ca/rss-srp-appartement-condo-4-1-2/ville-de-montreal/c214l1700281';
 // var rssFeed  = 'http://www.kijiji.ca/rss-srp-2-bedroom-apartments-condos/ville-de-montreal/village/k0c214l1700281?ad=offering';
-   
+
 /***************************************************************************************\
 
 Function:       Initialize
@@ -26,9 +26,8 @@ Return Value:   None.
 Comments:       None.
 
 \***************************************************************************************/
-function initialize() {
-    var data;
-
+function initialize() 
+{
     //
     // Instantiate a directions service.
     //
@@ -52,6 +51,8 @@ function initialize() {
     //
     // Set markers
     //
+    var data;
+
     $(document).ready(function() {
         $.get("api/flats",function(data,status){
             fSetAllMarkerOnMapFlatFiltered(data);
@@ -163,6 +164,42 @@ function update()
 
 /***************************************************************************************\
 
+Function:           fUpdateDisplay
+
+Description:       Update
+
+Parameters:        None.
+
+Return Value:      None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fUpdateDisplay() 
+{
+    for (var i = 0; i < FlatMarkers.length; i++) 
+    {
+        if (document.getElementById("CheckBoxHide").checked == true)
+        {
+            if (FlatMarkers[i].IsValid == true)
+            {
+                FlatMarkers[i].setMap(map);
+            }
+            else
+            {
+                FlatMarkers[i].setMap(null);
+            }
+        }
+        else
+        {
+            FlatMarkers[i].setMap(map);
+        }
+    }
+}
+
+
+/***************************************************************************************\
+
 Function:           fSetAMarkerOnMapValidFlat
 
 Description:       Set a marker on the map of a flat.
@@ -254,10 +291,12 @@ function fFilterRawPostalArray() {
             if (Duration <= uiMaximumTimeS) 
             {
                 pinColor    = "f80808";    // Big red
+                FlatMarkers[uiFlatMarkersIndex].IsValid = true;
             }
             else
             {
                 pinColor    = "f69e9e";    // Low red
+                FlatMarkers[uiFlatMarkersIndex].IsValid = false;
             }
             
             var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
@@ -310,11 +349,10 @@ Comments:       None.
 \***************************************************************************************/
 function addSearchLocation() 
 {
- 
     var oLatLng = new google.maps.LatLng(45.506, -73.556);
-    
+
     fSetAMarkerOnMap(oLatLng, "Search", true);
-    
+
     update();
 }
 
