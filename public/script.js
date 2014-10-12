@@ -13,6 +13,8 @@ var uiSearchPointAddressIndex       = 0;
 // var rssFeed  = 'http://www.kijiji.ca/rss-srp-appartement-condo-4-1-2/ville-de-montreal/c214l1700281';
 // var rssFeed  = 'http://www.kijiji.ca/rss-srp-2-bedroom-apartments-condos/ville-de-montreal/village/k0c214l1700281?ad=offering';
 
+var infowindow;
+
 /***************************************************************************************\
 
 Function:       Initialize
@@ -51,6 +53,7 @@ function initialize()
     //
     // Set markers
     //
+    infowindow = new google.maps.InfoWindow();
     var data;
 
     $(document).ready(function() {
@@ -74,7 +77,7 @@ Return Value:       None.
 Comments:           None.
 
 \***************************************************************************************/
-function fSetAMarkerOnMap(oLatLng, eType, isDragable) {
+function fSetAMarkerOnMap(oLatLng, url, image, eType, isDragable) {
     var IsValidType = false;
 
     switch (eType) 
@@ -134,6 +137,14 @@ function fSetAMarkerOnMap(oLatLng, eType, isDragable) {
         }
         else
         {
+            if (url != null)
+            {
+                google.maps.event.addListener(oMarker, 'click', function() {
+                    infowindow.setContent(url);
+                    infowindow.open(map, this);
+                });
+            }
+
             FlatMarkers.push(oMarker);
         }
     }
@@ -211,9 +222,9 @@ Return Value:      None.
 Comments:       None.
 
 \***************************************************************************************/
-function fSetAMarkerOnMapValidFlat(oLatLng) 
+function fSetAMarkerOnMapValidFlat(oLatLng, url, image) 
 {
-    fSetAMarkerOnMap(oLatLng, "ValidFlat", false);
+    fSetAMarkerOnMap(oLatLng, url, image, "ValidFlat", false);
 }
 
 /***************************************************************************************\
@@ -231,14 +242,11 @@ Comments:       None.
 \***************************************************************************************/
 function fSetAllMarkerOnMapFlatFiltered(data) 
 {
-    console.log("PROUT ");
-    console.log(data);
-    
     for (var i = 0; i < data.length; i++) {
     
         var oLatLng = new google.maps.LatLng(data[i].lat, data[i].long);
 
-        fSetAMarkerOnMapValidFlat(oLatLng);
+        fSetAMarkerOnMapValidFlat(oLatLng, data[i].url, data[i].image);
     }
 }
 
@@ -351,7 +359,7 @@ function addSearchLocation()
 {
     var oLatLng = new google.maps.LatLng(45.506, -73.556);
 
-    fSetAMarkerOnMap(oLatLng, "Search", true);
+    fSetAMarkerOnMap(oLatLng, null, null, "Search", true);
 
     update();
 }
