@@ -8,10 +8,7 @@ var SearchPointAddress = [];
 var uiFlatMarkersIndex                  = 0;
 var uiSearchPointAddressIndex       = 0;
 
-// var rssFeed  = "http://www.google.fr";
-// var rssFeed  = 'http://montreal.kijiji.ca/f-SearchAdRss?AdType=2&CatId=214&Keyword=village&Location=1700281';
-// var rssFeed  = 'http://www.kijiji.ca/rss-srp-appartement-condo-4-1-2/ville-de-montreal/c214l1700281';
-// var rssFeed  = 'http://www.kijiji.ca/rss-srp-2-bedroom-apartments-condos/ville-de-montreal/village/k0c214l1700281?ad=offering';
+// http://localhost:5000/?city=montreal&pricemin=600&travelmode=walking&timemax=30&lat=45.525&long=-73.55
 
 var infowindow;
 
@@ -37,22 +34,56 @@ function initialize()
     // Instantiate a directions service.
     //
    directionsService = new google.maps.DirectionsService();
+
+    var args = document.location.search.substring(1).split('&');
+
+    argsParsed = {};
+
+    for (i=0; i < args.length; i++)
+    {
+        arg = unescape(args[i]);
+
+        if (arg.indexOf('=') == -1)
+        {
+            argsParsed[arg.trim()] = true;
+        }
+        else
+        {
+            kvp = arg.split('=');
+            argsParsed[kvp[0].trim()] = kvp[1].trim();
+        }
+    }
+
+    var oCityCoord;
+    var uiZoom;
     
+    if (argsParsed.city == "montreal")
+    {
+        oCityCoord = new google.maps.LatLng(45.506, -73.556);
+        uiZoom = 12;
+    }
+    else
+    {
+        // default
+        oCityCoord = new google.maps.LatLng(45.506, -73.556);
+        uiZoom = 12;
+    }
+    
+
     //
-    // Create a map and center it on Montreal.
+    // Create a map and center it on the city.
     //
-    var Montreal = new google.maps.LatLng(45.506, -73.556);
     var mapOptions = {
-        zoom: 12,
-        center: Montreal,
+        zoom: uiZoom,
+        center: oCityCoord,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
+    
     //
     // Load map
     //
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    
+
     //
     // Set markers
     //
@@ -64,20 +95,14 @@ function initialize()
     uiInputPriceMin = oFlatPrice.Min;
     uiInputPriceMax = oFlatPrice.Max;
 
-    var oMarker;
-
     $(document).ready(function() {
         $.get("api/flats",function(data,status){
         
             for (var i = 0; i < data.length; i++) 
             {
-                // FlatMarkers[i].IsPriceValid = true;
-                // FlatMarkers[i].IsDistanceValid = false;
-                // FlatMarkers[i].Price = data[i].price;
-                
                 var oMarker = {
                                             IsPriceValid: true, 
-                                            IsDistanceValid: false,
+                                            IsDistanceValid: true,
                                             Price: data[i].price,
                                             marker: new google.maps.Marker()
                                          };
@@ -87,17 +112,77 @@ function initialize()
 
             fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice);
 
-            document.getElementById("inputMinimumText").value = oFlatPrice.Min;
-            document.getElementById("inputMaximumText").value = oFlatPrice.Max;
+            if (argsParsed.pricemin == undefined)
+            {
+                document.getElementById("inputMinimumText").value = oFlatPrice.Min;
+            }
+            else
+            {
+                document.getElementById("inputMinimumText").value = argsParsed.pricemin;
+                oFlatPrice.Min = argsParsed.pricemin;
+            }
+
+            if (argsParsed.pricemax == undefined)
+            {
+                document.getElementById("inputMaximumText").value = oFlatPrice.Max;
+            }
+            else
+            {
+                document.getElementById("inputMaximumText").value = argsParsed.pricemax;
+                oFlatPrice.Max = argsParsed.pricemax;
+            }
             
             uiInputPriceMin = oFlatPrice.Min;
             uiInputPriceMax = oFlatPrice.Max;
+
+            for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) 
+            {
+                fFilterByPrice(FlatMarkers[uiFlatIndex]);
+                fUpdateDisplay(FlatMarkers[uiFlatIndex]);
+            }
+            
+            if (argsParsed.timemax != undefined)
+            {
+                document.getElementById("inputMinuteDelayText").value = argsParsed.timemax;
+            }
+            
+            if (argsParsed.travelmode != undefined)
+            {
+                if (argsParsed.travelmode == "driving")
+                {
+                    document.getElementById('TravelMode').value = "DRIVING";
+                }
+                else if (argsParsed.travelmode == "walking")
+                {
+                    document.getElementById('TravelMode').value = "WALKING";
+                }
+                else if (argsParsed.travelmode == "bicycling")
+                {
+                    document.getElementById('TravelMode').value = "BICYCLING";
+                }
+                else if (argsParsed.travelmode == "transit")
+                {
+                    document.getElementById('TravelMode').value = "TRANSIT";
+                }
+            }
+            
+            if ((argsParsed.long != undefined) && (argsParsed.lat != undefined))
+            {
+                var oCustLatLng = new google.maps.LatLng(argsParsed.lat, argsParsed.long);
+                
+                var oMarkerSearchPoint =   {
+                                            marker: new google.maps.Marker()
+                };
+
+                SearchPointAddress.push(oMarkerSearchPoint);
+                
+                fBuildMarker(oCustLatLng, oMarkerSearchPoint.marker, null, null, "Search", true);
+
+                update();
+            }
+
         });
     });
-    
-    // console.log(window.location.pathname);
-    // console.log(window.location.search);
-    // /montreal&pricemin=3000&distancemax=30&location=(45,0708,56,98890)
 }
 
 
@@ -117,7 +202,7 @@ Comments:           None.
 function fBuildMarker(oLatLng, oMarker, url, image, eType, isDragable) {
     var IsValidType = true;
 
-   switch (eType) 
+    switch (eType) 
     {
         case "Station" :
             pinColor    = "FFFFFF";    // White
