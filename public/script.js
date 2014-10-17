@@ -104,7 +104,9 @@ function initialize()
                                             IsPriceValid: true, 
                                             IsDistanceValid: true,
                                             Price: data[i].price,
-                                            marker: new google.maps.Marker()
+                                            marker: new google.maps.Marker(),
+                                            pinColorValid: data[i].colorvalid,
+                                            pinColorNotValid: data[i].colornotvalid,
                                          };
 
                 FlatMarkers.push(oMarker);
@@ -174,6 +176,13 @@ function initialize()
                                             marker: new google.maps.Marker()
                 };
 
+                var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "B8B8B8",
+                                        new google.maps.Size(21, 34),
+                                        new google.maps.Point(0,0),
+                                        new google.maps.Point(10, 34));
+               
+                oMarkerSearchPoint.marker.setIcon(pinImage);
+    
                 SearchPointAddress.push(oMarkerSearchPoint);
                 
                 fBuildMarker(oCustLatLng, oMarkerSearchPoint.marker, null, null, "Search", true);
@@ -199,76 +208,38 @@ Return Value:       None.
 Comments:           None.
 
 \***************************************************************************************/
-function fBuildMarker(oLatLng, oMarker, url, image, eType, isDragable) {
-    var IsValidType = true;
-
-    switch (eType) 
+function fBuildMarker(oLatLng, oMarker, url, image, eType, isDragable) 
+{
+    if (isDragable)
     {
-        case "Station" :
-            pinColor    = "FFFFFF";    // White
-            IsValidType    = true;
-            break;
-                
-        case "ValidFlat" :
-            pinColor    = "f80808";    // Big red
-            IsValidType = true;
-            break;
-                
-        case "NotValidFlat" :
-            pinColor    = "f69e9e";    // Low red
-            IsValidType = true;
-            break;
-                
-        case "Search" :
-            pinColor    = "B8B8B8";    // Grey
-            IsValidType = true;
-            break;
-
-        default :
-            pinColor    = "000000";    // Black
-            IsValidType = true;
-            break;
+        google.maps.event.addListener(oMarker, 'dragend', update);
+                    
+        oMarker.setDraggable (isDragable);
+        oMarker.setTitle('Drag me !! ');
+            
     }
 
-    if (IsValidType == true)
-    {
-        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-                                        new google.maps.Size(21, 34),
-                                        new google.maps.Point(0,0),
-                                        new google.maps.Point(10, 34));
-
-        if (isDragable)
-        {
-            google.maps.event.addListener(oMarker, 'dragend', update);
-                    
-            oMarker.setDraggable (isDragable);
-            oMarker.setTitle('Drag me !! ');
-            
-        }
-
-        oMarker.setIcon(pinImage);
-
-        oMarker.setAnimation(google.maps.Animation.DROP);
-        oMarker.setPosition(oLatLng);
-        oMarker.setMap(map);
+    oMarker.setAnimation(google.maps.Animation.DROP);
+    oMarker.setPosition(oLatLng);
+    oMarker.setMap(map);
         
-        if (isDragable == false)
+    if (isDragable == false)
+    {
+        if (url != null)
         {
-            if (url != null)
+            google.maps.event.addListener(oMarker, 'click', function() 
             {
-                google.maps.event.addListener(oMarker, 'click', function() {
-                    infowindow.setContent(
-                            '<div style="width:300px; height:325px">'                                                      +
-                                '<div align="center">'                                                                                +
-                                    '<img src="' + image + '" width="225" height="300" ALIGN="middle" />'   +
-                                '</div>'                                                                                                    +
-                                '<div align="center">'                                                                                +
-                                    '<a href="' + url + '">' + ''+ url + '</a> '                                                +
-                                '</div>'                                                                                                    +
-                            '</div>');
-                    infowindow.open(map, this);
-                });
-            }
+                infowindow.setContent(
+                    '<div style="width:300px; height:325px">'                                                      +
+                        '<div align="center">'                                                                                +
+                            '<img src="' + image + '" width="225" height="300" ALIGN="middle" />'   +
+                        '</div>'                                                                                                    +
+                        '<div align="center">'                                                                                +
+                            '<a href="' + url + '">' + ''+ url + '</a> '                                                +
+                        '</div>'                                                                                                    +
+                    '</div>');
+                infowindow.open(map, this);
+            });
         }
     }
 }
@@ -293,7 +264,6 @@ function update()
     uiSearchPointAddressIndex   = 0;
 
     fFilterByDistance();
-    // fUpdateDisplay();
 }
 
 
@@ -325,11 +295,11 @@ function fUpdateDisplay(oFlatMarker)
 
     if ((oFlatMarker.IsDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
     {
-        pinColor    = "f80808";    // Big red
+        pinColor    = oFlatMarker.pinColorValid;
     }
     else
     {
-        pinColor    = "f69e9e";    // Low red
+        pinColor    = oFlatMarker.pinColorNotValid;
     }
 
     var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
@@ -534,6 +504,13 @@ function addSearchLocation()
     var oMarkerSearchPoint =   {
                                 marker: new google.maps.Marker()
                             };
+
+    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "B8B8B8",
+                                        new google.maps.Size(21, 34),
+                                        new google.maps.Point(0,0),
+                                        new google.maps.Point(10, 34));
+               
+    oMarkerSearchPoint.marker.setIcon(pinImage);
 
     SearchPointAddress.push(oMarkerSearchPoint);
                 
