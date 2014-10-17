@@ -100,9 +100,13 @@ function initialize()
         
             for (var i = 0; i < data.length; i++) 
             {
+                var DistanceValid = [];
+                
+                DistanceValid[0] = true;
+                
                 var oMarker = {
                                             IsPriceValid: true, 
-                                            IsDistanceValid: true,
+                                            IsDistanceValid: DistanceValid,
                                             Price: data[i].price,
                                             marker: new google.maps.Marker(),
                                             pinColorValid: data[i].colorvalid,
@@ -293,7 +297,17 @@ function fUpdateDisplay(oFlatMarker)
     // Update color.
     var pinColor = 0;
 
-    if ((oFlatMarker.IsDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
+    var bDistanceValid = false;
+    
+    for (var a = 0; a < oFlatMarker.IsDistanceValid.length; a++)
+    {
+        if (oFlatMarker.IsDistanceValid[a] == true)
+        {
+            bDistanceValid = true;
+        }
+    }
+
+    if ((bDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
     {
         pinColor    = oFlatMarker.pinColorValid;
     }
@@ -311,7 +325,7 @@ function fUpdateDisplay(oFlatMarker)
         
     if (document.getElementById("CheckBoxHide").checked == true)
     {
-        if ((oFlatMarker.IsDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
+        if ((bDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
         {
             oFlatMarker.marker.setMap(map);
         }
@@ -420,16 +434,20 @@ function fFilterByDistance() {
                 Duration += legs[k].duration.value;
             }
 
+            console.log("================================");
+            console.log(uiFlatMarkersIndex);
+            console.log(FlatMarkers[uiFlatMarkersIndex]);
+
             // Check direction
             var uiMaximumTimeS = document.getElementById("inputMinuteDelayText").value * 60;
 
             if (Duration <= uiMaximumTimeS) 
             {
-                FlatMarkers[uiFlatMarkersIndex].IsDistanceValid = true;
+                FlatMarkers[uiFlatMarkersIndex].IsDistanceValid[uiSearchPointAddressIndex] = true;
             }
             else
             {
-                FlatMarkers[uiFlatMarkersIndex].IsDistanceValid = false;
+                FlatMarkers[uiFlatMarkersIndex].IsDistanceValid[uiSearchPointAddressIndex] = false;
             }
 
             fFilterByPrice(FlatMarkers[uiFlatMarkersIndex]);
@@ -440,6 +458,16 @@ function fFilterByDistance() {
             if (uiFlatMarkersIndex < FlatMarkers.length)
             {
                 setTimeout(function() { fFilterByDistance(); }, (350));
+            }
+            else
+            {
+                uiSearchPointAddressIndex++;
+
+                if (uiSearchPointAddressIndex < SearchPointAddress.length)
+                {
+                    uiFlatMarkersIndex = 0;
+                    setTimeout(function() { fFilterByDistance(); }, (350));
+                }
             }
         }
         else
