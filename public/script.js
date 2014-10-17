@@ -185,7 +185,7 @@ function initialize()
     
                 SearchPointAddress.push(oMarkerSearchPoint);
                 
-                fBuildMarker(oCustLatLng, oMarkerSearchPoint.marker, null, null, "Search", true);
+                fBuildMarker(oCustLatLng, oMarkerSearchPoint.marker, null, null, true);
 
                 update();
             }
@@ -208,7 +208,7 @@ Return Value:       None.
 Comments:           None.
 
 \***************************************************************************************/
-function fBuildMarker(oLatLng, oMarker, url, image, eType, isDragable) 
+function fBuildMarker(oLatLng, oMarker, url, image, isDragable) 
 {
     if (isDragable)
     {
@@ -342,7 +342,7 @@ Comments:       None.
 \***************************************************************************************/
 function fSetAMarkerOnMapValidFlat(oLatLng, i, url, image) 
 {
-    fBuildMarker(oLatLng, FlatMarkers[i].marker, url, image, "ValidFlat", false);
+    fBuildMarker(oLatLng, FlatMarkers[i].marker, url, image, false);
 }
 
 /***************************************************************************************\
@@ -514,7 +514,7 @@ function addSearchLocation()
 
     SearchPointAddress.push(oMarkerSearchPoint);
                 
-    fBuildMarker(oLatLng, oMarkerSearchPoint.marker, null, null, "Search", true);
+    fBuildMarker(oLatLng, oMarkerSearchPoint.marker, null, null, true);
 
     update();
 }
