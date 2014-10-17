@@ -15,6 +15,9 @@ var uiSearchPointAddressIndex       = 0;
 
 var infowindow;
 
+var uiInputPriceMin = 0;
+var uiInputPriceMax = 0;
+
 /***************************************************************************************\
 
 Function:       Initialize
@@ -54,13 +57,47 @@ function initialize()
     // Set markers
     //
     infowindow = new google.maps.InfoWindow();
+
     var data;
+    var oFlatPrice = {Min: 99999999, Max: 0};
+    
+    uiInputPriceMin = oFlatPrice.Min;
+    uiInputPriceMax = oFlatPrice.Max;
+
+    var oMarker;
 
     $(document).ready(function() {
         $.get("api/flats",function(data,status){
-            fSetAllMarkerOnMapFlatFiltered(data);
+        
+            for (var i = 0; i < data.length; i++) 
+            {
+                // FlatMarkers[i].IsPriceValid = true;
+                // FlatMarkers[i].IsDistanceValid = false;
+                // FlatMarkers[i].Price = data[i].price;
+                
+                var oMarker = {
+                                            IsPriceValid: true, 
+                                            IsDistanceValid: false,
+                                            Price: data[i].price,
+                                            marker: new google.maps.Marker()
+                                         };
+
+                FlatMarkers.push(oMarker);
+            }
+
+            fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice);
+
+            document.getElementById("inputMinimumText").value = oFlatPrice.Min;
+            document.getElementById("inputMaximumText").value = oFlatPrice.Max;
+            
+            uiInputPriceMin = oFlatPrice.Min;
+            uiInputPriceMax = oFlatPrice.Max;
         });
     });
+    
+    // console.log(window.location.pathname);
+    // console.log(window.location.search);
+    // /montreal&pricemin=3000&distancemax=30&location=(45,0708,56,98890)
 }
 
 
@@ -77,10 +114,10 @@ Return Value:       None.
 Comments:           None.
 
 \***************************************************************************************/
-function fSetAMarkerOnMap(oLatLng, url, image, eType, isDragable) {
-    var IsValidType = false;
+function fBuildMarker(oLatLng, oMarker, url, image, eType, isDragable) {
+    var IsValidType = true;
 
-    switch (eType) 
+   switch (eType) 
     {
         case "Station" :
             pinColor    = "FFFFFF";    // White
@@ -107,11 +144,9 @@ function fSetAMarkerOnMap(oLatLng, url, image, eType, isDragable) {
             IsValidType = true;
             break;
     }
-            
+
     if (IsValidType == true)
     {
-        oMarker = new google.maps.Marker();
-            
         var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
                                         new google.maps.Size(21, 34),
                                         new google.maps.Point(0,0),
@@ -127,15 +162,12 @@ function fSetAMarkerOnMap(oLatLng, url, image, eType, isDragable) {
         }
 
         oMarker.setIcon(pinImage);
+
         oMarker.setAnimation(google.maps.Animation.DROP);
         oMarker.setPosition(oLatLng);
         oMarker.setMap(map);
         
-        if (isDragable)
-        {
-            SearchPointAddress.push(oMarker);
-        }
-        else
+        if (isDragable == false)
         {
             if (url != null)
             {
@@ -152,8 +184,6 @@ function fSetAMarkerOnMap(oLatLng, url, image, eType, isDragable) {
                     infowindow.open(map, this);
                 });
             }
-
-            FlatMarkers.push(oMarker);
         }
     }
 }
@@ -177,42 +207,67 @@ function update()
     uiFlatMarkersIndex              = 0;
     uiSearchPointAddressIndex   = 0;
 
-    fFilterRawPostalArray();
+    fFilterByDistance();
+    // fUpdateDisplay();
 }
 
 
+function fUpdateDisplayAll() 
+{
+    for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) 
+    {
+        fUpdateDisplay(FlatMarkers[uiFlatIndex]);
+    }
+}
+    
 /***************************************************************************************\
 
 Function:           fUpdateDisplay
 
 Description:       Update
 
-Parameters:        None.
+Parameters:        oFlatMarker.
 
 Return Value:      None.
 
 Comments:       None.
 
 \***************************************************************************************/
-function fUpdateDisplay() 
+function fUpdateDisplay(oFlatMarker) 
 {
-    for (var i = 0; i < FlatMarkers.length; i++) 
+    // Update color.
+    var pinColor = 0;
+
+    if ((oFlatMarker.IsDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
     {
-        if (document.getElementById("CheckBoxHide").checked == true)
+        pinColor    = "f80808";    // Big red
+    }
+    else
+    {
+        pinColor    = "f69e9e";    // Low red
+    }
+
+    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+                                            new google.maps.Size(21, 34),
+                                            new google.maps.Point(0,0),
+                                            new google.maps.Point(10, 34));
+            
+    oFlatMarker.marker.setIcon(pinImage);
+        
+    if (document.getElementById("CheckBoxHide").checked == true)
+    {
+        if ((oFlatMarker.IsDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
         {
-            if (FlatMarkers[i].IsValid == true)
-            {
-                FlatMarkers[i].setMap(map);
-            }
-            else
-            {
-                FlatMarkers[i].setMap(null);
-            }
+            oFlatMarker.marker.setMap(map);
         }
         else
         {
-            FlatMarkers[i].setMap(map);
+            oFlatMarker.marker.setMap(null);
         }
+    }
+    else
+    {
+        oFlatMarker.marker.setMap(map);
     }
 }
 
@@ -230,9 +285,9 @@ Return Value:      None.
 Comments:       None.
 
 \***************************************************************************************/
-function fSetAMarkerOnMapValidFlat(oLatLng, url, image) 
+function fSetAMarkerOnMapValidFlat(oLatLng, i, url, image) 
 {
-    fSetAMarkerOnMap(oLatLng, url, image, "ValidFlat", false);
+    fBuildMarker(oLatLng, FlatMarkers[i].marker, url, image, "ValidFlat", false);
 }
 
 /***************************************************************************************\
@@ -248,20 +303,30 @@ Return Value:      None.
 Comments:       None.
 
 \***************************************************************************************/
-function fSetAllMarkerOnMapFlatFiltered(data) 
+function fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice) 
 {
-    for (var i = 0; i < data.length; i++) {
-    
+    for (var i = 0; i < data.length; i++) 
+    {
+        if (data[i].price < oFlatPrice.Min)
+        {
+            oFlatPrice.Min = data[i].price;
+        }
+        
+        if (data[i].price > oFlatPrice.Max)
+        {
+            oFlatPrice.Max = data[i].price;
+        }
+
         var oLatLng = new google.maps.LatLng(data[i].lat, data[i].long);
 
-        fSetAMarkerOnMapValidFlat(oLatLng, data[i].url, data[i].image);
+        fSetAMarkerOnMapValidFlat(oLatLng, i, data[i].url, data[i].image, data.Price);
     }
 }
 
 
 /***************************************************************************************\
 
-Function:           fFilterRawPostalArray
+Function:           fFilterByDistance
 
 Description:       Filter the raw postal array with maximum walking distance.
 
@@ -272,26 +337,27 @@ Return Value:      None.
 Comments:       None.
 
 \***************************************************************************************/
-function fFilterRawPostalArray() {
+function fFilterByDistance() {
     
     var selectedMode = document.getElementById('TravelMode').value;
 
     var request = {
-                    origin: FlatMarkers[uiFlatMarkersIndex].getPosition(),
-                    destination: SearchPointAddress[uiSearchPointAddressIndex].getPosition(),
+                    origin: FlatMarkers[uiFlatMarkersIndex].marker.getPosition(),
+                    destination: SearchPointAddress[uiSearchPointAddressIndex].marker.getPosition(),
                     travelMode: google.maps.TravelMode[selectedMode]
     };
 
     // Route the directions and pass the response to a function to create markers for each step.
-    directionsService.route(request,  function (response, status) {
-
-        // console.log("Request = " + request.origin);
+    directionsService.route(request,  function (response, status) 
+    {
 
         if (status == google.maps.DirectionsStatus.OK) 
         {
-            var Duration = 0;
-        
+            // Find the equivalent flat
+            
             // Compute road duration.
+            var Duration = 0;
+            
             var legs = response.routes[0].legs;
         
             for(var k = 0; k < legs.length; k++) 
@@ -301,41 +367,24 @@ function fFilterRawPostalArray() {
 
             // Check direction
             var uiMaximumTimeS = document.getElementById("inputMinuteDelayText").value * 60;
-            
-            var pinColor = 0;
-            
+
             if (Duration <= uiMaximumTimeS) 
             {
-                pinColor    = "f80808";    // Big red
-                FlatMarkers[uiFlatMarkersIndex].IsValid = true;
+                FlatMarkers[uiFlatMarkersIndex].IsDistanceValid = true;
             }
             else
             {
-                pinColor    = "f69e9e";    // Low red
-                FlatMarkers[uiFlatMarkersIndex].IsValid = false;
+                FlatMarkers[uiFlatMarkersIndex].IsDistanceValid = false;
             }
-            
-            var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-                                                new google.maps.Size(21, 34),
-                                                new google.maps.Point(0,0),
-                                                new google.maps.Point(10, 34));
-            
-            FlatMarkers[uiFlatMarkersIndex].setIcon(pinImage);
-            
-            if (document.getElementById("CheckBoxHide").checked == true)
-            {
-                FlatMarkers[uiFlatMarkersIndex].setMap(null);
-            }
-            else
-            {
-                FlatMarkers[uiFlatMarkersIndex].setMap(map);
-            }
+
+            fFilterByPrice(FlatMarkers[uiFlatMarkersIndex]);
+            fUpdateDisplay(FlatMarkers[uiFlatMarkersIndex]);
 
             uiFlatMarkersIndex++;
 
             if (uiFlatMarkersIndex < FlatMarkers.length)
             {
-                setTimeout(function() { fFilterRawPostalArray(); }, (250));
+                setTimeout(function() { fFilterByDistance(); }, (350));
             }
         }
         else
@@ -343,10 +392,40 @@ function fFilterRawPostalArray() {
             if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
             {
                 console.log("DirectionServiceCallback " + status);
-                setTimeout(function() { fFilterRawPostalArray(); }, (600 * 3));
+                setTimeout(function() { fFilterByDistance(); }, (600 * 3));
             }
         }
     });
+}
+
+
+/***************************************************************************************\
+
+Function:           fFilterByPrice
+
+Description:       Adds a search marker/location in the map.
+
+Parameters:        None.
+
+Return Value:      None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fFilterByPrice(oFlatMarker)
+{
+    if (oFlatMarker.Price < uiInputPriceMin) 
+    {
+        oFlatMarker.IsPriceValid = false;
+    }
+    else if (oFlatMarker.Price > uiInputPriceMax) 
+    {
+        oFlatMarker.IsPriceValid = false;
+    }
+    else
+    {
+        oFlatMarker.IsPriceValid = true;
+    }
 }
 
 
@@ -367,9 +446,65 @@ function addSearchLocation()
 {
     var oLatLng = new google.maps.LatLng(45.506, -73.556);
 
-    fSetAMarkerOnMap(oLatLng, null, null, "Search", true);
+    var oMarkerSearchPoint =   {
+                                marker: new google.maps.Marker()
+                            };
+
+    SearchPointAddress.push(oMarkerSearchPoint);
+                
+    fBuildMarker(oLatLng, oMarkerSearchPoint.marker, null, null, "Search", true);
 
     update();
+}
+
+
+/***************************************************************************************\
+
+Function:           fMinPriceChanged
+
+Description:       Adds a search marker/location in the map.
+
+Parameters:        None.
+
+Return Value:      None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fMinPriceChanged() 
+{
+    uiInputPriceMin = document.getElementById("inputMinimumText").value;
+
+    for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) 
+    {
+        fFilterByPrice(FlatMarkers[uiFlatIndex]);
+        fUpdateDisplay(FlatMarkers[uiFlatIndex]);
+    }
+}
+
+
+/***************************************************************************************\
+
+Function:           fMaxPriceChanged
+
+Description:       Adds a search marker/location in the map.
+
+Parameters:        None.
+
+Return Value:      None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fMaxPriceChanged() 
+{
+    InputPriceMax = document.getElementById("inputMaximumText").value;
+
+    for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) 
+    {
+        fFilterByPrice(FlatMarkers[uiFlatIndex]);
+        fUpdateDisplay(FlatMarkers[uiFlatIndex]);
+    }
 }
 
 

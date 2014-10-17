@@ -38,10 +38,30 @@
                         </p>
 
                         <p> Time (minute): <input type="text" id="inputMinuteDelayText" value="5" size="5"></input> </p>
-                        <p> Minimum = <input type="text" id="inputMinimumText" value="0" size="5"></input> $ </p>
-                        <p> Maximum = <input type="text" id="inputMinimumText" value="0" size="5"></input> $ </p>
-                        
-                        <input type="checkbox" id="CheckBoxHide" onClick="fUpdateDisplay();"/> Hide not valid flat
+                        <p> Minimum = 
+                            <input  type            ="text" 
+                                        onchange    = "fMinPriceChanged();"
+                                        onkeypress = "this.onchange();"
+                                        onpaste         = "this.onchange();"
+                                        oninput     = "this.onchange();"
+                                        align="right" 
+                                        id="inputMinimumText" 
+                                        value="0">
+                            </input> $ 
+                        </p>
+                        <p> Maximum = 
+                            <input  type="text" 
+                                        onchange   = "fMaxPriceChanged();"
+                                        onkeypress = "this.onchange();"
+                                        onpaste    = "this.onchange();"
+                                        oninput    = "this.onchange();"
+                                        align="right" 
+                                        id="inputMaximumText" 
+                                        value="0">
+                            </input> $ 
+                        </p>
+
+                        <input type="checkbox" id="CheckBoxHide" onClick="fUpdateDisplayAll();"/> Hide not valid flat
 
                     </form>
                 </font>
