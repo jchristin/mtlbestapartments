@@ -30,6 +30,8 @@ Comments:       None.
 \***************************************************************************************/
 function initialize() 
 {
+    document.getElementById("CheckBoxHide").checked = true;
+    
     //
     // Instantiate a directions service.
     //
@@ -434,10 +436,6 @@ function fFilterByDistance() {
                 Duration += legs[k].duration.value;
             }
 
-            console.log("================================");
-            console.log(uiFlatMarkersIndex);
-            console.log(FlatMarkers[uiFlatMarkersIndex]);
-
             // Check direction
             var uiMaximumTimeS = document.getElementById("inputMinuteDelayText").value * 60;
 
@@ -545,6 +543,30 @@ function addSearchLocation()
     fBuildMarker(oLatLng, oMarkerSearchPoint.marker, null, null, true);
 
     update();
+}
+
+
+/***************************************************************************************\
+
+Function:           fMinuteTimeChanged
+
+Description:       Adds a search marker/location in the map.
+
+Parameters:        None.
+
+Return Value:      None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fMinuteTimeChanged() 
+{
+    update();
+
+    for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) 
+    {
+        fUpdateDisplay(FlatMarkers[uiFlatIndex]);
+    }
 }
 
 
