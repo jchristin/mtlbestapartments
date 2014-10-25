@@ -86,6 +86,12 @@ function initialize()
     //
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+    google.maps.event.addListener(map, 'click', function(event) {
+        placeMarker(event.latLng);
+    });
+
+
+
     //
     // Set markers
     //
@@ -197,6 +203,142 @@ function initialize()
             }
 
         });
+    });
+}
+
+var aLatLong = [];
+var oLatLongCenter;
+var uiPointIndex;
+var oCurrentLat;
+var oCurrentLong;
+
+function placeMarker(location) 
+{
+    
+    oCurrentLat = location.lat();
+    oCurrentLong = location.lng();
+    
+    
+    oLatLongCenter = new google.maps.LatLng(oCurrentLat, oCurrentLong);
+        
+    uiPointIndex = 0;
+
+    fComputePointDistance();
+    
+    // aLatLong[uiPrecision] = new google.maps.LatLng(oCurrentLat, oCurrentLong); // Center
+    console.log("aLatLong = " + aLatLong.length);
+    
+    
+}
+
+var bermudaTriangle;
+
+/***************************************************************************************\
+
+Function:           fComputePointDistance
+
+Description:       TODO
+
+Parameters:        None.
+
+Return Value:      None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fComputePointDistance() 
+{
+    var uiRadius = 0.01;
+    var uiPrecision = 36; //18
+
+    var uiAngle = (360 * (uiPointIndex/uiPrecision)) * (Math.PI / 180);
+        
+    aLatLong[uiPointIndex] = new google.maps.LatLng(
+                                                            oCurrentLat     + (uiRadius) * Math.sin(uiAngle), 
+                                                            oCurrentLong   + (uiRadius) * Math.cos(uiAngle));
+                                                                
+    var selectedMode = document.getElementById('TravelMode').value;
+
+    var request = {
+                    origin: oLatLongCenter,
+                    destination: aLatLong[uiPointIndex],
+                    travelMode: google.maps.TravelMode[selectedMode]
+    };
+
+    // Route the directions and pass the response to a function to create markers for each step.
+    directionsService.route(request,  function (response, status) 
+    {
+        console.log("*******************************");
+        console.log("uiPointIndex = " + uiPointIndex);
+
+        if (status == google.maps.DirectionsStatus.OK) 
+        {
+            // Compute road duration.
+            var Duration = 0;
+            
+            var legs = response.routes[0].legs;
+        
+            for(var k = 0; k < legs.length; k++) 
+            {
+                Duration += legs[k].duration.value;
+            }
+
+            // Check direction
+            var uiMaximumTimeS = document.getElementById("inputMinuteDelayText").value * 60;
+
+            console.log("Duration = " + Duration);
+            console.log("uiMaximumTimeS = " + uiMaximumTimeS);
+
+            var uiNewRadius = 0;
+
+            if (Duration <= uiMaximumTimeS) 
+            {
+                // Need to increase the radius.
+                console.log("Duration <= uiMaximumTimeS");
+                uiNewRadius = (uiRadius * uiMaximumTimeS) / Duration;
+                console.log("uiNewRadius = " + uiNewRadius);
+            }
+            else
+            {
+                // Need to reduce the radius.
+                console.log("Duration > uiMaximumTimeS");
+                uiNewRadius = (uiRadius * uiMaximumTimeS) / Duration;
+                console.log("uiNewRadius = " + uiNewRadius);
+            }
+                
+            aLatLong[uiPointIndex] = new google.maps.LatLng(
+                                                        oCurrentLat     + (uiNewRadius) * Math.sin(uiAngle), 
+                                                        oCurrentLong   + (uiNewRadius) * Math.cos(uiAngle));
+                                                        
+            uiPointIndex++;
+
+            if (uiPointIndex < uiPrecision)
+            {
+                setTimeout(function() { fComputePointDistance(); }, (350));
+            }
+            else
+            {
+                // Construct the polygon.
+                bermudaTriangle = new google.maps.Polygon({
+                        paths: aLatLong,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35
+                });
+    
+                bermudaTriangle.setMap(map);
+            }
+        }
+        else
+        {
+            if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
+            {
+                console.log("DirectionServiceCallback " + status);
+                setTimeout(function() { fComputePointDistance(); }, (600 * 3));
+            }
+        }
     });
 }
 
@@ -408,7 +550,8 @@ Return Value:      None.
 Comments:       None.
 
 \***************************************************************************************/
-function fFilterByDistance() {
+function fFilterByDistance() 
+{
     
     var selectedMode = document.getElementById('TravelMode').value;
 
@@ -537,6 +680,7 @@ function addSearchLocation()
                                         new google.maps.Point(10, 34));
                
     oMarkerSearchPoint.marker.setIcon(pinImage);
+
 
     SearchPointAddress.push(oMarkerSearchPoint);
                 
