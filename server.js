@@ -1,5 +1,6 @@
+"use strict";
+
 var path = require("path"),
-	fs = require("fs"),
 	express = require("express"),
 	morgan = require("morgan"),
 	bodyParser = require("body-parser"),
