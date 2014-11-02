@@ -117,7 +117,7 @@ function initialize()
                     IsDistanceValid:    DistanceValid,
                     Price:              data[i].price,
                     marker:             new google.maps.Marker(),
-                    pinColorValid:      data[i].colorvalid,
+                    uSource:            data[i].source,
                     pinColorNotValid:   data[i].colornotvalid,
                  };
 
@@ -498,22 +498,6 @@ function fUpdateDisplay(oFlatMarker)
         }
     }
 
-    if ((bDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
-    {
-        pinColor    = oFlatMarker.pinColorValid;
-    }
-    else
-    {
-        pinColor    = oFlatMarker.pinColorNotValid;
-    }
-
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-                                            new google.maps.Size(21, 34),
-                                            new google.maps.Point(0,0),
-                                            new google.maps.Point(10, 34));
-
-    oFlatMarker.marker.setIcon(pinImage);
-
     if (document.getElementById("CheckBoxHide").checked == true)
     {
         if ((bDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
@@ -579,7 +563,7 @@ function fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice)
 
         var oLatLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
 
-        fSetAMarkerOnMapValidFlat(oLatLng, i, data[i].url, data[i].image, data.Price);
+        fSetAMarkerOnMapValidFlat(oLatLng, i, data[i]._id, data[i].image, data.Price);
     }
 }
 
