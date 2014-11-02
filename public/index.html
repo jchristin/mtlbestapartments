@@ -4,22 +4,14 @@
 	<title>Simple Map</title>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-	<style>
-		html,
-		body,
-		#map-canvas {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 </head>
 
 <body>
 	<div id="container">
-		<div id="menu" style="text-align:center; background-color:#F8F5F5;width=10%;height=100%;float:right;">
+		<div id="menu">
 			<input type="button" value="Add location" onclick="addSearchLocation();">
 			<form>
 				<p> Travel mode:
