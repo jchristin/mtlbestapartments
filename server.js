@@ -7,7 +7,10 @@ var path = require("path"),
 	favicon = require("serve-favicon"),
 	server = express(),
 	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
-	port = process.env.PORT || 5000;
+	port = process.env.PORT || 5000,
+	mongoClient = require("mongodb").MongoClient,
+	mongoUrl = "mongodb://flat-scraper-craigslist:" + process.env.MONGODB_PASSWORD + "@linus.mongohq.com:10059/flats",
+	database;
 
 // Enable logging for development environment
 if (process.env.NODE_ENV === "development") {
@@ -34,6 +37,18 @@ server.use(express.static(path.join(__dirname, "bower_components"), {
 }));
 
 server.get("/api/flats", function(req, res) {
+	database.collection("active").find({
+		source: "craigslist"
+	}).limit(1000).toArray(function(err, docs) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.json(docs);
+		}
+	});
+});
+
+server.get("/api/dflats", function(req, res) {
 	res.json([{
 		latitude: 45.530647,
 		longitude: -73.553009,
@@ -149,6 +164,15 @@ server.get("/api/flats", function(req, res) {
 	}]);
 });
 
-// Start server
-server.listen(port);
-console.log("Listening on " + port);
+mongoClient.connect(mongoUrl, function(err, db) {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log("Connected to the database");
+		database = db;
+
+		// Start server
+		server.listen(port);
+		console.log("Listening on " + port);
+	}
+});
