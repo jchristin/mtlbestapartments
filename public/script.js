@@ -106,6 +106,11 @@ function initialize()
 
                 DistanceValid[0] = true;
 
+                if (data[i].price == null)
+                {
+                    data[i].price = 0;
+                }
+
                 var oMarker =
                 {
                     IsPriceValid:       true,
