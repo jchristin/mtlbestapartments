@@ -572,7 +572,7 @@ function fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice)
             oFlatPrice.Max = data[i].price;
         }
 
-        var oLatLng = new google.maps.LatLng(data[i].lat, data[i].long);
+        var oLatLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
 
         fSetAMarkerOnMapValidFlat(oLatLng, i, data[i].url, data[i].image, data.Price);
     }
