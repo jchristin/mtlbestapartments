@@ -45,7 +45,7 @@ function initialize()
     {
         arg = unescape(args[i]);
 
-        if (arg.indexOf('=') == -1)
+        if (arg.indexOf('=') === -1)
         {
             argsParsed[arg.trim()] = true;
         }
@@ -59,7 +59,7 @@ function initialize()
     var oCityCoord;
     var uiZoom;
 
-    if (argsParsed.city == "montreal")
+    if (argsParsed.city === "montreal")
     {
         oCityCoord = new google.maps.LatLng(45.506, -73.556);
         uiZoom = 12;
@@ -106,7 +106,7 @@ function initialize()
 
                 DistanceValid[0] = true;
 
-                if (data[i].price == null)
+                if (data[i].price === null)
                 {
                     data[i].price = 0;
                 }
@@ -126,7 +126,7 @@ function initialize()
 
             fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice);
 
-            if (argsParsed.pricemin == undefined)
+            if (argsParsed.pricemin === undefined)
             {
                 document.getElementById("inputMinimumText").value = oFlatPrice.Min;
             }
@@ -136,7 +136,7 @@ function initialize()
                 oFlatPrice.Min = argsParsed.pricemin;
             }
 
-            if (argsParsed.pricemax == undefined)
+            if (argsParsed.pricemax === undefined)
             {
                 document.getElementById("inputMaximumText").value = oFlatPrice.Max;
             }
@@ -155,32 +155,32 @@ function initialize()
                 fUpdateDisplay(FlatMarkers[uiFlatIndex]);
             }
 
-            if (argsParsed.timemax != undefined)
+            if (argsParsed.timemax !== undefined)
             {
                 document.getElementById("inputMinuteDelayText").value = argsParsed.timemax;
             }
 
-            if (argsParsed.travelmode != undefined)
+            if (argsParsed.travelmode !== undefined)
             {
-                if (argsParsed.travelmode == "driving")
+                if (argsParsed.travelmode === "driving")
                 {
                     document.getElementById('TravelMode').value = "DRIVING";
                 }
-                else if (argsParsed.travelmode == "walking")
+                else if (argsParsed.travelmode === "walking")
                 {
                     document.getElementById('TravelMode').value = "WALKING";
                 }
-                else if (argsParsed.travelmode == "bicycling")
+                else if (argsParsed.travelmode === "bicycling")
                 {
                     document.getElementById('TravelMode').value = "BICYCLING";
                 }
-                else if (argsParsed.travelmode == "transit")
+                else if (argsParsed.travelmode === "transit")
                 {
                     document.getElementById('TravelMode').value = "TRANSIT";
                 }
             }
 
-            if ((argsParsed.long != undefined) && (argsParsed.lat != undefined))
+            if ((argsParsed.long !== undefined) && (argsParsed.lat !== undefined))
             {
                 var oCustLatLng = new google.maps.LatLng(argsParsed.lat, argsParsed.long);
 
@@ -272,7 +272,7 @@ function fDrawSearchPolygon()
         console.log("*******************************");
         console.log("uiPointIndex = " + uiPointIndex);
 
-        if (status == google.maps.DirectionsStatus.OK)
+        if (status === google.maps.DirectionsStatus.OK)
         {
             // Compute road duration.
             var Duration = 0;
@@ -350,7 +350,7 @@ function fDrawSearchPolygon()
         }
         else
         {
-            if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
+            if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
             {
                 console.log("DirectionServiceCallback " + status);
                 setTimeout(function() { fDrawSearchPolygon(); }, (600 * 3));
@@ -402,9 +402,9 @@ function fBuildMarker(oLatLng, oMarker, url, image, isDragable)
     oMarker.setPosition(oLatLng);
     oMarker.setMap(map);
 
-    if (isDragable == false)
+    if (isDragable === false)
     {
-        if (url != null)
+        if (url !== null)
         {
             google.maps.event.addListener(oMarker, 'click', function()
             {
@@ -492,15 +492,15 @@ function fUpdateDisplay(oFlatMarker)
 
     for (var a = 0; a < oFlatMarker.IsDistanceValid.length; a++)
     {
-        if (oFlatMarker.IsDistanceValid[a] == true)
+        if (oFlatMarker.IsDistanceValid[a] === true)
         {
             bDistanceValid = true;
         }
     }
 
-    if (document.getElementById("CheckBoxHide").checked == true)
+    if (document.getElementById("CheckBoxHide").checked === true)
     {
-        if ((bDistanceValid == true) && (oFlatMarker.IsPriceValid == true))
+        if ((bDistanceValid === true) && (oFlatMarker.IsPriceValid === true))
         {
             oFlatMarker.marker.setMap(map);
         }
