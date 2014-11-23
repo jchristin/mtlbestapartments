@@ -1,3 +1,10 @@
+/*global unescape: true */
+
+/*exported addSearchLocation */
+/*exported fMinuteTimeChanged */
+/*exported fMinPriceChanged */
+/*exported fMaxPriceChanged */
+
 var map;
 
 var directionsService;
@@ -14,11 +21,59 @@ var infowindow;
 var uiInputPriceMin = 0;
 var uiInputPriceMax = 0;
 
+var document;
+var google;
+var window;
+
+var aLatLong = [];
+var oLatLongCenter;
+var uiPointIndex;
+var oCurrentLat;
+var oCurrentLong;
+
+var oPolyline;
+var aoSearchPointAddress;
+
 /***************************************************************************************\
 
-Function:       Initialize
+Function:       fUpdateDisplay
 
-Description:    Initialize all services.
+Description:    Update
+
+Parameters:     oFlatMarker.
+
+Return Value:   None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fUpdateDisplay(oFlatMarker) {
+	"use strict";
+
+	var bDistanceValid = false;
+
+	for (var a = 0; a < oFlatMarker.IsDistanceValid.length; a++) {
+		if (oFlatMarker.IsDistanceValid[a] === true) {
+			bDistanceValid = true;
+		}
+	}
+
+	if (document.getElementById("CheckBoxHide").checked === true) {
+		if ((bDistanceValid === true) && (oFlatMarker.IsPriceValid === true)) {
+			oFlatMarker.marker.setMap(map);
+		} else {
+			oFlatMarker.marker.setMap(null);
+		}
+	} else {
+		oFlatMarker.marker.setMap(map);
+	}
+}
+
+/***************************************************************************************\
+
+Function:       fUpdateDisplayAll
+
+Description:    TODO
 
 Parameters:     None.
 
@@ -27,182 +82,51 @@ Return Value:   None.
 Comments:       None.
 
 \***************************************************************************************/
-function initialize() {
+function fUpdateDisplayAll() {
 	"use strict";
 
-	document.getElementById("CheckBoxHide").checked = true;
-
-	//
-	// Instantiate a directions service.
-	//
-	directionsService = new google.maps.DirectionsService();
-
-	var args = document.location.search.substring(1).split('&');
-
-	argsParsed = {};
-
-	for (var i = 0; i < args.length; i++) {
-		arg = unescape(args[i]);
-
-		if (arg.indexOf('=') === -1) {
-			argsParsed[arg.trim()] = true;
-		} else {
-			kvp = arg.split('=');
-			argsParsed[kvp[0].trim()] = kvp[1].trim();
-		}
+	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
+		fUpdateDisplay(FlatMarkers[uiFlatIndex]);
 	}
-
-	var oCityCoord;
-	var uiZoom;
-
-	if (argsParsed.city === "montreal") {
-		oCityCoord = new google.maps.LatLng(45.506, -73.556);
-		uiZoom = 12;
-	} else {
-		// default
-		oCityCoord = new google.maps.LatLng(45.506, -73.556);
-		uiZoom = 12;
-	}
-
-	//
-	// Create a map and center it on the city.
-	//
-	var mapOptions = {
-		zoom: uiZoom,
-		center: oCityCoord,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-
-	//
-	// Load map
-	//
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-	//
-	// Set markers
-	//
-	infowindow = new google.maps.InfoWindow();
-
-	var data;
-	var oFlatPrice = {
-		Min: 99999999,
-		Max: 0
-	};
-
-	uiInputPriceMin = oFlatPrice.Min;
-	uiInputPriceMax = oFlatPrice.Max;
-
-	$(document).ready(function() {
-		$.get("api/flats", function(data, status) {
-
-			for (var i = 0; i < data.length; i++) {
-				var DistanceValid = [];
-
-				DistanceValid[0] = true;
-
-				if (data[i].price === null) {
-					data[i].price = 0;
-				}
-
-				var oMarker = {
-					IsPriceValid: true,
-					IsDistanceValid: DistanceValid,
-					Price: data[i].price,
-					marker: new google.maps.Marker(),
-					uSource: data[i].source,
-					pinColorNotValid: data[i].colornotvalid,
-				};
-
-				FlatMarkers.push(oMarker);
-			}
-
-			fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice);
-
-			if (argsParsed.pricemin === undefined) {
-				document.getElementById("inputMinimumText").value = oFlatPrice.Min;
-			} else {
-				document.getElementById("inputMinimumText").value = argsParsed.pricemin;
-				oFlatPrice.Min = argsParsed.pricemin;
-			}
-
-			if (argsParsed.pricemax === undefined) {
-				document.getElementById("inputMaximumText").value = oFlatPrice.Max;
-			} else {
-				document.getElementById("inputMaximumText").value = argsParsed.pricemax;
-				oFlatPrice.Max = argsParsed.pricemax;
-			}
-
-			uiInputPriceMin = oFlatPrice.Min;
-			uiInputPriceMax = oFlatPrice.Max;
-
-			for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
-				fFilterByPrice(FlatMarkers[uiFlatIndex]);
-				fUpdateDisplay(FlatMarkers[uiFlatIndex]);
-			}
-
-			if (argsParsed.timemax !== undefined) {
-				document.getElementById("inputMinuteDelayText").value = argsParsed.timemax;
-			}
-
-			if (argsParsed.travelmode !== undefined) {
-				if (argsParsed.travelmode === "driving") {
-					document.getElementById('TravelMode').value = "DRIVING";
-				} else if (argsParsed.travelmode === "walking") {
-					document.getElementById('TravelMode').value = "WALKING";
-				} else if (argsParsed.travelmode === "bicycling") {
-					document.getElementById('TravelMode').value = "BICYCLING";
-				} else if (argsParsed.travelmode === "transit") {
-					document.getElementById('TravelMode').value = "TRANSIT";
-				}
-			}
-
-			if ((argsParsed.long !== undefined) && (argsParsed.lat !== undefined)) {
-				var oCustLatLng = new google.maps.LatLng(argsParsed.lat, argsParsed.long);
-
-				var oMarkerSearchPoint = {
-					marker: new google.maps.Marker()
-				};
-
-				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "B8B8B8",
-					new google.maps.Size(21, 34),
-					new google.maps.Point(0, 0),
-					new google.maps.Point(10, 34));
-
-				oMarkerSearchPoint.marker.setIcon(pinImage);
-
-				aoSearchPointAddress.push(oMarkerSearchPoint);
-
-				fBuildMarker(oCustLatLng, oMarkerSearchPoint.marker, null, null, true);
-
-				update();
-			}
-
-		});
-	});
 }
 
-var aLatLong = [];
-var oLatLongCenter;
-var uiPointIndex;
-var oCurrentLat;
-var oCurrentLong;
+/***************************************************************************************\
 
-function placeMarker(location) {
+Function:       fFilterByDistance
+
+Description:    Filter the raw postal array with maximum walking distance.
+
+Parameters:     None.
+
+Return Value:   None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function fFilterByDistance() {
 	"use strict";
 
-	oCurrentLat = location.lat();
-	oCurrentLong = location.lng();
+	console.log("*****************************");
+	console.log("fFilterByDistance");
+	// console.log(Polyline);
+	console.log("length = " + oPolyline.getPath().length);
+	console.log("getPath = " + oPolyline.getPath());
 
-	oLatLongCenter = new google.maps.LatLng(oCurrentLat, oCurrentLong);
+	// bermudaTriangle.setMap(map);
+	oPolyline.setMap(map);
 
-	uiPointIndex = 0;
+	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
+		console.log("Position = " + FlatMarkers[uiFlatIndex].marker.getPosition());
 
-	fDrawSearchPolygon();
+		var bDistanceValid = google.maps.geometry.poly.containsLocation(
+			FlatMarkers[uiFlatIndex].marker.getPosition(),
+			oPolyline);
+		console.log("uiFlatIndex#" + uiFlatIndex + " - bDistanceValid = " + bDistanceValid);
+		FlatMarkers[uiFlatIndex].IsDistanceValid[0] = google.maps.geometry.poly.containsLocation(
+			FlatMarkers[uiFlatIndex].marker.getPosition(),
+			oPolyline);
+	}
 }
-
-// var bermudaTriangle;
-var oPolyline;
-var aoSearchPointAddress;
 
 /***************************************************************************************\
 
@@ -287,13 +211,13 @@ function fDrawSearchPolygon() {
 				// Construct the polygon.
 				/* bermudaTriangle = new google.maps.Polygon(
 				{
-				    paths:          aLatLong,
-				    strokeColor:    '#FF0000',
-				    strokeOpacity:  0.8,
-				    strokeWeight:   2,
-				    fillColor:      '#FF0000',
-				    fillOpacity:    0.35
-				}); */
+				paths:          aLatLong,
+				strokeColor:    '#FF0000',
+				strokeOpacity:  0.8,
+				strokeWeight:   2,
+				fillColor:      '#FF0000',
+				fillOpacity:    0.35
+			}); */
 
 				oPolyline = new google.maps.Polyline(
 					// oPolyline = new google.maps.Polygon(
@@ -402,67 +326,6 @@ function update() {
 	fFilterByDistance();
 }
 
-function fUpdatePolygon(event) {
-	"use strict";
-
-	oCurrentLat = event.latLng.lat();
-	oCurrentLong = event.latLng.lng();
-
-	oLatLongCenter = new google.maps.LatLng(oCurrentLat, oCurrentLong);
-
-	uiPointIndex = 0;
-
-	fDrawSearchPolygon();
-	fFilterByDistance();
-	fUpdateDisplayAll();
-}
-
-function fUpdateDisplayAll() {
-	"use strict";
-
-	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
-		fUpdateDisplay(FlatMarkers[uiFlatIndex]);
-	}
-}
-
-/***************************************************************************************\
-
-Function:       fUpdateDisplay
-
-Description:    Update
-
-Parameters:     oFlatMarker.
-
-Return Value:   None.
-
-Comments:       None.
-
-\***************************************************************************************/
-function fUpdateDisplay(oFlatMarker) {
-	"use strict";
-
-	// Update color.
-	var pinColor = 0;
-
-	var bDistanceValid = false;
-
-	for (var a = 0; a < oFlatMarker.IsDistanceValid.length; a++) {
-		if (oFlatMarker.IsDistanceValid[a] === true) {
-			bDistanceValid = true;
-		}
-	}
-
-	if (document.getElementById("CheckBoxHide").checked === true) {
-		if ((bDistanceValid === true) && (oFlatMarker.IsPriceValid === true)) {
-			oFlatMarker.marker.setMap(map);
-		} else {
-			oFlatMarker.marker.setMap(null);
-		}
-	} else {
-		oFlatMarker.marker.setMap(map);
-	}
-}
-
 /***************************************************************************************\
 
 Function:       fSetAMarkerOnMapValidFlat
@@ -513,43 +376,6 @@ function fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice) {
 	}
 }
 
-/***************************************************************************************\
-
-Function:       fFilterByDistance
-
-Description:    Filter the raw postal array with maximum walking distance.
-
-Parameters:     None.
-
-Return Value:   None.
-
-Comments:       None.
-
-\***************************************************************************************/
-function fFilterByDistance() {
-	"use strict";
-
-	console.log("*****************************");
-	console.log("fFilterByDistance");
-	// console.log(Polyline);
-	console.log("length = " + oPolyline.getPath().length);
-	console.log("getPath = " + oPolyline.getPath());
-
-	// bermudaTriangle.setMap(map);
-	oPolyline.setMap(map);
-
-	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
-		console.log("Position = " + FlatMarkers[uiFlatIndex].marker.getPosition());
-
-		var bDistanceValid = google.maps.geometry.poly.containsLocation(
-			FlatMarkers[uiFlatIndex].marker.getPosition(),
-			oPolyline);
-		console.log("uiFlatIndex#" + uiFlatIndex + " - bDistanceValid = " + bDistanceValid);
-		FlatMarkers[uiFlatIndex].IsDistanceValid[0] = google.maps.geometry.poly.containsLocation(
-			FlatMarkers[uiFlatIndex].marker.getPosition(),
-			oPolyline);
-	}
-}
 
 /***************************************************************************************\
 
@@ -575,6 +401,176 @@ function fFilterByPrice(oFlatMarker) {
 		oFlatMarker.IsPriceValid = true;
 	}
 }
+
+
+/***************************************************************************************\
+
+Function:       Initialize
+
+Description:    Initialize all services.
+
+Parameters:     None.
+
+Return Value:   None.
+
+Comments:       None.
+
+\***************************************************************************************/
+function initialize() {
+	"use strict";
+
+	document.getElementById("CheckBoxHide").checked = true;
+
+	//
+	// Instantiate a directions service.
+	//
+	directionsService = new google.maps.DirectionsService();
+
+	var args = document.location.search.substring(1).split('&');
+
+	var argsParsed = {};
+
+	for (var i = 0; i < args.length; i++) {
+		var arg = unescape(args[i]);
+
+		if (arg.indexOf('=') === -1) {
+			argsParsed[arg.trim()] = true;
+		} else {
+			var kvp = arg.split('=');
+			argsParsed[kvp[0].trim()] = kvp[1].trim();
+		}
+	}
+
+	var oCityCoord;
+	var uiZoom;
+
+	if (argsParsed.city === "montreal") {
+		oCityCoord = new google.maps.LatLng(45.506, -73.556);
+		uiZoom = 12;
+	} else {
+		// default
+		oCityCoord = new google.maps.LatLng(45.506, -73.556);
+		uiZoom = 12;
+	}
+
+	//
+	// Create a map and center it on the city.
+	//
+	var mapOptions = {
+		zoom: uiZoom,
+		center: oCityCoord,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+
+	//
+	// Load map
+	//
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	//
+	// Set markers
+	//
+	infowindow = new google.maps.InfoWindow();
+
+	var oFlatPrice = {
+		Min: 99999999,
+		Max: 0
+	};
+
+	uiInputPriceMin = oFlatPrice.Min;
+	uiInputPriceMax = oFlatPrice.Max;
+
+	$(document).ready(function() {
+		$.get("api/flats", function(data, status) {
+
+			console.log("Status = " + status);
+
+			for (var i = 0; i < data.length; i++) {
+				var DistanceValid = [];
+
+				DistanceValid[0] = true;
+
+				if (data[i].price === null) {
+					data[i].price = 0;
+				}
+
+				var oMarker = {
+					IsPriceValid: true,
+					IsDistanceValid: DistanceValid,
+					Price: data[i].price,
+					marker: new google.maps.Marker(),
+					uSource: data[i].source,
+					pinColorNotValid: data[i].colornotvalid,
+				};
+
+				FlatMarkers.push(oMarker);
+			}
+
+			fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice);
+
+			if (argsParsed.pricemin === undefined) {
+				document.getElementById("inputMinimumText").value = oFlatPrice.Min;
+			} else {
+				document.getElementById("inputMinimumText").value = argsParsed.pricemin;
+				oFlatPrice.Min = argsParsed.pricemin;
+			}
+
+			if (argsParsed.pricemax === undefined) {
+				document.getElementById("inputMaximumText").value = oFlatPrice.Max;
+			} else {
+				document.getElementById("inputMaximumText").value = argsParsed.pricemax;
+				oFlatPrice.Max = argsParsed.pricemax;
+			}
+
+			uiInputPriceMin = oFlatPrice.Min;
+			uiInputPriceMax = oFlatPrice.Max;
+
+			for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
+				fFilterByPrice(FlatMarkers[uiFlatIndex]);
+				fUpdateDisplay(FlatMarkers[uiFlatIndex]);
+			}
+
+			if (argsParsed.timemax !== undefined) {
+				document.getElementById("inputMinuteDelayText").value = argsParsed.timemax;
+			}
+
+			if (argsParsed.travelmode !== undefined) {
+				if (argsParsed.travelmode === "driving") {
+					document.getElementById('TravelMode').value = "DRIVING";
+				} else if (argsParsed.travelmode === "walking") {
+					document.getElementById('TravelMode').value = "WALKING";
+				} else if (argsParsed.travelmode === "bicycling") {
+					document.getElementById('TravelMode').value = "BICYCLING";
+				} else if (argsParsed.travelmode === "transit") {
+					document.getElementById('TravelMode').value = "TRANSIT";
+				}
+			}
+
+			if ((argsParsed.long !== undefined) && (argsParsed.lat !== undefined)) {
+				var oCustLatLng = new google.maps.LatLng(argsParsed.lat, argsParsed.long);
+
+				var oMarkerSearchPoint = {
+					marker: new google.maps.Marker()
+				};
+
+				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "B8B8B8",
+					new google.maps.Size(21, 34),
+					new google.maps.Point(0, 0),
+					new google.maps.Point(10, 34));
+
+				oMarkerSearchPoint.marker.setIcon(pinImage);
+
+				aoSearchPointAddress.push(oMarkerSearchPoint);
+
+				fBuildMarker(oCustLatLng, oMarkerSearchPoint.marker, null, null, true);
+
+				update();
+			}
+
+		});
+	});
+}
+
 
 /***************************************************************************************\
 
