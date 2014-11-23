@@ -28,6 +28,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function initialize() {
+	"use strict";
+
 	document.getElementById("CheckBoxHide").checked = true;
 
 	//
@@ -186,6 +188,8 @@ var oCurrentLat;
 var oCurrentLong;
 
 function placeMarker(location) {
+	"use strict";
+
 	oCurrentLat = location.lat();
 	oCurrentLong = location.lng();
 
@@ -214,6 +218,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fDrawSearchPolygon() {
+	"use strict";
+
 	var uiRadius = 0.01;
 	var uiPrecision = 10; //18
 	var uiAngle = (360 * (uiPointIndex / uiPrecision)) * (Math.PI / 180);
@@ -330,6 +336,8 @@ Comments:           None.
 
 \***************************************************************************************/
 function fBuildMarker(oLatLng, oMarker, url, image, isDragable) {
+	"use strict";
+
 	if (isDragable) {
 		google.maps.event.addListener(oMarker, 'dragend', function(event) {
 			oPolyline.getPath().clear();
@@ -386,6 +394,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function update() {
+	"use strict";
+
 	uiFlatMarkersIndex = 0;
 	uiSearchPointAddressIndex = 0;
 
@@ -393,6 +403,8 @@ function update() {
 }
 
 function fUpdatePolygon(event) {
+	"use strict";
+
 	oCurrentLat = event.latLng.lat();
 	oCurrentLong = event.latLng.lng();
 
@@ -406,6 +418,8 @@ function fUpdatePolygon(event) {
 }
 
 function fUpdateDisplayAll() {
+	"use strict";
+
 	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
 		fUpdateDisplay(FlatMarkers[uiFlatIndex]);
 	}
@@ -425,6 +439,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fUpdateDisplay(oFlatMarker) {
+	"use strict";
+
 	// Update color.
 	var pinColor = 0;
 
@@ -461,6 +477,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fSetAMarkerOnMapValidFlat(oLatLng, i, url, image) {
+	"use strict";
+
 	fBuildMarker(oLatLng, FlatMarkers[i].marker, url, image, false);
 }
 
@@ -478,6 +496,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fSetAllMarkerOnMapFlatFiltered(data, oFlatPrice) {
+	"use strict";
+
 	for (var i = 0; i < data.length; i++) {
 		if (data[i].price < oFlatPrice.Min) {
 			oFlatPrice.Min = data[i].price;
@@ -507,6 +527,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fFilterByDistance() {
+	"use strict";
+
 	console.log("*****************************");
 	console.log("fFilterByDistance");
 	// console.log(Polyline);
@@ -543,6 +565,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fFilterByPrice(oFlatMarker) {
+	"use strict";
+
 	if (oFlatMarker.Price < uiInputPriceMin) {
 		oFlatMarker.IsPriceValid = false;
 	} else if (oFlatMarker.Price > uiInputPriceMax) {
@@ -566,6 +590,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function addSearchLocation() {
+	"use strict";
+
 	oCurrentLat = 45.526;
 	oCurrentLong = -73.564;
 	oLatLongCenter = new google.maps.LatLng(oCurrentLat, oCurrentLong);
@@ -608,6 +634,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fMinuteTimeChanged() {
+	"use strict";
+
 	update();
 
 	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
@@ -629,6 +657,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fMinPriceChanged() {
+	"use strict";
+
 	uiInputPriceMin = document.getElementById("inputMinimumText").value;
 
 	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
@@ -651,6 +681,8 @@ Comments:       None.
 
 \***************************************************************************************/
 function fMaxPriceChanged() {
+	"use strict";
+
 	uiInputPriceMax = document.getElementById("inputMaximumText").value;
 
 	for (var uiFlatIndex = 0; uiFlatIndex < FlatMarkers.length; uiFlatIndex++) {
