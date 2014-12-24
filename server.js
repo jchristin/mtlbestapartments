@@ -1,6 +1,7 @@
 "use strict";
 
 var path = require("path"),
+	request = require("request"),
 	express = require("express"),
 	morgan = require("morgan"),
 	bodyParser = require("body-parser"),
@@ -10,6 +11,7 @@ var path = require("path"),
 	port = process.env.PORT || 5000,
 	mongoClient = require("mongodb").MongoClient,
 	mongoUrl = "mongodb://flat-scraper-craigslist:" + process.env.MONGODB_PASSWORD + "@linus.mongohq.com:10059/flats",
+	cartoUrl = process.env.FLAT_CARTO_HOST || "http://flat-carto.herokuapp.com/",
 	database;
 
 // Enable logging for development environment
@@ -46,6 +48,22 @@ server.get("/api/flats", function(req, res) {
 			res.json(docs);
 		}
 	});
+});
+
+server.get("/api/polygon", function(req, res) {
+
+	request.get(cartoUrl + "api/polygon?" +
+	"lat=" + req.query.lat + "&" +
+	"long=" +  req.query.long + "&" +
+	"timeinmin=" + req.query.timeinmin + "&" +
+	"traveltype=" + req.query.traveltype).pipe(res);
+
+	console.log(req.query);
+	console.log("lat=" + req.query.lat);
+	console.log("long=" +  req.query.long);
+	console.log("timeinmin=" + req.query.timeinmin);
+	console.log("traveltype=" + req.query.traveltype);
+
 });
 
 server.get("/api/dflats", function(req, res) {
