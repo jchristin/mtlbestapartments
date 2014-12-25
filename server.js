@@ -57,13 +57,6 @@ server.get("/api/polygon", function(req, res) {
 	"long=" +  req.query.long + "&" +
 	"timeinmin=" + req.query.timeinmin + "&" +
 	"traveltype=" + req.query.traveltype).pipe(res);
-
-	console.log(req.query);
-	console.log("lat=" + req.query.lat);
-	console.log("long=" +  req.query.long);
-	console.log("timeinmin=" + req.query.timeinmin);
-	console.log("traveltype=" + req.query.traveltype);
-
 });
 
 server.get("/api/dflats", function(req, res) {
