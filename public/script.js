@@ -287,6 +287,8 @@ var flatfinder = function flatfinderlib(city) {
 	var uiInputPriceMin = 0;
 	var uiInputPriceMax = 0;
 
+	var uiFlatFiltered = 0;
+	var uiFlatShown = 0;
 	var markerCluster = null;
 
 	/**************************************************************************\
@@ -392,6 +394,9 @@ var flatfinder = function flatfinderlib(city) {
 					}
 				}
 
+				document.getElementById("field_available_flat").innerHTML = "Available flats = " + flatmarkersObj.length;
+				document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + flatmarkersObj.length;
+
 				document.getElementById("inputMinimumText").value = oFlatPrice.Min;
 				document.getElementById("inputMaximumText").value = oFlatPrice.Max;
 			});
@@ -465,8 +470,7 @@ var flatfinder = function flatfinderlib(city) {
 
 	Description:    Adds a search marker.
 
-	Parameters:     latidude	Latitude of the search marker.
-	longitude	Longitude of the search marker.
+	Parameters:     None.
 
 	Return Value:   None.
 
@@ -502,15 +506,23 @@ var flatfinder = function flatfinderlib(city) {
 	\**************************************************************************/
 	function updateDisplay() {
 
+		uiFlatFiltered = 0;
+		uiFlatShown = 0;
+
 		for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
 			if (flatmarkersObj[flatIdx].IsValid()) {
 				markerCluster.addMarker(flatmarkersObj[flatIdx].getMarker());
+				uiFlatShown++;
 			} else {
 				markerCluster.removeMarker(flatmarkersObj[flatIdx].getMarker());
+				uiFlatFiltered++;
 			}
 		}
 
 		markerCluster.repaint();
+
+		document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + uiFlatShown;
+		document.getElementById("field_filtered_flat").innerHTML = "Filtered flats = " + uiFlatFiltered;
 	}
 
 	/**************************************************************************\
@@ -545,7 +557,6 @@ var flatfinder = function flatfinderlib(city) {
 	};
 }();
 
-
 /***************************************************************************************\
 
 Function:       addSearchLocation
@@ -564,7 +575,6 @@ function addSearchLocation() {
 
 	flatfinder.addsearchmarkerdummy();
 }
-
 
 //-----------------------------------------------------------------------------------------------------------
 // Main
