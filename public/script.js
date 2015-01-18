@@ -1,5 +1,5 @@
 /*global $, google, document */
-// global MarkerClusterer
+/*global MarkerClusterer */
 
 /*exported addSearchLocation */
 
