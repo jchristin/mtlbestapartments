@@ -1,24 +1,20 @@
 {
-  "name": "montreal",
+  "name": "flat-finder",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/julbaxter/montreal.git"
+    "url": "https://julbaxter@bitbucket.org/julbaxter/flat-finder.git"
   },
   "contributors": [
     "Mathieu Albrespy <mathieu.albrespy@gmail.com>",
     "Julien Christin <jul.christin@gmail.com>"
   ],
   "license": "Proprietary",
-  "bugs": {
-    "url": "https://github.com/julbaxter/montreal/issues"
-  },
-  "homepage": "https://github.com/julbaxter/montreal",
   "dependencies": {
     "body-parser": "^1.9.0",
     "express": "^4.9.7",
