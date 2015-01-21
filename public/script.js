@@ -1,6 +1,4 @@
 /*global $, google, document */
-/*global MarkerClusterer */
-
 /*exported addSearchLocation */
 
 var searchPolygon = null;
@@ -289,7 +287,6 @@ var flatfinder = function flatfinderlib(city) {
 
 	var uiFlatFiltered = 0;
 	var uiFlatShown = 0;
-	var markerCluster = null;
 
 	/**************************************************************************\
 
@@ -340,8 +337,6 @@ var flatfinder = function flatfinderlib(city) {
 		//
 		// Set markers
 		//
-		markerCluster = new MarkerClusterer(map);
-
 		infowindow = new google.maps.InfoWindow();
 
 		var oFlatPrice = {
@@ -389,7 +384,7 @@ var flatfinder = function flatfinderlib(city) {
 							data[i].image
 						);
 
-						markerCluster.addMarker(flatMarker.getMarker());
+						flatMarker.getMarker().setMap(map);
 						flatmarkersObj.push(flatMarker);
 					}
 				}
@@ -511,15 +506,13 @@ var flatfinder = function flatfinderlib(city) {
 
 		for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
 			if (flatmarkersObj[flatIdx].IsValid()) {
-				markerCluster.addMarker(flatmarkersObj[flatIdx].getMarker());
+				flatmarkersObj[flatIdx].getMarker().setMap(map);
 				uiFlatShown++;
 			} else {
-				markerCluster.removeMarker(flatmarkersObj[flatIdx].getMarker());
+				flatmarkersObj[flatIdx].getMarker().setMap(null);
 				uiFlatFiltered++;
 			}
 		}
-
-		markerCluster.repaint();
 
 		document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + uiFlatShown;
 		document.getElementById("field_filtered_flat").innerHTML = "Filtered flats = " + uiFlatFiltered;
