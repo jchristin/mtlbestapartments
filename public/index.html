@@ -23,7 +23,7 @@
 			<input type="button" value="Add location" onclick="addSearchLocation();">
 			<form>
 				<p> Travel mode:
-					<select id="TravelMode" onchange="flatfinder.updateTravelMode();">
+					<select id="TravelMode" onchange="flatfinder.updateTravelMode(this.value);">
 						<option value="DRIVING">Driving</option>
 						<option value="WALKING">Walking</option>
 						<option value="BICYCLING">Bicycling</option>
