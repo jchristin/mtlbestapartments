@@ -1,11 +1,11 @@
 /*global $, google, document */
 /*exported addSearchLocation */
 
-var searchPolygon = null;
+var searchpolygong = null;
 
 /**************************************************************************\
 
-Object:       	markerObj
+Object:       	Markerobj
 
 Description:    Base marker object.
 
@@ -18,90 +18,46 @@ Return Value:   None.
 Comments:       None.
 
 \**************************************************************************/
-var markerObj = function(latitude, longitude, map) {
+function Markerobj(latitude, longitude, map) {
 	"use strict";
 
-	this.map_ = map;
-
-	/*jshint validthis:true */
+	this.map = map;
 
 	// Create the marker.
 	this.mapMarker = new google.maps.Marker();
 	this.mapMarker.setAnimation(google.maps.Animation.DROP);
 	this.mapMarker.setPosition(new google.maps.LatLng(latitude, longitude));
-};
+
+	this.getmarker = function() {
+		return this.mapMarker;
+	};
+
+	this.show = function() {
+		return this.mapMarker.setMap(this.map);
+	};
+
+	this.hide = function() {
+		return this.mapMarker.setMap(null);
+	};
+}
 
 /**************************************************************************\
 
-Function:       getMarker
-
-Description:    Gets the google map marker.
-
-Parameters:     None.
-
-Return Value:   None.
-
-Comments:       None.
-
-\**************************************************************************/
-markerObj.prototype.getMarker = function() {
-	"use strict";
-	return this.mapMarker;
-};
-
-/**************************************************************************\
-
-Function:       Show
-
-Description:    SHow the marker.
-
-Parameters:     None.
-
-Return Value:   None.
-
-Comments:       None.
-
-\**************************************************************************/
-markerObj.prototype.show = function() {
-	"use strict";
-	return this.mapMarker.setMap(this.map);
-};
-
-/**************************************************************************\
-
-Function:       hide
-
-Description:    Hides the marker.
-
-Parameters:     None.
-
-Return Value:   None.
-
-Comments:       None.
-
-\**************************************************************************/
-markerObj.prototype.hide = function() {
-	"use strict";
-	return this.mapMarker.setMap(null);
-};
-
-/**************************************************************************\
-
-Object:       	markerFlatObj
+Object:       	Markerflatobj
 
 Description:    Flat marker object.
 
 \**************************************************************************/
-var markerFlatObj = function(lat, lng, map, source, price, infowindow, url, image) {
+function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 	"use strict";
 
 	this.source = source;
 	this.price = price;
-	this.isDistanceValid = true;
-	this.isPriceValid = true;
-	this.markerBase = new markerObj(lat, lng, map);
+	this.distancevalid = true;
+	this.pricevalid = true;
+	this.markerbase = new Markerobj(lat, lng, map);
 
-	google.maps.event.addListener(this.markerBase.getMarker(), 'click', function() {
+	google.maps.event.addListener(this.markerbase.getmarker(), 'click', function() {
 		infowindow.setContent(
 			'<div style="width:300px; height:325px">' +
 			'<div align="center">' +
@@ -115,67 +71,55 @@ var markerFlatObj = function(lat, lng, map, source, price, infowindow, url, imag
 
 		infowindow.open(map, this);
 	});
-};
 
-markerFlatObj.prototype.getMarker = function() {
-	"use strict";
-	return this.markerBase.getMarker();
-};
+	this.getmarker = function() {
+		return this.markerbase.getmarker();
+	};
 
-markerFlatObj.prototype.getSource = function() {
-	"use strict";
-	return this.source;
-};
+	this.getprice = function() {
+		return this.price;
+	};
 
-markerFlatObj.prototype.getPrice = function() {
-	"use strict";
-	return this.price;
-};
+	this.show = function() {
+		return this.markerbase.show();
+	};
 
-markerFlatObj.prototype.show = function() {
-	"use strict";
-	return this.markerBase.show();
-};
+	this.hide = function() {
+		return this.markerbase.hide();
+	};
 
-markerFlatObj.prototype.setDistanceValid = function(isDistanceValid) {
-	"use strict";
-	this.isDistanceValid = isDistanceValid;
-};
+	this.setdistancevalid = function(distancevalid) {
+		this.distancevalid = distancevalid;
+	};
 
-markerFlatObj.prototype.IsDistanceValid = function() {
-	"use strict";
-	return this.isDistanceValid;
-};
+	this.setpricevalid = function(pricevalid) {
+		this.pricevalid = pricevalid;
+	};
 
-markerFlatObj.prototype.setPriceValid = function(isPriceValid) {
-	"use strict";
-	this.isPriceValid = isPriceValid;
-};
-
-markerFlatObj.prototype.IsPriceValid = function() {
-	"use strict";
-	return this.isPriceValid;
-};
-
-markerFlatObj.prototype.IsValid = function() {
-	"use strict";
-	return ((this.isDistanceValid === true) && (this.isPriceValid === true));
-};
+	this.isvalid = function() {
+		return ((this.distancevalid === true) && (this.pricevalid === true));
+	};
+}
 
 /**************************************************************************\
 
-Object:       	markerSearchObj
+Object:       	Markersearchobj
 
 Description:    Search marker object.
 
 \**************************************************************************/
-var markerSearchObj = function(lat, lng, map, travelType, radiusDelay, updateCallBack) {
+function Markersearchobj(lat, lng, map, traveltype, radiusDelay, updateCallBack) {
 	"use strict";
 
 	this.lat = lat;
 	this.lng = lng;
 	this.map = map;
+	this.traveltype = traveltype;
+	this.radiusDelay = radiusDelay;
+	this.updateCallBack = updateCallBack;
+	this.searchpolygon = null;
 
+	// Create the marker.
 	var pinImage = new google.maps.MarkerImage(
 		"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "B8B8B8",
 		new google.maps.Size(21, 34),
@@ -183,86 +127,92 @@ var markerSearchObj = function(lat, lng, map, travelType, radiusDelay, updateCal
 		new google.maps.Point(10, 34)
 	);
 
-	this.markerBase = new markerObj(lat, lng, map);
-	this.markerBase.getMarker().setDraggable(true);
-	this.markerBase.getMarker().setTitle('Drag me !! ');
-	this.markerBase.getMarker().setIcon(pinImage);
-	this.markerBase.getMarker().setMap(map);
-
-	this.travelType = travelType;
-	this.radiusDelay = radiusDelay;
-	this.updateCallBack = updateCallBack;
+	this.markerbase = new Markerobj(lat, lng, map);
+	this.markerbase.getmarker().setDraggable(true);
+	this.markerbase.getmarker().setTitle('Drag me !! ');
+	this.markerbase.getmarker().setIcon(pinImage);
+	this.markerbase.getmarker().setMap(map);
 
 	var radiusDelay_ = radiusDelay;
-	var travelType_ = travelType;
+	var traveltype_ = traveltype;
 	var updateCallBack_ = updateCallBack;
 
-	this.drawPolygon(lat, lng, radiusDelay_, travelType_, updateCallBack_);
+	// this.drawpolygon(lat, lng, radiusDelay_, traveltype_, updateCallBack_);
 
-	var drawPolygonEvent = this.drawPolygon;
+	// var drawPolygonEvent = this.drawpolygon;
 
-	google.maps.event.addListener(this.markerBase.getMarker(), 'dragend', function(event) {
+	google.maps.event.addListener(this.markerbase.getmarker(), 'dragend', function(event) {
 
-		if (searchPolygon !== null) {
+		if (searchpolygong !== null) {
 			// Delete previous polygon.
-			searchPolygon.getPath().clear();
-			searchPolygon.setMap(null);
+			searchpolygong.getPath().clear();
+			searchpolygong.setMap(null);
 		}
 
-		drawPolygonEvent(event.latLng.lat(), event.latLng.lng(), radiusDelay_, travelType_, updateCallBack_);
-	});
-};
-
-markerSearchObj.prototype.drawPolygon = function(lat, lng, radiusDelay, travelType, updateCallBack) {
-	"use strict";
-
-	var request = "/api/polygon?" + $.param({
-		lat: lat,
-		long: lng,
-		timeinmin: radiusDelay,
-		traveltype: travelType
+		this.drawpolygon(event.latLng.lat(), event.latLng.lng(), radiusDelay_, traveltype_, updateCallBack_);
 	});
 
-	var callback = null;
-	if (updateCallBack && typeof(updateCallBack) === "function") {
-		callback = updateCallBack;
-	}
+	this.getsearchpolygon = function() {
+		return this.searchpolygon;
+	};
 
-	// Get the polygon points from the server.
-	$(document).ready(function() {
-		$.get(request, function(data, status) {
-			if (status === 'success') {
+	this.updatetraveltype = function(traveltype) {
+		this.traveltype = traveltype;
+		this.drawpolygon();
+	};
 
-				// Build path for the polygone.
-				var apath = [];
-				for (var i = 0; i < data.length; i++) {
-					apath[i] = new google.maps.LatLng(
-						data[i].latitude,
-						data[i].longitude);
-				}
+	this.drawpolygon = function(lat, lng, radiusDelay, traveltype, updateCallBack) {
 
-				// Build the polygone.
-				searchPolygon = new google.maps.Polygon({
-					path: apath,
-					strokeColor: "#FF0000",
-					strokeOpacity: 0.1,
-					strokeWeight: 2,
-					// map: this.map,
-				});
-
-				if (callback !== null) {
-					callback(searchPolygon);
-				}
-			}
+		var request = "/api/polygon?" + $.param({
+			lat: lat,
+			long: lng,
+			timeinmin: radiusDelay,
+			traveltype: traveltype
 		});
-	});
-};
 
-markerSearchObj.prototype.getSearchPolygon = function() {
-	"use strict";
+		var callback = null;
+		if (updateCallBack && typeof(updateCallBack) === "function") {
+			callback = updateCallBack;
+		}
 
-	return this.searchpolygon;
-};
+		// Get the polygon points from the server.
+		$(document).ready(function() {
+			$.get(request, function(data, status) {
+				if (status === 'success') {
+
+					// Build path for the polygone.
+					var apath = [];
+					for (var i = 0; i < data.length; i++) {
+						apath[i] = new google.maps.LatLng(
+							data[i].latitude,
+							data[i].longitude);
+					}
+
+					// Build the polygone.
+					searchpolygong = new google.maps.Polygon({
+						path: apath,
+						strokeColor: "#FF0000",
+						strokeOpacity: 0.1,
+						strokeWeight: 2,
+					});
+
+					if (callback !== null) {
+						callback(searchpolygong);
+					}
+				}
+			});
+		});
+	};
+
+	this.init = function() {
+		this.drawpolygon(
+			this.lat,
+			this.lng,
+			this.radiusDelay,
+			this.traveltype,
+			this.updateCallBack);
+	};
+}
 
 /**************************************************************************\
 
@@ -275,7 +225,6 @@ var flatfinder = function flatfinderlib(city) {
 	"use strict";
 
 	var map;
-	// var document;
 
 	var infowindow;
 	var flatmarkersObj = [];
@@ -373,7 +322,7 @@ var flatfinder = function flatfinderlib(city) {
 							oFlatPrice.Max = data[i].price;
 						}
 
-						var flatMarker = new markerFlatObj(
+						var flatMarker = new Markerflatobj(
 							data[i].latitude,
 							data[i].longitude,
 							map,
@@ -384,7 +333,7 @@ var flatfinder = function flatfinderlib(city) {
 							data[i].image
 						);
 
-						flatMarker.getMarker().setMap(map);
+						flatMarker.show();
 						flatmarkersObj.push(flatMarker);
 					}
 				}
@@ -415,23 +364,24 @@ var flatfinder = function flatfinderlib(city) {
 	function addsearchmarker(
 		latitude,
 		longitude,
-		travelType,
+		traveltype,
 		radiusTime) {
 
-		var searchmarker = new markerSearchObj(
+		var searchmarker = new Markersearchobj(
 			latitude,
 			longitude,
 			map,
-			travelType,
+			traveltype,
 			radiusTime,
-			updateDistance);
+			updatedistance);
 
+		searchmarker.init();
 		searchmarkers.push(searchmarker);
 	}
 
 	/**************************************************************************\
 
-	Function:       updateDistance
+	Function:       updatedistance
 
 	Description:    Adds a search marker.
 
@@ -443,20 +393,21 @@ var flatfinder = function flatfinderlib(city) {
 	Comments:       None.
 
 	\**************************************************************************/
-	function updateDistance(searchPolygon) {
+	function updatedistance() {
 
-		// var searchPolygon = searchmarkers[0].getSearchPolygon();
+		if (searchpolygong !== null) {
 
-		searchPolygon.setMap(map);
+			searchpolygong.setMap(map);
 
-		for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
-			flatmarkersObj[flatIdx].setDistanceValid(
-				google.maps.geometry.poly.containsLocation(
-					flatmarkersObj[flatIdx].getMarker().getPosition(),
-					searchPolygon));
+			for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
+				flatmarkersObj[flatIdx].setdistancevalid(
+					google.maps.geometry.poly.containsLocation(
+						flatmarkersObj[flatIdx].getmarker().getPosition(),
+						searchpolygong));
+			}
+
+			updateDisplay();
 		}
-
-		updateDisplay();
 	}
 
 	/**************************************************************************\
@@ -479,19 +430,23 @@ var flatfinder = function flatfinderlib(city) {
 
 		for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
 
-			if ((flatmarkersObj[flatIdx].getPrice() >= minPrice) &&
-				(flatmarkersObj[flatIdx].getPrice() <= maxPrice)) {
-				flatmarkersObj[flatIdx].setPriceValid(true);
+			if ((flatmarkersObj[flatIdx].getprice() >= minPrice) &&
+				(flatmarkersObj[flatIdx].getprice() <= maxPrice)) {
+				flatmarkersObj[flatIdx].setpricevalid(true);
 			} else {
-				flatmarkersObj[flatIdx].setPriceValid(false);
+				flatmarkersObj[flatIdx].setpricevalid(false);
 			}
 		}
 
 		updateDisplay();
 	}
 
-	function updateTravelMode() {
+	function updateTravelMode(traveltype) {
+		var searchpolygon = searchmarkers[0].getsearchpolygon();
 
+		if (searchpolygon !== null) {
+			searchpolygon.updateTravelMode(traveltype);
+		}
 	}
 
 	/**************************************************************************\
@@ -505,11 +460,11 @@ var flatfinder = function flatfinderlib(city) {
 		uiFlatShown = 0;
 
 		for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
-			if (flatmarkersObj[flatIdx].IsValid()) {
-				flatmarkersObj[flatIdx].getMarker().setMap(map);
+			if (flatmarkersObj[flatIdx].isvalid()) {
+				flatmarkersObj[flatIdx].show();
 				uiFlatShown++;
 			} else {
-				flatmarkersObj[flatIdx].getMarker().setMap(null);
+				flatmarkersObj[flatIdx].hide();
 				uiFlatFiltered++;
 			}
 		}
