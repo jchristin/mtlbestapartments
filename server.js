@@ -34,10 +34,6 @@ server.use(express.static(path.join(__dirname, "public"), {
 	maxAge: cacheMaxAge
 }));
 
-server.use(express.static(path.join(__dirname, "bower_components"), {
-	maxAge: cacheMaxAge
-}));
-
 server.get("/api/flats", function(req, res) {
 	database.collection("active").find({
 		source: "craigslist"
