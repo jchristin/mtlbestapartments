@@ -1,7 +1,7 @@
 /*global $, google, document */
 /*exported addSearchLocation */
 
-var searchpolygong = null;
+var mapssearchpolygon = [];
 
 /**************************************************************************\
 
@@ -103,21 +103,125 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 
 /**************************************************************************\
 
+Object:       	Searchpolygonobj
+
+Description:    Search polygon object.
+
+\**************************************************************************/
+function Searchpolygonobj(index, lat, lng, map, traveltype, radiusdelay, updatecallback) {
+	"use strict";
+
+	this.index = index;
+	this.lat = lat;
+	this.lng = lng;
+	this.map = map;
+	this.traveltype = traveltype;
+	this.radiusdelay = radiusdelay;
+	this.updatecallback = updatecallback;
+
+	this.updatelatlng = function(lat, lng) {
+		this.clearpolygon();
+		this.lat = lat;
+		this.lng = lng;
+		this.drawpolygon();
+	};
+
+	this.updatetraveltype = function(traveltype) {
+		this.clearpolygon();
+		this.traveltype = traveltype;
+		this.drawpolygon();
+	};
+
+	this.updateradiusdelay = function(radiusdelay) {
+		this.clearpolygon();
+		this.radiusdelay = radiusdelay;
+		this.drawpolygon();
+	};
+
+	this.clearpolygon = function() {
+
+		// Delete previous polygon if any.
+		if (mapssearchpolygon[index] !== null) {
+
+			mapssearchpolygon[index].getPath().clear();
+			mapssearchpolygon[index].setMap(null);
+		}
+	};
+
+	this.drawpolygon = function() {
+
+		var request = "/api/polygon?" + $.param({
+			lat: this.lat,
+			long: this.lng,
+			timeinmin: this.radiusdelay,
+			traveltype: this.traveltype
+		});
+
+		var callback = null;
+		if (this.updatecallback && typeof(this.updatecallback) === "function") {
+			callback = this.updatecallback;
+		}
+
+		var map = this.map;
+
+		// Get the polygon points from the server.
+		$(document).ready(function() {
+			$.get(request, function(data, status) {
+				if (status === 'success') {
+
+					// Build path for the polygone.
+					var apath = [];
+					for (var i = 0; i < data.length; i++) {
+						apath[i] = new google.maps.LatLng(
+							data[i].latitude,
+							data[i].longitude);
+					}
+
+					var mapssearchpolygoncurrent = new google.maps.Polygon({
+						path: apath,
+						strokeColor: "#FF0000",
+						strokeOpacity: 0.1,
+						strokeWeight: 2,
+						map: map
+					});
+
+					mapssearchpolygon[index] = mapssearchpolygoncurrent;
+
+					callback();
+				}
+			});
+		});
+	};
+}
+
+/**************************************************************************\
+
 Object:       	Markersearchobj
 
 Description:    Search marker object.
 
 \**************************************************************************/
-function Markersearchobj(lat, lng, map, traveltype, radiusDelay, updateCallBack) {
+function Markersearchobj(lat, lng, map, traveltype, radiusdelay, updatecallback) {
 	"use strict";
 
 	this.lat = lat;
 	this.lng = lng;
 	this.map = map;
 	this.traveltype = traveltype;
-	this.radiusDelay = radiusDelay;
-	this.updateCallBack = updateCallBack;
-	this.searchpolygon = null;
+	this.radiusdelay = radiusdelay;
+	this.updatecallback = updatecallback;
+
+	this.getsearchpolygon = function() {
+		return this.searchpolygon;
+	};
+
+	this.updatetraveltype = function(traveltype) {
+		this.searchpolygon.updatetraveltype(traveltype);
+	};
+
+	this.init = function() {
+		this.searchpolygon.drawpolygon();
+	};
 
 	// Create the marker.
 	var pinImage = new google.maps.MarkerImage(
@@ -133,85 +237,34 @@ function Markersearchobj(lat, lng, map, traveltype, radiusDelay, updateCallBack)
 	this.markerbase.getmarker().setIcon(pinImage);
 	this.markerbase.getmarker().setMap(map);
 
-	var radiusDelay_ = radiusDelay;
-	var traveltype_ = traveltype;
-	var updateCallBack_ = updateCallBack;
+	console.log("TOUP");
+	console.log(mapssearchpolygon);
 
-	// this.drawpolygon(lat, lng, radiusDelay_, traveltype_, updateCallBack_);
+	var index = 0;
+	if (typeof mapssearchpolygon[0] !== 'undefined') {
+		console.log("YEP");
+		index = mapssearchpolygon.length;
+	}
 
-	// var drawPolygonEvent = this.drawpolygon;
+	// Create the polygon.
+	this.searchpolygon = new Searchpolygonobj(
+		index,
+		lat,
+		lng,
+		map,
+		traveltype,
+		radiusdelay,
+		updatecallback
+	);
 
+	var this_ = this;
 	google.maps.event.addListener(this.markerbase.getmarker(), 'dragend', function(event) {
 
-		if (searchpolygong !== null) {
-			// Delete previous polygon.
-			searchpolygong.getPath().clear();
-			searchpolygong.setMap(null);
-		}
-
-		this.drawpolygon(event.latLng.lat(), event.latLng.lng(), radiusDelay_, traveltype_, updateCallBack_);
+		this_.searchpolygon.updatelatlng(
+			event.latLng.lat(),
+			event.latLng.lng()
+		);
 	});
-
-	this.getsearchpolygon = function() {
-		return this.searchpolygon;
-	};
-
-	this.updatetraveltype = function(traveltype) {
-		this.traveltype = traveltype;
-		this.drawpolygon();
-	};
-
-	this.drawpolygon = function(lat, lng, radiusDelay, traveltype, updateCallBack) {
-
-		var request = "/api/polygon?" + $.param({
-			lat: lat,
-			long: lng,
-			timeinmin: radiusDelay,
-			traveltype: traveltype
-		});
-
-		var callback = null;
-		if (updateCallBack && typeof(updateCallBack) === "function") {
-			callback = updateCallBack;
-		}
-
-		// Get the polygon points from the server.
-		$(document).ready(function() {
-			$.get(request, function(data, status) {
-				if (status === 'success') {
-
-					// Build path for the polygone.
-					var apath = [];
-					for (var i = 0; i < data.length; i++) {
-						apath[i] = new google.maps.LatLng(
-							data[i].latitude,
-							data[i].longitude);
-					}
-
-					// Build the polygone.
-					searchpolygong = new google.maps.Polygon({
-						path: apath,
-						strokeColor: "#FF0000",
-						strokeOpacity: 0.1,
-						strokeWeight: 2,
-					});
-
-					if (callback !== null) {
-						callback(searchpolygong);
-					}
-				}
-			});
-		});
-	};
-
-	this.init = function() {
-		this.drawpolygon(
-			this.lat,
-			this.lng,
-			this.radiusDelay,
-			this.traveltype,
-			this.updateCallBack);
-	};
 }
 
 /**************************************************************************\
@@ -227,9 +280,9 @@ var flatfinder = function flatfinderlib(city) {
 	var map;
 
 	var infowindow;
-	var flatmarkersObj = [];
 
-	var searchmarkers = [];
+	var flatmarkersobj = [];
+	var searchmarkersobj = [];
 
 	var uiInputPriceMin = 0;
 	var uiInputPriceMax = 0;
@@ -334,12 +387,12 @@ var flatfinder = function flatfinderlib(city) {
 						);
 
 						flatMarker.show();
-						flatmarkersObj.push(flatMarker);
+						flatmarkersobj.push(flatMarker);
 					}
 				}
 
-				document.getElementById("field_available_flat").innerHTML = "Available flats = " + flatmarkersObj.length;
-				document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + flatmarkersObj.length;
+				document.getElementById("field_available_flat").innerHTML = "Available flats = " + flatmarkersobj.length;
+				document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + flatmarkersobj.length;
 
 				document.getElementById("inputMinimumText").value = oFlatPrice.Min;
 				document.getElementById("inputMaximumText").value = oFlatPrice.Max;
@@ -376,7 +429,7 @@ var flatfinder = function flatfinderlib(city) {
 			updatedistance);
 
 		searchmarker.init();
-		searchmarkers.push(searchmarker);
+		searchmarkersobj.push(searchmarker);
 	}
 
 	/**************************************************************************\
@@ -395,19 +448,27 @@ var flatfinder = function flatfinderlib(city) {
 	\**************************************************************************/
 	function updatedistance() {
 
-		if (searchpolygong !== null) {
-
-			searchpolygong.setMap(map);
-
-			for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
-				flatmarkersObj[flatIdx].setdistancevalid(
-					google.maps.geometry.poly.containsLocation(
-						flatmarkersObj[flatIdx].getmarker().getPosition(),
-						searchpolygong));
-			}
-
-			updateDisplay();
+		for (var flatIdx = 0; flatIdx < flatmarkersobj.length; flatIdx++) {
+			flatmarkersobj[flatIdx].setdistancevalid(
+				isdistancevalid(flatmarkersobj[flatIdx]));
 		}
+
+		updateDisplay();
+	}
+
+	function isdistancevalid(flatmarkersobj) {
+
+		for (var searchmarkeridx = 0; searchmarkeridx < searchmarkersobj.length; searchmarkeridx++) {
+
+			if (!google.maps.geometry.poly.containsLocation(
+					flatmarkersobj.getmarker().getPosition(),
+					mapssearchpolygon[searchmarkeridx])) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**************************************************************************\
@@ -428,13 +489,13 @@ var flatfinder = function flatfinderlib(city) {
 		var minPrice = document.getElementById("inputMinimumText").value;
 		var maxPrice = document.getElementById("inputMaximumText").value;
 
-		for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
+		for (var flatIdx = 0; flatIdx < flatmarkersobj.length; flatIdx++) {
 
-			if ((flatmarkersObj[flatIdx].getprice() >= minPrice) &&
-				(flatmarkersObj[flatIdx].getprice() <= maxPrice)) {
-				flatmarkersObj[flatIdx].setpricevalid(true);
+			if ((flatmarkersobj[flatIdx].getprice() >= minPrice) &&
+				(flatmarkersobj[flatIdx].getprice() <= maxPrice)) {
+				flatmarkersobj[flatIdx].setpricevalid(true);
 			} else {
-				flatmarkersObj[flatIdx].setpricevalid(false);
+				flatmarkersobj[flatIdx].setpricevalid(false);
 			}
 		}
 
@@ -442,7 +503,7 @@ var flatfinder = function flatfinderlib(city) {
 	}
 
 	function updateTravelMode(traveltype) {
-		var searchpolygon = searchmarkers[0].getsearchpolygon();
+		var searchpolygon = searchmarkersobj[0].getsearchpolygon();
 
 		if (searchpolygon !== null) {
 			searchpolygon.updateTravelMode(traveltype);
@@ -459,12 +520,12 @@ var flatfinder = function flatfinderlib(city) {
 		uiFlatFiltered = 0;
 		uiFlatShown = 0;
 
-		for (var flatIdx = 0; flatIdx < flatmarkersObj.length; flatIdx++) {
-			if (flatmarkersObj[flatIdx].isvalid()) {
-				flatmarkersObj[flatIdx].show();
+		for (var flatIdx = 0; flatIdx < flatmarkersobj.length; flatIdx++) {
+			if (flatmarkersobj[flatIdx].isvalid()) {
+				flatmarkersobj[flatIdx].show();
 				uiFlatShown++;
 			} else {
-				flatmarkersObj[flatIdx].hide();
+				flatmarkersobj[flatIdx].hide();
 				uiFlatFiltered++;
 			}
 		}
