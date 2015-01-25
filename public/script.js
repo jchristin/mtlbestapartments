@@ -211,6 +211,10 @@ function Markersearchobj(lat, lng, map, traveltype, radiusdelay, updatecallback)
 		this.searchpolygon.updatetraveltype(traveltype);
 	};
 
+	this.updateradiusdelay = function(radiusdelay) {
+		this.searchpolygon.updateradiusdelay(radiusdelay);
+	};
+
 	this.init = function() {
 		this.searchpolygon.drawpolygon();
 	};
@@ -457,6 +461,14 @@ var flatfinder = function flatfinderlib(city) {
 		}
 	}
 
+	function updateRadiusDelay(radiusdelay) {
+		var searchpolygon = searchmarkersobj[0].getsearchpolygon();
+
+		if (searchpolygon !== null) {
+			searchpolygon.updateradiusdelay(radiusdelay);
+		}
+	}
+
 	function updateDisplay() {
 
 		uiFlatFiltered = 0;
@@ -490,6 +502,7 @@ var flatfinder = function flatfinderlib(city) {
 		init: init,
 		updatePrice: updatePrice,
 		updateTravelMode: updateTravelMode,
+		updateRadiusDelay: updateRadiusDelay,
 		addsearchmarkerdummy: addsearchmarkerdummy
 	};
 }();

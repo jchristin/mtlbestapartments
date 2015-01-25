@@ -31,13 +31,13 @@
 					</select>
 				</p>
 				<p> Time :
-					<input type="number" style="max-width:65px; text-align:right;" onchange="fMinuteTimeChanged();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" align="right" id="inputMinuteDelayText" value="5">minutes
+					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updateRadiusDelay(this.value);" id="inputMinuteDelayText" value="5">minutes
 				</p>
 				<p> Minimum =
-					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" align="right" id="inputMinimumText" value="0"> $
+					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMinimumText" value="0"> $
 				</p>
 				<p> Maximum =
-					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" align="right" id="inputMaximumText" value="0"> $
+					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMaximumText" value="0"> $
 				</p>
 				<input type="checkbox" id="CheckBoxHide" onClick="fUpdateDisplayAll();"> Hide not valid flat
 				<div id="field_available_flat">Available flats = 0</div>
