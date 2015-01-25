@@ -1,46 +1,92 @@
-<html>
+<html lang="en">
 
 <head>
-	<title>Fleub</title>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+	<title>Fleub</title>
+
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Oswald">
 	<link rel="stylesheet" href="style.css">
+
 	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&v=3.exp&sensor=false"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
-	<script src="markerclusterer.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="markerclusterer.js"></script>
 </head>
 
 <body>
-	<div id="container">
-		<div id="menu">
-			<input type="button" value="Add location" onclick="addSearchLocation();">
-			<form>
-				<p> Travel mode:
-					<select id="TravelMode" onchange="flatfinder.updateTravelMode(this.value);">
-						<option value="DRIVING">Driving</option>
-						<option value="WALKING">Walking</option>
-						<option value="BICYCLING">Bicycling</option>
-						<option value="TRANSIT">Transit</option>
-					</select>
-				</p>
-				<p> Time :
-					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updateRadiusDelay(this.value);" id="inputMinuteDelayText" value="5">minutes
-				</p>
-				<p> Minimum =
-					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMinimumText" value="0"> $
-				</p>
-				<p> Maximum =
-					<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMaximumText" value="0"> $
-				</p>
-				<div id="field_available_flat">Available flats = 0</div>
-				<div id="field_shown_flat"> Shown flats = 0</div>
-				<div id="field_filtered_flat"> Filtered flats = 0</div>
-			</form>
+	<div class="sidebar">
+		<div class="sidebar-logo"></div>
+		<ul class="sidebar-nav">
+			<li class="menu-item">
+				<a>
+					<div><i class="fa fa-usd"></i>
+						</span>
+					</div>
+					<div>Price</div>
+				</a>
+			</li>
+			<li class="menu-item">
+				<a>
+					<div><i class="fa fa-home"></i>
+						</span>
+					</div>
+					<div>Bedrooms</div>
+				</a>
+			</li>
+			<li class="menu-item">
+				<a>
+					<div><i class="fa fa-map-marker"></i>
+						</span>
+					</div>
+					<div>Map</div>
+				</a>
+			</li>
+		</ul>
+		<div class="sidebar-footer">
+			<div class="share">
+				<div>SHARE</div>
+				<ul>
+					<li><i class="fa fa-google-plus-square"></i>
+					</li>
+					<li><i class="fa fa-twitter-square"></i>
+					</li>
+					<li><i class="fa fa-facebook-square"></i>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div id="map-canvas"></div>
 	</div>
-	<script type="text/javascript" src="script.js"></script>
+	<div id="menu">
+		<input type="button" value="Add location" onclick="addSearchLocation();">
+		<form>
+			<p> Travel mode:
+				<select id="TravelMode" onchange="flatfinder.updateTravelMode(this.value);">
+					<option value="DRIVING">Driving</option>
+					<option value="WALKING">Walking</option>
+					<option value="BICYCLING">Bicycling</option>
+					<option value="TRANSIT">Transit</option>
+				</select>
+			</p>
+			<p> Time :
+				<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updateRadiusDelay(this.value);" id="inputMinuteDelayText" value="5">minutes
+			</p>
+			<p> Minimum =
+				<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMinimumText" value="0"> $
+			</p>
+			<p> Maximum =
+				<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMaximumText" value="0"> $
+			</p>
+			<div id="field_available_flat">Available flats = 0</div>
+			<div id="field_shown_flat"> Shown flats = 0</div>
+			<div id="field_filtered_flat"> Filtered flats = 0</div>
+		</form>
+	</div>
+	<div id="map-canvas"></div>
+	<script src="script.js"></script>
 </body>
 
 </html>
