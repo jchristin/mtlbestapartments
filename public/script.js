@@ -229,12 +229,8 @@ function Markersearchobj(lat, lng, map, traveltype, radiusdelay, updatecallback)
 	this.markerbase.getmarker().setIcon(pinImage);
 	this.markerbase.getmarker().setMap(map);
 
-	console.log("TOUP");
-	console.log(mapssearchpolygon);
-
 	var index = 0;
 	if (typeof mapssearchpolygon[0] !== 'undefined') {
-		console.log("YEP");
 		index = mapssearchpolygon.length;
 	}
 
@@ -457,7 +453,7 @@ var flatfinder = function flatfinderlib(city) {
 		var searchpolygon = searchmarkersobj[0].getsearchpolygon();
 
 		if (searchpolygon !== null) {
-			searchpolygon.updateTravelMode(traveltype);
+			searchpolygon.updatetraveltype(traveltype);
 		}
 	}
 
