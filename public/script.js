@@ -146,7 +146,7 @@ function Searchpolygonobj(index, lat, lng, map, traveltype, radiusdelay, updatec
 			lat: this.lat,
 			long: this.lng,
 			timeinmin: this.radiusdelay,
-			traveltype: this.traveltype
+			traveltype: this.traveltype.toLowerCase()
 		});
 
 		var callback = null;
