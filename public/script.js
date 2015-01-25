@@ -9,14 +9,6 @@ Object:       	Markerobj
 
 Description:    Base marker object.
 
-Parameters:     latitude.
-longitude
-map
-
-Return Value:   None.
-
-Comments:       None.
-
 \**************************************************************************/
 function Markerobj(latitude, longitude, map) {
 	"use strict";
@@ -400,20 +392,6 @@ var flatfinder = function flatfinderlib(city) {
 		});
 	}
 
-	/**************************************************************************\
-
-	Function:       addsearchmarker
-
-	Description:    Adds a search marker.
-
-	Parameters:     latidude	Latitude of the search marker.
-					longitude	Longitude of the search marker.
-
-	Return Value:   None.
-
-	Comments:       None.
-
-	\**************************************************************************/
 	function addsearchmarker(
 		latitude,
 		longitude,
@@ -432,20 +410,6 @@ var flatfinder = function flatfinderlib(city) {
 		searchmarkersobj.push(searchmarker);
 	}
 
-	/**************************************************************************\
-
-	Function:       updatedistance
-
-	Description:    Adds a search marker.
-
-	Parameters:     latidude	Latitude of the search marker.
-	longitude	Longitude of the search marker.
-
-	Return Value:   None.
-
-	Comments:       None.
-
-	\**************************************************************************/
 	function updatedistance() {
 
 		for (var flatIdx = 0; flatIdx < flatmarkersobj.length; flatIdx++) {
@@ -471,19 +435,6 @@ var flatfinder = function flatfinderlib(city) {
 		return true;
 	}
 
-	/**************************************************************************\
-
-	Function:       updatePrice
-
-	Description:    Adds a search marker.
-
-	Parameters:     None.
-
-	Return Value:   None.
-
-	Comments:       None.
-
-	\**************************************************************************/
 	function updatePrice() {
 
 		var minPrice = document.getElementById("inputMinimumText").value;
@@ -510,11 +461,6 @@ var flatfinder = function flatfinderlib(city) {
 		}
 	}
 
-	/**************************************************************************\
-
-	Function:       updateDisplay
-
-	\**************************************************************************/
 	function updateDisplay() {
 
 		uiFlatFiltered = 0;
@@ -534,20 +480,6 @@ var flatfinder = function flatfinderlib(city) {
 		document.getElementById("field_filtered_flat").innerHTML = "Filtered flats = " + uiFlatFiltered;
 	}
 
-	/**************************************************************************\
-
-	Function:       addsearchmarkerdummy
-
-	Description:    Adds a search marker.
-
-	Parameters:     latidude	Latitude of the search marker.
-					longitude	Longitude of the search marker.
-
-	Return Value:   None.
-
-	Comments:       None.
-
-	\**************************************************************************/
 	function addsearchmarkerdummy() {
 
 		var strTravelMode = document.getElementById('TravelMode').value;
