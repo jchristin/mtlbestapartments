@@ -10,8 +10,6 @@ var path = require("path"),
 	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
 	port = process.env.PORT || 5000,
 	mongoClient = require("mongodb").MongoClient,
-	mongoUrl = "mongodb://flat-scraper-craigslist:" + process.env.MONGODB_PASSWORD + "@linus.mongohq.com:10059/flats",
-	cartoUrl = process.env.FLAT_CARTO_HOST || "http://flat-carto.herokuapp.com/",
 	database;
 
 // Enable logging for development environment
@@ -48,14 +46,14 @@ server.get("/api/flats", function(req, res) {
 
 server.get("/api/polygon", function(req, res) {
 
-	request.get(cartoUrl + "api/polygon?" +
+	request.get(process.env.FLAT_CARTO_URL + "api/polygon?" +
 	"lat=" + req.query.lat + "&" +
 	"long=" +  req.query.long + "&" +
 	"timeinmin=" + req.query.timeinmin + "&" +
 	"traveltype=" + req.query.traveltype).pipe(res);
 });
 
-mongoClient.connect(mongoUrl, function(err, db) {
+mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
 	if (err) {
 		console.log(err);
 	} else {
