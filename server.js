@@ -44,10 +44,10 @@ server.get("/api/flats", function(req, res) {
 
 server.get("/api/polygon", function(req, res) {
 	request.get(process.env.FLAT_CARTO_URL + "api/polygon?" +
-	"lat=" + req.query.lat + "&" +
-	"long=" +  req.query.long + "&" +
-	"timeinmin=" + req.query.timeinmin + "&" +
-	"traveltype=" + req.query.traveltype).pipe(res);
+		"lat=" + req.query.lat + "&" +
+		"long=" + req.query.long + "&" +
+		"timeinmin=" + req.query.timeinmin + "&" +
+		"traveltype=" + req.query.traveltype).pipe(res);
 });
 
 mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
