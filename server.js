@@ -33,9 +33,7 @@ server.use(express.static(path.join(__dirname, "public"), {
 }));
 
 server.get("/api/flats", function(req, res) {
-	database.collection("active").find({
-		source: "craigslist"
-	}).limit(1000).toArray(function(err, docs) {
+	database.collection("active").find().limit(1000).toArray(function(err, docs) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -45,7 +43,6 @@ server.get("/api/flats", function(req, res) {
 });
 
 server.get("/api/polygon", function(req, res) {
-
 	request.get(process.env.FLAT_CARTO_URL + "api/polygon?" +
 	"lat=" + req.query.lat + "&" +
 	"long=" +  req.query.long + "&" +
