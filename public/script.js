@@ -56,7 +56,7 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 			'<img src="' + image + '" width="225" height="300" ALIGN="middle" />' +
 			'</div>' +
 			'<div align="center">' +
-			'<a href="' + url + '">' + '' + url + '</a> ' +
+			'<a href="' + url + '" target=_blank>' + '' + url + '</a> ' +
 			'</div>' +
 			'</div>'
 		);
