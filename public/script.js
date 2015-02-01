@@ -193,15 +193,24 @@ Object:       	Markersearchobj
 Description:    Search marker object.
 
 \**************************************************************************/
-function Markersearchobj(lat, lng, map, traveltype, radiusdelay, updatecallback) {
+function Markersearchobj(
+	index,
+	lat,
+	lng,
+	map,
+	traveltype,
+	radiusdelay,
+	updatecallback) {
 	"use strict";
 
+	this.index = index;
 	this.lat = lat;
 	this.lng = lng;
 	this.map = map;
 	this.traveltype = traveltype;
 	this.radiusdelay = radiusdelay;
 	this.updatecallback = updatecallback;
+	this.infowindow = new google.maps.InfoWindow();
 
 	this.getsearchpolygon = function() {
 		return this.searchpolygon;
@@ -233,10 +242,21 @@ function Markersearchobj(lat, lng, map, traveltype, radiusdelay, updatecallback)
 	this.markerbase.getmarker().setIcon(pinImage);
 	this.markerbase.getmarker().setMap(map);
 
-	var index = 0;
-	if (typeof mapssearchpolygon[0] !== 'undefined') {
-		index = mapssearchpolygon.length;
-	}
+	this.updateinfowindow = function() {
+		this.infowindow.setContent(
+			'<center> Search marker #' + this.index + '</center>' +
+			'<table style="width:100%">' +
+			'<tr>' +
+			'<td>Latitude</td>' +
+			'<td> : ' + this.lat + '</td>' +
+			'</tr>' +
+			'<tr>' +
+			'<td>Longitude</td>' +
+			'<td> : ' + this.lng + '</td>' +
+			'</tr>' +
+			'</table>'
+		);
+	};
 
 	// Create the polygon.
 	this.searchpolygon = new Searchpolygonobj(
@@ -252,11 +272,25 @@ function Markersearchobj(lat, lng, map, traveltype, radiusdelay, updatecallback)
 	var this_ = this;
 	google.maps.event.addListener(this.markerbase.getmarker(), 'dragend', function(event) {
 
+		this_.lat = event.latLng.lat();
+		this_.lng = event.latLng.lng();
+
+		this_.updateinfowindow();
+
 		this_.searchpolygon.updatelatlng(
 			event.latLng.lat(),
 			event.latLng.lng()
 		);
 	});
+
+	google.maps.event.addListener(this.markerbase.getmarker(), 'click', function() {
+		this_.infowindow.open(map, this);
+	});
+
+	//
+	// Object initialization.
+	//
+	this_.updateinfowindow();
 }
 
 /**************************************************************************\
@@ -398,7 +432,13 @@ var flatfinder = function flatfinderlib(city) {
 		traveltype,
 		radiusTime) {
 
+		var index = 0;
+		if (typeof mapssearchpolygon[0] !== 'undefined') {
+			index = mapssearchpolygon.length;
+		}
+
 		var searchmarker = new Markersearchobj(
+			index,
 			latitude,
 			longitude,
 			map,
