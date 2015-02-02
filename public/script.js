@@ -48,21 +48,9 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 	this.distancevalid = true;
 	this.pricevalid = true;
 	this.markerbase = new Markerobj(lat, lng, map);
-
-	google.maps.event.addListener(this.markerbase.getmarker(), 'click', function() {
-		infowindow.setContent(
-			'<div style="width:300px; height:325px">' +
-			'<div align="center">' +
-			'<img src="' + image + '" width="225" height="300" ALIGN="middle" />' +
-			'</div>' +
-			'<div align="center">' +
-			'<a href="' + url + '" target=_blank>' + '' + url + '</a> ' +
-			'</div>' +
-			'</div>'
-		);
-
-		infowindow.open(map, this);
-	});
+	this.infowindow = new google.maps.InfoWindow();
+	this.url = url;
+	this.image = image;
 
 	this.getmarker = function() {
 		return this.markerbase.getmarker();
@@ -91,6 +79,41 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 	this.isvalid = function() {
 		return ((this.distancevalid === true) && (this.pricevalid === true));
 	};
+
+	this.updateinfowindow = function() {
+		var content;
+
+		content = '<div style="width:325px; height:350px">';
+
+		if (this.image !== null) {
+			content += '<div align="center">';
+			content += '<img src="';
+			content += this.image;
+			content += '" width="225" height="300" ALIGN="middle" />';
+			content += '</div>';
+		}
+
+		if (this.url !== null) {
+			content += '<div align="center">';
+			content += '<a href="';
+			content += this.url;
+			content += '" target=_blank>';
+			content += this.url;
+			content += '</a>';
+			content += '</div>';
+		}
+
+		content += '</div>';
+
+		this.infowindow.setContent(content);
+	};
+
+	var this_ = this;
+
+	google.maps.event.addListener(this.markerbase.getmarker(), 'click', function() {
+		this_.updateinfowindow();
+		this_.infowindow.open(map, this);
+	});
 }
 
 /**************************************************************************\
