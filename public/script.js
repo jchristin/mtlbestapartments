@@ -48,7 +48,7 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 	this.distancevalid = true;
 	this.pricevalid = true;
 	this.markerbase = new Markerobj(lat, lng, map);
-	this.infowindow = new google.maps.InfoWindow();
+	this.infowindow = infowindow;
 	this.url = url;
 	this.image = image;
 
