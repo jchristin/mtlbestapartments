@@ -1,5 +1,4 @@
 /*global $, google, document */
-/*exported addSearchLocation */
 
 var mapssearchpolygon = [];
 
@@ -81,9 +80,7 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 	};
 
 	this.updateinfowindow = function() {
-		var content;
-
-		content = '<div style="width:325px; height:350px">';
+		var content = '';
 
 		if (this.image !== null) {
 			content += '<div align="center">';
@@ -98,7 +95,7 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 			content += '<a href="';
 			content += this.url;
 			content += '" target=_blank>';
-			content += this.url;
+			content += 'link';
 			content += '</a>';
 			content += '</div>';
 		}
@@ -265,6 +262,12 @@ function Markersearchobj(
 	this.markerbase.getmarker().setIcon(pinImage);
 	this.markerbase.getmarker().setMap(map);
 
+	this.destroy = function() {
+		this.searchpolygon.clearpolygon();
+		this.infowindow.close();
+		this.markerbase.getmarker().setMap(null);
+	};
+
 	this.updateinfowindow = function() {
 		this.infowindow.setContent(
 			'<center> Search marker #' + this.index + '</center>' +
@@ -277,7 +280,8 @@ function Markersearchobj(
 			'<td>Longitude</td>' +
 			'<td> : ' + this.lng + '</td>' +
 			'</tr>' +
-			'</table>'
+			'</table>' +
+			'<center><button onclick="flatfinder.removesearchmarker(' + this.index + ')">Delete</button></center>'
 		);
 	};
 
@@ -561,33 +565,25 @@ var flatfinder = function flatfinderlib(city) {
 			document.getElementById("inputMinuteDelayText").value);
 	}
 
+	function removesearchmarker(markerindex) {
+
+		searchmarkersobj[markerindex].destroy();
+		searchmarkersobj.splice(markerindex, 1);
+
+		mapssearchpolygon.splice(markerindex, 1);
+
+		updatedistance();
+	}
+
 	return {
 		init: init,
 		updatePrice: updatePrice,
 		updateTravelMode: updateTravelMode,
 		updateRadiusDelay: updateRadiusDelay,
-		addsearchmarkerdummy: addsearchmarkerdummy
+		addsearchmarkerdummy: addsearchmarkerdummy,
+		removesearchmarker: removesearchmarker
 	};
 }();
-
-/***************************************************************************************\
-
-Function:       addSearchLocation
-
-Description:    Adds a search marker/location in the map.
-
-Parameters:     None.
-
-Return Value:   None.
-
-Comments:       None.
-
-\***************************************************************************************/
-function addSearchLocation() {
-	"use strict";
-
-	flatfinder.addsearchmarkerdummy();
-}
 
 //-----------------------------------------------------------------------------------------------------------
 // Main

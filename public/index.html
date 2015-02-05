@@ -39,7 +39,7 @@
 			</li>
 			<li class="menu-item">
 				<a>
-					<div><i class="fa fa-map-marker"></i>
+					<div onclick="flatfinder.addsearchmarkerdummy()"><i class="fa fa-map-marker"></i>
 						</span>
 					</div>
 					<div>Map</div>
@@ -61,7 +61,7 @@
 		</div>
 	</div>
 	<div id="menu">
-		<input type="button" value="Add location" onclick="addSearchLocation();">
+		<input type="button" value="Add location" onclick="flatfinder.addsearchmarkerdummy();">
 		<form>
 			<p> Travel mode:
 				<select id="TravelMode" onchange="flatfinder.updateTravelMode(this.value);">
@@ -83,6 +83,18 @@
 			<div id="field_available_flat">Available flats = 0</div>
 			<div id="field_shown_flat"> Shown flats = 0</div>
 			<div id="field_filtered_flat"> Filtered flats = 0</div>
+			<div> --- </div>
+			<div> Metro stations </div>
+			<p> Metro line:
+				<select id="Metro Line">
+					<option value="GREEN">Verte</option>
+					<option value="ORANGE">Orange</option>
+					<option value="BLUE">Blue</option>
+					<option value="YELOW">Yelow</option>
+				</select>
+			</p>
+
+			<input type="checkbox"> Frontenac
 		</form>
 	</div>
 	<div id="map-canvas"></div>
