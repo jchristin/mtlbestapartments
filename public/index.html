@@ -18,48 +18,7 @@
 </head>
 
 <body>
-	<div class="sidebar">
-		<div class="sidebar-logo"></div>
-		<ul class="sidebar-nav">
-			<li class="menu-item">
-				<a>
-					<div><i class="fa fa-usd"></i>
-						</span>
-					</div>
-					<div>Price</div>
-				</a>
-			</li>
-			<li class="menu-item">
-				<a>
-					<div><i class="fa fa-home"></i>
-						</span>
-					</div>
-					<div>Bedrooms</div>
-				</a>
-			</li>
-			<li class="menu-item">
-				<a>
-					<div onclick="flatfinder.addsearchmarkerdummy()"><i class="fa fa-map-marker"></i>
-						</span>
-					</div>
-					<div>Map</div>
-				</a>
-			</li>
-		</ul>
-		<div class="sidebar-footer">
-			<div class="share">
-				<div>SHARE</div>
-				<ul>
-					<li><i class="fa fa-google-plus-square"></i>
-					</li>
-					<li><i class="fa fa-twitter-square"></i>
-					</li>
-					<li><i class="fa fa-facebook-square"></i>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	<div id="app"></div>
 	<div id="menu">
 		<input type="button" value="Add location" onclick="flatfinder.addsearchmarkerdummy();">
 		<form>
@@ -98,6 +57,7 @@
 		</form>
 	</div>
 	<div id="map-canvas"></div>
+	<script src="bundle.js"></script>
 	<script src="script.js"></script>
 </body>
 
