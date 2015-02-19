@@ -51,6 +51,13 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 	this.url = url;
 	this.image = image;
 
+	// Create a dot marker.
+	// var pinImage = new google.maps.MarkerImage(
+	// 	"https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0"
+	// );
+
+	// this.markerbase.getmarker().setIcon(pinImage);
+
 	this.getmarker = function() {
 		return this.markerbase.getmarker();
 	};
