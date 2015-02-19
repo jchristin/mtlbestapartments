@@ -412,51 +412,54 @@ var flatfinder = function flatfinderlib(city) {
 		$(document).ready(function() {
 			$.get("api/flats", function(data, status) {
 
-				console.log("Status = " + status);
+				if (status === 'success') {
 
-				for (var i = 0; i < data.length; i++) {
+					for (var i = 0; i < data.length; i++) {
 
-					if ((data[i].latitude !== null) &&
-						(data[i].longitude !== null)) {
+						if ((data[i].latitude !== null) &&
+							(data[i].longitude !== null)) {
 
-						var DistanceValid = [];
+							var DistanceValid = [];
 
-						DistanceValid[0] = true;
+							DistanceValid[0] = true;
 
-						if (data[i].price === null) {
-							data[i].price = 0;
+							if (data[i].price === null) {
+								data[i].price = 0;
+							}
+
+							if (data[i].price < oFlatPrice.Min) {
+								oFlatPrice.Min = data[i].price;
+							}
+
+							if (data[i].price > oFlatPrice.Max) {
+								oFlatPrice.Max = data[i].price;
+							}
+
+							var flatMarker = new Markerflatobj(
+								data[i].latitude,
+								data[i].longitude,
+								map,
+								null,
+								data[i].price,
+								infowindow,
+								data[i]._id,
+								data[i].image
+							);
+
+							flatMarker.show();
+							flatmarkersobj.push(flatMarker);
 						}
-
-						if (data[i].price < oFlatPrice.Min) {
-							oFlatPrice.Min = data[i].price;
-						}
-
-						if (data[i].price > oFlatPrice.Max) {
-							oFlatPrice.Max = data[i].price;
-						}
-
-						var flatMarker = new Markerflatobj(
-							data[i].latitude,
-							data[i].longitude,
-							map,
-							null,
-							data[i].price,
-							infowindow,
-							data[i]._id,
-							data[i].image
-						);
-
-						flatMarker.show();
-						flatmarkersobj.push(flatMarker);
 					}
+
+					document.getElementById("field_available_flat").innerHTML = "Available flats = " + flatmarkersobj.length;
+					document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + flatmarkersobj.length;
+
+					document.getElementById("inputMinimumText").value = oFlatPrice.Min;
+					document.getElementById("inputMaximumText").value = oFlatPrice.Max;
+				} else {
+					console.log("Failed to get flats [status = " + status + "]");
 				}
-
-				document.getElementById("field_available_flat").innerHTML = "Available flats = " + flatmarkersobj.length;
-				document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + flatmarkersobj.length;
-
-				document.getElementById("inputMinimumText").value = oFlatPrice.Min;
-				document.getElementById("inputMaximumText").value = oFlatPrice.Max;
-			});
+			}); // $.get("api/flats"
 		});
 	}
 
