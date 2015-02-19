@@ -570,7 +570,7 @@ var flatfinder = function flatfinderlib(city) {
 		var strTravelMode = document.getElementById('TravelMode').value;
 
 		return addsearchmarker(
-			45.526, -73.564,
+			map.getCenter().lat(), map.getCenter().lng(),
 			strTravelMode.toLowerCase(),
 			document.getElementById("inputMinuteDelayText").value);
 	}
