@@ -355,9 +355,9 @@ var flatfinder = function flatfinderlib(city) {
 	Function:       init
 
 	Description:    Initializes the flat finder library :
-					- create the map (create the map options)
-					- create the windows infowindow
-					- get and create the marker
+	- create the map (create the map options)
+	- create the windows infowindow
+	- get and create the marker
 
 	Parameters:     None.
 
@@ -459,7 +459,61 @@ var flatfinder = function flatfinderlib(city) {
 				} else {
 					console.log("Failed to get flats [status = " + status + "]");
 				}
-			}); // $.get("api/flats"
+			}); // $.get("api/flats")
+
+			var stationsrequest = "/api/stations?" + $.param({
+				city: 'montreal'
+			});
+
+			$.get(stationsrequest, function(alllines, status) {
+
+				if (status === 'success') {
+
+					var container = document.getElementById("Metro Line");
+
+					// Clear previous contents of the container
+					while (container.hasChildNodes()) {
+						container.removeChild(container.lastChild);
+					}
+
+					var selectHTML = "";
+					selectHTML = "<select>";
+
+					for (var line = 0; line < alllines.length; line++) {
+
+						selectHTML += "<option value='" + alllines[line].key + "'>" + alllines[line].key + "</option>";
+
+						var stations = alllines[line].data;
+						var stationspath = [];
+
+						for (var i = 0; i < stations.length; i++) {
+
+							if ((stations[i].latitude !== null) &&
+								(stations[i].longitude !== null)) {
+								stationspath.push(
+									new google.maps.LatLng(
+										stations[i].lat,
+										stations[i].lng));
+							}
+
+							new google.maps.Polyline({
+								path: stationspath,
+								strokeColor: alllines[line].color,
+								strokeOpacity: 1.0,
+								strokeWeight: 3,
+								map: map
+							});
+						}
+					}
+
+					selectHTML += "</select>";
+					container.innerHTML = selectHTML;
+
+				} else {
+					console.log("Failed to get stations [status = " + status + "]");
+				}
+
+			}); // $.get("api/stations")
 		});
 	}
 
