@@ -3,7 +3,6 @@
 var path = require("path"),
 	request = require("request"),
 	express = require("express"),
-	morgan = require("morgan"),
 	bodyParser = require("body-parser"),
 	favicon = require("serve-favicon"),
 	server = express(),
@@ -11,14 +10,6 @@ var path = require("path"),
 	port = process.env.PORT || 5000,
 	mongoClient = require("mongodb").MongoClient,
 	database;
-
-// Enable logging for development environment
-if (process.env.NODE_ENV === "development") {
-	server.use(morgan({
-		immediate: true,
-		format: "dev"
-	}));
-}
 
 server.use(express.query());
 
