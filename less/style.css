@@ -67,5 +67,7 @@
 	text-align: center;
 	background-color: #F8F5F5;
 	height: 100%;
-	float: right;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
