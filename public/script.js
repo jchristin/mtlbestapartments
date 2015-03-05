@@ -372,6 +372,33 @@ var flatfinder = function flatfinderlib(city) {
 		//
 		// Create a map options.
 		//
+		var styles = [
+		{
+			stylers: [
+			{ hue: "#1e292b" },
+			{ saturation: -20 }
+			]
+		},{
+			featureType: "road",
+			elementType: "geometry",
+			stylers: [
+			{ lightness: 100 },
+			{ visibility: "simplified" }
+			]
+		},{
+			featureType: "road",
+			elementType: "labels",
+			stylers: [
+			{ visibility: "off" }
+			]
+		}
+		];
+
+		// Create a new StyledMapType object, passing it the array of styles,
+		// as well as the name to be displayed on the map type control.
+		var styledMap = new google.maps.StyledMapType(styles,
+			{name: "Styled Map"});
+
 		var oCityCoord;
 		var uiZoom;
 
@@ -387,7 +414,6 @@ var flatfinder = function flatfinderlib(city) {
 		var mapOptions = {
 			zoom: uiZoom,
 			center: oCityCoord,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
 		//
@@ -396,6 +422,10 @@ var flatfinder = function flatfinderlib(city) {
 		map = new google.maps.Map(
 			document.getElementById('map-canvas'),
 			mapOptions);
+
+		//Associate the styled map with the MapTypeId and set it to display.
+		map.mapTypes.set('map_style', styledMap);
+		map.setMapTypeId('map_style');
 
 		//
 		// Set markers
