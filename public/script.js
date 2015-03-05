@@ -16,7 +16,6 @@ function Markerobj(latitude, longitude, map) {
 
 	// Create the marker.
 	this.mapMarker = new google.maps.Marker();
-	this.mapMarker.setAnimation(google.maps.Animation.DROP);
 	this.mapMarker.setPosition(new google.maps.LatLng(latitude, longitude));
 
 	this.getmarker = function() {
@@ -30,6 +29,8 @@ function Markerobj(latitude, longitude, map) {
 	this.hide = function() {
 		return this.mapMarker.setMap(null);
 	};
+
+	this.hide();
 }
 
 /**************************************************************************\
@@ -451,6 +452,10 @@ var flatfinder = function flatfinderlib(city) {
 						}
 					}
 
+					for (var j = 0; j < flatmarkersobj.length; j++) {
+						flatmarkersobj[j].show();
+					}
+
 					document.getElementById("field_available_flat").innerHTML = "Available flats = " + flatmarkersobj.length;
 					document.getElementById("field_shown_flat").innerHTML = "Shown flats = " + flatmarkersobj.length;
 
@@ -538,6 +543,7 @@ var flatfinder = function flatfinderlib(city) {
 			updatedistance);
 
 		searchmarker.init();
+		searchmarker.show();
 		searchmarkersobj.push(searchmarker);
 	}
 
