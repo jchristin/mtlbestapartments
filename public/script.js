@@ -94,7 +94,7 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 			content += '<div align="center">';
 			content += '<img src="';
 			content += this.image;
-			content += '" width="225" height="300" ALIGN="middle" />';
+			content += '" width="300" ALIGN="middle" />';
 			content += '</div>';
 		}
 
