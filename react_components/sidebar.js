@@ -1,8 +1,12 @@
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	actions = require("./actions");
 
 module.exports = React.createClass({
+	handleClick: function() {
+		actions.togglePanel();
+	},
 	render: function() {
 		return React.createElement("div", {
 				className: "sidebar"
@@ -14,6 +18,7 @@ module.exports = React.createClass({
 					className: "sidebar-nav"
 				},
 				React.createElement("li", {
+						onClick: this.handleClick,
 						className: "menu-item"
 					},
 					React.createElement("a", null,

@@ -5,7 +5,7 @@ var Reflux = require("reflux"),
 
 module.exports = Reflux.createStore({
 	init: function() {
-		this.isActivated = true;
+		this.isActivated = false;
 		this.listenTo(actions.togglePanel, this.handleTogglePanel);
 	},
 
