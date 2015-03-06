@@ -1548,6 +1548,23 @@
         }
       }
     },
+    "reflux": {
+      "version": "0.2.5",
+      "from": "reflux@*",
+      "resolved": "https://registry.npmjs.org/reflux/-/reflux-0.2.5.tgz",
+      "dependencies": {
+        "eventemitter3": {
+          "version": "0.1.6",
+          "from": "eventemitter3@>=0.1.2 <0.2.0",
+          "resolved": "https://registry.npmjs.org/eventemitter3/-/eventemitter3-0.1.6.tgz"
+        },
+        "native-promise-only": {
+          "version": "0.7.6-a",
+          "from": "native-promise-only@>=0.7.6-a <0.8.0",
+          "resolved": "https://registry.npmjs.org/native-promise-only/-/native-promise-only-0.7.6-a.tgz"
+        }
+      }
+    },
     "request": {
       "version": "2.51.0",
       "from": "request@>=2.51.0 <3.0.0",
