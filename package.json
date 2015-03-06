@@ -27,6 +27,7 @@
     "less": "^2.4.0",
     "mongodb": "^1.4.19",
     "react": "^0.12.2",
+    "reflux": "^0.2.5",
     "request": "^2.51.0",
     "serve-favicon": "^2.1.5"
   }
