@@ -1,7 +1,7 @@
 "use strict";
 
 var React = require("react"),
-	item = require("./sidebar-item"),
+	Item = require("./sidebar-item"),
 	actions = require("./actions");
 
 module.exports = React.createClass({
@@ -18,15 +18,15 @@ module.exports = React.createClass({
 			React.createElement("ul", {
 					className: "sidebar-nav"
 				},
-				React.createElement(item, {
+				React.createElement(Item, {
 					icon: "fa-usd",
 					caption: "Price"
 				}),
-				React.createElement(item, {
+				React.createElement(Item, {
 					icon: "fa-home",
 					caption: "Bedrooms"
 				}),
-				React.createElement(item, {
+				React.createElement(Item, {
 					icon: "fa-map-marker",
 					caption: "Map"
 				})
