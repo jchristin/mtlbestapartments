@@ -23,6 +23,10 @@ server.use(express.static(path.join(__dirname, "public"), {
 	maxAge: cacheMaxAge
 }));
 
+server.use(express.static(path.join(__dirname, "node_modules/font-awesome"), {
+	maxAge: cacheMaxAge
+}));
+
 server.get("/api/flats", function(req, res) {
 	database.collection("active").find().limit(2000).toArray(function(err, docs) {
 		if (err) {
