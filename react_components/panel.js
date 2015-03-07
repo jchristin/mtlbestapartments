@@ -3,7 +3,7 @@
 "use strict";
 
 var React = require("react"),
-	panelStore = require("./panel-store");
+	panelStore = require("../react_stores/panel-store");
 
 module.exports = React.createClass({
 	onPanelChange: function(isActivated, position, content) {

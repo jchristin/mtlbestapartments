@@ -1,7 +1,7 @@
 "use strict";
 
 var React = require("react"),
-	actions = require("./actions");
+	actions = require("../react_stores/actions");
 
 module.exports = React.createClass({
 	handleClick: function(e) {

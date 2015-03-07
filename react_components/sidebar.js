@@ -2,7 +2,7 @@
 
 var React = require("react"),
 	Item = require("./sidebar-item"),
-	actions = require("./actions");
+	actions = require("../react_stores/actions");
 
 module.exports = React.createClass({
 	handleClick: function() {
