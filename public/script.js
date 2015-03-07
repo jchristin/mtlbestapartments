@@ -625,7 +625,6 @@ var flatfinder = function flatfinderlib(city) {
 			updatedistance);
 
 		searchmarker.init();
-		searchmarker.show();
 		searchmarkersobj.push(searchmarker);
 	}
 
