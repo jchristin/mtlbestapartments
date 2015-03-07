@@ -11,7 +11,7 @@ module.exports = Reflux.createStore({
 		this.listenTo(actions.togglePanel, this.handleTogglePanel);
 		this.listenTo(actions.hidePanel, this.handleHidePanel);
 	},
-	handleTogglePanel: function(position) {
+	handleTogglePanel: function(position, content) {
 		if (position != this.position) {
 			this.isActivated = true;
 		} else {
@@ -19,10 +19,10 @@ module.exports = Reflux.createStore({
 		}
 
 		this.position = position;
-		this.trigger(this.isActivated, position);
+		this.trigger(this.isActivated, position, content);
 	},
-	handleHidePanel: function(position) {
+	handleHidePanel: function() {
 		this.isActivated = false;
-		this.trigger(this.isActivated, position);
+		this.trigger(this.isActivated);
 	}
 });

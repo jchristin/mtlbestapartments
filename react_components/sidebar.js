@@ -20,7 +20,8 @@ module.exports = React.createClass({
 				},
 				React.createElement(Item, {
 					icon: "fa-usd",
-					caption: "Price"
+					caption: "Price",
+					content: require("./price")
 				}),
 				React.createElement(Item, {
 					icon: "fa-home",

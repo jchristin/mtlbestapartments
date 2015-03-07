@@ -9,7 +9,7 @@ module.exports = React.createClass({
 		e.stopPropagation();
 
 		var position = this.refs.item.getDOMNode().getBoundingClientRect().top;
-		actions.togglePanel(position);
+		actions.togglePanel(position, this.props.content);
 	},
 	render: function() {
 		return React.createElement("li", {

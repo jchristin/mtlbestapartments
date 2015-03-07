@@ -6,10 +6,17 @@ var React = require("react"),
 	panelStore = require("./panel-store");
 
 module.exports = React.createClass({
-	onPanelChange: function(isActivated, position) {
+	onPanelChange: function(isActivated, position, content) {
+		if(content && isActivated) {
+			content = React.createElement(content);
+		} else {
+			content = undefined;
+		}
+
 		this.setState({
 			panelClassName: isActivated ? "panel" : "",
-			position: position
+			position: position,
+			content: content
 		});
 	},
 	getInitialState: function() {
@@ -30,6 +37,6 @@ module.exports = React.createClass({
 				top: this.state.position + "px"
 			},
 			className: this.state.panelClassName
-		});
+		}, this.state.content);
 	}
 });
