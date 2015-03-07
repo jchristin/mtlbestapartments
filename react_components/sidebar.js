@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require("react"),
+	item = require("./sidebar-item"),
 	actions = require("./actions");
 
 module.exports = React.createClass({
@@ -17,37 +18,18 @@ module.exports = React.createClass({
 			React.createElement("ul", {
 					className: "sidebar-nav"
 				},
-				React.createElement("li", {
-						onClick: this.handleClick,
-						className: "menu-item"
-					},
-					React.createElement("a", null,
-						React.createElement("div", null, React.createElement("i", {
-							className: "fa fa-usd"
-						})),
-						React.createElement("div", null, "Price")
-					)
-				),
-				React.createElement("li", {
-						className: "menu-item"
-					},
-					React.createElement("a", null,
-						React.createElement("div", null, React.createElement("i", {
-							className: "fa fa-home"
-						})),
-						React.createElement("div", null, "Bedrooms")
-					)
-				),
-				React.createElement("li", {
-						className: "menu-item"
-					},
-					React.createElement("a", null,
-						React.createElement("div", null, React.createElement("i", {
-							className: "fa fa-map-marker"
-						})),
-						React.createElement("div", null, "Map")
-					)
-				)
+				React.createElement(item, {
+					icon: "fa-usd",
+					caption: "Price"
+				}),
+				React.createElement(item, {
+					icon: "fa-home",
+					caption: "Bedrooms"
+				}),
+				React.createElement(item, {
+					icon: "fa-map-marker",
+					caption: "Map"
+				})
 			),
 			React.createElement("div", {
 					className: "sidebar-footer"
