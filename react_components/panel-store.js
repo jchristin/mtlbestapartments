@@ -6,11 +6,23 @@ var Reflux = require("reflux"),
 module.exports = Reflux.createStore({
 	init: function() {
 		this.isActivated = false;
-		this.listenTo(actions.togglePanel, this.handleTogglePanel);
-	},
+		this.position = -1;
 
-	handleTogglePanel: function() {
-		this.isActivated = !this.isActivated;
-		this.trigger(this.isActivated);
+		this.listenTo(actions.togglePanel, this.handleTogglePanel);
+		this.listenTo(actions.hidePanel, this.handleHidePanel);
+	},
+	handleTogglePanel: function(position) {
+		if (position != this.position) {
+			this.isActivated = true;
+		} else {
+			this.isActivated = !this.isActivated;
+		}
+
+		this.position = position;
+		this.trigger(this.isActivated, position);
+	},
+	handleHidePanel: function(position) {
+		this.isActivated = false;
+		this.trigger(this.isActivated, position);
 	}
 });

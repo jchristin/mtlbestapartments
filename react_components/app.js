@@ -5,14 +5,20 @@
 var React = require("react"),
 	Sidebar = require("./sidebar"),
 	Panel = require("./panel"),
-	Map = require("./map");
+	Canvas = require("./map"),
+	actions = require("./actions");
 
 module.exports = React.createClass({
+	handleClick: function() {
+		actions.hidePanel();
+	},
 	render: function() {
-		return React.createElement("div", null,
+		return React.createElement("div", {
+			onClick: this.handleClick,
+		},
 			React.createElement(Sidebar),
 			React.createElement(Panel),
-			React.createElement(Map)
+			React.createElement(Canvas)
 		);
 	}
 });
