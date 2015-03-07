@@ -372,32 +372,80 @@ var flatfinder = function flatfinderlib(city) {
 		//
 		// Create a map options.
 		//
-		var styles = [
-		{
-			stylers: [
-			{ hue: "#1e292b" },
-			{ saturation: -20 }
-			]
-		},{
-			featureType: "road",
-			elementType: "geometry",
-			stylers: [
-			{ lightness: 100 },
-			{ visibility: "simplified" }
-			]
-		},{
-			featureType: "road",
-			elementType: "labels",
-			stylers: [
-			{ visibility: "off" }
-			]
-		}
-		];
+		var styles = [{
+			"stylers": [{
+				"visibility": "on"
+			}, {
+				"saturation": -100
+			}, {
+				"gamma": 0.54
+			}]
+		}, {
+			"featureType": "road",
+			"elementType": "labels.icon",
+			"stylers": [{
+				"visibility": "off"
+			}]
+		}, {
+			"featureType": "water",
+			"stylers": [{
+				"color": "#4d4946"
+			}]
+		}, {
+			"featureType": "poi",
+			"elementType": "labels.icon",
+			"stylers": [{
+				"visibility": "off"
+			}]
+		}, {
+			"featureType": "poi",
+			"elementType": "labels.text",
+			"stylers": [{
+				"visibility": "simplified"
+			}]
+		}, {
+			"featureType": "road",
+			"elementType": "geometry.fill",
+			"stylers": [{
+				"color": "#ffffff"
+			}]
+		}, {
+			"featureType": "road.local",
+			"elementType": "labels.text",
+			"stylers": [{
+				"visibility": "simplified"
+			}]
+		}, {
+			"featureType": "water",
+			"elementType": "labels.text.fill",
+			"stylers": [{
+				"color": "#ffffff"
+			}]
+		}, {
+			"featureType": "transit.line",
+			"elementType": "geometry",
+			"stylers": [{
+				"gamma": 0.48
+			}]
+		}, {
+			"featureType": "transit.station",
+			"elementType": "labels.icon",
+			"stylers": [{
+				"visibility": "off"
+			}]
+		}, {
+			"featureType": "road",
+			"elementType": "geometry.stroke",
+			"stylers": [{
+				"gamma": 7.18
+			}]
+		}];
 
 		// Create a new StyledMapType object, passing it the array of styles,
 		// as well as the name to be displayed on the map type control.
-		var styledMap = new google.maps.StyledMapType(styles,
-			{name: "Styled Map"});
+		var styledMap = new google.maps.StyledMapType(styles, {
+			name: "Styled Map"
+		});
 
 		var oCityCoord;
 		var uiZoom;
