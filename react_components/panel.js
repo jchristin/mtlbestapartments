@@ -19,6 +19,10 @@ module.exports = React.createClass({
 			content: content
 		});
 	},
+	handleClick: function(e) {
+		// Prevent the root component to hide the panel.
+		e.stopPropagation();
+	},
 	getInitialState: function() {
 		return {
 			panelClassName: "",
@@ -36,6 +40,7 @@ module.exports = React.createClass({
 			style: {
 				top: this.state.position + "px"
 			},
+			onClick: this.handleClick,
 			className: this.state.panelClassName
 		}, this.state.content);
 	}
