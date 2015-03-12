@@ -1372,6 +1372,16 @@
       "from": "font-awesome@*",
       "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.3.0.tgz"
     },
+    "jquery": {
+      "version": "2.1.3",
+      "from": "jquery@*",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-2.1.3.tgz"
+    },
+    "jquery-ui": {
+      "version": "1.10.5",
+      "from": "jquery-ui@*",
+      "resolved": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.10.5.tgz"
+    },
     "less": {
       "version": "2.4.0",
       "from": "less@*",
@@ -1441,6 +1451,11 @@
           }
         }
       }
+    },
+    "lodash": {
+      "version": "3.5.0",
+      "from": "lodash@*",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.5.0.tgz"
     },
     "mongodb": {
       "version": "1.4.28",
