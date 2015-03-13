@@ -1,7 +1,7 @@
 {
   "name": "fleub",
   "version": "1.0.0",
-  "description": "",
+  "description": "Web app to find apartment in Montreal",
   "scripts": {
     "less": "lessc less/index.less > public/bundle.css",
     "browserify": "browserify react_components/boot.js -o public/bundle.js",
