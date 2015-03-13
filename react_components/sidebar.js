@@ -25,7 +25,8 @@ module.exports = React.createClass({
 				}),
 				React.createElement(Item, {
 					icon: "fa-home",
-					caption: "Bedrooms"
+					caption: "Bedrooms",
+					content: require("./bedroom")
 				}),
 				React.createElement(Item, {
 					icon: "fa-map-marker",

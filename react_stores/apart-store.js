@@ -17,9 +17,11 @@ module.exports = Reflux.createStore({
 
 		// Define internal state.
 		this.price = [0, 4000];
+		this.bedroom = [1, 7];
 
 		// Listen to actions.
 		this.listenTo(actions.setPrice, this.handleSetPrice);
+		this.listenTo(actions.setBedroom, this.handleSetBedroom);
 	},
 	filter: function() {
 		return _.filter(this.allApartments, function(apart) {
@@ -28,6 +30,10 @@ module.exports = Reflux.createStore({
 	},
 	handleSetPrice: function(price) {
 		this.price = price;
+		this.trigger(this.filter());
+	},
+	handleSetBedroom: function(bedroom) {
+		this.bedroom = bedroom;
 		this.trigger(this.filter());
 	}
 });
