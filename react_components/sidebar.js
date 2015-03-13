@@ -30,7 +30,7 @@ module.exports = React.createClass({
 				}),
 				React.createElement(Item, {
 					icon: "fa-map-marker",
-					caption: "Map"
+					caption: "Zone"
 				})
 			),
 			React.createElement("div", {
