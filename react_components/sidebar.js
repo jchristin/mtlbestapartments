@@ -1,13 +1,9 @@
 "use strict";
 
 var React = require("react"),
-	Item = require("./sidebar-item"),
-	actions = require("../react_stores/actions");
+	Item = require("./sidebar-item");
 
 module.exports = React.createClass({
-	handleClick: function() {
-		actions.togglePanel();
-	},
 	render: function() {
 		return React.createElement("div", {
 				className: "sidebar"
