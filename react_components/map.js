@@ -7,7 +7,6 @@ var React = require("react"),
 	apartStore = require("../react_stores/apart-store");
 
 module.exports = React.createClass({
-
 	updateinfowindow: function(Apt) {
 		var content = '';
 
@@ -33,7 +32,6 @@ module.exports = React.createClass({
 
 		this.infowindow.setContent(content);
 	},
-
 	onMapDataChange: function(filteredApt) {
 
 		if (this.allApt === undefined) {
@@ -82,30 +80,9 @@ module.exports = React.createClass({
 				Apt.marker.setMap(null);
 			});
 	},
-
-	componentDidMount: function() {
-		this.allApt = undefined;
-
-		var mapOptions = {
-			center: this.mapCenterLatLng(),
-			zoom: 12
-		};
-
-		this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		this.setMapStyle();
-
-		this.infowindow = new google.maps.InfoWindow();
-		this.unsubscribe = apartStore.listen(this.onMapDataChange);
-	},
-
-	componentWillUnmount: function() {
-		this.unsubscribe();
-	},
-
 	mapCenterLatLng: function() {
 		return new google.maps.LatLng(45.506, -73.556);
 	},
-
 	setMapStyle: function() {
 		var styles = [{
 			"stylers": [{
@@ -221,7 +198,23 @@ module.exports = React.createClass({
 		this.map.mapTypes.set('map_style', styledMap);
 		this.map.setMapTypeId('map_style');
 	},
+	componentWillUnmount: function() {
+		this.unsubscribe();
+	},
+	componentDidMount: function() {
+		this.allApt = undefined;
 
+		var mapOptions = {
+			center: this.mapCenterLatLng(),
+			zoom: 12
+		};
+
+		this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		this.setMapStyle();
+
+		this.infowindow = new google.maps.InfoWindow();
+		this.unsubscribe = apartStore.listen(this.onMapDataChange);
+	},
 	render: function() {
 		return React.createElement("div", {
 			id: 'map-canvas'
