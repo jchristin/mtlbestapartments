@@ -481,6 +481,15 @@ var flatfinder = function flatfinderlib(city) {
 			"stylers": [{
 				"color": "#91bed4"
 			}]
+		}, {
+			"featureType": "poi.park",
+			"elementType": "geometry.fill",
+			"stylers": [{
+				"color": "#cbdfaa"
+           		 
+			}]
+
+			
 
 			// Subway features
 		}, {
