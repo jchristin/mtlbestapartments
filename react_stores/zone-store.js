@@ -8,6 +8,11 @@ var Reflux = require("reflux"),
 module.exports = Reflux.createStore({
 	init: function() {
 		this.boroughs = {
+			"anjou": require("../boroughs/anjou"),
+			"le-plateau-mont-royal": require("../boroughs/le-plateau-mont-royal"),
+			"mercier-hochelaga-maisonneuve": require("../boroughs/mercier-hochelaga-maisonneuve"),
+			"montreal-est": require("../boroughs/montreal-est"),
+			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
 			"ville-marie": require("../boroughs/ville-marie")
 		};
 
