@@ -2,7 +2,7 @@
 
 var Reflux = require("reflux"),
 	actions = require("./actions.js"),
-	turf = require("turf"),
+	polygon = require("turf-polygon"),
 	_ = require("lodash");
 
 module.exports = Reflux.createStore({
