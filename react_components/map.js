@@ -35,121 +35,6 @@ module.exports = React.createClass({
 	mapCenterLatLng: function() {
 		return new google.maps.LatLng(45.506, -73.556);
 	},
-	setMapStyle: function() {
-		var styles = [{
-			"stylers": [{
-				"visibility": "on"
-			}, {
-				"saturation": -100
-			}, {
-				"gamma": 0.54
-			}]
-
-			// Global features
-		}, {
-			"featureType": "all",
-			"elementType": "labels.text.fill",
-			"stylers": [{
-				"saturation": 100
-			}, {
-				"color": "#1e292c"
-			}]
-		}, {
-			"featureType": "poi",
-			"elementType": "labels.icon",
-			"stylers": [{
-				"visibility": "off"
-			}]
-		}, {
-			"featureType": "poi",
-			"elementType": "labels.text",
-			"stylers": [{
-				"visibility": "simplified"
-			}]
-
-			// Road features
-		}, {
-			"featureType": "road",
-			"elementType": "labels.icon",
-			"stylers": [{
-				"visibility": "on"
-			}]
-		}, {
-			"featureType": "road",
-			"elementType": "geometry.fill",
-			"stylers": [{
-				"color": "#ffffff"
-			}]
-		}, {
-			"featureType": "road.local",
-			"elementType": "labels.text",
-			"stylers": [{
-				"visibility": "simplified"
-			}]
-		}, {
-			"featureType": "road",
-			"elementType": "geometry.stroke",
-			"stylers": [{
-				"gamma": 7.18
-			}]
-		}, {
-			"featureType": "road.highway",
-			"elementType": "geometry",
-			"stylers": [{
-				"hue": "#0e1b1f"
-			}, {
-				"saturation": -88
-			}, {
-				"lightness": 54
-			}, {
-				"visibility": "simplified"
-			}]
-
-			// Miscelaneous features
-		}, {
-			"featureType": "water",
-			"elementType": "labels.text.fill",
-			"stylers": [{
-				"color": "#0e1b1f"
-
-			}]
-		}, {
-			"featureType": "water",
-			"elementType": "geometry",
-			"stylers": [{
-				"color": "#91bed4"
-			}]
-
-			// Subway features
-		}, {
-			"featureType": "transit.station",
-			"elementType": "labels.icon",
-			"stylers": [{
-				"hue": "#85a0a7"
-			}, {
-				"saturation": 50
-			}, {
-				"visibility": "simplified"
-			}]
-		}, {
-			"featureType": "transit.line",
-			"elementType": "geometry",
-			"stylers": [{
-				"gamma": 0.48
-			}, {
-				"visibility": "on"
-			}]
-		}];
-
-		// Create a new StyledMapType object, passing it the array of styles,
-		// as well as the name to be displayed on the map type control.
-		var styledMap = new google.maps.StyledMapType(styles, {
-			name: 'map_style'
-		});
-
-		this.map.mapTypes.set('map_style', styledMap);
-		this.map.setMapTypeId('map_style');
-	},
 	onMapDataChange: function(filteredApt) {
 
 		if (this.allApt === undefined) {
@@ -210,7 +95,10 @@ module.exports = React.createClass({
 		};
 
 		this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-		this.setMapStyle();
+
+		var styledMap = new google.maps.StyledMapType(require("./map-style"));
+		this.map.mapTypes.set("map-style", styledMap);
+		this.map.setMapTypeId("map-style");
 
 		this.infowindow = new google.maps.InfoWindow();
 		this.unsubscribe = apartStore.listen(this.onMapDataChange);
