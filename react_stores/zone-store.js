@@ -17,22 +17,24 @@ module.exports = Reflux.createStore({
 		this.listenTo(actions.addBorough, this.handleAddBorough);
 	},
 	handleAddBorough: function(name) {
-		var borough = this.borough[name];
+		var borough = this.boroughs[name];
 
-		var coords = [
-			[-2.275543, 53.464547],
-			[-2.275543, 53.489271],
-			[-2.215118, 53.489271],
-			[-2.215118, 53.464547],
-			[-2.275543, 53.464547]
-		];
+		if (borough === undefined) {
+			console.log("Unknown borough: " + name);
+			return;
+		}
 
-		var zone = turf.polygon(coords, {
+		// Transform JSON data to turf data.
+		var coords = _.map(borough, function(coord) {
+			return [coord.lat, coord.lng];
+		});
+
+		// Create a turf polygon.
+		var zone = polygon(coords, {
 			name: name
 		});
 
 		this.zones.push(zone);
-
 		this.trigger(this.zones);
 	},
 });

@@ -1,8 +1,12 @@
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	actions = require("../react_stores/actions.js");
 
 module.exports = React.createClass({
+	handleClick: function() {
+		actions.addBorough("ville-marie");
+	},
 	render: function() {
 		return React.createElement("div", {
 				className: "zone"
@@ -17,8 +21,9 @@ module.exports = React.createClass({
 				className: "zone-a"
 			}, "Zone C"),
 			React.createElement("div", {
-				className: "zone-a"
-			}, "Zone D")
+				className: "zone-a",
+				onClick: this.handleClick
+			}, "Ville-Marie")
 		);
 	}
 });
