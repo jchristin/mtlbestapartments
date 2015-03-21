@@ -4,6 +4,7 @@
 	height: 100%;
 	background: #0e1c1f;
 	color: #fff;
+	z-index: 2;
 }
 .sidebar-logo {
 	width: @sidebar;
@@ -30,6 +31,16 @@
 	color: #fff;
 	font-size: 20px;
 	cursor: pointer;
+	.transition (background 0.5s);
+}
+.sidebar-nav .menu-item a:hover{
+	background: #85a0a7;
+	color: #0e1b1f;
+	.transition (background 0.5s);
+}
+.sidebar-nav .menu-item.selected{
+	background: #85a0a7;
+	color: #0e1b1f;
 }
 .sidebar-nav .menu-item .fa {
 	font-size: 32px;
