@@ -54,7 +54,9 @@ function Markerflatobj(lat, lng, map, source, price, infowindow, url, image) {
 
 	// Create a dot marker.
 	var pinImage = new google.maps.MarkerImage(
-		"https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0"
+		"img/marker-dot.png"
+		//"https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0"
+		//url: "img/Marker_Pin_Fleub.png",
 	);
 	/*var pinImage = new google.maps.MarkerImage(
 		"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "F06424",
@@ -267,6 +269,26 @@ function Markersearchobj(
 		new google.maps.Point(0, 0),
 		new google.maps.Point(10, 34)
 	);
+
+	// Marker personnalisé (NEED TO BE FIXED)
+	var imageMarqueur = {
+	url: "img/marker-pin-fleub.png",
+	size: new google.maps.Size(60, 50),
+	anchor: new google.maps.Point(16, 50)
+	};
+	var ombreMarqueur = {
+		url: "img/marker-shadow-pin-fleub.png",
+		size: new google.maps.Size(60, 50),
+		anchor: new google.maps.Point(16, 50)
+	};
+	var optionsMarqueur = {
+		map: maCarte,
+		position: centreCarte,
+		icon: imageMarqueur,
+		shadow: ombreMarqueur
+	}
+	var marqueur = new google.maps.Marker(optionsMarqueur);
+	//
 
 	this.markerbase = new Markerobj(lat, lng, map);
 	this.markerbase.getmarker().setDraggable(true);
