@@ -14,38 +14,6 @@
 
 <body>
 	<div id="app"></div>
-	<div id="menu">
-		<input type="button" value="Add location" onclick="flatfinder.addsearchmarkerdummy();">
-		<form>
-			<p> Travel mode:
-				<select id="TravelMode" onchange="flatfinder.updateTravelMode(this.value);">
-					<option value="DRIVING">Driving</option>
-					<option value="WALKING">Walking</option>
-					<option value="BICYCLING">Bicycling</option>
-					<option value="TRANSIT">Transit</option>
-				</select>
-			</p>
-			<p> Time :
-				<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updateRadiusDelay(this.value);" id="inputMinuteDelayText" value="5">minutes
-			</p>
-			<p> Minimum =
-				<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMinimumText" value="0"> $
-			</p>
-			<p> Maximum =
-				<input type="number" style="max-width:65px; text-align:right;" onchange="flatfinder.updatePrice();" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" id="inputMaximumText" value="0"> $
-			</p>
-			<div id="field_available_flat">Available flats = 0</div>
-			<div id="field_shown_flat"> Shown flats = 0</div>
-			<div id="field_filtered_flat"> Filtered flats = 0</div>
-			<div> --- </div>
-			<div> Metro stations </div>
-			<p> Metro line:
-				<select id="Metro Line"></select>
-			</p>
-
-			<input type="checkbox"> Frontenac
-		</form>
-	</div>
 	<script src="bundle.js"></script>
 	<script src="script.js"></script>
 </body>
