@@ -406,16 +406,16 @@ var flatfinder = function flatfinderlib(city) {
 			}, {
 				"gamma": 0.54
 			}]
+
+		// Global features
 		}, {
-			"featureType": "road",
-			"elementType": "labels.icon",
+			"featureType": "all",
+			"elementType": "labels.text.fill",
 			"stylers": [{
-				"visibility": "off"
-			}]
-		}, {
-			"featureType": "water",
-			"stylers": [{
-				"color": "#4d4946"
+	                "saturation": 100
+	            },
+	            {
+	                "color": "#1e292c"
 			}]
 		}, {
 			"featureType": "poi",
@@ -428,6 +428,14 @@ var flatfinder = function flatfinderlib(city) {
 			"elementType": "labels.text",
 			"stylers": [{
 				"visibility": "simplified"
+			}]
+
+		// Road features
+		}, {
+			"featureType": "road",
+			"elementType": "labels.icon",
+			"stylers": [{
+				"visibility": "on"
 			}]
 		}, {
 			"featureType": "road",
@@ -442,30 +450,67 @@ var flatfinder = function flatfinderlib(city) {
 				"visibility": "simplified"
 			}]
 		}, {
+			"featureType": "road",
+			"elementType": "geometry.stroke",
+			"stylers": [{
+				"gamma": 7.18
+			}]
+		}, {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "hue": "#0e1b1f"
+            },
+            {
+                "saturation": -88
+            },
+            {
+                "lightness": 54
+            },
+            {
+                "visibility": "simplified"
+            }]
+
+		// Miscelaneous features
+		}, {
 			"featureType": "water",
 			"elementType": "labels.text.fill",
 			"stylers": [{
-				"color": "#ffffff"
+				"color": "#0e1b1f"
+           		 
+			}]
+		}, {
+			"featureType": "water",
+			"elementType": "geometry",
+			"stylers": [{
+				"color": "#91bed4"
+			}]
+
+		// Subway features
+		}, {
+			"featureType": "transit.station",
+			"elementType": "labels.icon",
+			"stylers": [{
+                "hue": "#85a0a7"
+	            },
+	            {
+                "saturation": 50
+	            },
+	            {
+                "visibility": "simplified"
 			}]
 		}, {
 			"featureType": "transit.line",
 			"elementType": "geometry",
 			"stylers": [{
 				"gamma": 0.48
+				},
+	            {
+                "visibility": "on"
 			}]
-		}, {
-			"featureType": "transit.station",
-			"elementType": "labels.icon",
-			"stylers": [{
-				"visibility": "off"
-			}]
-		}, {
-			"featureType": "road",
-			"elementType": "geometry.stroke",
-			"stylers": [{
-				"gamma": 7.18
-			}]
-		}];
+		
+        }];
 
 		// Create a new StyledMapType object, passing it the array of styles,
 		// as well as the name to be displayed on the map type control.
