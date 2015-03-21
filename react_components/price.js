@@ -2,13 +2,14 @@
 
 var React = require("react"),
 	actions = require("../react_stores/actions"),
+	apartStore = require("../react_stores/apart-store"),
 	$ = require("jquery-ui"),
 	$ = require("jquery");
 
 module.exports = React.createClass({
 	getInitialState: function() {
 		return {
-			price: [0, 4000]
+			price: apartStore.price
 		};
 	},
 	componentDidMount: function() {
@@ -17,7 +18,7 @@ module.exports = React.createClass({
 			min: 0,
 			max: 4000,
 			step: 50,
-			values: [0, 4000],
+			values: this.state.price,
 			slide: function(event, ui) {
 				actions.setPrice(ui.values);
 				this.setState({
