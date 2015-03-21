@@ -26,7 +26,8 @@ module.exports = React.createClass({
 				}),
 				React.createElement(Item, {
 					icon: "fa-map-marker",
-					caption: "Zone"
+					caption: "Zone",
+					content: require("./zone")
 				})
 			),
 			React.createElement("div", {
