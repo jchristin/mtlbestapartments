@@ -14,7 +14,7 @@ module.exports = React.createClass({
 		}
 
 		this.setState({
-			panelClassName: isActivated ? "panel" : "",
+			panelClassName: isActivated ? "panel on" : "panel off",
 			position: position,
 			content: content
 		});

@@ -2,6 +2,16 @@
 	width: @panel-width;
 	background: @panel-background;
 	position: absolute;
-	left: @sidebar;
+	left: -230px;
 	z-index: 1;
+}
+.panel.on{
+    transition: 0.5s;
+    left: 132px;
+    .opacity(1);
+}
+.panel.off {
+    transition: 0.5s;
+    left: -230px;
+    .opacity(0);
 }
