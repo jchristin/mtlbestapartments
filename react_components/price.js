@@ -17,7 +17,7 @@ module.exports = React.createClass({
 			min: 0,
 			max: 4000,
 			step: 50,
-			values: [500, 1000],
+			values: [0, 4000],
 			slide: function(event, ui) {
 				actions.setPrice(ui.values);
 				this.setState({
