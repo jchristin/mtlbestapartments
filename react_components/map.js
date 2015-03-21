@@ -6,10 +6,9 @@ var React = require("react"),
 	_ = require("lodash"),
 	apartStore = require("../react_stores/apart-store");
 
-var infowindow = new google.maps.InfoWindow();
-
 module.exports = React.createClass({
-	updateinfowindow : function(Apt) {
+
+	updateinfowindow: function(Apt) {
 		var content = '';
 
 		if (Apt.image !== null) {
@@ -32,8 +31,9 @@ module.exports = React.createClass({
 
 		content += '</div>';
 
-		infowindow.setContent(content);
+		this.infowindow.setContent(content);
 	},
+
 	onMapDataChange: function(filteredApt) {
 
 		if (this.allApt === undefined) {
@@ -65,7 +65,7 @@ module.exports = React.createClass({
 
 					google.maps.event.addListener(Apt.marker, 'click', function() {
 						this.updateinfowindow(Apt);
-						infowindow.open(this.map, Apt.marker);
+						this.infowindow.open(this.map, Apt.marker);
 					}.bind(this));
 				}
 
@@ -94,15 +94,19 @@ module.exports = React.createClass({
 		this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 		this.setMapStyle();
 
+		this.infowindow = new google.maps.InfoWindow();
 		this.unsubscribe = apartStore.listen(this.onMapDataChange);
 	},
+
 	componentWillUnmount: function() {
 		this.unsubscribe();
 	},
+
 	mapCenterLatLng: function() {
 		return new google.maps.LatLng(45.506, -73.556);
 	},
-	setMapStyle: function(){
+
+	setMapStyle: function() {
 		var styles = [{
 			"stylers": [{
 				"visibility": "on"
@@ -118,8 +122,7 @@ module.exports = React.createClass({
 			"elementType": "labels.text.fill",
 			"stylers": [{
 				"saturation": 100
-			},
-			{
+			}, {
 				"color": "#1e292c"
 			}]
 		}, {
@@ -163,17 +166,13 @@ module.exports = React.createClass({
 		}, {
 			"featureType": "road.highway",
 			"elementType": "geometry",
-			"stylers": [
-			{
+			"stylers": [{
 				"hue": "#0e1b1f"
-			},
-			{
+			}, {
 				"saturation": -88
-			},
-			{
+			}, {
 				"lightness": 54
-			},
-			{
+			}, {
 				"visibility": "simplified"
 			}]
 
@@ -198,11 +197,9 @@ module.exports = React.createClass({
 			"elementType": "labels.icon",
 			"stylers": [{
 				"hue": "#85a0a7"
-			},
-			{
+			}, {
 				"saturation": 50
-			},
-			{
+			}, {
 				"visibility": "simplified"
 			}]
 		}, {
@@ -210,8 +207,7 @@ module.exports = React.createClass({
 			"elementType": "geometry",
 			"stylers": [{
 				"gamma": 0.48
-			},
-			{
+			}, {
 				"visibility": "on"
 			}]
 		}];
@@ -225,6 +221,7 @@ module.exports = React.createClass({
 		this.map.mapTypes.set('map_style', styledMap);
 		this.map.setMapTypeId('map_style');
 	},
+
 	render: function() {
 		return React.createElement("div", {
 			id: 'map-canvas'
