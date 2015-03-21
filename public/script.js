@@ -272,9 +272,9 @@ function Markersearchobj(
 
 	// Marker personnalisé (NEED TO BE FIXED)
 	var imageMarqueur = {
-	url: "img/marker-pin-fleub.png",
-	size: new google.maps.Size(60, 50),
-	anchor: new google.maps.Point(16, 50)
+		url: "img/marker-pin-fleub.png",
+		size: new google.maps.Size(60, 50),
+		anchor: new google.maps.Point(16, 50)
 	};
 	var ombreMarqueur = {
 		url: "img/marker-shadow-pin-fleub.png",
@@ -407,15 +407,14 @@ var flatfinder = function flatfinderlib(city) {
 				"gamma": 0.54
 			}]
 
-		// Global features
+			// Global features
 		}, {
 			"featureType": "all",
 			"elementType": "labels.text.fill",
 			"stylers": [{
-	                "saturation": 100
-	            },
-	            {
-	                "color": "#1e292c"
+				"saturation": 100
+			}, {
+				"color": "#1e292c"
 			}]
 		}, {
 			"featureType": "poi",
@@ -430,7 +429,7 @@ var flatfinder = function flatfinderlib(city) {
 				"visibility": "simplified"
 			}]
 
-		// Road features
+			// Road features
 		}, {
 			"featureType": "road",
 			"elementType": "labels.icon",
@@ -456,29 +455,25 @@ var flatfinder = function flatfinderlib(city) {
 				"gamma": 7.18
 			}]
 		}, {
-        "featureType": "road.highway",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "hue": "#0e1b1f"
-            },
-            {
-                "saturation": -88
-            },
-            {
-                "lightness": 54
-            },
-            {
-                "visibility": "simplified"
-            }]
+			"featureType": "road.highway",
+			"elementType": "geometry",
+			"stylers": [{
+				"hue": "#0e1b1f"
+			}, {
+				"saturation": -88
+			}, {
+				"lightness": 54
+			}, {
+				"visibility": "simplified"
+			}]
 
-		// Miscelaneous features
+			// Miscelaneous features
 		}, {
 			"featureType": "water",
 			"elementType": "labels.text.fill",
 			"stylers": [{
 				"color": "#0e1b1f"
-           		 
+
 			}]
 		}, {
 			"featureType": "water",
@@ -487,30 +482,27 @@ var flatfinder = function flatfinderlib(city) {
 				"color": "#91bed4"
 			}]
 
-		// Subway features
+			// Subway features
 		}, {
 			"featureType": "transit.station",
 			"elementType": "labels.icon",
 			"stylers": [{
-                "hue": "#85a0a7"
-	            },
-	            {
-                "saturation": 50
-	            },
-	            {
-                "visibility": "simplified"
+				"hue": "#85a0a7"
+			}, {
+				"saturation": 50
+			}, {
+				"visibility": "simplified"
 			}]
 		}, {
 			"featureType": "transit.line",
 			"elementType": "geometry",
 			"stylers": [{
 				"gamma": 0.48
-				},
-	            {
-                "visibility": "on"
+			}, {
+				"visibility": "on"
 			}]
-		
-        }];
+
+		}];
 
 		// Create a new StyledMapType object, passing it the array of styles,
 		// as well as the name to be displayed on the map type control.
@@ -806,5 +798,5 @@ var flatfinder = function flatfinderlib(city) {
 //-----------------------------------------------------------------------------------------------------------
 // Main
 //-----------------------------------------------------------------------------------------------------------
-var window = null;
-google.maps.event.addDomListener(window, 'load', flatfinder.init());
+// var window = null;
+// google.maps.event.addDomListener(window, 'load', flatfinder.init());

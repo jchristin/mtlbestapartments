@@ -12,6 +12,7 @@ module.exports = Reflux.createStore({
 		$.get("api/flats", function(data, status) {
 			if (status === "success") {
 				this.allApartments = data;
+				this.trigger(this.filter());
 			}
 		}.bind(this));
 
