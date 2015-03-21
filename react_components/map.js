@@ -32,9 +32,6 @@ module.exports = React.createClass({
 
 		this.infowindow.setContent(content);
 	},
-	mapCenterLatLng: function() {
-		return new google.maps.LatLng(45.506, -73.556);
-	},
 	onMapDataChange: function(filteredApt) {
 
 		if (this.allApt === undefined) {
@@ -90,7 +87,7 @@ module.exports = React.createClass({
 		this.allApt = undefined;
 
 		var mapOptions = {
-			center: this.mapCenterLatLng(),
+			center: new google.maps.LatLng(45.506, -73.556),
 			zoom: 12
 		};
 
