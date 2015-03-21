@@ -32,54 +32,6 @@ module.exports = React.createClass({
 
 		this.infowindow.setContent(content);
 	},
-	onMapDataChange: function(filteredApt) {
-
-		if (this.allApt === undefined) {
-			this.allApt = _.clone(filteredApt);
-		}
-
-		// Check for new marker to create (should run once)
-		_.forEach(
-			filteredApt,
-			function(Apt) {
-				if (Apt.marker === undefined) {
-					// Create icon if not present.
-					var position = new google.maps.LatLng(
-						Apt.latitude,
-						Apt.longitude);
-
-					var markerIcon = {
-						url: "img/marker-dot.png",
-						size: new google.maps.Size(60, 50),
-						anchor: new google.maps.Point(16, 50)
-					};
-
-					// Add marker nature
-					Apt.marker = new google.maps.Marker({
-						position: position,
-						map: this.map,
-						icon: markerIcon,
-					});
-
-					google.maps.event.addListener(Apt.marker, 'click', function() {
-						this.updateinfowindow(Apt);
-						this.infowindow.open(this.map, Apt.marker);
-					}.bind(this));
-				}
-
-				if (!Apt.marker.getMap()) {
-					Apt.marker.setMap(this.map);
-				}
-
-			}, this);
-
-		// Diffing old vs new tab to hide makers.
-		_.forEach(
-			_.difference(this.allApt, filteredApt),
-			function(Apt) {
-				Apt.marker.setMap(null);
-			});
-	},
 	mapCenterLatLng: function() {
 		return new google.maps.LatLng(45.506, -73.556);
 	},
@@ -197,6 +149,54 @@ module.exports = React.createClass({
 
 		this.map.mapTypes.set('map_style', styledMap);
 		this.map.setMapTypeId('map_style');
+	},
+	onMapDataChange: function(filteredApt) {
+
+		if (this.allApt === undefined) {
+			this.allApt = _.clone(filteredApt);
+		}
+
+		// Check for new marker to create (should run once)
+		_.forEach(
+			filteredApt,
+			function(Apt) {
+				if (Apt.marker === undefined) {
+					// Create icon if not present.
+					var position = new google.maps.LatLng(
+						Apt.latitude,
+						Apt.longitude);
+
+					var markerIcon = {
+						url: "img/marker-dot.png",
+						size: new google.maps.Size(60, 50),
+						anchor: new google.maps.Point(16, 50)
+					};
+
+					// Add marker nature
+					Apt.marker = new google.maps.Marker({
+						position: position,
+						map: this.map,
+						icon: markerIcon,
+					});
+
+					google.maps.event.addListener(Apt.marker, 'click', function() {
+						this.updateinfowindow(Apt);
+						this.infowindow.open(this.map, Apt.marker);
+					}.bind(this));
+				}
+
+				if (!Apt.marker.getMap()) {
+					Apt.marker.setMap(this.map);
+				}
+
+			}, this);
+
+		// Diffing old vs new tab to hide makers.
+		_.forEach(
+			_.difference(this.allApt, filteredApt),
+			function(Apt) {
+				Apt.marker.setMap(null);
+			});
 	},
 	componentWillUnmount: function() {
 		this.unsubscribe();
