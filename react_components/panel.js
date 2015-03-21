@@ -7,17 +7,16 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	onPanelChange: function(isActivated, position, content) {
-		if(content && isActivated) {
-			content = React.createElement(content);
-		} else {
-			content = undefined;
-		}
-
-		this.setState({
+		var newState = {
 			panelClassName: isActivated ? "panel on" : "panel off",
 			position: position,
-			content: content
-		});
+		};
+
+		if(content && isActivated) {
+			newState.content = React.createElement(content);
+		}
+
+		this.setState(newState);
 	},
 	handleClick: function(e) {
 		// Prevent the root component to hide the panel.
