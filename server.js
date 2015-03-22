@@ -15,7 +15,7 @@ server.use(express.query());
 
 server.use(bodyParser.json());
 
-server.use(favicon(path.join(__dirname, "public/img/favicon.ico"), {
+server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
 	maxAge: cacheMaxAge
 }));
 
