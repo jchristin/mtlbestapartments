@@ -24,7 +24,11 @@ server.use(express.static(path.join(__dirname, "public"), {
 }));
 
 server.get("/api/flats", function(req, res) {
-	database.collection("active").find().limit(2000).toArray(function(err, docs) {
+	database.collection("active").find({
+		image: {
+			$ne: null
+		}
+	}).limit(2000).toArray(function(err, docs) {
 		if (err) {
 			console.log(err);
 		} else {
