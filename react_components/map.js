@@ -74,6 +74,27 @@ module.exports = React.createClass({
 				Apt.marker.setMap(null);
 			});
 	},
+	handleZoomChanged: function(currentZoom) {
+		var markerIcoToUse = this.markerIconDot;
+
+		if (currentZoom >= 15) {
+			markerIcoToUse = this.markerIconPin;
+		}
+
+		if (this.allApt !== undefined) {
+
+			if (markerIcoToUse !== this.markerIcon) {
+				this.markerIcon = markerIcoToUse;
+
+				_.forEach(
+					this.allApt,
+					function(Apt) {
+						Apt.marker.setIcon(this.markerIcon);
+					}.bind(this)
+				);
+			}
+		}
+	},
 	componentWillUnmount: function() {
 		this.unsubscribe();
 	},
@@ -85,11 +106,20 @@ module.exports = React.createClass({
 			zoom: 12
 		};
 
-		this.markerIcon = {
+		// Create both marker icon (dot and pin)
+		this.markerIconDot = {
 			url: "img/marker-dot.png",
 			size: new google.maps.Size(10, 10),
 			anchor: new google.maps.Point(5, 5)
 		};
+
+		this.markerIconPin = {
+			url: "img/marker-pin-fleub.png",
+			size: new google.maps.Size(60, 50),
+			anchor: new google.maps.Point(16, 50)
+		};
+
+		this.markerIcon = this.markerIconDot;
 
 		this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
@@ -98,6 +128,11 @@ module.exports = React.createClass({
 		this.map.setMapTypeId("map-style");
 
 		this.infowindow = new google.maps.InfoWindow();
+
+		google.maps.event.addListener(this.map, 'zoom_changed', function() {
+			this.handleZoomChanged(this.map.getZoom());
+		}.bind(this));
+
 		this.unsubscribe = apartStore.listen(this.onMapDataChange);
 	},
 	render: function() {
