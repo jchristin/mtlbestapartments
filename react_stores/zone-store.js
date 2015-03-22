@@ -39,6 +39,7 @@ module.exports = Reflux.createStore({
 			name: name
 		});
 
+		// TODO added trick here to return void zone on %2 click (to be removed)
 		if (this.zones.length) {
 			this.zones.length = 0;
 		} else {
