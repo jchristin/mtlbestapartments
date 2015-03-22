@@ -39,8 +39,12 @@ module.exports = Reflux.createStore({
 			name: name
 		});
 
-		this.zones.length = 0;
-		this.zones.push(zone);
+		if (this.zones.length) {
+			this.zones.length = 0;
+		} else {
+			this.zones.push(zone);
+		}
+
 		this.trigger(this.zones);
 	},
 });
