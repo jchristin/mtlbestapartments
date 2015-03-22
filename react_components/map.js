@@ -48,17 +48,11 @@ module.exports = React.createClass({
 						Apt.latitude,
 						Apt.longitude);
 
-					var markerIcon = {
-						url: "img/marker-dot.png",
-						size: new google.maps.Size(10, 10),
-						anchor: new google.maps.Point(5, 5)
-					};
-
 					// Add marker nature
 					Apt.marker = new google.maps.Marker({
 						position: position,
 						map: this.map,
-						icon: markerIcon,
+						icon: this.markerIcon,
 					});
 
 					google.maps.event.addListener(Apt.marker, 'click', function() {
@@ -89,6 +83,12 @@ module.exports = React.createClass({
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),
 			zoom: 12
+		};
+
+		this.markerIcon = {
+			url: "img/marker-dot.png",
+			size: new google.maps.Size(10, 10),
+			anchor: new google.maps.Point(5, 5)
 		};
 
 		this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
