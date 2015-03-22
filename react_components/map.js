@@ -50,8 +50,8 @@ module.exports = React.createClass({
 
 					var markerIcon = {
 						url: "img/marker-dot.png",
-						size: new google.maps.Size(60, 50),
-						anchor: new google.maps.Point(16, 50)
+						size: new google.maps.Size(10, 10),
+						anchor: new google.maps.Point(5, 5)
 					};
 
 					// Add marker nature
