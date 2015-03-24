@@ -4,7 +4,8 @@
 
 var React = require("react"),
 	_ = require("lodash"),
-	apartStore = require("../react_stores/apart-store");
+	apartStore = require("../react_stores/apart-store"),
+	zoneStore = require("../react_stores/zone-store");
 
 module.exports = React.createClass({
 	updateinfowindow: function(Apt) {
@@ -31,6 +32,17 @@ module.exports = React.createClass({
 		content += '</div>';
 
 		this.infowindow.setContent(content);
+	},
+	clearZones: function() {
+		_.forEach(
+			this.allZone,
+			function(zone) {
+				zone.setMap(null);
+				zone.setVisible(false);
+			}, this
+		);
+
+		this.allZone.length = 0;
 	},
 	onMapDataChange: function(filteredApt) {
 
@@ -119,11 +131,46 @@ module.exports = React.createClass({
 			}
 		}
 	},
+	onZoneChange: function(allZones) {
+		this.clearZones();
+
+		if (allZones.length) {
+			// Build coordonates.
+			_.forEach(
+				allZones,
+				function(zone) {
+					var apath = [];
+					_.forEach(
+						zone.geometry.coordinates,
+						function(coordinate) {
+							var latlng = new google.maps.LatLng(
+								coordinate[0],
+								coordinate[1]);
+
+							apath.push(latlng);
+						}, this
+					);
+
+					var polygon = new google.maps.Polygon({
+						path: apath,
+						strokeColor: "#FF0000",
+						strokeOpacity: 0.1,
+						strokeWeight: 2,
+						map: this.map
+					});
+
+					this.allZone.push(polygon);
+				}, this
+			);
+		}
+	},
 	componentWillUnmount: function() {
-		this.unsubscribe();
+		this.unsubscribeMap();
+		this.unsubscribeZone();
 	},
 	componentDidMount: function() {
 		this.allApt = undefined;
+		this.allZone = [];
 		this.zoom = 12;
 
 		var mapOptions = {
@@ -164,7 +211,8 @@ module.exports = React.createClass({
 			this.handleZoomChanged(this.map.getZoom());
 		}.bind(this));
 
-		this.unsubscribe = apartStore.listen(this.onMapDataChange);
+		this.unsubscribeMap = apartStore.listen(this.onMapDataChange);
+		this.unsubscribeZone = zoneStore.listen(this.onZoneChange);
 	},
 	render: function() {
 		return React.createElement("div", {
