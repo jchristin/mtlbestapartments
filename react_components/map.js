@@ -55,9 +55,13 @@ module.exports = React.createClass({
 						icon: this.markerIcon,
 					});
 
+					Apt.viewed = false;
+
 					google.maps.event.addListener(Apt.marker, 'click', function() {
 						this.updateinfowindow(Apt);
 						this.infowindow.open(this.map, Apt.marker);
+						Apt.marker.setIcon(this.markerIconDotViewed);
+						Apt.viewed = true;
 					}.bind(this));
 				}
 
@@ -75,20 +79,40 @@ module.exports = React.createClass({
 			});
 	},
 	handleZoomChanged: function(currentZoom) {
-		var markerIcoToUse = this.markerIconDot;
 
-		if (currentZoom >= 15) {
-			markerIcoToUse = this.markerIconPin;
-		}
+		var usePin = false;
+		var iconNeedUpdate = false;
 
 		if (this.allApt !== undefined) {
+			// Check if zoom change require marker icon update.
+			if (currentZoom !== this.zoom) {
 
-			if (markerIcoToUse !== this.markerIcon) {
-				this.markerIcon = markerIcoToUse;
+				if ((currentZoom >= 15) && (this.zoom < 15)) {
+					iconNeedUpdate = true;
+					usePin = true;
+				} else if ((currentZoom < 15) && (this.zoom >= 15)) {
+					iconNeedUpdate = true;
+					usePin = false;
+				}
+
+				this.zoom = currentZoom;
+			}
+
+			if (iconNeedUpdate) {
 
 				_.forEach(
 					this.allApt,
 					function(Apt) {
+						var markerIcon;
+
+						// Compute marker icon to set.
+						if (usePin) {
+							markerIcon = this.markerIconPin;
+						} else {
+							markerIcon = (Apt.viewed) ? this.markerIconDotViewed : this.markerIconDot;
+						}
+
+						this.markerIcon = markerIcon;
 						Apt.marker.setIcon(this.markerIcon);
 					}.bind(this)
 				);
@@ -100,15 +124,22 @@ module.exports = React.createClass({
 	},
 	componentDidMount: function() {
 		this.allApt = undefined;
+		this.zoom = 12;
 
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),
-			zoom: 12
+			zoom: this.zoom
 		};
 
-		// Create both marker icon (dot and pin)
+		// Create marker icons (dot and pin)
 		this.markerIconDot = {
 			url: "img/marker-dot.png",
+			size: new google.maps.Size(10, 10),
+			anchor: new google.maps.Point(5, 5)
+		};
+
+		this.markerIconDotViewed = {
+			url: "img/marker-dot-viewed.png",
 			size: new google.maps.Size(10, 10),
 			anchor: new google.maps.Point(5, 5)
 		};
