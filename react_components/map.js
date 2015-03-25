@@ -22,7 +22,7 @@ module.exports = React.createClass({
 		if (Apt.url !== null) {
 			content += '<div align="center">';
 			content += '<a href="';
-			content += Apt.url;
+			content += Apt._id;
 			content += '" target=_blank>';
 			content += 'link';
 			content += '</a>';
