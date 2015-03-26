@@ -8,6 +8,27 @@ var React = require("react"),
 	zoneStore = require("../react_stores/zone-store");
 
 module.exports = React.createClass({
+	createMarker: function(Apt) {
+		var position = new google.maps.LatLng(
+			Apt.latitude,
+			Apt.longitude);
+
+		// Add marker nature
+		Apt.marker = new google.maps.Marker({
+			position: position,
+			map: this.map,
+			icon: this.markerIcon,
+		});
+
+		Apt.viewed = false;
+
+		google.maps.event.addListener(Apt.marker, 'click', function() {
+			this.updateinfowindow(Apt);
+			this.infowindow.open(this.map, Apt.marker);
+			Apt.marker.setIcon(this.markerIconDotViewed);
+			Apt.viewed = true;
+		}.bind(this));
+	},
 	updateinfowindow: function(Apt) {
 		var content = '';
 
@@ -55,33 +76,15 @@ module.exports = React.createClass({
 			filteredApt,
 			function(Apt) {
 				if (Apt.marker === undefined) {
-					// Create icon if not present.
-					var position = new google.maps.LatLng(
-						Apt.latitude,
-						Apt.longitude);
-
-					// Add marker nature
-					Apt.marker = new google.maps.Marker({
-						position: position,
-						map: this.map,
-						icon: this.markerIcon,
-					});
-
-					Apt.viewed = false;
-
-					google.maps.event.addListener(Apt.marker, 'click', function() {
-						this.updateinfowindow(Apt);
-						this.infowindow.open(this.map, Apt.marker);
-						Apt.marker.setIcon(this.markerIconDotViewed);
-						Apt.viewed = true;
-					}.bind(this));
+					this.createMarker(Apt);
 				}
 
 				if (!Apt.marker.getMap()) {
 					Apt.marker.setMap(this.map);
 				}
 
-			}, this);
+			}, this
+		);
 
 		// Diffing old vs new tab to hide makers.
 		_.forEach(
