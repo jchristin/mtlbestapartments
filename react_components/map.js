@@ -54,6 +54,50 @@ module.exports = React.createClass({
 
 		this.infowindow.setContent(content);
 	},
+	updatedisplay: function() {
+		_.forEach(
+			this.filteredApt,
+			function(Apt) {
+				if (this.allZone.length !== 0) {
+					Apt.marker.AptInZone = false;
+					_.forEach(
+						this.allZone,
+						function(polygon) {
+							if (!Apt.marker.AptInZone) {
+								if (google.maps.geometry.poly.containsLocation(
+										Apt.marker.getPosition(),
+										polygon)) {
+									Apt.marker.AptInZone = true;
+									if (!Apt.marker.getMap()) {
+										Apt.marker.setMap(this.map);
+									}
+								}
+							}
+
+						}, this
+					);
+
+					if (!Apt.marker.AptInZone) {
+						Apt.marker.setMap(null);
+					}
+
+				} else {
+					if (!Apt.marker.getMap()) {
+						Apt.marker.setMap(this.map);
+					}
+				}
+
+			}, this
+		);
+
+		// Diffing old vs new tab to hide makers.
+		_.forEach(
+			_.difference(this.allApt, this.filteredApt),
+			function(Apt) {
+				Apt.marker.setMap(null);
+			}
+		);
+	},
 	clearZones: function() {
 		_.forEach(
 			this.allZone,
@@ -67,6 +111,8 @@ module.exports = React.createClass({
 	},
 	onMapDataChange: function(filteredApt) {
 
+		this.filteredApt = filteredApt;
+
 		if (this.allApt === undefined) {
 			this.allApt = _.clone(filteredApt);
 		}
@@ -78,20 +124,10 @@ module.exports = React.createClass({
 				if (Apt.marker === undefined) {
 					this.createMarker(Apt);
 				}
-
-				if (!Apt.marker.getMap()) {
-					Apt.marker.setMap(this.map);
-				}
-
 			}, this
 		);
 
-		// Diffing old vs new tab to hide makers.
-		_.forEach(
-			_.difference(this.allApt, filteredApt),
-			function(Apt) {
-				Apt.marker.setMap(null);
-			});
+		this.updatedisplay();
 	},
 	handleZoomChanged: function(currentZoom) {
 
@@ -134,38 +170,39 @@ module.exports = React.createClass({
 			}
 		}
 	},
+	buildZone: function(zone) {
+		var apath = [];
+		_.forEach(
+			zone.geometry.coordinates,
+			function(coordinate) {
+				var latlng = new google.maps.LatLng(
+					coordinate[0],
+					coordinate[1]);
+
+				apath.push(latlng);
+			}, this
+		);
+
+		return new google.maps.Polygon({
+			path: apath,
+			strokeColor: "#FF0000",
+			strokeOpacity: 0.1,
+			strokeWeight: 2,
+			map: this.map
+		});
+	},
 	onZoneChange: function(allZones) {
 		this.clearZones();
 
-		if (allZones.length) {
-			// Build coordonates.
-			_.forEach(
-				allZones,
-				function(zone) {
-					var apath = [];
-					_.forEach(
-						zone.geometry.coordinates,
-						function(coordinate) {
-							var latlng = new google.maps.LatLng(
-								coordinate[0],
-								coordinate[1]);
+		_.forEach(
+			allZones,
+			function(zone) {
+				var polygon = this.buildZone(zone);
+				this.allZone.push(polygon);
+			}, this
+		);
 
-							apath.push(latlng);
-						}, this
-					);
-
-					var polygon = new google.maps.Polygon({
-						path: apath,
-						strokeColor: "#FF0000",
-						strokeOpacity: 0.1,
-						strokeWeight: 2,
-						map: this.map
-					});
-
-					this.allZone.push(polygon);
-				}, this
-			);
-		}
+		this.updatedisplay();
 	},
 	componentWillUnmount: function() {
 		this.unsubscribeMap();
