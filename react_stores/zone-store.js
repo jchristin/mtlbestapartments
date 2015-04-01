@@ -13,7 +13,8 @@ module.exports = Reflux.createStore({
 			"mercier-hochelaga-maisonneuve": require("../boroughs/mercier-hochelaga-maisonneuve"),
 			"montreal-est": require("../boroughs/montreal-est"),
 			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
-			"ville-marie": require("../boroughs/ville-marie")
+			"ville-marie": require("../boroughs/ville-marie"),
+			"montreal-nord": require("../boroughs/montreal-nord"),
 		};
 
 		this.zones = [];
