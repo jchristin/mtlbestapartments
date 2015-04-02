@@ -15,6 +15,7 @@ module.exports = Reflux.createStore({
 			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
 			"ville-marie": require("../boroughs/ville-marie"),
 			"montreal-nord": require("../boroughs/montreal-nord"),
+			"saint-leonard": require("../boroughs/saint-leonard"),
 		};
 
 		this.zones = [];
