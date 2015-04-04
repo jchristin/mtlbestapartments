@@ -101,7 +101,7 @@ module.exports = React.createClass({
 			function(zone) {
 				zone.setMap(null);
 				zone.setVisible(false);
-			}, this
+			}
 		);
 
 		this.allZone.length = 0;
