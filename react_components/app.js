@@ -14,8 +14,8 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			onClick: this.handleClick,
-		},
+				onClick: this.handleClick,
+			},
 			React.createElement(Sidebar),
 			React.createElement(Panel),
 			React.createElement(Canvas)
