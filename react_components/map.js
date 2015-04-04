@@ -20,13 +20,10 @@ module.exports = React.createClass({
 			icon: this.markerIcon,
 		});
 
-		Apt.viewed = false;
-
 		google.maps.event.addListener(Apt.marker, 'click', function() {
 			this.updateinfowindow(Apt);
 			this.infowindow.open(this.map, Apt.marker);
 			Apt.marker.setIcon(this.markerIconDotViewed);
-			Apt.viewed = true;
 		}.bind(this));
 	},
 	updateinfowindow: function(Apt) {
