@@ -127,16 +127,11 @@ module.exports = React.createClass({
 		this.updatedisplay();
 	},
 	buildZone: function(zone) {
-		var apath = [];
-		_.forEach(
+		var apath = _.map(
 			zone.geometry.coordinates,
-			function(coordinate) {
-				var latlng = new google.maps.LatLng(
-					coordinate[0],
-					coordinate[1]);
-
-				apath.push(latlng);
-			}, this
+			function(coord) {
+				return new google.maps.LatLng(coord[0], coord[1]);
+			}
 		);
 
 		return new google.maps.Polygon({
