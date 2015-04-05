@@ -30,7 +30,7 @@
 	"featureType": "road",
 	"elementType": "labels.icon",
 	"stylers": [{
-		"visibility": "on"
+		"visibility": "off"
 	}]
 }, {
 	"featureType": "road",
