@@ -75,6 +75,12 @@
 		"color": "#91bed4"
 	}]
 }, {
+	"featureType": "poi",
+	"elementType": "all",
+	"stylers": [{
+		"color": "#dbdbdb"
+	}]
+}, {
 	"featureType": "poi.park",
 	"elementType": "geometry.fill",
 	"stylers": [{
