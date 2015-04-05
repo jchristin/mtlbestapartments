@@ -96,6 +96,6 @@
 	"stylers": [{
 		"gamma": 0.48
 	}, {
-		"visibility": "on"
+		"visibility": "off"
 	}]
 }]
