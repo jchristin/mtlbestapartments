@@ -162,11 +162,10 @@ module.exports = React.createClass({
 	componentDidMount: function() {
 		this.allApt = undefined;
 		this.allZone = [];
-		this.zoom = 12;
 
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),
-			zoom: this.zoom
+			zoom: 12
 		};
 
 		// Create marker icons (dot and pin)
