@@ -26,7 +26,10 @@ module.exports = Reflux.createStore({
 	},
 	filter: function() {
 		return _.filter(this.allApartments, function(apart) {
-			return apart.price >= this.price[0] && apart.price <= this.price[1];
+			return apart.price >= this.price[0] &&
+				apart.price <= this.price[1] &&
+				apart.room >= this.bedroom[0] &&
+				apart.room <= this.bedroom[1];
 		}, this);
 	},
 	handleSetPrice: function(price) {

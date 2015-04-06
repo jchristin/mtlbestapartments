@@ -27,6 +27,9 @@ server.get("/api/flats", function(req, res) {
 	database.collection("active").find({
 		image: {
 			$ne: null
+		},
+		room: {
+			$ne: null
 		}
 	}).limit(2000).toArray(function(err, docs) {
 		if (err) {
