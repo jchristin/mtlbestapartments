@@ -21,7 +21,7 @@ module.exports = React.createClass({
 				}),
 				React.createElement(Item, {
 					icon: "fa-home",
-					caption: "Bedrooms",
+					caption: "Rooms",
 					content: require("./bedroom")
 				}),
 				React.createElement(Item, {
