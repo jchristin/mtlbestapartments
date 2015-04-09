@@ -5,7 +5,10 @@
 var React = require("react"),
 	_ = require("lodash"),
 	apartStore = require("../react_stores/apart-store"),
-	zoneStore = require("../react_stores/zone-store");
+	zoneStore = require("../react_stores/zone-store"),
+	tinside = require("turf-inside"),
+	tpolygon = require("turf-polygon"),
+	tpoint = require("turf-point");
 
 module.exports = React.createClass({
 	createMarker: function(Apt) {
@@ -25,6 +28,9 @@ module.exports = React.createClass({
 			this.infowindow.open(this.map, Apt.marker);
 			Apt.marker.setIcon(this.markerIconDotViewed);
 		}.bind(this));
+
+		// turf point.
+		Apt.turfPoint = tpoint([Apt.latitude, Apt.longitude]);
 	},
 	updateinfowindow: function(Apt) {
 		var content = '';
@@ -55,22 +61,20 @@ module.exports = React.createClass({
 		_.forEach(
 			this.filteredApt,
 			function(Apt) {
-				if (this.allZone.length !== 0) {
+				if (this.allTurfPolygon.length !== 0) {
+
 					Apt.marker.AptInZone = false;
 					_.forEach(
-						this.allZone,
+						this.allTurfPolygon,
 						function(polygon) {
 							if (!Apt.marker.AptInZone) {
-								if (google.maps.geometry.poly.containsLocation(
-										Apt.marker.getPosition(),
-										polygon)) {
+								if (tinside(Apt.turfPoint, polygon)) {
 									Apt.marker.AptInZone = true;
 									if (!Apt.marker.getMap()) {
 										Apt.marker.setMap(this.map);
 									}
 								}
 							}
-
 						}, this
 					);
 
@@ -128,7 +132,7 @@ module.exports = React.createClass({
 	},
 	buildZone: function(zone) {
 		var apath = _.map(
-			zone.geometry.coordinates,
+			zone.geometry.coordinates[0],
 			function(coord) {
 				return new google.maps.LatLng(coord[0], coord[1]);
 			}
@@ -144,6 +148,7 @@ module.exports = React.createClass({
 	},
 	onZoneChange: function(allZones) {
 		this.clearZones();
+		this.allTurfPolygon = allZones;
 
 		_.forEach(
 			allZones,
@@ -162,6 +167,7 @@ module.exports = React.createClass({
 	componentDidMount: function() {
 		this.allApt = undefined;
 		this.allZone = [];
+		this.allTurfPolygon = [];
 
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),

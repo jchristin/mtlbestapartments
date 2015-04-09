@@ -38,7 +38,7 @@ module.exports = Reflux.createStore({
 		});
 
 		// Create a turf polygon.
-		var zone = polygon(coords, {
+		var zone = polygon([coords], {
 			name: name
 		});
 
