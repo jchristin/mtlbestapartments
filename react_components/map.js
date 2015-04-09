@@ -7,7 +7,6 @@ var React = require("react"),
 	apartStore = require("../react_stores/apart-store"),
 	zoneStore = require("../react_stores/zone-store"),
 	tinside = require("turf-inside"),
-	tpolygon = require("turf-polygon"),
 	tpoint = require("turf-point");
 
 module.exports = React.createClass({
