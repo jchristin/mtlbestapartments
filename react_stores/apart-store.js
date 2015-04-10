@@ -49,21 +49,9 @@ module.exports = Reflux.createStore({
 		}, this);
 	},
 	isZoneValid: function(apart) {
-		var isValid = false;
-		if (this.zones.length) {
-			_.forEach(
-				this.zones,
-				function(polygon) {
-					if (!isValid && tinside(apart.turfPoint, polygon)) {
-						isValid = true;
-					}
-				}
-			);
-		} else {
-			isValid = true;
-		}
-
-		return isValid;
+		return this.zones.length === 0 || _.any(this.zones, function(polygon) {
+			return tinside(apart.turfPoint, polygon);
+		});
 	},
 	handleSetPrice: function(price) {
 		this.price = price;
