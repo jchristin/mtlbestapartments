@@ -23,8 +23,18 @@ module.exports = Reflux.createStore({
 
 		// Listen to actions.
 		this.listenTo(actions.addBorough, this.handleAddBorough);
+		this.listenTo(actions.removeBorough, this.handleRemoveBorough);
 	},
 	handleAddBorough: function(name) {
+		var zone = _.find(this.zones, function(z) {
+			return z.properties.name === name;
+		});
+
+		if (zone !== undefined) {
+			console.log("Borough alread added: " + name);
+			return;
+		}
+
 		var borough = this.boroughs[name];
 
 		if (borough === undefined) {
@@ -38,17 +48,19 @@ module.exports = Reflux.createStore({
 		});
 
 		// Create a turf polygon.
-		var zone = polygon([coords], {
+		zone = polygon([coords], {
 			name: name
 		});
 
-		// TODO added trick here to return void zone on %2 click (to be removed)
-		if (this.zones.length) {
-			this.zones.length = 0;
-		} else {
-			this.zones.push(zone);
-		}
+		this.zones.push(zone);
 
 		this.trigger(this.zones);
 	},
+	handleRemoveBorough: function(name) {
+		_.remove(this.zones, function(zone) {
+			return zone.properties.name === name;
+		});
+
+		this.trigger(this.zones);
+	}
 });

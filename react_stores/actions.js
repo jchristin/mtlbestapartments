@@ -5,5 +5,6 @@ module.exports = {
 	hidePanel: Reflux.createAction(),
 	setPrice: Reflux.createAction(),
 	setBedroom: Reflux.createAction(),
-	addBorough: Reflux.createAction()
+	addBorough: Reflux.createAction(),
+	removeBorough: Reflux.createAction()
 };
