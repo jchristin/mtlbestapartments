@@ -5,9 +5,7 @@
 var React = require("react"),
 	_ = require("lodash"),
 	apartStore = require("../react_stores/apart-store"),
-	zoneStore = require("../react_stores/zone-store"),
-	tinside = require("turf-inside"),
-	tpoint = require("turf-point");
+	zoneStore = require("../react_stores/zone-store");
 
 module.exports = React.createClass({
 	createMarker: function(Apt) {
@@ -28,8 +26,6 @@ module.exports = React.createClass({
 			Apt.marker.setIcon(this.markerIconDotViewed);
 		}.bind(this));
 
-		// turf point.
-		Apt.turfPoint = tpoint([Apt.latitude, Apt.longitude]);
 	},
 	updateinfowindow: function(Apt) {
 		var content = '';
@@ -55,48 +51,6 @@ module.exports = React.createClass({
 		content += '</div>';
 
 		this.infowindow.setContent(content);
-	},
-	updatedisplay: function() {
-		_.forEach(
-			this.filteredApt,
-			function(Apt) {
-				if (this.allTurfPolygon.length !== 0) {
-
-					Apt.marker.AptInZone = false;
-					_.forEach(
-						this.allTurfPolygon,
-						function(polygon) {
-							if (!Apt.marker.AptInZone) {
-								if (tinside(Apt.turfPoint, polygon)) {
-									Apt.marker.AptInZone = true;
-									if (!Apt.marker.getMap()) {
-										Apt.marker.setMap(this.map);
-									}
-								}
-							}
-						}, this
-					);
-
-					if (!Apt.marker.AptInZone) {
-						Apt.marker.setMap(null);
-					}
-
-				} else {
-					if (!Apt.marker.getMap()) {
-						Apt.marker.setMap(this.map);
-					}
-				}
-
-			}, this
-		);
-
-		// Diffing old vs new tab to hide makers.
-		_.forEach(
-			_.difference(this.allApt, this.filteredApt),
-			function(Apt) {
-				Apt.marker.setMap(null);
-			}
-		);
 	},
 	clearZones: function() {
 		_.forEach(
@@ -124,12 +78,22 @@ module.exports = React.createClass({
 				if (Apt.marker === undefined) {
 					this.createMarker(Apt);
 				}
+
+				if (!Apt.marker.getMap()) {
+					Apt.marker.setMap(this.map);
+				}
+
 			}, this
 		);
 
-		this.updatedisplay();
+		_.forEach(
+			_.difference(this.allApt, filteredApt),
+			function(Apt) {
+				Apt.marker.setMap(null);
+			}
+		);
 	},
-	buildZone: function(zone) {
+	drawZone: function(zone) {
 		var apath = _.map(
 			zone.geometry.coordinates[0],
 			function(coord) {
@@ -147,17 +111,14 @@ module.exports = React.createClass({
 	},
 	onZoneChange: function(allZones) {
 		this.clearZones();
-		this.allTurfPolygon = allZones;
 
 		_.forEach(
 			allZones,
 			function(zone) {
-				var polygon = this.buildZone(zone);
+				var polygon = this.drawZone(zone);
 				this.allZone.push(polygon);
 			}, this
 		);
-
-		this.updatedisplay();
 	},
 	componentWillUnmount: function() {
 		this.unsubscribeMap();
@@ -166,7 +127,6 @@ module.exports = React.createClass({
 	componentDidMount: function() {
 		this.allApt = undefined;
 		this.allZone = [];
-		this.allTurfPolygon = [];
 
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),
