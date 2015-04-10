@@ -3,11 +3,16 @@
 "use strict";
 
 var React = require("react"),
+	Reflux = require("reflux"),
 	_ = require("lodash"),
 	apartStore = require("../react_stores/apart-store"),
 	zoneStore = require("../react_stores/zone-store");
 
 module.exports = React.createClass({
+	mixins: [
+		Reflux.listenTo(apartStore, "onMapDataChange"),
+		Reflux.listenTo(zoneStore, "onZoneChange"),
+	],
 	createMarker: function(Apt) {
 		var position = new google.maps.LatLng(
 			Apt.latitude,
@@ -120,10 +125,6 @@ module.exports = React.createClass({
 			}, this
 		);
 	},
-	componentWillUnmount: function() {
-		this.unsubscribeMap();
-		this.unsubscribeZone();
-	},
 	componentDidMount: function() {
 		this.allApt = undefined;
 		this.allZone = [];
@@ -155,9 +156,6 @@ module.exports = React.createClass({
 		this.map.setMapTypeId("map-style");
 
 		this.infowindow = new google.maps.InfoWindow();
-
-		this.unsubscribeMap = apartStore.listen(this.onMapDataChange);
-		this.unsubscribeZone = zoneStore.listen(this.onZoneChange);
 	},
 	render: function() {
 		return React.createElement("div", {
