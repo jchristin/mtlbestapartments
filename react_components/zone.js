@@ -15,7 +15,8 @@ var React = require("react"),
 		"saint-leonard": "Saint-Leonard",
 		"ville-marie": "Ville-Marie",
 		"senneville": "Senneville",
-		"verdun": "Verdun"
+		"verdun": "Verdun",
+		"saint-laurent": "Saint-Laurent"
 	};
 
 module.exports = React.createClass({
