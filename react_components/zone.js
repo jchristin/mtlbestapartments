@@ -7,6 +7,7 @@ var React = require("react"),
 	boroughs = {
 		"ahuntsic-cartierville": "Ahuntsic-Cartierville",
 		"anjou": "Anjou",
+		"cote-des-neiges-notre-dame-de-grace": "Cote-des-Neiges-Notre-Dame-de-Grace",
 		"cote-saint-luc": "Cote-Saint-Luc",
 		"hampstead": "Hampstead",
 		"lasalle": "Lasalle",
