@@ -17,7 +17,8 @@ var React = require("react"),
 		"senneville": "Senneville",
 		"verdun": "Verdun",
 		"saint-laurent": "Saint-Laurent",
-		"le-sud-ouest": "Le-Sud-Ouest"
+		"le-sud-ouest": "Le-Sud-Ouest",
+		"villeray-saint-michel-parc-extension": "Villeray-Saint-Michel-Parc-Extension",
 	};
 
 module.exports = React.createClass({
