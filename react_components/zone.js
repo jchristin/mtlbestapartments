@@ -22,6 +22,7 @@ var React = require("react"),
 		"verdun": "Verdun",
 		"ville-marie": "Ville-Marie",
 		"villeray-saint-michel-parc-extension": "Villeray-Saint-Michel-Parc-Extension",
+		"westmount": "Westmount",
 	};
 
 module.exports = React.createClass({

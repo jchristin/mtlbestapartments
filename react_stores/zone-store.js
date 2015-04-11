@@ -25,6 +25,7 @@ module.exports = Reflux.createStore({
 			"verdun": require("../boroughs/verdun"),
 			"ville-marie": require("../boroughs/ville-marie"),
 			"villeray-saint-michel-parc-extension": require ("../boroughs/villeray-saint-michel-parc-extension"),
+			"westmount": require ("../boroughs/westmount"),
 		};
 
 		this.zones = [];
