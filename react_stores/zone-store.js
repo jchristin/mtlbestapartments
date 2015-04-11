@@ -10,6 +10,7 @@ module.exports = Reflux.createStore({
 		this.boroughs = {
 			"ahuntsic-cartierville": require ("../boroughs/ahuntsic-cartierville"),
 			"anjou": require("../boroughs/anjou"),
+			"hampstead": require("../boroughs/hampstead"),
 			"lasalle": require("../boroughs/lasalle"),
 			"le-plateau-mont-royal": require("../boroughs/le-plateau-mont-royal"),
 			"le-sud-ouest": require("../boroughs/le-sud-ouest"),
