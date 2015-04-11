@@ -13,6 +13,7 @@ module.exports = Reflux.createStore({
 			"cote-des-neiges-notre-dame-de-grace": require("../boroughs/cote-des-neiges-notre-dame-de-grace"),
 			"cote-saint-luc": require("../boroughs/cote-saint-luc"),
 			"hampstead": require("../boroughs/hampstead"),
+			"lachine": require("../boroughs/lachine"),
 			"lasalle": require("../boroughs/lasalle"),
 			"le-plateau-mont-royal": require("../boroughs/le-plateau-mont-royal"),
 			"le-sud-ouest": require("../boroughs/le-sud-ouest"),
