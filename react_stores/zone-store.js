@@ -8,21 +8,21 @@ var Reflux = require("reflux"),
 module.exports = Reflux.createStore({
 	init: function() {
 		this.boroughs = {
+			"ahuntsic-cartierville": require ("../boroughs/ahuntsic-cartierville"),
 			"anjou": require("../boroughs/anjou"),
 			"le-plateau-mont-royal": require("../boroughs/le-plateau-mont-royal"),
+			"le-sud-ouest": require("../boroughs/le-sud-ouest"),
 			"mercier-hochelaga-maisonneuve": require("../boroughs/mercier-hochelaga-maisonneuve"),
 			"montreal-est": require("../boroughs/montreal-est"),
-			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
-			"ville-marie": require("../boroughs/ville-marie"),
 			"montreal-nord": require("../boroughs/montreal-nord"),
-			"saint-leonard": require("../boroughs/saint-leonard"),
+			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
 			"rosemont-la-petite-patrie": require("../boroughs/rosemont-la-petite-patrie"),
+			"saint-laurent": require("../boroughs/saint-laurent"),
+			"saint-leonard": require("../boroughs/saint-leonard"),
 			"senneville": require("../boroughs/senneville"),
 			"verdun": require("../boroughs/verdun"),
-			"saint-laurent": require("../boroughs/saint-laurent"),
-			"le-sud-ouest": require("../boroughs/le-sud-ouest"),
+			"ville-marie": require("../boroughs/ville-marie"),
 			"villeray-saint-michel-parc-extension": require ("../boroughs/villeray-saint-michel-parc-extension"),
-			"ahuntsic-cartierville": require ("../boroughs/ahuntsic-cartierville"),
 		};
 
 		this.zones = [];
