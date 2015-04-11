@@ -15,6 +15,7 @@ module.exports = Reflux.createStore({
 			"mercier-hochelaga-maisonneuve": require("../boroughs/mercier-hochelaga-maisonneuve"),
 			"montreal-est": require("../boroughs/montreal-est"),
 			"montreal-nord": require("../boroughs/montreal-nord"),
+			"mont-royal": require("../boroughs/mont-royal"),
 			"outremont": require("../boroughs/outremont"),
 			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
 			"rosemont-la-petite-patrie": require("../boroughs/rosemont-la-petite-patrie"),
