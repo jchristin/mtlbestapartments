@@ -13,7 +13,8 @@ var React = require("react"),
 		"riviere-des-prairies-pointe-aux-trembles": "Riviere-des-Prairies-Pointe-aux-Trembles",
 		"rosemont-la-petite-patrie": "Rosemont-La Petite-Patrie",
 		"saint-leonard": "Saint-Leonard",
-		"ville-marie": "Ville-Marie"
+		"ville-marie": "Ville-Marie",
+		"senneville": "Senneville"
 	};
 
 module.exports = React.createClass({
