@@ -22,6 +22,7 @@ module.exports = Reflux.createStore({
 			"saint-laurent": require("../boroughs/saint-laurent"),
 			"le-sud-ouest": require("../boroughs/le-sud-ouest"),
 			"villeray-saint-michel-parc-extension": require ("../boroughs/villeray-saint-michel-parc-extension"),
+			"ahuntsic-cartierville": require ("../boroughs/ahuntsic-cartierville"),
 		};
 
 		this.zones = [];

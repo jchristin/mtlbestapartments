@@ -19,6 +19,7 @@ var React = require("react"),
 		"saint-laurent": "Saint-Laurent",
 		"le-sud-ouest": "Le-Sud-Ouest",
 		"villeray-saint-michel-parc-extension": "Villeray-Saint-Michel-Parc-Extension",
+		"ahuntsic-cartierville": "Ahuntsic-Cartierville",
 	};
 
 module.exports = React.createClass({
