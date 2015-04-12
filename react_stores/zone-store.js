@@ -16,6 +16,7 @@ module.exports = Reflux.createStore({
 			"dollard-des-ormeaux": require("../boroughs/dollard-des-ormeaux"),
 			"dorval": require("../boroughs/dorval"),
 			"hampstead": require("../boroughs/hampstead"),
+			"kirkland": require("../boroughs/kirkland"),
 			"lachine": require("../boroughs/lachine"),
 			"lasalle": require("../boroughs/lasalle"),
 			"le-plateau-mont-royal": require("../boroughs/le-plateau-mont-royal"),
