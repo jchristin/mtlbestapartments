@@ -31,6 +31,8 @@ server.get("/api/flats", function(req, res) {
 		room: {
 			$ne: null
 		}
+	}).sort({
+		"date": -1
 	}).limit(2000).toArray(function(err, docs) {
 		if (err) {
 			console.log(err);
