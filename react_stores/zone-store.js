@@ -28,6 +28,7 @@ module.exports = Reflux.createStore({
 			"montreal-ouest": require("../boroughs/montreal-ouest"),
 			"mont-royal": require("../boroughs/mont-royal"),
 			"outremont": require("../boroughs/outremont"),
+			"pierrefonds-roxboro": require("../boroughs/pierrefonds-roxboro"),
 			"pointe-claire": require("../boroughs/pointe-claire"),
 			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
 			"rosemont-la-petite-patrie": require("../boroughs/rosemont-la-petite-patrie"),
