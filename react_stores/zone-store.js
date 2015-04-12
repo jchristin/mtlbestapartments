@@ -31,6 +31,7 @@ module.exports = Reflux.createStore({
 			"pointe-claire": require("../boroughs/pointe-claire"),
 			"riviere-des-prairies-pointe-aux-trembles": require("../boroughs/riviere-des-prairies-pointe-aux-trembles"),
 			"rosemont-la-petite-patrie": require("../boroughs/rosemont-la-petite-patrie"),
+			"saint-anne-de-bellevue": require("../boroughs/saint-anne-de-bellevue"),
 			"saint-laurent": require("../boroughs/saint-laurent"),
 			"saint-leonard": require("../boroughs/saint-leonard"),
 			"senneville": require("../boroughs/senneville"),
