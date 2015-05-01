@@ -131,6 +131,7 @@ module.exports = React.createClass({
 
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),
+			minZoom: 11,
 			zoom: 12
 		};
 
