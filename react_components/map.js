@@ -157,6 +157,23 @@ module.exports = React.createClass({
 		this.map.setMapTypeId("map-style");
 
 		this.infowindow = new google.maps.InfoWindow();
+
+		// Limit the pan zone.
+		this.lastValidCenter = this.map.getCenter();
+
+		this.allowedBounds = new google.maps.LatLngBounds(
+			new google.maps.LatLng(45.392061, -73.981247), //	south-west
+			new google.maps.LatLng(45.772672, -73.331680) // 	north-east
+		);
+
+		google.maps.event.addListener(this.map, 'center_changed', function() {
+			if (this.allowedBounds.contains(this.map.getCenter())) {
+				this.lastValidCenter = this.map.getCenter();
+				return;
+			}
+
+			this.map.panTo(this.lastValidCenter);
+		}.bind(this));
 	},
 	render: function() {
 		return React.createElement("div", {
