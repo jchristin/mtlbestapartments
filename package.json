@@ -1,41 +1,42 @@
 {
-	"name": "fleub",
-	"version": "1.0.0",
-	"description": "Web app to find apartment in Montreal",
-	"scripts": {
-		"less": "lessc less/index.less > public/bundle.css",
-		"browserify": "browserify react_components/boot.js -o public/bundle.js",
-		"build": "npm run browserify && npm run less",
-		"postinstall": "npm run build",
-		"start": "node server.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://julbaxter@bitbucket.org/julbaxter/flat-finder.git"
-	},
-	"contributors": [
-		"Mathieu Albrespy <mathieu.albrespy@gmail.com>",
-		"Julien Christin <jul.christin@gmail.com>",
-		"Xavier Koubi <helloxavierk@gmail.com>"
-	],
-	"license": "Proprietary",
-	"dependencies": {
-		"body-parser": "^1.9.0",
-		"bootstrap": "^3.3.2",
-		"browserify": "^9.0.3",
-		"express": "^4.9.7",
-		"font-awesome": "^4.3.0",
-		"jquery": "^2.1.3",
-		"jquery-ui": "^1.10.5",
-		"less": "^2.4.0",
-		"lodash": "^3.5.0",
-		"mongodb": "^1.4.19",
-		"react": "^0.13.0",
-		"reflux": "^0.2.5",
-		"request": "^2.51.0",
-		"serve-favicon": "^2.1.5",
-		"turf-polygon": "^1.0.3",
-		"turf-inside": "^1.1.4",
-		"turf-point": "^2.0.1"
-	}
+  "name": "fleub",
+  "version": "1.0.0",
+  "description": "Web app to find apartment in Montreal",
+  "scripts": {
+    "less": "lessc less/index.less > public/bundle.css",
+    "browserify": "browserify react_components/boot.js -o public/bundle.js",
+    "build": "npm run browserify && npm run less",
+    "postinstall": "npm run build",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://julbaxter@bitbucket.org/julbaxter/flat-finder.git"
+  },
+  "contributors": [
+    "Mathieu Albrespy <mathieu.albrespy@gmail.com>",
+    "Julien Christin <jul.christin@gmail.com>",
+    "Xavier Koubi <helloxavierk@gmail.com>"
+  ],
+  "license": "Proprietary",
+  "dependencies": {
+    "body-parser": "^1.9.0",
+    "bootstrap": "^3.3.2",
+    "browserify": "^9.0.3",
+    "express": "^4.9.7",
+    "font-awesome": "^4.3.0",
+    "google-maps-infobox": "^1.1.13",
+    "jquery": "^2.1.3",
+    "jquery-ui": "^1.10.5",
+    "less": "^2.4.0",
+    "lodash": "^3.5.0",
+    "mongodb": "^1.4.19",
+    "react": "^0.13.0",
+    "reflux": "^0.2.5",
+    "request": "^2.51.0",
+    "serve-favicon": "^2.1.5",
+    "turf-inside": "^1.1.4",
+    "turf-point": "^2.0.1",
+    "turf-polygon": "^1.0.3"
+  }
 }

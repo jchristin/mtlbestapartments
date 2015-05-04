@@ -2,11 +2,13 @@
 
 "use strict";
 
-var React = require("react"),
+var _ = require("lodash"),
+	React = require("react"),
 	Reflux = require("reflux"),
-	_ = require("lodash"),
+	InfoBoxLib = require("google-maps-infobox"),
 	apartStore = require("../react_stores/apart-store"),
-	zoneStore = require("../react_stores/zone-store");
+	zoneStore = require("../react_stores/zone-store"),
+	infoBoxComponent = require("./info-box");
 
 module.exports = React.createClass({
 	mixins: [
@@ -26,36 +28,19 @@ module.exports = React.createClass({
 		});
 
 		google.maps.event.addListener(Apt.marker, 'click', function() {
-			this.updateinfowindow(Apt);
-			this.infowindow.open(this.map, Apt.marker);
+			this.infoBox.setContent(
+				React.renderToStaticMarkup(
+					React.createElement(infoBoxComponent, {
+						apart: Apt
+					})
+				)
+			);
+
+			this.infoBox.open(this.map, Apt.marker);
+
 			Apt.marker.setIcon(this.markerIconDotViewed);
 		}.bind(this));
 
-	},
-	updateinfowindow: function(Apt) {
-		var content = '';
-
-		if (Apt.image !== null) {
-			content += '<div align="center">';
-			content += '<img src="';
-			content += Apt.image;
-			content += '" width="300" ALIGN="middle" />';
-			content += '</div>';
-		}
-
-		if (Apt.url !== null) {
-			content += '<div align="center">';
-			content += '<a href="';
-			content += Apt._id;
-			content += '" target=_blank>';
-			content += 'link';
-			content += '</a>';
-			content += '</div>';
-		}
-
-		content += '</div>';
-
-		this.infowindow.setContent(content);
 	},
 	clearZones: function() {
 		_.forEach(
@@ -150,30 +135,43 @@ module.exports = React.createClass({
 
 		this.markerIcon = this.markerIconDot;
 
-		this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
 		var styledMap = new google.maps.StyledMapType(require("./map-style"));
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
 
-		this.infowindow = new google.maps.InfoWindow();
-
 		// Limit the pan zone.
-		this.lastValidCenter = this.map.getCenter();
+		var lastValidCenter = this.map.getCenter();
 
 		this.allowedBounds = new google.maps.LatLngBounds(
-			new google.maps.LatLng(45.392061, -73.981247), //	south-west
-			new google.maps.LatLng(45.772672, -73.331680) // 	north-east
+			new google.maps.LatLng(45.392061, -73.981247), //...south-west
+			new google.maps.LatLng(45.772672, -73.331680) //....north-east
 		);
 
-		google.maps.event.addListener(this.map, 'center_changed', function() {
+		google.maps.event.addListener(this.map, "center_changed", function() {
 			if (this.allowedBounds.contains(this.map.getCenter())) {
-				this.lastValidCenter = this.map.getCenter();
+				lastValidCenter = this.map.getCenter();
 				return;
 			}
 
-			this.map.panTo(this.lastValidCenter);
+			this.map.panTo(lastValidCenter);
 		}.bind(this));
+
+		google.maps.event.addListener(this.map, "click", function() {
+			this.infoBox.close();
+		}.bind(this));
+
+		this.infoBox = new InfoBoxLib({
+			alignBottom: true,
+			disableAutoPan: false,
+			pixelOffset: new google.maps.Size(-140, -15),
+			zIndex: null,
+			closeBoxURL: "",
+			infoBoxClearance: new google.maps.Size(15, 50),
+			pane: "floatPane",
+			enableEventPropagation: false
+		});
 	},
 	render: function() {
 		return React.createElement("div", {
