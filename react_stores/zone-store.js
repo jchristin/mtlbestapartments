@@ -48,6 +48,9 @@ module.exports = Reflux.createStore({
 		// Listen to actions.
 		this.listenTo(actions.addBorough, this.handleAddBorough);
 		this.listenTo(actions.removeBorough, this.handleRemoveBorough);
+		this.listenTo(actions.enableWalkingZone, this.handleEnableWalkingZone);
+		this.listenTo(actions.setWalkingZoneTime, this.handleSetWalkingZoneTime);
+		this.listenTo(actions.setWalkingZoneCenter, this.handleSetWalkingZoneCenter);
 	},
 	handleAddBorough: function(name) {
 		var zone = _.find(this.zones, function(z) {
@@ -86,5 +89,14 @@ module.exports = Reflux.createStore({
 		});
 
 		this.trigger(this.zones);
+	},
+	handleEnableWalkingZone: function(state) {
+		console.log("enableWalkingZone:" + state);
+	},
+	handleSetWalkingZoneTime: function(time) {
+		console.log("setWalkingZoneTime:" + time);
+	},
+	handleSetWalkingZoneCenter: function(center) {
+		console.log("setWalkingZoneCenter:" + center);
 	}
 });

@@ -6,5 +6,8 @@ module.exports = {
 	setPrice: Reflux.createAction(),
 	setBedroom: Reflux.createAction(),
 	addBorough: Reflux.createAction(),
-	removeBorough: Reflux.createAction()
+	removeBorough: Reflux.createAction(),
+	enableWalkingZone: Reflux.createAction(),
+	setWalkingZoneTime: Reflux.createAction(),
+	setWalkingZoneCenter: Reflux.createAction()
 };
