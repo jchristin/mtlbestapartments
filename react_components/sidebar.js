@@ -28,6 +28,11 @@ module.exports = React.createClass({
 					icon: "fa-map-marker",
 					caption: "Zone",
 					content: require("./zone")
+				}),
+				React.createElement(Item, {
+					icon: "fa-street-view",
+					caption: "Walking zone",
+					content: require("./walking-zone")
 				})
 			),
 			React.createElement("div", {
