@@ -8,7 +8,7 @@ var Reflux = require("reflux"),
 module.exports = Reflux.createStore({
 	init: function() {
 		this.boroughs = {
-			"ahuntsic-cartierville": require ("../boroughs/ahuntsic-cartierville"),
+			"ahuntsic-cartierville": require("../boroughs/ahuntsic-cartierville"),
 			"anjou": require("../boroughs/anjou"),
 			"baie-durfe": require("../boroughs/baie-durfe"),
 			"beaconsfield": require("../boroughs/beaconsfield"),
@@ -39,8 +39,8 @@ module.exports = Reflux.createStore({
 			"senneville": require("../boroughs/senneville"),
 			"verdun": require("../boroughs/verdun"),
 			"ville-marie": require("../boroughs/ville-marie"),
-			"villeray-saint-michel-parc-extension": require ("../boroughs/villeray-saint-michel-parc-extension"),
-			"westmount": require ("../boroughs/westmount"),
+			"villeray-saint-michel-parc-extension": require("../boroughs/villeray-saint-michel-parc-extension"),
+			"westmount": require("../boroughs/westmount"),
 		};
 
 		this.zones = [];
