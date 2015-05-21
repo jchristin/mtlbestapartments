@@ -6,6 +6,7 @@
     "less": "lessc less/index.less > public/bundle.css",
     "browserify": "browserify react_components/boot.js -o public/bundle.js",
     "build": "npm run browserify && npm run less",
+    "test": "mocha --recursive --require should",
     "postinstall": "npm run build",
     "start": "node server.js"
   },
@@ -38,5 +39,9 @@
     "turf-inside": "^1.1.4",
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^6.0.3"
   }
 }
