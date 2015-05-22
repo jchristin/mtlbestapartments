@@ -3,6 +3,15 @@
 "use strict";
 
 var React = require("react"),
-	app = require("./app");
+	Router = require('react-router'),
+	Route = Router.Route,
+	App = require("./app");
 
-React.render(React.createElement(app), document.getElementById("app"));
+var routes = React.createElement(Route, {
+	handler: App,
+	path: "/"
+});
+
+Router.run(routes, Router.HistoryLocation, function(Root) {
+	React.render(React.createElement(Root), document.getElementById("app"));
+});
