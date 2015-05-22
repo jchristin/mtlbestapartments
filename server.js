@@ -383,6 +383,10 @@ server.get("/api/polygon", function(req, res) {
 		"traveltype=" + req.query.traveltype).pipe(res);
 });
 
+server.get("*", function (req, res) {
+	res.sendFile(__dirname + "/public/index.html");
+});
+
 mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
 	if (err) {
 		console.log(err);
