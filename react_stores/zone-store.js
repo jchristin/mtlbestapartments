@@ -46,6 +46,7 @@ module.exports = Reflux.createStore({
 		this.zones = [];
 		this.enableWalkingZone = false;
 		this.walkingzonetime = 0;
+		this.walkingzonecenter = [0, 0];
 
 		// Listen to actions.
 		this.listenTo(actions.addBorough, this.handleAddBorough);
@@ -102,5 +103,6 @@ module.exports = Reflux.createStore({
 	},
 	handleSetWalkingZoneCenter: function(center) {
 		console.log("setWalkingZoneCenter:" + center);
+		this.walkingzonecenter = center;
 	}
 });
