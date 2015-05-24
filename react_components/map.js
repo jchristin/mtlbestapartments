@@ -7,6 +7,7 @@ var _ = require("lodash"),
 	Reflux = require("reflux"),
 	apartStore = require("../react_stores/apart-store"),
 	zoneStore = require("../react_stores/zone-store"),
+	actions = require("../react_stores/actions.js"),
 	infoBoxComponent = require("./info-box");
 
 module.exports = React.createClass({
@@ -160,8 +161,12 @@ module.exports = React.createClass({
 			this.map.panTo(lastValidCenter);
 		}.bind(this));
 
-		google.maps.event.addListener(this.map, "click", function() {
+		google.maps.event.addListener(this.map, "click", function(e) {
 			this.infoBox.close();
+
+			if (zoneStore.enableWalkingZone) {
+				actions.setWalkingZoneCenter([e.latLng.lat(), e.latLng.lng()]);
+			}
 		}.bind(this));
 
 		this.infoBox = new InfoBoxLib({
