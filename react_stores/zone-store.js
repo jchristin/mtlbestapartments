@@ -124,7 +124,6 @@ module.exports = Reflux.createStore({
 				}),
 				function(data, status) {
 					if (status === 'success') {
-						console.log(data);
 						this.zones.push(data);
 						this.trigger(this.zones);
 					}
