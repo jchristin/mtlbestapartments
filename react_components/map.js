@@ -43,6 +43,21 @@ module.exports = React.createClass({
 		}.bind(this));
 
 	},
+	createWalkingMarker: function(lat, lng) {
+		var position = new google.maps.LatLng(lat, lng);
+
+		this.walkingmarker = new google.maps.Marker({
+			position: position,
+			map: this.map,
+			draggable: true,
+		});
+
+		actions.setWalkingZoneCenter([lat, lng]);
+
+		google.maps.event.addListener(this.walkingmarker, 'dragend', function(e) {
+			actions.setWalkingZoneCenter([e.latLng.lat(), e.latLng.lng()]);
+		}.bind(this));
+	},
 	clearZones: function() {
 		_.forEach(
 			this.allZone,
@@ -115,6 +130,8 @@ module.exports = React.createClass({
 		this.allApt = undefined;
 		this.allZone = [];
 
+		this.walkingmarker = undefined;
+
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),
 			minZoom: 11,
@@ -163,8 +180,8 @@ module.exports = React.createClass({
 		google.maps.event.addListener(this.map, "click", function(e) {
 			this.infoBox.close();
 
-			if (zoneStore.enableWalkingZone) {
-				actions.setWalkingZoneCenter([e.latLng.lat(), e.latLng.lng()]);
+			if (zoneStore.enableWalkingZone && (this.walkingmarker === undefined)) {
+				this.createWalkingMarker(e.latLng.lat(), e.latLng.lng());
 			}
 		}.bind(this));
 
