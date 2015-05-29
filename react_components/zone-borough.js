@@ -3,7 +3,7 @@
 var React = require("react"),
 	_ = require("lodash"),
 	actions = require("../react_stores/actions"),
-	zoneStore = require("../react_stores/zone-store"),
+	zoneStoreBorough = require("../react_stores/zone-store-borough"),
 	boroughs = {
 		"ahuntsic-cartierville": "Ahuntsic-Cartierville",
 		"anjou": "Anjou",
@@ -42,7 +42,7 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	createCheckbox: function(value, key) {
-		var checked = _.find(zoneStore.zones, function(zone) {
+		var checked = _.find(zoneStoreBorough.zones, function(zone) {
 			return zone.properties.name === key;
 		});
 

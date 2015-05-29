@@ -2,21 +2,21 @@
 
 var React = require("react"),
 	actions = require("../react_stores/actions"),
-	zoneStore = require("../react_stores/zone-store"),
+	zoneStoreWalking = require("../react_stores/zone-store-walking"),
 	$ = require("jquery-ui"),
 	$ = require("jquery");
 
 module.exports = React.createClass({
 	getInitialState: function() {
 		return {
-			time: zoneStore.walkingzonetime
+			time: zoneStoreWalking.walkingzonetime
 		};
 	},
 	createCheckbox: function() {
 		return React.createElement("div", null,
 			React.createElement("input", {
 				type: "checkbox",
-				defaultChecked: zoneStore.enableWalkingZone,
+				defaultChecked: zoneStoreWalking.enableWalkingZone,
 				onChange: this.handleChange
 			}, " Enable walking zone")
 		);
@@ -30,7 +30,7 @@ module.exports = React.createClass({
 			min: 0,
 			max: 20,
 			step: 1,
-			value: zoneStore.walkingzonetime,
+			value: zoneStoreWalking.walkingzonetime,
 			slide: function(event, ui) {
 				actions.setWalkingZoneTime(ui.value);
 				this.setState({

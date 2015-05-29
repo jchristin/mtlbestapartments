@@ -7,7 +7,7 @@ var _ = require("lodash"),
 	Reflux = require("reflux"),
 	InfoBoxLib = require("google-maps-infobox"),
 	apartStore = require("../react_stores/apart-store"),
-	zoneStore = require("../react_stores/zone-store"),
+	zoneStoreBorough = require("../react_stores/zone-store-borough"),
 	zoneStoreWalking = require("../react_stores/zone-store-walking"),
 	actions = require("../react_stores/actions.js"),
 	infoBoxComponent = require("./info-box");
@@ -15,7 +15,7 @@ var _ = require("lodash"),
 module.exports = React.createClass({
 	mixins: [
 		Reflux.listenTo(apartStore, "onMapDataChange"),
-		Reflux.listenTo(zoneStore, "onZoneChange"),
+		Reflux.listenTo(zoneStoreBorough, "onZoneBoroughChange"),
 		Reflux.listenTo(zoneStoreWalking, "onZoneWalkingChange"),
 	],
 	createMarker: function(Apt) {
@@ -128,7 +128,7 @@ module.exports = React.createClass({
 			map: this.map
 		});
 	},
-	onZoneChange: function(allZones) {
+	onZoneBoroughChange: function(allZones) {
 		this.clearZones();
 
 		_.forEach(
