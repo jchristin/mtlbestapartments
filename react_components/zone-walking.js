@@ -41,7 +41,7 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-				className: "walking-zone"
+				className: "zone-walking"
 			},
 			React.createElement("div", {
 				className: "enable-walking-zone"
