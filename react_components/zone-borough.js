@@ -65,7 +65,7 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			className: "zone"
+			className: "zone-borough"
 		}, _.map(boroughs, this.createCheckbox));
 	}
 });
