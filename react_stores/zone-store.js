@@ -3,8 +3,7 @@
 var Reflux = require("reflux"),
 	actions = require("./actions.js"),
 	polygon = require("turf-polygon"),
-	_ = require("lodash"),
-	$ = require("jquery");
+	_ = require("lodash");
 
 module.exports = Reflux.createStore({
 	init: function() {
@@ -46,16 +45,9 @@ module.exports = Reflux.createStore({
 
 		this.zones = [];
 
-		this.enableWalkingZone = false;
-		this.walkingzonetime = 0;
-		this.walkingzonecenter = undefined;
-
 		// Listen to actions.
 		this.listenTo(actions.addBorough, this.handleAddBorough);
 		this.listenTo(actions.removeBorough, this.handleRemoveBorough);
-		this.listenTo(actions.enableWalkingZone, this.handleEnableWalkingZone);
-		this.listenTo(actions.setWalkingZoneTime, this.handleSetWalkingZoneTime);
-		this.listenTo(actions.setWalkingZoneCenter, this.handleSetWalkingZoneCenter);
 	},
 	handleAddBorough: function(name) {
 		var zone = _.find(this.zones, function(z) {
@@ -95,40 +87,4 @@ module.exports = Reflux.createStore({
 
 		this.trigger(this.zones);
 	},
-	handleEnableWalkingZone: function(state) {
-		this.enableWalkingZone = state;
-	},
-	handleSetWalkingZoneTime: function(time) {
-		this.walkingzonetime = time;
-		this.requestWalkingZone();
-	},
-	handleSetWalkingZoneCenter: function(center) {
-
-		if (this.enableWalkingZone) {
-			this.walkingzonecenter = center;
-			this.requestWalkingZone();
-		} else {
-			this.walkingzonecenter = undefined;
-		}
-	},
-	requestWalkingZone: function() {
-		if (this.enableWalkingZone &&
-			(this.walkingzonetime > 0) &&
-			(this.walkingzonecenter !== undefined)) {
-			$.get("api/polygon?" +
-				$.param({
-					lat: this.walkingzonecenter[0],
-					long: this.walkingzonecenter[1],
-					timeinmin: this.walkingzonetime,
-					traveltype: 'walking',
-				}),
-				function(data, status) {
-					if (status === 'success') {
-						this.zones.push(data);
-						this.trigger(this.zones);
-					}
-				}.bind(this)
-			);
-		}
-	}
 });
