@@ -2,7 +2,7 @@
 
 var Reflux = require("reflux"),
 	actions = require("./actions.js"),
-	zoneStoreBorough = require("./zone-store"),
+	zoneStoreBorough = require("./zone-store-borough"),
 	zoneStoreWalking = require("./zone-store-walking"),
 	tinside = require("turf-inside"),
 	tpoint = require("turf-point"),
@@ -73,7 +73,6 @@ module.exports = Reflux.createStore({
 	handleZoneWalkingChange: function(zones) {
 		this.zonesWalking = zones;
 		this.zones = this.zonesBorough.concat(this.zonesWalking);
-		console.log(this.zones);
 		this.trigger(this.filter());
 	},
 });
