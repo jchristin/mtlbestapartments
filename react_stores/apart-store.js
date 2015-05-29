@@ -2,7 +2,8 @@
 
 var Reflux = require("reflux"),
 	actions = require("./actions.js"),
-	zoneStore = require("./zone-store"),
+	zoneStoreBorough = require("./zone-store"),
+	zoneStoreWalking = require("./zone-store-walking"),
 	tinside = require("turf-inside"),
 	tpoint = require("turf-point"),
 	$ = require("jquery"),
@@ -31,12 +32,15 @@ module.exports = Reflux.createStore({
 		// Define internal state.
 		this.price = [0, 4000];
 		this.bedroom = [1, 7];
+		this.zonesBorough = [];
+		this.zonesWalking = [];
 		this.zones = [];
 
 		// Listen to actions.
 		this.listenTo(actions.setPrice, this.handleSetPrice);
 		this.listenTo(actions.setBedroom, this.handleSetBedroom);
-		this.listenTo(zoneStore, this.handleZoneChange);
+		this.listenTo(zoneStoreBorough, this.handleZoneBoroughChange);
+		this.listenTo(zoneStoreWalking, this.handleZoneWalkingChange);
 	},
 
 	filter: function() {
@@ -45,10 +49,10 @@ module.exports = Reflux.createStore({
 				apart.price <= this.price[1] &&
 				apart.room >= this.bedroom[0] &&
 				apart.room <= this.bedroom[1] &&
-				this.isZoneValid(apart);
+				this.isZonesValid(apart);
 		}, this);
 	},
-	isZoneValid: function(apart) {
+	isZonesValid: function(apart) {
 		return this.zones.length === 0 || _.any(this.zones, function(polygon) {
 			return tinside(apart.turfPoint, polygon);
 		});
@@ -61,8 +65,15 @@ module.exports = Reflux.createStore({
 		this.bedroom = bedroom;
 		this.trigger(this.filter());
 	},
-	handleZoneChange: function(zones) {
-		this.zones = zones;
+	handleZoneBoroughChange: function(zones) {
+		this.zonesBorough = zones;
+		this.zones = this.zonesBorough.concat(this.zonesWalking);
+		this.trigger(this.filter());
+	},
+	handleZoneWalkingChange: function(zones) {
+		this.zonesWalking = zones;
+		this.zones = this.zonesBorough.concat(this.zonesWalking);
+		console.log(this.zones);
 		this.trigger(this.filter());
 	},
 });

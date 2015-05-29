@@ -8,6 +8,7 @@ var _ = require("lodash"),
 	InfoBoxLib = require("google-maps-infobox"),
 	apartStore = require("../react_stores/apart-store"),
 	zoneStore = require("../react_stores/zone-store"),
+	zoneStoreWalking = require("../react_stores/zone-store-walking"),
 	actions = require("../react_stores/actions.js"),
 	infoBoxComponent = require("./info-box");
 
@@ -15,6 +16,7 @@ module.exports = React.createClass({
 	mixins: [
 		Reflux.listenTo(apartStore, "onMapDataChange"),
 		Reflux.listenTo(zoneStore, "onZoneChange"),
+		Reflux.listenTo(zoneStoreWalking, "onZoneWalkingChange"),
 	],
 	createMarker: function(Apt) {
 		var position = new google.maps.LatLng(
@@ -68,6 +70,17 @@ module.exports = React.createClass({
 		);
 
 		this.allZone.length = 0;
+	},
+	clearZonesWalking: function() {
+		_.forEach(
+			this.allZoneWalking,
+			function(zone) {
+				zone.setMap(null);
+				zone.setVisible(false);
+			}
+		);
+
+		this.allZoneWalking.length = 0;
 	},
 	onMapDataChange: function(filteredApt) {
 
@@ -126,9 +139,16 @@ module.exports = React.createClass({
 			}, this
 		);
 	},
+	onZoneWalkingChange: function(theWalkingZone) {
+		this.clearZonesWalking();
+
+		var polygon = this.drawZone(theWalkingZone);
+		this.allZoneWalking.push(polygon);
+	},
 	componentDidMount: function() {
 		this.allApt = undefined;
 		this.allZone = [];
+		this.allZoneWalking = [];
 
 		this.walkingmarker = undefined;
 
@@ -180,7 +200,7 @@ module.exports = React.createClass({
 		google.maps.event.addListener(this.map, "click", function(e) {
 			this.infoBox.close();
 
-			if (zoneStore.enableWalkingZone && (this.walkingmarker === undefined)) {
+			if (zoneStoreWalking.enableWalkingZone && (this.walkingmarker === undefined)) {
 				this.createWalkingMarker(e.latLng.lat(), e.latLng.lng());
 			}
 		}.bind(this));
