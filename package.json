@@ -6,6 +6,7 @@
     "less": "lessc less/index.less > public/bundle.css",
     "browserify": "browserify react_components/boot.js -o public/bundle.js",
     "build": "npm run browserify && npm run less",
+    "test": "mocha --recursive --require should",
     "postinstall": "npm run build",
     "start": "node server.js"
   },
@@ -32,11 +33,16 @@
     "lodash": "^3.5.0",
     "mongodb": "^1.4.19",
     "react": "^0.13.0",
+    "react-router": "^0.13.3",
     "reflux": "^0.2.5",
     "request": "^2.51.0",
     "serve-favicon": "^2.1.5",
     "turf-inside": "^1.1.4",
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^6.0.3"
   }
 }

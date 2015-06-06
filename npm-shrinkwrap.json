@@ -1529,6 +1529,23 @@
         }
       }
     },
+    "react-router": {
+      "version": "0.13.3",
+      "from": "react-router@*",
+      "resolved": "https://registry.npmjs.org/react-router/-/react-router-0.13.3.tgz",
+      "dependencies": {
+        "object-assign": {
+          "version": "2.0.0",
+          "from": "object-assign@>=2.0.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-2.0.0.tgz"
+        },
+        "qs": {
+          "version": "2.4.1",
+          "from": "qs@2.4.1",
+          "resolved": "https://registry.npmjs.org/qs/-/qs-2.4.1.tgz"
+        }
+      }
+    },
     "reflux": {
       "version": "0.2.5",
       "from": "reflux@*",
