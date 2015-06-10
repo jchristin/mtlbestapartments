@@ -1,10 +1,12 @@
 "use strict";
 
 var path = require("path"),
-	request = require("request"),
 	express = require("express"),
 	bodyParser = require("body-parser"),
 	favicon = require("serve-favicon"),
+	osmToGraph = require("osm-to-graph"),
+	graph = osmToGraph.loadGraph("./montreal.json"),
+	polygon = require("./polygon"),
 	server = express(),
 	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
 	port = process.env.PORT || 5000,
@@ -376,11 +378,27 @@ server.get("/api/stations", function(req, res) {
 });
 
 server.get("/api/polygon", function(req, res) {
-	request.get(process.env.FLAT_CARTO_URL + "api/polygon?" +
-		"lat=" + req.query.lat + "&" +
-		"long=" + req.query.long + "&" +
-		"timeinmin=" + req.query.timeinmin + "&" +
-		"traveltype=" + req.query.traveltype).pipe(res);
+	if ((typeof req.query.traveltype === "undefined") ||
+		(typeof req.query.timeinmin === "undefined") ||
+		(typeof req.query.lat === "undefined") ||
+		(typeof req.query.long === "undefined")) {
+		res.json({
+			"status": "error",
+			"data": null,
+			/* or optional error payload */
+			"message": "Wrong parameters to polygon"
+		});
+	}
+
+	// Compute distance in meter, according to the travel type and the time.
+	var distmeter = Math.ComputeDistance(
+		req.query.traveltype,
+		req.query.timeinmin
+	);
+
+	var hull = polygon(graph, distmeter, req.query.lat, req.query.long);
+
+	res.json(hull);
 });
 
 server.get("*", function (req, res) {
