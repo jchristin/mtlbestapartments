@@ -79,7 +79,6 @@ module.exports = React.createClass({
 			onClick: tile.onClick || defaultOnClick,
 			style: {
 				width: (this.state.cellSize * tile.size) + remaining,
-				height: this.state.cellSize
 			}
 		}, React.createElement("div", {
 			className: "content " + tile.className

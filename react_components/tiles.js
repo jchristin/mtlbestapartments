@@ -9,14 +9,14 @@ var createTile = function(caption) {
 	};
 };
 
-var tileB = {
+var tilePrice = {
 	size: 1,
 	content: [React.createElement("div", null, React.createElement("i", {
-			className: "fa fa-cog"
+			className: "fa fa-usd"
 		})),
-		React.createElement("div", null, "Settings")
+		React.createElement("div", null, "Price")
 	],
-	subtiles: [createTile("1"),createTile("2"), createTile("3"), createTile("4"), createTile("5")  ]
+	subtiles: []
 };
 
-module.exports = [createTile("A"), tileB, createTile("B"), createTile("C")];
+module.exports = [tilePrice, createTile("B"), createTile("C")];
