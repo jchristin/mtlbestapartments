@@ -5,7 +5,6 @@
 var _ = require("lodash"),
 	React = require("react"),
 	Reflux = require("reflux"),
-	InfoBoxLib = require("google-maps-infobox"),
 	apartStore = require("../react_stores/apart-store"),
 	zoneStore = require("../react_stores/zone-store"),
 	infoBoxComponent = require("./info-box");
@@ -111,6 +110,8 @@ module.exports = React.createClass({
 		);
 	},
 	componentDidMount: function() {
+		var InfoBoxLib = require("google-maps-infobox");
+
 		this.allApt = undefined;
 		this.allZone = [];
 

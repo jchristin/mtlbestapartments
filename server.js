@@ -26,6 +26,11 @@ server.use(express.static(path.join(__dirname, "public"), {
 }));
 
 server.get("/api/flats", function(req, res) {
+	if(!database) {
+		res.sendStatus(500);
+		return;
+	}
+
 	database.collection("active").find({
 		image: {
 			$ne: null
@@ -405,15 +410,17 @@ server.get("*", function (req, res) {
 	res.sendFile(__dirname + "/public/index.html");
 });
 
+// Connect database.
 mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
 	if (err) {
 		console.log(err);
 	} else {
 		console.log("Connected to the database");
 		database = db;
-
-		// Start server
-		server.listen(port);
-		console.log("Listening on " + port);
 	}
 });
+
+// Start server.
+server.listen(port);
+console.log("Listening on " + port);
+
