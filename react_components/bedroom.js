@@ -1,9 +1,7 @@
 "use strict";
 
 var React = require("react"),
-	actions = require("../react_stores/actions"),
-	$ = require("jquery-ui"),
-	$ = require("jquery");
+	actions = require("../react_stores/actions");
 
 module.exports = React.createClass({
 	getInitialState: function() {
