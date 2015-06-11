@@ -124,10 +124,15 @@ module.exports = React.createClass({
 
 		while (tiles.length > 0) {
 			var row = [];
-			var cellAvailable = this.state.cellCount - 2;
+			var cellAvailable = this.state.cellCount - 1;
 			while (tiles.length > 0 && cellAvailable - tiles[0].size >= 0) {
 				cellAvailable = cellAvailable - tiles[0].size;
 				row.push(tiles.shift());
+			}
+
+			if(tiles.length > 0) {
+				tiles.unshift(row.pop());
+				row.push(this.createNextTile());
 			}
 
 			if (row.length === 0) {
@@ -135,14 +140,6 @@ module.exports = React.createClass({
 			}
 
 			rows.push(row);
-		}
-
-		if (rows.length > 1 && _.last(rows).length === 1) {
-			var lastTile = _.first(_.last(rows));
-			if (lastTile.size === 1) {
-				rows.pop();
-				_.last(rows).push(lastTile);
-			}
 		}
 
 		if (this.state.stack.length > 1) {
@@ -153,9 +150,6 @@ module.exports = React.createClass({
 
 		_.forEach(_.rest(rows), function(row) {
 			row.unshift(this.createPrevTile());
-		}, this);
-		_.forEach(_.initial(rows), function(row) {
-			row.push(this.createNextTile());
 		}, this);
 
 		return React.createElement("div", {
