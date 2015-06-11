@@ -2,9 +2,7 @@
 
 var React = require("react"),
 	actions = require("../react_stores/actions"),
-	apartStore = require("../react_stores/apart-store"),
-	$ = require("jquery-ui"),
-	$ = require("jquery");
+	apartStore = require("../react_stores/apart-store");
 
 module.exports = React.createClass({
 	getInitialState: function() {
