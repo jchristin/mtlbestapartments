@@ -8,6 +8,42 @@ var _ = require("lodash"),
 	tfeaturecollection = require("turf-featurecollection"),
 	trigohelper = require("./trigohelper.js");
 
+function ComputeDistance(traveltype, timeinmin) {
+	var distmeter = 0;
+
+	switch (traveltype) {
+		case 'walking':
+			// Average walking speed is 4.86 Km / h
+			// 4860 / 60 = 81 meters / minutes.
+			distmeter = 81 * timeinmin;
+			break;
+
+		case 'bicycling':
+			// Average bicycling speed is 15.5 km / h
+			// 15500 / 60 = 258.33 meters / minutes.
+			distmeter = 258.33 * timeinmin;
+			break;
+
+		case 'driving':
+			// Average walking speed is 28.64 Km / h
+			// 28640 / 60 = 477.33 meters / minutes.
+			distmeter = 477.33 * timeinmin;
+			break;
+
+		case 'transit':
+			// Average bicycling speed is 40.0 km / h
+			// 40000 / 60 = 666.66 meters / minutes.
+			distmeter = 666.66 * timeinmin;
+			break;
+
+		default:
+			console.log("Unknown travel type = " + traveltype);
+			console.log("Time in minutes = " + timeinmin);
+			break;
+	}
+	return distmeter;
+};
+
 function nearestPointNode(osm, latdeg, lngdeg) {
 	var nearestNode;
 	var nearestdistance;
@@ -115,7 +151,9 @@ function traversingGraph(
 	});
 }
 
-module.exports = function(osm, distmeter, lat, lng) {
+module.exports = function(osm, traveltype, timeinmin, lat, lng) {
+
+	var distmeter = ComputeDistance(traveltype, timeinmin);
 
 	// Reset view node state.
 	_.forEach(osm.graph, function(node) {
