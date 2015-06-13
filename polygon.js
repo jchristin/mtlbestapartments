@@ -3,12 +3,12 @@
 var _ = require("lodash"),
 	firstIteration = true,
 	polygonpoints = [],
-	tpoint = require("turf-point"),
-	tconvex = require("turf-convex"),
-	tfeaturecollection = require("turf-featurecollection"),
+	turfpoint = require("turf-point"),
+	turfconvex = require("turf-convex"),
+	turffeaturecollection = require("turf-featurecollection"),
 	trigohelper = require("./trigohelper.js");
 
-function ComputeDistance(traveltype, timeinmin) {
+function computeDistance(traveltype, timeinmin) {
 	var distmeter = 0;
 
 	switch (traveltype) {
@@ -42,7 +42,7 @@ function ComputeDistance(traveltype, timeinmin) {
 			break;
 	}
 	return distmeter;
-};
+}
 
 function nearestPointNode(osm, latdeg, lngdeg) {
 	var nearestNode;
@@ -153,7 +153,7 @@ function traversingGraph(
 
 module.exports = function(osm, traveltype, timeinmin, lat, lng) {
 
-	var distmeter = ComputeDistance(traveltype, timeinmin);
+	var distmeter = computeDistance(traveltype, timeinmin);
 
 	// Reset view node state.
 	_.forEach(osm.graph, function(node) {
@@ -175,11 +175,11 @@ module.exports = function(osm, traveltype, timeinmin, lat, lng) {
 	);
 
 	var points = _.map(polygonpoints, function(coord) {
-		return tpoint([Number(coord[0]), Number(coord[1])]);
+		return turfpoint([Number(coord[0]), Number(coord[1])]);
 	});
 
-	var fcpoints = tfeaturecollection(points);
-	var hull = tconvex(fcpoints);
+	var fcpoints = turffeaturecollection(points);
+	var hull = turfconvex(fcpoints);
 
 	return hull;
 };
