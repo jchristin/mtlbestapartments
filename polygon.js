@@ -44,11 +44,11 @@ function computeDistance(traveltype, timeinmin) {
 	return distmeter;
 }
 
-function nearestPointNode(osm, latdeg, lngdeg) {
+function nearestPointNode(graph, latdeg, lngdeg) {
 	var nearestNode;
 	var nearestdistance;
 
-	_.forEach(osm.graph, function(node) {
+	_.forEach(graph, function(node) {
 		if (typeof nearestNode === 'undefined') {
 			nearestNode = node;
 
@@ -151,16 +151,16 @@ function traversingGraph(
 	});
 }
 
-module.exports = function(osm, traveltype, timeinmin, lat, lng) {
+module.exports = function(graph, traveltype, timeinmin, lat, lng) {
 
 	var distmeter = computeDistance(traveltype, timeinmin);
 
 	// Reset view node state.
-	_.forEach(osm.graph, function(node) {
+	_.forEach(graph, function(node) {
 		node.viewed = false;
 	});
 
-	var nearestNode = nearestPointNode(osm, lat, lng);
+	var nearestNode = nearestPointNode(graph, lat, lng);
 
 	firstIteration = true;
 	polygonpoints.length = 0;
