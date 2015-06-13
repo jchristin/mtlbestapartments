@@ -5,7 +5,6 @@
 var _ = require("lodash"),
 	React = require("react"),
 	Reflux = require("reflux"),
-	InfoBoxLib = require("google-maps-infobox"),
 	apartStore = require("../react_stores/apart-store"),
 	zoneStoreBorough = require("../react_stores/zone-store-borough"),
 	zoneStoreWalking = require("../react_stores/zone-store-walking"),
@@ -146,6 +145,8 @@ module.exports = React.createClass({
 		this.allZoneWalking.push(polygon);
 	},
 	componentDidMount: function() {
+		var InfoBoxLib = require("google-maps-infobox");
+
 		this.allApt = undefined;
 		this.allZone = [];
 		this.allZoneWalking = [];
