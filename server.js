@@ -26,7 +26,7 @@ server.use(express.static(path.join(__dirname, "public"), {
 }));
 
 server.get("/api/flats", function(req, res) {
-	if(!database) {
+	if (!database) {
 		res.sendStatus(500);
 		return;
 	}
@@ -395,18 +395,17 @@ server.get("/api/polygon", function(req, res) {
 		});
 	}
 
-	// Compute distance in meter, according to the travel type and the time.
-	var distmeter = Math.ComputeDistance(
+	var hull = polygon(
+		graph,
 		req.query.traveltype,
-		req.query.timeinmin
-	);
-
-	var hull = polygon(graph, distmeter, req.query.lat, req.query.long);
+		req.query.timeinmin,
+		req.query.lat,
+		req.query.long);
 
 	res.json(hull);
 });
 
-server.get("*", function (req, res) {
+server.get("*", function(req, res) {
 	res.sendFile(__dirname + "/public/index.html");
 });
 
@@ -423,4 +422,3 @@ mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
 // Start server.
 server.listen(port);
 console.log("Listening on " + port);
-
