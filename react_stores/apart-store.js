@@ -21,7 +21,7 @@ module.exports = Reflux.createStore({
 				_.forEach(
 					this.allApartments,
 					function(apt) {
-						apt.turfPoint = tpoint([apt.latitude, apt.longitude]);
+						apt.turfPoint = tpoint([apt.longitude, apt.latitude]);
 					}
 				);
 

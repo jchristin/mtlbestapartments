@@ -115,7 +115,7 @@ module.exports = React.createClass({
 		var apath = _.map(
 			zone.geometry.coordinates[0],
 			function(coord) {
-				return new google.maps.LatLng(coord[0], coord[1]);
+				return new google.maps.LatLng(coord[1], coord[0]);
 			}
 		);
 

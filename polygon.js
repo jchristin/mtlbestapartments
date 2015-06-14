@@ -5,8 +5,10 @@ var _ = require("lodash"),
 	polygonpoints = [],
 	turfpoint = require("turf-point"),
 	turfconvex = require("turf-convex"),
-	turffeaturecollection = require("turf-featurecollection"),
-	trigohelper = require("./trigohelper.js");
+	turfdistance = require("turf-distance"),
+	turfdestination = require("turf-destination"),
+	turfbearing = require("turf-bearing"),
+	turffeaturecollection = require("turf-featurecollection");
 
 function computeDistance(traveltype, timeinmin) {
 	var distmeter = 0;
@@ -44,25 +46,24 @@ function computeDistance(traveltype, timeinmin) {
 	return distmeter;
 }
 
-function nearestPointNode(graph, latdeg, lngdeg) {
+function nearestPointNode(graph, tpointorign) {
 	var nearestNode;
 	var nearestdistance;
 
 	_.forEach(graph, function(node) {
 		if (typeof nearestNode === 'undefined') {
+			// Set the initial value (should run once)
 			nearestNode = node;
 
-			nearestdistance = trigohelper.distanceMeter(
-				node.latitude,
-				node.longitude,
-				latdeg,
-				lngdeg);
+			nearestdistance = turfdistance(
+				node.tpoint,
+				tpointorign,
+				'kilometers');
 		} else {
-			var currentdistance = trigohelper.distanceMeter(
-				node.latitude,
-				node.longitude,
-				latdeg,
-				lngdeg);
+			var currentdistance = turfdistance(
+				node.tpoint,
+				tpointorign,
+				'kilometers');
 
 			if (currentdistance < nearestdistance) {
 				nearestNode = node;
@@ -75,8 +76,7 @@ function nearestPointNode(graph, latdeg, lngdeg) {
 }
 
 function traversingGraph(
-	centerlat,
-	centerlng,
+	pointorigin,
 	parentnode,
 	initdistance,
 	distancemax,
@@ -95,54 +95,35 @@ function traversingGraph(
 		if (firstIteration === true) {
 			firstIteration = false;
 
-			currentdistance = trigohelper.distanceMeter(
-				centerlat,
-				centerlng,
-				childnode.latitude,
-				childnode.longitude
-			);
+			currentdistance = turfdistance(
+				pointorigin,
+				childnode.tpoint,
+				'kilometers');
 		} else {
-			currentdistance = trigohelper.distanceMeter(
-				parentnode.latitude,
-				parentnode.longitude,
-				childnode.latitude,
-				childnode.longitude
-			);
+			currentdistance = turfdistance(
+				parentnode.tpoint,
+				childnode.tpoint,
+				'kilometers');
 		}
 
 		if (initdistance + currentdistance > distancemax) {
 			// Compute intermediate distance.
-			var currentAngle = trigohelper.coodinatesAngle(
-				parentnode.latitude,
-				parentnode.longitude,
-				childnode.latitude,
-				childnode.longitude
-			);
+			var currentAngle = turfbearing(
+				parentnode.tpoint,
+				childnode.tpoint);
 
-			var coordinates = trigohelper.destinationPoint(
-				parentnode.latitude,
-				parentnode.longitude,
+			var coordinates = turfdestination(
+				parentnode.tpoint,
 				distancemax - initdistance,
-				currentAngle
+				currentAngle,
+				'kilometers'
 			);
 
-			var angleFromCenter = trigohelper.coodinatesAngle(
-				Number(centerlat).toFixed(7),
-				Number(centerlng).toFixed(7),
-				Number(coordinates[0]).toFixed(7),
-				Number(coordinates[1]).toFixed(7)
-			);
-
-			polygonpoints.push([
-				Number(coordinates[0]).toFixed(7),
-				Number(coordinates[1]).toFixed(7),
-				Number(angleFromCenter).toFixed(7)
-			]);
+			polygonpoints.push(coordinates);
 
 		} else {
 			traversingGraph(
-				centerlat,
-				centerlng,
+				pointorigin,
 				childnode,
 				Number(initdistance + currentdistance),
 				Number(distancemax),
@@ -153,32 +134,33 @@ function traversingGraph(
 
 module.exports = function(graph, traveltype, timeinmin, lat, lng) {
 
-	var distmeter = computeDistance(traveltype, timeinmin);
+	var distkilometer = computeDistance(traveltype, timeinmin) / 1000;
 
 	// Reset view node state.
 	_.forEach(graph, function(node) {
 		node.viewed = false;
+
+		// Add turf point property (should run once)
+		if (node.tpoint === undefined) {
+			node.tpoint = turfpoint([node.longitude, node.latitude]);
+		}
 	});
 
-	var nearestNode = nearestPointNode(graph, lat, lng);
+	var pointorigin = turfpoint([Number(lng), Number(lat)]);
+	var nearestNode = nearestPointNode(graph, pointorigin);
 
 	firstIteration = true;
 	polygonpoints.length = 0;
 
 	traversingGraph(
-		lat,
-		lng,
+		pointorigin,
 		nearestNode,
 		Number(0),
-		Number(distmeter),
+		Number(distkilometer),
 		polygonpoints
 	);
 
-	var points = _.map(polygonpoints, function(coord) {
-		return turfpoint([Number(coord[0]), Number(coord[1])]);
-	});
-
-	var fcpoints = turffeaturecollection(points);
+	var fcpoints = turffeaturecollection(polygonpoints);
 	var hull = turfconvex(fcpoints);
 
 	return hull;
