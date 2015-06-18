@@ -4,7 +4,7 @@
 "use strict";
 
 var _ = require("lodash"),
-	zoneStore = require("../react_stores/zone-store");
+	zoneStore = require("../react_stores/zone-store-borough");
 
 describe("zoneStore", function() {
 	it("should have 33 boroughs", function() {
