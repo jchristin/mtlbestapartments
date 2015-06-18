@@ -27,7 +27,7 @@ module.exports = React.createClass({
 	componentDidMount: function() {
 		$("#walking-zone-slider").slider({
 			range: false,
-			min: 0,
+			min: 1,
 			max: 20,
 			step: 1,
 			value: zoneStoreWalking.walkingzonetime,

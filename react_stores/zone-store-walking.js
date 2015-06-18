@@ -9,7 +9,7 @@ module.exports = Reflux.createStore({
 		this.zoneswalking = [];
 
 		this.enableWalkingZone = false;
-		this.walkingzonetime = 0;
+		this.walkingzonetime = 1;
 		this.walkingzonecenter = undefined;
 
 		// Listen to actions.
