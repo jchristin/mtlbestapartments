@@ -177,7 +177,7 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			id: 'map-canvas'
+			id: "map-canvas"
 		});
 	}
 });

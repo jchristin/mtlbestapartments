@@ -1657,6 +1657,10 @@
         }
       }
     },
+    "react-ribbon": {
+      "version": "0.1.0",
+      "from": "react-ribbon@*"
+    },
     "react-router": {
       "version": "0.13.3",
       "from": "react-router@*",

@@ -18,7 +18,11 @@ module.exports = React.createClass({
 			},
 			React.createElement(Sidebar),
 			React.createElement(Panel),
-			React.createElement(Canvas)
+			React.createElement("div", {
+					className: "map-container"
+				},
+				React.createElement(Canvas)
+			)
 		);
 	}
 });
