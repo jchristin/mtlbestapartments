@@ -6,7 +6,12 @@ var React = require("react"),
 	Sidebar = require("./sidebar"),
 	Panel = require("./panel"),
 	Canvas = require("./map"),
-	actions = require("../react_stores/actions");
+	actions = require("../react_stores/actions"),
+	SupportKit = require("supportkit");
+
+SupportKit.init({
+	appToken: "9vodhu6slw13v5t866npfylpx"
+});
 
 module.exports = React.createClass({
 	handleClick: function() {

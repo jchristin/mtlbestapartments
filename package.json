@@ -38,6 +38,7 @@
     "react-router": "^0.13.3",
     "reflux": "^0.2.5",
     "serve-favicon": "^2.1.5",
+    "supportkit": "^0.2.10",
     "turf-convex": "^1.0.1",
     "turf-featurecollection": "^1.0.1",
     "turf-inside": "^1.1.4",
