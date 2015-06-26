@@ -34,6 +34,7 @@
     "mongodb": "^1.4.19",
     "osm-to-graph": "^0.1.0",
     "react": "^0.13.0",
+    "react-ribbon": "^0.1.0",
     "react-router": "^0.13.3",
     "reflux": "^0.2.5",
     "serve-favicon": "^2.1.5",
