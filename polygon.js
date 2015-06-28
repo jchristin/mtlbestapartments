@@ -7,7 +7,6 @@ var _ = require("lodash"),
 	turfconvex = require("turf-convex"),
 	turfdistance = require("turf-distance"),
 	turfdestination = require("turf-destination"),
-	turfbearing = require("turf-bearing"),
 	turffeaturecollection = require("turf-featurecollection");
 
 function computeDistance(traveltype, timeinmin) {
@@ -84,11 +83,11 @@ function traversingGraph(
 
 	_.forEach(parentnode.edges, function(childnode) {
 
-		if ((typeof childnode === 'undefined') || childnode.viewed) {
+		if ((typeof childnode === 'undefined') || childnode.node.viewed) {
 			return;
 		}
 
-		childnode.viewed = true;
+		childnode.node.viewed = true;
 
 		var currentdistance = 0;
 
@@ -97,25 +96,18 @@ function traversingGraph(
 
 			currentdistance = turfdistance(
 				pointorigin,
-				childnode.tpoint,
+				childnode.node.tpoint,
 				'kilometers');
 		} else {
-			currentdistance = turfdistance(
-				parentnode.tpoint,
-				childnode.tpoint,
-				'kilometers');
+			currentdistance = Number(childnode.distance);
 		}
 
 		if (initdistance + currentdistance > distancemax) {
 			// Compute intermediate distance.
-			var currentAngle = turfbearing(
-				parentnode.tpoint,
-				childnode.tpoint);
-
 			var coordinates = turfdestination(
 				parentnode.tpoint,
 				distancemax - initdistance,
-				currentAngle,
+				childnode.bearing,
 				'kilometers'
 			);
 
@@ -124,7 +116,7 @@ function traversingGraph(
 		} else {
 			traversingGraph(
 				pointorigin,
-				childnode,
+				childnode.node,
 				Number(initdistance + currentdistance),
 				Number(distancemax),
 				polygonpoints);
@@ -149,8 +141,17 @@ module.exports = function(graph, traveltype, timeinmin, lat, lng) {
 	var pointorigin = turfpoint([Number(lng), Number(lat)]);
 	var nearestNode = nearestPointNode(graph, pointorigin);
 
-	firstIteration = true;
 	polygonpoints.length = 0;
+
+	// Add the search marker point the polygon.
+	var pointsource = turfpoint([lng, lat]);
+	polygonpoints.push(pointsource);
+
+	// Add the nearest marker point the polygon.
+	var pointnearest = turfpoint([nearestNode.longitude, nearestNode.latitude]);
+	polygonpoints.push(pointnearest);
+
+	firstIteration = true;
 
 	traversingGraph(
 		pointorigin,
