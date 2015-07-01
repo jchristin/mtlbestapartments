@@ -1,12 +1,13 @@
 "use strict";
 
 var React = require("react"),
-	actions = require("../react_stores/actions");
+	actions = require("../react_stores/actions"),
+	apartStore = require("../react_stores/apart-store");
 
 module.exports = React.createClass({
 	getInitialState: function() {
 		return {
-			bedroom: [1, 7]
+			bedroom: apartStore.bedroom
 		};
 	},
 	componentDidMount: function() {
@@ -15,7 +16,7 @@ module.exports = React.createClass({
 			min: 1,
 			max: 7,
 			step: 1,
-			values: [1, 7],
+			values: this.state.bedroom,
 			slide: function(event, ui) {
 				actions.setBedroom(ui.values);
 				this.setState({
