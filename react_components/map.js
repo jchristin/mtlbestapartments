@@ -124,13 +124,13 @@ module.exports = React.createClass({
 
 		// Create marker icons (dot and pin)
 		this.markerIconDot = {
-			url: "img/marker-dot.png",
+			url: "/img/marker-dot.png",
 			size: new google.maps.Size(10, 10),
 			anchor: new google.maps.Point(5, 5)
 		};
 
 		this.markerIconDotViewed = {
-			url: "img/marker-dot-viewed.png",
+			url: "/img/marker-dot-viewed.png",
 			size: new google.maps.Size(10, 10),
 			anchor: new google.maps.Point(5, 5)
 		};

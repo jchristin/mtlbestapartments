@@ -12,7 +12,7 @@ module.exports = Reflux.createStore({
 	init: function() {
 		// Retrieve all apartments from server.
 		this.allApartments = [];
-		$.get("api/flats", function(data, status) {
+		$.get("/api/flats", function(data, status) {
 			if (status === "success") {
 				this.allApartments = data;
 
