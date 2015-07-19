@@ -39,6 +39,7 @@ module.exports = Reflux.createStore({
 		// Listen to actions.
 		this.listenTo(actions.setPrice, this.handleSetPrice);
 		this.listenTo(actions.setBedroom, this.handleSetBedroom);
+		this.listenTo(actions.enableWalkingZone, this.handleEnableWalkingZone)
 		this.listenTo(zoneStoreBorough, this.handleZoneBoroughChange);
 		this.listenTo(zoneStoreWalking, this.handleZoneWalkingChange);
 	},
@@ -53,12 +54,16 @@ module.exports = Reflux.createStore({
 		}, this);
 	},
 	isZonesValid: function(apart) {
-		return this.zones.length === 0 || _.any(this.zones, function(polygon) {
-			return tinside(apart.turfPoint, polygon);
-		});
+		return (this.zones.length === 0 && !zoneStoreWalking.enableWalkingZone) ||
+			_.any(this.zones, function(polygon) {
+				return tinside(apart.turfPoint, polygon);
+			});
 	},
 	handleSetPrice: function(price) {
 		this.price = price;
+		this.trigger(this.filter());
+	},
+	handleEnableWalkingZone: function() {
 		this.trigger(this.filter());
 	},
 	handleSetBedroom: function(bedroom) {
