@@ -9,7 +9,7 @@ var _ = require("lodash"),
 	zoneStoreBorough = require("../react_stores/zone-store-borough"),
 	zoneStoreWalking = require("../react_stores/zone-store-walking"),
 	actions = require("../react_stores/actions.js"),
-	infoBoxComponent = require("./info-box");
+	infoBoxComponentApt = require("./info-box");
 
 module.exports = React.createClass({
 	mixins: [
@@ -30,15 +30,15 @@ module.exports = React.createClass({
 		});
 
 		google.maps.event.addListener(Apt.marker, 'click', function() {
-			this.infoBox.setContent(
+			this.infoBoxApt.setContent(
 				React.renderToStaticMarkup(
-					React.createElement(infoBoxComponent, {
+					React.createElement(infoBoxComponentApt, {
 						apart: Apt
 					})
 				)
 			);
 
-			this.infoBox.open(this.map, Apt.marker);
+			this.infoBoxApt.open(this.map, Apt.marker);
 
 			Apt.marker.setIcon(this.markerIconDotViewed);
 		}.bind(this));
@@ -199,14 +199,14 @@ module.exports = React.createClass({
 		}.bind(this));
 
 		google.maps.event.addListener(this.map, "click", function(e) {
-			this.infoBox.close();
+			this.infoBoxApt.close();
 
 			if (zoneStoreWalking.enableWalkingZone && (this.walkingmarker === undefined)) {
 				this.createWalkingMarker(e.latLng.lat(), e.latLng.lng());
 			}
 		}.bind(this));
 
-		this.infoBox = new InfoBoxLib({
+		this.infoBoxApt = new InfoBoxLib({
 			alignBottom: true,
 			disableAutoPan: false,
 			pixelOffset: new google.maps.Size(-140, -15),
