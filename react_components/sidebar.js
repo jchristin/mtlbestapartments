@@ -9,47 +9,42 @@ module.exports = React.createClass({
 				className: "sidebar"
 			},
 			React.createElement("div", {
-				className: "sidebar-logo"
+				className: "sidebar-top"
+			}, "Fleub"),
+			React.createElement(Item, {
+				icon: "fa-user",
+				caption: "My account"
 			}),
-			React.createElement("ul", {
-					className: "sidebar-nav"
-				},
-				React.createElement(Item, {
-					icon: "fa-usd",
-					caption: "Price",
-					content: require("./price")
-				}),
-				React.createElement(Item, {
-					icon: "fa-home",
-					caption: "Rooms",
-					content: require("./bedroom")
-				}),
-				React.createElement(Item, {
-					icon: "fa-map-marker",
-					caption: "Zone",
-					content: require("./zone")
-				})
-			),
+			React.createElement(Item, {
+				icon: "fa-cog",
+				caption: "Settings"
+			}),
+			React.createElement(Item, {
+				icon: "fa-sign-out",
+				caption: "Sign out"
+			}),
+			React.createElement("hr", {
+				className: "sidebar-divider"
+			}),
 			React.createElement("div", {
-					className: "sidebar-footer"
-				},
-				React.createElement("div", {
-						className: "share"
-					},
-					React.createElement("div", null, "SHARE"),
-					React.createElement("ul", null,
-						React.createElement("li", null, React.createElement("i", {
-							className: "fa fa-google-plus-square"
-						})),
-						React.createElement("li", null, React.createElement("i", {
-							className: "fa fa-twitter-square"
-						})),
-						React.createElement("li", null, React.createElement("i", {
-							className: "fa fa-facebook-square"
-						}))
-					)
-				)
-			)
+				className: "sidebar-list-title"
+			}, "Lists"),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				caption: "Favorite"
+			}),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				caption: "Search"
+			}),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				caption: "Staff picks"
+			}),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				caption: "Posted apartments"
+			})
 		);
 	}
 });
