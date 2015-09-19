@@ -9,8 +9,7 @@ var _ = require("lodash"),
 	zoneStoreBorough = require("../react_stores/zone-store-borough"),
 	zoneStoreWalking = require("../react_stores/zone-store-walking"),
 	actions = require("../react_stores/actions.js"),
-	infoBoxComponentApt = require("./info-box"),
-	infoBoxComponentWalking = require("./info-box-walking");
+	infoBoxComponentApt = require("./info-box");
 
 module.exports = React.createClass({
 	mixins: [
@@ -58,17 +57,6 @@ module.exports = React.createClass({
 
 		google.maps.event.addListener(this.walkingmarker, 'dragend', function(e) {
 			actions.setWalkingZoneCenter([e.latLng.lat(), e.latLng.lng()]);
-		}.bind(this));
-
-		google.maps.event.addListener(this.walkingmarker, 'click', function() {
-			this.infoBoxWalking.setContent(
-				React.renderToStaticMarkup(
-					React.createElement(infoBoxComponentWalking)
-				)
-			);
-
-			this.infoBoxWalking.open(this.map, this.walkingmarker);
-
 		}.bind(this));
 	},
 	clearZones: function() {
@@ -212,7 +200,6 @@ module.exports = React.createClass({
 
 		google.maps.event.addListener(this.map, "click", function(e) {
 			this.infoBoxApt.close();
-			this.infoBoxWalking.close();
 
 			if (zoneStoreWalking.enableWalkingZone && (this.walkingmarker === undefined)) {
 				this.createWalkingMarker(e.latLng.lat(), e.latLng.lng());
@@ -228,23 +215,6 @@ module.exports = React.createClass({
 			infoBoxClearance: new google.maps.Size(15, 50),
 			pane: "floatPane",
 			enableEventPropagation: false
-		});
-
-		this.infoBoxWalking = new InfoBoxLib({
-			alignBottom: true,
-			disableAutoPan: false,
-			pixelOffset: new google.maps.Size(-120, 0),
-			zIndex: null,
-			closeBoxURL: "",
-			infoBoxClearance: new google.maps.Size(1, 1),
-			pane: "floatPane",
-			enableEventPropagation: false,
-			maxWidth: 0,
-			boxStyle: {
-				opacity: 0.90,
-				width: "120px",
-				height: "60px",
-			},
 		});
 	},
 	render: function() {
