@@ -1,6 +1,7 @@
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	Link = require("react-router").Link;
 
 module.exports = React.createClass({
 	getNotificationCountString: function() {
@@ -13,7 +14,8 @@ module.exports = React.createClass({
 		return "";
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.createElement(Link, {
+				to: this.props.path,
 				className: "sidebar-item"
 			},
 			React.createElement("span", null, React.createElement("i", {

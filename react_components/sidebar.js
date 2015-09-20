@@ -13,14 +13,17 @@ module.exports = React.createClass({
 			}, "Fleub"),
 			React.createElement(Item, {
 				icon: "fa-user",
+				path: "/account",
 				caption: "My account"
 			}),
 			React.createElement(Item, {
 				icon: "fa-cog",
+				path: "/settings",
 				caption: "Settings"
 			}),
 			React.createElement(Item, {
 				icon: "fa-sign-out",
+				path: "/signout",
 				caption: "Sign out"
 			}),
 			React.createElement("hr", {
@@ -31,18 +34,22 @@ module.exports = React.createClass({
 			}, "Lists"),
 			React.createElement(Item, {
 				icon: "fa-circle",
+				path: "/favorite",
 				caption: "Favorite"
 			}),
 			React.createElement(Item, {
 				icon: "fa-circle",
+				path: "/search",
 				caption: "Search"
 			}),
 			React.createElement(Item, {
 				icon: "fa-circle",
+				path: "/staff-picks",
 				caption: "Staff picks"
 			}),
 			React.createElement(Item, {
 				icon: "fa-circle",
+				path: "/posted",
 				caption: "Posted apartments"
 			})
 		);
