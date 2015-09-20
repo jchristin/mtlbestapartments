@@ -3,10 +3,8 @@
 "use strict";
 
 var React = require("react"),
+	Toolbar = require("./toolbar"),
 	Sidebar = require("./sidebar"),
-	Panel = require("./panel"),
-	Canvas = require("./map"),
-	actions = require("../react_stores/actions"),
 	SupportKit = require("supportkit");
 
 SupportKit.init({
@@ -14,19 +12,13 @@ SupportKit.init({
 });
 
 module.exports = React.createClass({
-	handleClick: function() {
-		actions.hidePanel();
-	},
 	render: function() {
-		return React.createElement("div", {
-				onClick: this.handleClick,
-			},
+		return React.createElement("div", null,
+			React.createElement(Toolbar),
 			React.createElement(Sidebar),
-			React.createElement(Panel),
 			React.createElement("div", {
-					className: "map-container"
-				},
-				React.createElement(Canvas)
+					className: "content"
+				}, this.props.children
 			)
 		);
 	}
