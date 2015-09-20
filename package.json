@@ -39,7 +39,7 @@
     "osm-to-graph": "^0.2.1",
     "react": "^0.13.3",
     "react-ribbon": "^0.1.0",
-    "react-router": "^0.13.3",
+    "react-router": "^1.0.0-rc1",
     "reflux": "^0.2.12",
     "serve-favicon": "^2.3.0",
     "supportkit": "^0.2.30",
