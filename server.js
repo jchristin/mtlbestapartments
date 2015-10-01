@@ -31,7 +31,8 @@ server.get("/api/flats", function(req, res) {
 		return;
 	}
 
-	database.collection("active").find({
+	database.collection("apartments").find({
+		active: true,
 		image: {
 			$ne: null
 		},
