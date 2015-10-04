@@ -9,8 +9,11 @@ module.exports = React.createClass({
 				className: "sidebar"
 			},
 			React.createElement("div", {
+				className: "sidebar-logo"
+			}),
+			React.createElement("div", {
 				className: "sidebar-top"
-			}, "Fleub"),
+			}),
 			React.createElement(Item, {
 				icon: "fa-user",
 				path: "/account",
