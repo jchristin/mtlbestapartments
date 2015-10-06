@@ -9,9 +9,6 @@ module.exports = React.createClass({
 				className: "sidebar"
 			},
 			React.createElement("div", {
-				className: "sidebar-logo"
-			}),
-			React.createElement("div", {
 				className: "sidebar-top"
 			}),
 			React.createElement(Item, {
