@@ -29,6 +29,8 @@ module.exports = React.createClass({
 		};
 	},
 	render: function() {
-		return React.createElement("div", null, this.state.content);
+		return React.createElement("div", {
+			className: "staff-picks"
+		}, this.state.content);
 	}
 });
