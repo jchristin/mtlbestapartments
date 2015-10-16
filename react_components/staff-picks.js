@@ -6,7 +6,8 @@ var React = require("react"),
 	Reflux = require("reflux"),
 	apartStore = require("../react_stores/apart-store"),
 	infoBoxComponent = require("./info-box"),
-	_ = require("lodash");
+	_ = require("lodash"),
+	lazyLoad = require('react-lazy-load');
 
 module.exports = React.createClass({
 	mixins: [
@@ -14,9 +15,13 @@ module.exports = React.createClass({
 	],
 	onMapDataChange: function(filteredApt) {
 		var aparts = _.map(filteredApt, function(apart) {
-			return React.createElement(infoBoxComponent, {
-				apart: apart
-			});
+			return React.createElement(lazyLoad, {
+					key: apart._id
+				},
+				React.createElement(infoBoxComponent, {
+					apart: apart
+				})
+			);
 		});
 
 		this.setState({
