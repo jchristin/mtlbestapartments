@@ -14,9 +14,9 @@ module.exports = React.createClass({
 		Reflux.listenTo(apartStore, "onMapDataChange"),
 	],
 	onMapDataChange: function(filteredApt) {
-		var aparts = _.map(filteredApt, function(apart) {
+		var aparts = _.map(filteredApt, function(apart, i) {
 			return React.createElement(lazyLoad, {
-					key: apart._id
+					key: i
 				},
 				React.createElement(infoBoxComponent, {
 					apart: apart
