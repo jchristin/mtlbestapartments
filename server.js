@@ -3,7 +3,11 @@
 var path = require("path"),
 	express = require("express"),
 	bodyParser = require("body-parser"),
+	cookieParser = require("cookie-parser"),
+	session = require("express-session"),
 	favicon = require("serve-favicon"),
+	passport = require("passport"),
+	LocalStrategy = require("passport-local").Strategy,
 	osmToGraph = require("osm-to-graph"),
 	graph = osmToGraph.loadGraph("./montreal.json"),
 	polygon = require("./polygon"),
@@ -13,20 +17,70 @@ var path = require("path"),
 	mongoClient = require("mongodb").MongoClient,
 	database;
 
+var user = 1;
+
+// Passport setup.
+passport.use(new LocalStrategy(function(username, password, done) {
+	if (username === "Teub") {
+		return done(null, user);
+	}
+
+	return done(null, false, {
+		message: "Incorrect username."
+	});
+}));
+
+passport.serializeUser(function(user, done) {
+	done(null, user);
+});
+
+passport.deserializeUser(function(id, done) {
+	done(null, user);
+});
+
+// Server setup.
+server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
+	maxAge: cacheMaxAge
+}));
+
 server.use(express.query());
 
 server.use(bodyParser.json());
 
-server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
-	maxAge: cacheMaxAge
+server.use(bodyParser.urlencoded({
+	extended: false
 }));
+
+server.use(cookieParser());
+
+server.use(session({
+	secret: "fleuby",
+	resave: false,
+	saveUninitialized: false
+}));
+
+server.use(passport.initialize());
+
+server.use(passport.session());
 
 server.use(express.static(path.join(__dirname, "public"), {
 	maxAge: cacheMaxAge
 }));
 
+server.post("/signin",
+	passport.authenticate("local", {
+		successRedirect: "/",
+		failureRedirect: "/signin"
+	})
+);
+
+server.get("/signout", function(req, res) {
+	req.logout();
+	res.redirect("/");
+});
+
 server.get("/api/flats", function(req, res) {
-	if(!database) {
+	if (!database) {
 		res.sendStatus(500);
 		return;
 	}
@@ -407,7 +461,7 @@ server.get("/api/polygon", function(req, res) {
 	res.json(hull);
 });
 
-server.get("*", function (req, res) {
+server.get("*", function(req, res) {
 	res.sendFile(__dirname + "/public/index.html");
 });
 
@@ -424,4 +478,3 @@ mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
 // Start server.
 server.listen(port);
 console.log("Listening on " + port);
-
