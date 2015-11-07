@@ -17,12 +17,11 @@ var path = require("path"),
 	mongoClient = require("mongodb").MongoClient,
 	database;
 
-var user = 1;
 
 // Passport setup.
 passport.use(new LocalStrategy(function(username, password, done) {
 	if (username === "Teub") {
-		return done(null, user);
+		return done(null, "Teub");
 	}
 
 	return done(null, false, {
@@ -35,7 +34,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-	done(null, user);
+	done(null, id);
 });
 
 // Server setup.
@@ -67,16 +66,20 @@ server.use(express.static(path.join(__dirname, "public"), {
 	maxAge: cacheMaxAge
 }));
 
-server.post("/signin",
+server.post("/api/signin",
 	passport.authenticate("local", {
 		successRedirect: "/",
 		failureRedirect: "/signin"
 	})
 );
 
-server.get("/signout", function(req, res) {
+server.get("/api/signout", function(req, res) {
 	req.logout();
 	res.redirect("/");
+});
+
+server.get("/api/user", function(req, res) {
+	res.send(req.user);
 });
 
 server.get("/api/flats", function(req, res) {

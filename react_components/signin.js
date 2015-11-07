@@ -8,7 +8,7 @@ module.exports = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"form", {
-				action: "/signin",
+				action: "/api/signin",
 				method: "post"
 			},
 			React.createElement(

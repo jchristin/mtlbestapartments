@@ -23,7 +23,8 @@ module.exports = React.createClass({
 			}),
 			React.createElement(Item, {
 				icon: "fa-sign-out",
-				path: "/signout",
+				path: "/api/signout",
+				target: "_self",
 				caption: "Sign out"
 			}),
 			React.createElement("hr", {

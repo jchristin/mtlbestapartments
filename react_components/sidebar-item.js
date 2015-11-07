@@ -16,7 +16,8 @@ module.exports = React.createClass({
 	render: function() {
 		return React.createElement(Link, {
 				to: this.props.path,
-				className: "sidebar-item"
+				className: "sidebar-item",
+				target: this.props.target
 			},
 			React.createElement("span", null, React.createElement("i", {
 				className: "fa " + this.props.icon
