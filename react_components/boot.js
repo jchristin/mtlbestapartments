@@ -4,6 +4,7 @@
 
 var http = require("http"),
 	React = require("react"),
+	ReactDOM = require("react-dom"),
 	Router = require("react-router").Router,
 	browserHistory = require("history").createHistory();
 
@@ -78,6 +79,6 @@ var routes = [{
 	}]
 }];
 
-React.render(React.createElement(Router, {
+ReactDOM.render(React.createElement(Router, {
 	history: browserHistory
 }, routes), document.getElementById("app"));
