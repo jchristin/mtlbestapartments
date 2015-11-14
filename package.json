@@ -1,6 +1,7 @@
 {
   "name": "fleub",
   "description": "Web app to find apartment in Montreal",
+  "private": "true",
   "version": "1.0.0",
   "engines": {
     "node": "4.x",
