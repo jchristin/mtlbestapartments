@@ -17,7 +17,7 @@ module.exports = React.createClass({
 			React.createElement(Toolbar),
 			React.createElement(Sidebar),
 			React.createElement("div", {
-					className: "content"
+					className: "app"
 				}, this.props.children
 			)
 		);
