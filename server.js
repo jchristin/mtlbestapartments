@@ -1,6 +1,7 @@
 "use strict";
 
-var path = require("path"),
+var _ = require("lodash"),
+	path = require("path"),
 	express = require("express"),
 	bodyParser = require("body-parser"),
 	cookieParser = require("cookie-parser"),
@@ -64,6 +65,23 @@ server.use(passport.session());
 server.use(express.static(path.join(__dirname, "public"), {
 	maxAge: cacheMaxAge
 }));
+
+server.post("/api/signup", function(req, res) {
+	database.collection("users").find({
+		_id: req.body.email
+	}).toArray(function(err, docs) {
+		if (err) {
+			console.log(err);
+		} else {
+			// Checks if email is already used.
+			if (_.size(docs) > 0) {
+				res.status(409).send("Email already used.");
+			} else {
+				res.send("Ok");
+			}
+		}
+	});
+});
 
 server.post("/api/signin",
 	passport.authenticate("local", {

@@ -54,6 +54,7 @@
     "react-router": "^1.0.0",
     "reflux": "^0.3.0",
     "serve-favicon": "^2.3.0",
+    "superagent": "^1.4.0",
     "supportkit": "^0.2.30",
     "turf-convex": "^1.0.1",
     "turf-featurecollection": "^1.0.1",
