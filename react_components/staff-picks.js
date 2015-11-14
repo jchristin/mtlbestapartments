@@ -5,23 +5,20 @@
 var React = require("react"),
 	Reflux = require("reflux"),
 	apartStore = require("../react_stores/apart-store"),
-	infoBoxComponent = require("./info-box"),
-	_ = require("lodash"),
-	lazyLoad = require('react-lazy-load');
+	gridItem = require("./grid-item"),
+	Masonry = require('react-masonry-component')(React),
+	_ = require("lodash");
 
 module.exports = React.createClass({
 	mixins: [
 		Reflux.listenTo(apartStore, "onMapDataChange"),
 	],
 	onMapDataChange: function(filteredApt) {
-		var aparts = _.map(filteredApt, function(apart, i) {
-			return React.createElement(lazyLoad, {
-					key: i
-				},
-				React.createElement(infoBoxComponent, {
+		var aparts = _.map(filteredApt, function(apart) {
+			return React.createElement(gridItem, {
+					key: apart._id,
 					apart: apart
-				})
-			);
+				});
 		});
 
 		this.setState({
@@ -35,7 +32,12 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			className: "staff-picks"
-		}, this.state.content);
+			className: "staff-picks"},
+			React.createElement(Masonry, {
+				className: "masonry",
+				options: {isFitWidth: true},
+				disableImagesLoaded: false
+			}, this.state.content)
+		);
 	}
 });
