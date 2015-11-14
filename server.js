@@ -72,12 +72,25 @@ server.post("/api/signup", function(req, res) {
 	}).toArray(function(err, docs) {
 		if (err) {
 			console.log(err);
+			res.status(500).send("Server error. Please retry later.");
 		} else {
 			// Checks if email is already used.
 			if (_.size(docs) > 0) {
 				res.status(409).send("Email already used.");
 			} else {
-				res.send("Ok");
+				// Create a new user in database.
+				database.collection("users").insertOne({
+					name: req.body.name,
+					email: req.body.email,
+					password: req.body.password
+				}, function(err) {
+					if (err) {
+						console.log(err);
+						res.status(500).send("Server error. Please retry later.");
+					} else {
+						res.send("Ok");
+					}
+				});
 			}
 		}
 	});
