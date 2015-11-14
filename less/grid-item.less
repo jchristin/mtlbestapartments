@@ -1,4 +1,5 @@
 @grid-item-margin: 8px;
+@grid-item-radius: 6px;
 .grid-item {
 	width: 350px;
 	margin-top: @grid-item-margin;
@@ -8,6 +9,11 @@
 	img {
 		width: 100%;
 		cursor:-webkit-zoom-in;
-		border-radius: 6px;
+		border-radius: @grid-item-radius @grid-item-radius 0 0;
 	}
+}
+
+.grid-item-detail {
+	background: @white-full;
+	border-radius: 0 0 @grid-item-radius @grid-item-radius;
 }
