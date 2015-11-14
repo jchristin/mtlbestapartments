@@ -16,9 +16,9 @@ module.exports = React.createClass({
 	onMapDataChange: function(filteredApt) {
 		var aparts = _.map(filteredApt, function(apart) {
 			return React.createElement(gridItem, {
-					key: apart._id,
-					apart: apart
-				});
+				key: apart._id,
+				apart: apart
+			});
 		});
 
 		this.setState({
@@ -32,10 +32,13 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			className: "staff-picks"},
+				className: "staff-picks"
+			},
 			React.createElement(Masonry, {
 				className: "masonry",
-				options: {isFitWidth: true},
+				options: {
+					isFitWidth: true
+				},
 				disableImagesLoaded: false
 			}, this.state.content)
 		);
