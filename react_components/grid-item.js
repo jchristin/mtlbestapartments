@@ -2,7 +2,8 @@
 
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	Link = require("react-router").Link;
 
 module.exports = React.createClass({
 	getPriceString: function() {
@@ -25,9 +26,8 @@ module.exports = React.createClass({
 		return React.createElement("div", {
 				className: "grid-item",
 			},
-			React.createElement("a", {
-					href: this.props.apart._id,
-					target: "_blank"
+			React.createElement(Link, {
+					to: "/a?url=" + this.props.apart._id,
 				},
 				React.createElement("img", {
 					src: this.props.apart.image,

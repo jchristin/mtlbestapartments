@@ -42,6 +42,9 @@ var routes = [{
 	path: "/",
 	component: require("./app"),
 	childRoutes: [{
+		path: "a",
+		component: require("./apt-detail")
+	},{
 		path: "account",
 		component: require("./account"),
 		onEnter: redirect(null, "/signin")
