@@ -13,9 +13,11 @@ module.exports = React.createClass({
 
 		var mapOptions = {
 			center: center,
-			minZoom: 11,
-			maxZoom: 16,
-			zoom: 15
+			zoom: 15,
+			draggable: false,
+			scrollwheel: false,
+			disableDoubleClickZoom: true,
+			zoomControl: false
 		};
 
 		// Create the map.
