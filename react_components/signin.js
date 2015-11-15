@@ -18,7 +18,7 @@ module.exports = React.createClass({
 				React.createElement(
 					"label",
 					null,
-					"Username:"
+					"Email:"
 				),
 				React.createElement("input", {
 					type: "text",

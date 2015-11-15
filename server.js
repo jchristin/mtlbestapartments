@@ -2,6 +2,7 @@
 
 var _ = require("lodash"),
 	path = require("path"),
+	crypto = require("crypto"),
 	express = require("express"),
 	bodyParser = require("body-parser"),
 	cookieParser = require("cookie-parser"),
@@ -31,7 +32,10 @@ passport.use(new LocalStrategy(function(email, password, done) {
 			if (_.size(docs) === 0) {
 				done(null, false);
 			} else {
-				if (docs[0].password === password) {
+				var shasum = crypto.createHash("sha1");
+				shasum.update(password);
+
+				if (docs[0].password === shasum.digest("hex")) {
 					done(null, docs[0]);
 				} else {
 					done(null, false);
@@ -112,10 +116,13 @@ server.post("/api/signup", function(req, res) {
 				res.status(409).send("Email already used.");
 			} else {
 				// Create a new user in database.
+				var shasum = crypto.createHash("sha1");
+				shasum.update(req.body.password);
+
 				database.collection("users").insertOne({
 					name: req.body.name,
 					email: req.body.email,
-					password: req.body.password
+					password: shasum.digest("hex")
 				}, function(err) {
 					if (err) {
 						console.log(err);
