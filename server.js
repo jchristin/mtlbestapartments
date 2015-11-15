@@ -61,13 +61,14 @@ server.get("/api/flat", function(req, res) {
 		return;
 	}
 
-	database().collection("apartments").find({
+	database().collection("apartments").findOne({
 		_id: req.query.url,
-	}).toArray(function(err, docs) {
+	}, function(err, doc) {
 		if (err) {
 			console.log(err);
+			res.status(404).send("Invalid flat.");
 		} else {
-			res.json(docs[0]);
+			res.json(doc);
 		}
 	});
 });
