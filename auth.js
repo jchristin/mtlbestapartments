@@ -52,9 +52,13 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
-module.exports.initialize = passport.initialize;
+module.exports.initialize = function() {
+	return passport.initialize();
+};
 
-module.exports.session = passport.session;
+module.exports.session = function() {
+	return passport.session();
+};
 
 module.exports.isAuthenticated = function(req, res, next) {
 	if (req.user) {
@@ -97,7 +101,7 @@ module.exports.signUp = function(req, res) {
 	});
 };
 
-module.exports.singIn = passport.authenticate("local", {
+module.exports.signIn = passport.authenticate("local", {
 	successRedirect: "/",
 	failureRedirect: "/signin"
 });

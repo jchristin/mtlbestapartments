@@ -52,7 +52,7 @@ server.get("/api/signout", auth.signOut);
 
 server.get("/api/user", auth.getUser);
 
-server.delete("/api/user", auth.isAuthenticated, auth.delete.User);
+server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 
 server.get("/api/flat", function(req, res) {
 
