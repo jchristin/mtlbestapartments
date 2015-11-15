@@ -7,7 +7,7 @@ var crypto = require("crypto"),
 	database = require("./database");
 
 passport.use(new LocalStrategy(function(email, password, done) {
-	database().collection("users").findOne({
+	database.users.findOne({
 		email: email
 	}, function(err, doc) {
 		if (err) {
@@ -35,7 +35,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-	database().collection("users").findOne({
+	database.users.findOne({
 		_id: new ObjectID(id)
 	}, function(err, doc) {
 		done(err, doc);
@@ -59,7 +59,7 @@ module.exports.isAuthenticated = function(req, res, next) {
 };
 
 module.exports.signUp = function(req, res) {
-	database().collection("users").findOne({
+	database.users.findOne({
 		_id: req.body.email
 	}, function(err, doc) {
 		if (err) {
@@ -74,7 +74,7 @@ module.exports.signUp = function(req, res) {
 				var shasum = crypto.createHash("sha1");
 				shasum.update(req.body.password);
 
-				database().collection("users").insertOne({
+				database.users.insertOne({
 					name: req.body.name,
 					email: req.body.email,
 					password: shasum.digest("hex")
@@ -110,7 +110,7 @@ module.exports.getUser = function(req, res) {
 };
 
 module.exports.deleteUser = function(req, res) {
-	database().collection("users").deleteOne({
+	database.users.deleteOne({
 		_id: req.user._id
 	}, function(err) {
 		if (err) {

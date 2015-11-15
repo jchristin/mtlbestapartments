@@ -61,7 +61,7 @@ server.get("/api/flat", function(req, res) {
 		return;
 	}
 
-	database().collection("apartments").findOne({
+	database.apartments.findOne({
 		_id: req.query.url,
 	}, function(err, doc) {
 		if (err) {
@@ -74,7 +74,7 @@ server.get("/api/flat", function(req, res) {
 });
 
 server.get("/api/flats", function(req, res) {
-	database().collection("apartments").find({
+	database.apartments.find({
 		active: true,
 		image: {
 			$ne: null
