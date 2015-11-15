@@ -16,26 +16,59 @@ var _ = require("lodash"),
 	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
 	port = process.env.PORT || 5000,
 	mongoClient = require("mongodb").MongoClient,
+	ObjectID = require("mongodb").ObjectID,
 	database;
 
 // Passport setup.
-passport.use(new LocalStrategy(function(username, password, done) {
-	if (username === "Teub") {
-		return done(null, "Teub");
-	}
-
-	return done(null, false, {
-		message: "Incorrect username."
+passport.use(new LocalStrategy(function(email, password, done) {
+	database.collection("users").find({
+		email: email
+	}).toArray(function(err, docs) {
+		if (err) {
+			console.log(err);
+			done(err);
+		} else {
+			if (_.size(docs) === 0) {
+				done(null, false);
+			} else {
+				if (docs[0].password === password) {
+					done(null, docs[0]);
+				} else {
+					done(null, false);
+				}
+			}
+		}
 	});
 }));
 
 passport.serializeUser(function(user, done) {
-	done(null, user);
+	done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-	done(null, id);
+	database.collection("users").find({
+		_id: new ObjectID(id)
+	}).toArray(function(err, docs) {
+		if (err) {
+			console.log(err);
+			done(err);
+		} else {
+			if (_.size(docs) === 0) {
+				done(null, false);
+			} else {
+				done(null, docs[0]);
+			}
+		}
+	});
 });
+
+function isAuthenticated(req, res, next) {
+	if (req.user) {
+		next();
+	} else {
+		res.redirect("/");
+	}
+}
 
 // Server setup.
 server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
@@ -109,7 +142,25 @@ server.get("/api/signout", function(req, res) {
 });
 
 server.get("/api/user", function(req, res) {
-	res.send(req.user);
+	if (req.user !== undefined) {
+		res.send(req.user._id);
+	} else {
+		res.end();
+	}
+});
+
+server.delete("/api/user", isAuthenticated, function(req, res) {
+	database.collection("users").deleteOne({
+		_id: new ObjectID(req.user._id)
+	}, function(err) {
+		if (err) {
+			console.log(err);
+			res.status(500).end();
+		} else {
+			req.logout();
+			res.end();
+		}
+	});
 });
 
 server.get("/api/flats", function(req, res) {

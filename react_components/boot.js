@@ -2,38 +2,35 @@
 
 "use strict";
 
-var http = require("http"),
-	React = require("react"),
+var React = require("react"),
 	ReactDOM = require("react-dom"),
 	Router = require("react-router").Router,
-	browserHistory = require("history").createHistory();
+	browserHistory = require("history").createHistory(),
+	request = require("superagent");
 
 var redirect = function(pathIfLogged, pathIfNotLogged) {
 	return function(nextState, replaceState, callback) {
-		http.get("/api/user", function(res) {
-			var user = "";
+		request
+			.get("/api/user")
+			.end(function(err, res) {
+				if (err) {
+					console.log(err);
+				} else {
+					if (pathIfLogged && res.text !== "") {
+						replaceState({
+							nextPathname: nextState.location.pathname
+						}, pathIfLogged);
+					}
 
-			res.on("data", function(buf) {
-				user += buf;
-			});
+					if (pathIfNotLogged && res.text === "") {
+						replaceState({
+							nextPathname: nextState.location.pathname
+						}, pathIfNotLogged);
+					}
 
-			res.on("end", function() {
-				console.log(user);
-				if (pathIfLogged && user !== "") {
-					replaceState({
-						nextPathname: nextState.location.pathname
-					}, pathIfLogged);
+					callback();
 				}
-
-				if(pathIfNotLogged && user === "") {
-					replaceState({
-						nextPathname: nextState.location.pathname
-					}, pathIfNotLogged);
-				}
-
-				callback();
 			});
-		});
 	};
 };
 

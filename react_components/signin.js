@@ -2,7 +2,8 @@
 
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	Link = require("react-router").Link;
 
 module.exports = React.createClass({
 	render: function render() {
@@ -44,7 +45,10 @@ module.exports = React.createClass({
 					type: "submit",
 					defaultValue: "Sign In"
 				})
-			)
+			),
+			React.createElement(Link, {
+				to: "/signup"
+			}, "Sign Up")
 		);
 	}
 });
