@@ -170,6 +170,29 @@ server.delete("/api/user", isAuthenticated, function(req, res) {
 	});
 });
 
+server.get("/api/flat", function(req, res) {
+
+	if (typeof req.query === "undefined") {
+		res.status(404).send("Invalid flat.");
+		return;
+	}
+
+	if (!database) {
+		res.sendStatus(500);
+		return;
+	}
+
+	database.collection("apartments").find({
+		_id: req.query.url,
+	}).toArray(function(err, docs) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.json(docs[0]);
+		}
+	});
+});
+
 server.get("/api/flats", function(req, res) {
 	if (!database) {
 		res.sendStatus(500);
