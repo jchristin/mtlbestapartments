@@ -50,9 +50,17 @@ server.post("/api/signin", auth.signIn);
 
 server.get("/api/signout", auth.signOut);
 
-server.get("/api/user", auth.getUser);
+server.get("/api/user", auth.getUserId);
 
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
+
+server.get("/api/criteria", function(req, res) {
+	res.json(req.user.searches[0].criteria);
+});
+
+server.post("/api/criteria", function(req, res) {
+	res.end();
+});
 
 server.get("/api/flat", function(req, res) {
 

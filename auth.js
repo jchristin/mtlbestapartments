@@ -101,7 +101,7 @@ module.exports.signOut = function(req, res) {
 	res.redirect("/");
 };
 
-module.exports.getUser = function(req, res) {
+module.exports.getUserId = function(req, res) {
 	if (req.user !== undefined) {
 		res.send(req.user._id);
 	} else {
