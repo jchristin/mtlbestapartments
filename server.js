@@ -70,7 +70,7 @@ server.get("/api/flat", function(req, res) {
 	}
 
 	database.apartments.findOne({
-		_id: req.query.url,
+		_id: req._parsedUrl.query,
 	}, function(err, doc) {
 		if (err) {
 			console.log(err);

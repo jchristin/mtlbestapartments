@@ -42,7 +42,7 @@ var routes = [{
 	path: "/",
 	component: require("./app"),
 	childRoutes: [{
-		path: "a",
+		path: "a/:_id",
 		component: require("./apt-detail")
 	},{
 		path: "account",

@@ -27,7 +27,7 @@ module.exports = React.createClass({
 				className: "grid-item",
 			},
 			React.createElement(Link, {
-					to: "/a?url=" + this.props.apart._id,
+					to: "/a/" + this.props.apart._id,
 				},
 				React.createElement("img", {
 					src: this.props.apart.image,
