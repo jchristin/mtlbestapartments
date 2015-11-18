@@ -15,9 +15,7 @@ module.exports = React.createClass({
 		Reflux.listenTo(zoneStore, "onZoneChange"),
 	],
 	createMarker: function(Apt) {
-		var position = new google.maps.LatLng(
-			Apt.latitude,
-			Apt.longitude);
+		var position = new google.maps.LatLng(Apt.coord[1], Apt.coord[0]);
 
 		// Add marker nature
 		Apt.marker = new google.maps.Marker({

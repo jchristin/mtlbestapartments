@@ -71,7 +71,7 @@ module.exports = Reflux.createStore({
 
 		// Transform JSON data to turf data.
 		var coords = _.map(borough, function(coord) {
-			return [coord.lat, coord.lng];
+			return [coord.lng, coord.lat];
 		});
 
 		// Create a turf polygon.

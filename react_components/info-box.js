@@ -17,7 +17,7 @@ module.exports = React.createClass({
 					className: "img-container"
 				},
 				React.createElement("a", {
-						href: this.props.apart._id,
+						href: this.props.apart.url,
 						target: "_blank"
 					},
 					React.createElement("img", {
