@@ -30,14 +30,9 @@ module.exports = React.createClass({
 		var layout = React.createElement("div", {
 				className: "apt-detail"
 			},
-			React.createElement("a", {
-					href: apart._id,
-					target: "_blank"
-				},
-				React.createElement("img", {
-					src: apart.image
-				})
-			),
+			React.createElement("img", {
+				src: apart.image
+			}),
 			React.createElement("div", {
 				className: "apt-detail-price",
 			}, this.getPriceString(apart.price)),
