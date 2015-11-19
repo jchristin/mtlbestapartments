@@ -8,8 +8,8 @@ module.exports = React.createClass({
 
 	componentDidMount: function() {
 		var center = new google.maps.LatLng(
-			this.props.latitude,
-			this.props.longitude);
+			this.props.coord[1],
+			this.props.coord[0]);
 
 		var mapOptions = {
 			center: center,

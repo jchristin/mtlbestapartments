@@ -13,7 +13,8 @@ var path = require("path"),
 	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
 	port = process.env.PORT || 5000,
 	database = require("./database"),
-	auth = require("./auth");
+	auth = require("./auth"),
+	ObjectID = require("mongodb").ObjectID;
 
 // Server setup.
 server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
@@ -70,7 +71,7 @@ server.get("/api/flat", function(req, res) {
 	}
 
 	database.apartments.findOne({
-		_id: req._parsedUrl.query,
+		_id: new ObjectID(req._parsedUrl.query),
 	}, function(err, doc) {
 		if (err) {
 			console.log(err);
