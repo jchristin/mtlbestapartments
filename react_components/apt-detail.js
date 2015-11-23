@@ -39,7 +39,11 @@ module.exports = React.createClass({
 			React.createElement("div", {
 				className: "apt-detail-room",
 			}, this.getRoomString(apart.room)),
-			React.createElement(miniMap, apart)
+			React.createElement(
+				miniMap, {
+					coord: apart.coord
+				}
+			)
 		);
 
 		this.setState({

@@ -3,7 +3,8 @@
 "use strict";
 
 var React = require("react"),
-	starsLayout = require("./edit-stars");
+	starsLayout = require("./edit-stars"),
+	miniMapEdit = require("./map-mini-edit");
 
 module.exports = React.createClass({
 	render: function() {
@@ -22,7 +23,14 @@ module.exports = React.createClass({
 			React.createElement(
 				starsLayout, {
 					stars: this.props.children.stars
-				})
+				}
+			),
+			React.createElement(
+				miniMapEdit, {
+					polygon: this.props.children.polygon,
+					boroughs: this.props.children.boroughs,
+				}
+			)
 		);
 	}
 });
