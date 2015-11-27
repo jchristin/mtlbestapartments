@@ -23,6 +23,7 @@ module.exports = React.createClass({
 					key: i
 				}, criteria);
 			} else if (criteria.type === "zone") {
+				criteria.id = i;
 				return React.createElement(editSearchZone, {
 					key: i
 				}, criteria);

@@ -26,10 +26,9 @@ module.exports = React.createClass({
 				}
 			),
 			React.createElement(
-				miniMapEdit, {
-					polygon: this.props.children.polygon,
-					boroughs: this.props.children.boroughs,
-				}
+				miniMapEdit,
+				null,
+				this.props.children
 			)
 		);
 	}

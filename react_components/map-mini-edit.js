@@ -46,25 +46,13 @@ module.exports = React.createClass({
 			"westmount": require("../boroughs/westmount"),
 		};
 
-		if ((this.props.polygon === undefined) &&
-			(this.props.boroughs === undefined)) {
+		if ((this.props.children.polygon === undefined) &&
+			(this.props.children.borough === undefined)) {
 			console.log("map-mini-edit: no parameters");
 			return;
 		}
 
 		this.bounds = new google.maps.LatLngBounds();
-
-		var apath;
-		if (this.props.polygon !== undefined) {
-			apath = _.map(
-				this.props.polygon,
-				function(coord) {
-					return new google.maps.LatLng(
-						coord[0],
-						coord[1]);
-				}
-			);
-		}
 
 		var mapOptions = {
 			draggable: false,
@@ -75,27 +63,24 @@ module.exports = React.createClass({
 
 		// Create the map.
 		this.map = new google.maps.Map(
-			document.getElementById("map-canvas"),
+			document.getElementById("map-canvas" + this.props.children.id),
 			mapOptions);
 
 		// Draw the borough polygon.
-		if (this.props.boroughs !== undefined) {
-			_.forEach(this.props.boroughs, function(boroughName) {
+		if (this.props.children.borough !== undefined) {
 
-				var boroughCoord = this.boroughs[boroughName];
+			var boroughCoord = this.boroughs[this.props.children.borough];
 
-				if (boroughCoord !== undefined) {
-					this.drawZone(boroughCoord);
-				} else {
-					console.log("Unknown borough: " + boroughName);
-				}
-
-			}, this);
+			if (boroughCoord !== undefined) {
+				this.drawZone(boroughCoord);
+			} else {
+				console.log("Unknown borough: " + this.props.children.borough);
+			}
 		}
 
 		// Draw the polygon.
-		if (this.props.polygon !== undefined) {
-			this.drawZone(this.props.polygon);
+		if (this.props.children.polygon !== undefined) {
+			this.drawZone(this.props.children.polygon);
 		}
 
 		// Adjust bounds of the map.
@@ -152,7 +137,12 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			id: "map-canvas"
+			id: "map-canvas" + this.props.children.id,
+			style: {
+				margin: "0px",
+				padding: "0px",
+				height: "400px"
+			}
 		});
 	}
 });
