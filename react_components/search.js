@@ -10,7 +10,7 @@ module.exports = React.createClass({
 	componentWillMount: function() {
 		request
 			.get("/api/search/criteria")
-			.end(function(err, res) {
+			.end(function(err) {
 				if (err.status === 404) {
 					window.location = "/search/new";
 				} else {
