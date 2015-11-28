@@ -5,8 +5,8 @@ var mongoClient = require("mongodb").MongoClient,
 
 module.exports = collections;
 
-if(!process.env.MOMGO_URL) {
-	console.log("MONGODB_URL missing."); 
+if(!process.env.MONGODB_URL) {
+	console.log("MONGODB_URL missing.");
 	return;
 }
 
