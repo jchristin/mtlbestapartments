@@ -1,6 +1,7 @@
 "use strict";
 
-var path = require("path"),
+var _ = require("lodash"),
+	path = require("path"),
 	express = require("express"),
 	bodyParser = require("body-parser"),
 	cookieParser = require("cookie-parser"),
@@ -55,12 +56,32 @@ server.get("/api/user", auth.getUserId);
 
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 
-server.get("/api/criteria", function(req, res) {
+server.get("/api/search/criteria", function(req, res) {
 	res.json(req.user.searches[0].criteria);
 });
 
-server.post("/api/criteria", function(req, res) {
+server.post("/api/search/criteria", function(req, res) {
 	res.end();
+});
+
+server.get("/api/search/result", auth.isAuthenticated, function(req, res) {
+	var search = req.user.searches[0];
+
+	database.apartments.find({
+		active: true
+		/*$where: function() {
+			return this.scores[req.user.searches[0]] > 80;
+		}*/
+	}).toArray(function(err, docs) {
+		if (err) {
+			console.log(err);
+			res.sendStatus(500);
+		} else {
+			res.json(_.filter(docs, function(doc){
+				return doc.scores && doc.scores[search._id] > search.threshold;
+			}));
+		}
+	});
 });
 
 server.get("/api/flat", function(req, res) {

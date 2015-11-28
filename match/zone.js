@@ -5,7 +5,7 @@ var point = require("turf-point"),
 	inside = require("turf-inside");
 
 module.exports = function(criteria, apartment) {
-	if (inside(point(apartment.coord), polygon([criteria.polygon]))) {
+	if (inside(point(apartment.coord), polygon(criteria.polygon))) {
 		return 5;
 	}
 
