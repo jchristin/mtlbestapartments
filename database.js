@@ -5,6 +5,11 @@ var mongoClient = require("mongodb").MongoClient,
 
 module.exports = collections;
 
+if(!process.env.MOMGO_URL) {
+	console.log("MONGODB_URL missing."); 
+	return;
+}
+
 mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
 	if (err) {
 		console.log(err);
