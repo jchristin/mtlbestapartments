@@ -39,7 +39,7 @@ module.exports = React.createClass({
 	},
 	componentDidMount: function() {
 		request
-			.get("/api/criteria")
+			.get("/api/search/criteria")
 			.end(function(err, res) {
 				if (err) {
 					console.log(err);

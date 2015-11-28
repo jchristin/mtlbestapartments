@@ -57,7 +57,11 @@ server.get("/api/user", auth.getUserId);
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 
 server.get("/api/search/criteria", function(req, res) {
-	res.json(req.user.searches[0].criteria);
+	if (req.user.searches.length !== 0) {
+		res.json(req.user.searches[0].criteria);
+	} else {
+		res.sendStatus(404);
+	}
 });
 
 server.post("/api/search/criteria", function(req, res) {
@@ -69,15 +73,15 @@ server.get("/api/search/result", auth.isAuthenticated, function(req, res) {
 
 	database.apartments.find({
 		active: true
-		/*$where: function() {
-			return this.scores[req.user.searches[0]] > 80;
-		}*/
+			/*$where: function() {
+				return this.scores[req.user.searches[0]] > 80;
+			}*/
 	}).toArray(function(err, docs) {
 		if (err) {
 			console.log(err);
 			res.sendStatus(500);
 		} else {
-			res.json(_.filter(docs, function(doc){
+			res.json(_.filter(docs, function(doc) {
 				return doc.scores && doc.scores[search._id] > search.threshold;
 			}));
 		}
