@@ -11,10 +11,12 @@ module.exports = React.createClass({
 		request
 			.get("/api/search/criteria")
 			.end(function(err) {
-				if (err.status === 404) {
-					window.location = "/search/new";
-				} else {
-					console.log(err);
+				if (err) {
+					if (err.status === 404) {
+						window.location = "/search/new";
+					} else {
+						console.log(err);
+					}
 				}
 			}.bind(this));
 	},
