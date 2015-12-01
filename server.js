@@ -7,6 +7,7 @@ var _ = require("lodash"),
 	cookieParser = require("cookie-parser"),
 	session = require("express-session"),
 	favicon = require("serve-favicon"),
+	MongoStore = require("connect-mongo")(session),
 	osmToGraph = require("osm-to-graph"),
 	graph = osmToGraph.loadGraph("./montreal.json"),
 	polygon = require("./polygon"),
@@ -35,7 +36,10 @@ server.use(cookieParser());
 server.use(session({
 	secret: "fleuby",
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	store: new MongoStore({
+		db: database.instance
+	})
 }));
 
 server.use(auth.initialize());
@@ -182,5 +186,6 @@ server.get("*", function(req, res) {
 });
 
 // Start server.
-server.listen(port);
-console.log("Listening on " + port);
+module.exports.listen = function() {
+	server.listen(port);
+};

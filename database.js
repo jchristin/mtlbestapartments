@@ -1,20 +1,19 @@
 "use strict";
 
-var mongoClient = require("mongodb").MongoClient,
-	collections = {};
+var mongoClient = require("mongodb").MongoClient;
 
-module.exports = collections;
-
-if(!process.env.MONGODB_URL) {
-	console.log("MONGODB_URL missing.");
-	return;
+if (!process.env.MONGODB_URL) {
+	throw new Error("MONGODB_URL missing.");
 }
 
-mongoClient.connect(process.env.MONGODB_URL, function(err, db) {
-	if (err) {
-		console.log(err);
-	} else {
-		collections.users = db.collection("users");
-		collections.apartments = db.collection("apartments");
-	}
-});
+module.exports.connect = function() {
+	var promise = mongoClient.connect(process.env.MONGODB_URL);
+
+	promise.then(function(database) {
+		module.exports.instance = database;
+		module.exports.users = database.collection("users");
+		module.exports.apartments = database.collection("apartments");
+	});
+
+	return promise;
+};
