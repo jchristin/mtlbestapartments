@@ -2,10 +2,6 @@
 
 var mongoClient = require("mongodb").MongoClient;
 
-if (!process.env.MONGODB_URL) {
-	throw new Error("MONGODB_URL missing.");
-}
-
 module.exports.connect = function() {
 	var promise = mongoClient.connect(process.env.MONGODB_URL);
 
