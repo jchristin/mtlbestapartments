@@ -37,7 +37,7 @@ var redirect = function(pathIfLogged, pathIfNotLogged) {
 var routes = [{
 	path: "/",
 	component: require("./home"),
-	onEnter: redirect("/search", null)
+	onEnter: redirect("/search", "/staff-picks")
 }, {
 	path: "/",
 	component: require("./app"),
