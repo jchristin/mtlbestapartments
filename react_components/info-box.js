@@ -12,7 +12,9 @@ module.exports = React.createClass({
 		return "Contact";
 	},
 	render: function() {
-		return React.createElement("div", {},
+		return React.createElement("div", {
+			className: "infoBox"
+		},
 			React.createElement("div", {
 					className: "img-container"
 				},

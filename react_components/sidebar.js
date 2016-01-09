@@ -9,47 +9,50 @@ module.exports = React.createClass({
 				className: "sidebar"
 			},
 			React.createElement("div", {
-				className: "sidebar-logo"
+				className: "sidebar-top"
 			}),
-			React.createElement("ul", {
-					className: "sidebar-nav"
-				},
-				React.createElement(Item, {
-					icon: "fa-usd",
-					caption: "Price",
-					content: require("./price")
-				}),
-				React.createElement(Item, {
-					icon: "fa-home",
-					caption: "Rooms",
-					content: require("./bedroom")
-				}),
-				React.createElement(Item, {
-					icon: "fa-map-marker",
-					caption: "Zone",
-					content: require("./zone")
-				})
-			),
+			React.createElement(Item, {
+				icon: "fa-user",
+				path: "/account",
+				caption: "My account"
+			}),
+			React.createElement(Item, {
+				icon: "fa-cog",
+				path: "/settings",
+				caption: "Settings"
+			}),
+			React.createElement(Item, {
+				icon: "fa-sign-out",
+				path: "/api/signout",
+				target: "_self",
+				caption: "Sign out"
+			}),
+			React.createElement("hr", {
+				className: "sidebar-divider"
+			}),
 			React.createElement("div", {
-					className: "sidebar-footer"
-				},
-				React.createElement("div", {
-						className: "share"
-					},
-					React.createElement("div", null, "SHARE"),
-					React.createElement("ul", null,
-						React.createElement("li", null, React.createElement("i", {
-							className: "fa fa-google-plus-square"
-						})),
-						React.createElement("li", null, React.createElement("i", {
-							className: "fa fa-twitter-square"
-						})),
-						React.createElement("li", null, React.createElement("i", {
-							className: "fa fa-facebook-square"
-						}))
-					)
-				)
-			)
+				className: "sidebar-list-title"
+			}, "Lists"),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				path: "/favorite",
+				caption: "Favorite"
+			}),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				path: "/search",
+				caption: "Search"
+			}),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				path: "/staff-picks",
+				caption: "Staff picks"
+			}),
+			React.createElement(Item, {
+				icon: "fa-circle",
+				path: "/posted",
+				caption: "Posted apartments"
+			})
 		);
 	}
 });

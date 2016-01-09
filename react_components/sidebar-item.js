@@ -1,41 +1,28 @@
 "use strict";
 
 var React = require("react"),
-	Reflux = require("reflux"),
-	actions = require("../react_stores/actions"),
-	panelStore = require("../react_stores/panel-store"),
-	$ = require("jquery");
+	Link = require("react-router").Link;
 
 module.exports = React.createClass({
-	mixins: [
-		Reflux.listenTo(panelStore, "onPanelChange"),
-	],
-	handleClick: function(e) {
-		// Prevent the root component to hide the panel.
-		e.stopPropagation();
-
-		var position = this.refs.item.getDOMNode().getBoundingClientRect().top;
-		actions.togglePanel(position, this.props.content);
-	},
-	onPanelChange: function(isActivated, position, content) {
-		if (isActivated && content === this.props.content) {
-			$(this.refs.item.getDOMNode()).addClass("selected");
-		} else {
-			$(this.refs.item.getDOMNode()).removeClass("selected");
+	getNotificationCountString: function() {
+		// var notificationCount = request.getNotification(this.props.name);
+		var notificationCount = 1;
+		if (notificationCount) {
+			return notificationCount + "";
 		}
+
+		return "";
 	},
 	render: function() {
-		return React.createElement("li", {
-				ref: "item",
-				onClick: this.handleClick,
-				className: "menu-item"
+		return React.createElement(Link, {
+				to: this.props.path,
+				className: "sidebar-item",
+				target: this.props.target
 			},
-			React.createElement("a", null,
-				React.createElement("div", null, React.createElement("i", {
-					className: "fa " + this.props.icon
-				})),
-				React.createElement("div", null, this.props.caption)
-			)
+			React.createElement("span", null, React.createElement("i", {
+				className: "fa " + this.props.icon
+			})),
+			React.createElement("span", null, this.props.caption)
 		);
 	}
 });
