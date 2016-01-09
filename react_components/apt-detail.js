@@ -52,7 +52,7 @@ module.exports = React.createClass({
 	},
 	componentDidMount: function() {
 		request
-			.get("/api/flat?" + this.props.params._id)
+			.get("/api/apart?" + this.props.params._id)
 			.end(function(err, res) {
 				if (err) {
 					console.log(err);

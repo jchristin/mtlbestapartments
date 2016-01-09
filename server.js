@@ -16,7 +16,7 @@ var _ = require("lodash"),
 	port = process.env.PORT || 5000,
 	database = require("./database"),
 	auth = require("./auth"),
-	ObjectID = require("mongodb").ObjectID;
+	apart = require("./apart");
 
 // Server setup.
 server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
@@ -60,6 +60,14 @@ server.get("/api/user", auth.getUserId);
 
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 
+server.get("/api/apart", apart.getApart);
+
+server.put("/api/apart/:id", apart.updateApart);
+
+server.post("/api/apart", apart.addApart);
+
+server.get("/api/staff-picks", apart.getStaffPicks);
+
 server.get("/api/search/criteria", function(req, res) {
 	if (req.user.searches.length !== 0) {
 		res.json(req.user.searches[0].criteria);
@@ -88,59 +96,6 @@ server.get("/api/search/result", auth.isAuthenticated, function(req, res) {
 			res.json(_.filter(docs, function(doc) {
 				return doc.scores && doc.scores[search._id] > search.threshold;
 			}));
-		}
-	});
-});
-
-server.get("/api/flat", function(req, res) {
-
-	if (typeof req.query === "undefined") {
-		res.status(404).send("Invalid flat.");
-		return;
-	}
-
-	database.apartments.findOne({
-		_id: new ObjectID(req._parsedUrl.query),
-	}, function(err, doc) {
-		if (err) {
-			console.log(err);
-			res.status(404).send("Invalid flat.");
-		} else {
-			res.json(doc);
-		}
-	});
-});
-
-server.get("/api/staff-picks", function(req, res) {
-	database.apartments.find({
-		active: true,
-	}).sort({
-		"date": -1
-	}).limit(50).toArray(function(err, docs) {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(docs);
-		}
-	});
-});
-
-server.get("/api/flats", function(req, res) {
-	database.apartments.find({
-		active: true,
-		image: {
-			$ne: null
-		},
-		room: {
-			$ne: null
-		}
-	}).sort({
-		"date": -1
-	}).limit(2000).toArray(function(err, docs) {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(docs);
 		}
 	});
 });
