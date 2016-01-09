@@ -111,6 +111,20 @@ server.get("/api/flat", function(req, res) {
 	});
 });
 
+server.get("/api/staff-picks", function(req, res) {
+	database.apartments.find({
+		active: true,
+	}).sort({
+		"date": -1
+	}).limit(50).toArray(function(err, docs) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.json(docs);
+		}
+	});
+});
+
 server.get("/api/flats", function(req, res) {
 	database.apartments.find({
 		active: true,

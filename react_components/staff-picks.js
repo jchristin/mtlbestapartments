@@ -3,32 +3,34 @@
 "use strict";
 
 var React = require("react"),
-	Reflux = require("reflux"),
-	apartStore = require("../react_stores/apart-store"),
+	request = require("superagent"),
 	gridItem = require("./grid-item"),
 	Masonry = require('react-masonry-component')(React),
 	_ = require("lodash");
 
 module.exports = React.createClass({
-	mixins: [
-		Reflux.listenTo(apartStore, "onMapDataChange"),
-	],
-	onMapDataChange: function(filteredApt) {
-		var aparts = _.map(filteredApt, function(apart) {
-			return React.createElement(gridItem, {
-				key: apart._id,
-				apart: apart
-			});
-		});
-
-		this.setState({
-			content: aparts
-		});
-	},
 	getInitialState: function() {
 		return {
 			content: ""
 		};
+	},
+	componentDidMount: function() {
+		request
+			.get("/api/staff-picks")
+			.end(function(err, res) {
+				if (err) {
+					console.log(err);
+				} else {
+					this.setState({
+						content: _.map(res.body, function(apart) {
+							return React.createElement(gridItem, {
+								key: apart._id,
+								apart: apart
+							});
+						})
+					});
+				}
+			}.bind(this));
 	},
 	render: function() {
 		return React.createElement("div", {
