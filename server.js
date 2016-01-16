@@ -60,7 +60,7 @@ server.get("/api/user", auth.getUserId);
 
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 
-server.get("/api/apart", apart.getApart);
+server.get("/api/apart/:id", apart.getApart);
 
 server.put("/api/apart/:id", apart.updateApart);
 

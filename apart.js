@@ -3,26 +3,45 @@
 var ObjectID = require("mongodb").ObjectID,
 	database = require("./database");
 
+var addOrUpdateApart = function(apart, callback) {
+	database.apartments.update({
+			_id: apart._id
+		}, apart, {
+			upsert: true
+		},
+		function(err) {
+			callback(err);
+		}
+	);
+};
+
 module.exports.addApart = function(req, res) {
-	res.end();
+	addOrUpdateApart(req.body, function(err) {
+		if (err) {
+			res.sendStatus(500);
+		} else {
+			res.end();
+		}
+	});
 };
 
 module.exports.updateApart = function(req, res) {
-	res.end();
+	addOrUpdateApart(req.body, function(err) {
+		if (err) {
+			res.sendStatus(500);
+		} else {
+			res.end();
+		}
+	});
 };
 
 module.exports.getApart = function(req, res) {
-	if (typeof req.query === "undefined") {
-		res.status(404).send("Invalid flat.");
-		return;
-	}
-
 	database.apartments.findOne({
-		_id: new ObjectID(req._parsedUrl.query),
+		_id: new ObjectID(req.params.id),
 	}, function(err, doc) {
 		if (err) {
 			console.log(err);
-			res.status(404).send("Invalid flat.");
+			res.sendStatus(404);
 		} else {
 			res.json(doc);
 		}
