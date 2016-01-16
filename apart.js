@@ -1,9 +1,39 @@
 "use strict";
 
-var ObjectID = require("mongodb").ObjectID,
-	database = require("./database");
+var _ = require("lodash"),
+	ObjectID = require("mongodb").ObjectID,
+	turfInside = require("turf-inside"),
+	turfPoint = require("turf-point"),
+	turfPolygon = require("turf-polygon"),
+	database = require("./database"),
+	boroughs = require("./boroughs");
+
+// Construct a turf polygon for each borough.
+_.forEach(boroughs, function(borough, key) {
+	var turfCoords = _.map(borough.coord, function(coord) {
+		return [coord.lng, coord.lat];
+	});
+
+	borough.turfPolygon = turfPolygon([turfCoords], {
+		name: key
+	});
+});
+
+var getBoroughName = function(coord) {
+	var borough = _.find(boroughs, function(b) {
+		return turfInside(turfPoint(coord), b.turfPolygon);
+	});
+
+	return borough !== undefined ? borough.turfPolygon.properties.name : "Montreal";
+};
+
+var normalizeApart = function(apart) {
+	apart.borough = getBoroughName(apart.coord);
+};
 
 var addOrUpdateApart = function(apart, callback) {
+	normalizeApart(apart);
+
 	database.apartments.update({
 			_id: apart._id
 		}, apart, {
