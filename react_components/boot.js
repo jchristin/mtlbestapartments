@@ -84,4 +84,4 @@ var routes = [{
 
 ReactDOM.render(React.createElement(Router, {
 	history: browserHistory
-}, routes), document.getElementById("app"));
+}, routes), document.getElementById("container"));

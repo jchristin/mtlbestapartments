@@ -13,12 +13,15 @@ SupportKit.init({
 
 module.exports = React.createClass({
 	render: function() {
-		return React.createElement("div", null,
-			React.createElement(Toolbar),
+		return React.createElement("div", {
+				className: "app"
+			},
 			React.createElement(Sidebar),
 			React.createElement("div", {
-					className: "app"
-				}, this.props.children
+					className: "main"
+				},
+				React.createElement(Toolbar),
+				this.props.children
 			)
 		);
 	}

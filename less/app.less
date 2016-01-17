@@ -1,3 +1,11 @@
 .app {
 	background: @lightgray;
 }
+
+.main {
+	position: relative;
+	float: right;
+	width: calc(~"100% - "@sidebar-width);
+	height: 100%;
+	overflow: auto;
+}
