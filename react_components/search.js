@@ -7,16 +7,33 @@ var React = require("react"),
 	Link = require("react-router").Link;
 
 module.exports = React.createClass({
+	generateLayout: function(apts) {
+		console.log(apts);
+	},
+	getAptSearch: function() {
+		request
+			.get("/api/search/result")
+			.end(function(err, res) {
+				if (err) {
+					console.log(err);
+				} else {
+					this.generateLayout(res.body);
+				}
+			}.bind(this));
+	},
 	componentWillMount: function() {
 		request
 			.get("/api/search/criteria")
 			.end(function(err) {
 				if (err) {
 					if (err.status === 404) {
-						window.location = "/search/new";
+						// window.location = "/search/new/price";
+						this.props.history.pushState(null, "/search/new/price");
 					} else {
 						console.log(err);
 					}
+				} else {
+					this.getAptSearch();
 				}
 			}.bind(this));
 	},

@@ -62,7 +62,17 @@ var routes = [{
 		onEnter: redirect(null, "/signin")
 	}, {
 		path: "search/new",
-		component: require("./search-new")
+		component: require("./search-full-price-new"),
+		onEnter: redirect("/search/new/price", "/search/new/price")
+	}, {
+		path: "search/new/price",
+		component: require("./search-full-price-new")
+	}, {
+		path: "search/new/room",
+		component: require("./search-full-room-new")
+	}, {
+		path: "search/new/map",
+		component: require("./search-full-map-new")
 	}, {
 		path: "search/edit",
 		component: require("./edit")
