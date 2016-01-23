@@ -8,9 +8,6 @@ var _ = require("lodash"),
 	session = require("express-session"),
 	favicon = require("serve-favicon"),
 	MongoStore = require("connect-mongo")(session),
-	osmToGraph = require("osm-to-graph"),
-	graph = osmToGraph.loadGraph("./montreal.json"),
-	polygon = require("./polygon"),
 	server = express(),
 	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
 	port = process.env.PORT || 5000,
@@ -140,14 +137,14 @@ server.get("/api/polygon", function(req, res) {
 	}
 
 	// Compute distance in meter, according to the travel type and the time.
-	var distmeter = Math.ComputeDistance(
-		req.query.traveltype,
-		req.query.timeinmin
-	);
+	//var distmeter = Math.ComputeDistance(
+	//	req.query.traveltype,
+	//	req.query.timeinmin
+	//);
 
-	var hull = polygon(graph, distmeter, req.query.lat, req.query.long);
-
-	res.json(hull);
+	//var hull = polygon(graph, distmeter, req.query.lat, req.query.long);
+	//res.json(hull);
+	res.end();
 });
 
 server.get("*", function(req, res) {
