@@ -27,8 +27,7 @@ module.exports = React.createClass({
 			.end(function(err) {
 				if (err) {
 					if (err.status === 404) {
-						// window.location = "/search/new/price";
-						this.props.history.pushState(null, "/search/new/price");
+						this.props.history.pushState(null, "/search/new/map");
 					} else {
 						console.log(err);
 					}

@@ -7,7 +7,7 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	handleClick: function(event) {
-		this.props.history.pushState(null, "/search/new/map");
+		this.props.history.pushState(null, "/search/new/price");
 	},
 	render: function() {
 		return React.createElement("div", {
