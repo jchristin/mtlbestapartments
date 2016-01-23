@@ -3,7 +3,6 @@
 "use strict";
 
 var React = require("react"),
-	Toolbar = require("./toolbar"),
 	Sidebar = require("./sidebar"),
 	SupportKit = require("supportkit");
 
@@ -12,15 +11,36 @@ SupportKit.init({
 });
 
 module.exports = React.createClass({
+	getInitialState: function() {
+		return {
+			expanded: false
+		};
+	},
+	toggle: function() {
+		this.setState({
+			expanded: !this.state.expanded
+		});
+	},
 	render: function() {
 		return React.createElement("div", {
 				className: "app"
 			},
 			React.createElement(Sidebar),
 			React.createElement("div", {
-					className: "main"
+					className: "main" + (this.state.expanded ? " expanded" : "")
 				},
-				React.createElement(Toolbar),
+				React.createElement("div", {
+						className: "toolbar"
+					},
+					React.createElement("a", {
+							className: "sidebar-toggle visible-xs-inline-block visible-sm-inline-block",
+							onClick: this.toggle
+						},
+						React.createElement("i", {
+							className: "fa fa-bars"
+						})
+					)
+				),
 				this.props.children
 			)
 		);

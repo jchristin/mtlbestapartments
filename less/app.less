@@ -1,11 +1,36 @@
 .app {
-	background: @lightgray;
+	overflow-x: hidden;
 }
 
 .main {
+	background: @lightgray;
 	position: relative;
 	float: right;
 	width: calc(~"100% - "@sidebar-width);
 	height: 100%;
 	overflow: auto;
+	@media (max-width: @screen-sm-max) {
+		width: 100%;
+		transition: transform .3s ease;
+	}
+	&.main.expanded {
+		@media (max-width: @screen-sm-max) {
+			transform: translate3d(@sidebar-width, 0px, 0px);
+			transition: transform .3s ease;
+		}
+	}
+}
+
+.toolbar {
+	background: @red-strong;
+	height: @toolbar-height;
+}
+
+.sidebar-toggle {
+	width: @toolbar-height;
+	height: @toolbar-height;
+	text-align: center;
+	padding-top: 17px;
+	border-right: solid 1px black;
+	font-size: 20px;
 }
