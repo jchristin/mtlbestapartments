@@ -47,9 +47,12 @@ module.exports = React.createClass({
 
 		var mapOptions = {
 			center: new google.maps.LatLng(45.506, -73.556),
-			minZoom: 11,
-			maxZoom: 16,
-			zoom: 12
+			zoomControl: false, // Remove +/- buttons from the map
+			streetViewControl: false, // Remove wingman from the map
+			mapTypeControl: false, // Remove Map/Sat choice
+			scrollwheel: false, // Remove scrollwheel zoom handle.
+			draggable: false, // Remove draggable/movable map option.
+			disableDoubleClickZoom: true, // Remove double click zoom option.
 		};
 
 		// Polygon option definitions.
@@ -90,6 +93,7 @@ module.exports = React.createClass({
 		this.markerIcon = this.markerIconDot;
 
 		this.map = new google.maps.Map(document.getElementById(this.props.id), mapOptions);
+		this.bounds = new google.maps.LatLngBounds();
 
 		var styledMap = new google.maps.StyledMapType(require("./map-style"));
 		this.map.mapTypes.set("map-style", styledMap);
@@ -119,11 +123,21 @@ module.exports = React.createClass({
 				this.allZone.push(polygon);
 			}, this
 		);
+
+		this.map.fitBounds(this.bounds);
 	},
 	drawZone: function(coordinates) {
-		var path = _.map(coordinates, function(coord) {
-			return new google.maps.LatLng(coord.lat, coord.lng);
-		});
+		var path = [];
+
+		_.forEach(coordinates, function(coord) {
+			var LatLng = new google.maps.LatLng(coord.lat, coord.lng);
+
+			// Add coordinate to the path for the polygon.
+			path.push(LatLng);
+
+			// Extend bound for the map.
+			this.bounds.extend(LatLng);
+		}, this);
 
 		//
 		// Draw polygon.
