@@ -8,8 +8,8 @@ var React = require("react"),
 module.exports = React.createClass({
 	render: function() {
 		return React.createElement("div", null,
-			React.createElement("div", null, "Walking zone"),
-			React.createElement(miniMapEdit, null,this.props.children)
+			React.createElement("div", null, this.props.children.title),
+			React.createElement(miniMapEdit, null, this.props.children)
 		);
 	}
 });

@@ -29,14 +29,16 @@ module.exports = React.createClass({
 		);
 	},
 	generateLayout: function(criterias) {
+		var zoneIndex = 1;
 		var layout = _.map(criterias, function(criteria, i) {
-
 			if (criteria.type === "price") {
 				return this.generateEditLayout(editSearchPrice, i, criteria);
 			} else if (criteria.type === "room") {
 				return this.generateEditLayout(editSearchRoom, i, criteria);
 			} else if (criteria.type === "zone") {
 				criteria.id = i;
+				criteria.title = "Search zone " + zoneIndex;
+				++zoneIndex;
 				return this.generateEditLayout(editSearchZone, i, criteria);
 			} else {
 				// Not handled yet
