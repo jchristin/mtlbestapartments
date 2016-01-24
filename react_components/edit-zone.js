@@ -8,27 +8,14 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	render: function() {
-		return React.createElement("div", {
-				className: "edit-search"
-			},
-			React.createElement("i", {
-				className: "fa fa-map-marker"
-			}),
-			React.createElement("div", {
-				className: "edit-search-zone-caption"
-			}, "Walking zone"),
-			React.createElement("hr", {
-				className: "edit-search-zone-caption-sep"
-			}),
+		return React.createElement("div", null,
+			React.createElement("div", null, "Walking zone"),
+			React.createElement(miniMapEdit, null,this.props.children),
+			React.createElement("hr", null),
 			React.createElement(
 				starsLayout, {
 					stars: this.props.children.stars
 				}
-			),
-			React.createElement(
-				miniMapEdit,
-				null,
-				this.props.children
 			)
 		);
 	}
