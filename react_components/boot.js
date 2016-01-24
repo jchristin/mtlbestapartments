@@ -5,93 +5,131 @@
 var React = require("react"),
 	ReactDOM = require("react-dom"),
 	Router = require("react-router").Router,
+	Route = require("react-router").Route,
+	Redirect = require("react-router").Redirect,
 	browserHistory = require("history").createHistory(),
 	request = require("superagent");
 
-var redirect = function(pathIfLogged, pathIfNotLogged) {
-	return function(nextState, replaceState, callback) {
+var Boot = React.createClass({
+	redirect: function(pathIfLogged, pathIfNotLogged) {
+		return function(nextState, replaceState) {
+			var isLogged = this.state.user !== "";
+			if (pathIfLogged && isLogged) {
+				replaceState({
+					nextPathname: nextState.location.pathname
+				}, pathIfLogged);
+			}
+
+			if (pathIfNotLogged && !isLogged) {
+				replaceState({
+					nextPathname: nextState.location.pathname
+				}, pathIfNotLogged);
+			}
+		}.bind(this);
+	},
+	getInitialState: function() {
+		return {
+			user: ""
+		};
+	},
+	childContextTypes: {
+		user: React.PropTypes.string
+	},
+	getChildContext: function() {
+		return {
+			user: this.state.user
+		};
+	},
+	componentWillMount: function() {
 		request
 			.get("/api/user")
 			.end(function(err, res) {
 				if (err) {
 					console.log(err);
 				} else {
-					if (pathIfLogged && res.text !== "") {
-						replaceState({
-							nextPathname: nextState.location.pathname
-						}, pathIfLogged);
-					}
-
-					if (pathIfNotLogged && res.text === "") {
-						replaceState({
-							nextPathname: nextState.location.pathname
-						}, pathIfNotLogged);
-					}
-
-					callback();
+					this.setState({
+						user: res.text
+					});
 				}
-			});
-	};
-};
+			}.bind(this));
+	},
+	render: function() {
+		return React.createElement(Router, {
+				history: browserHistory
+			},
+			React.createElement(Redirect, {
+				from: "/",
+				to: this.state.user ? "/search" : "/staff-picks"
+			}),
+			React.createElement(Route, {
+					path: "/",
+					component: require("./app")
+				},
+				React.createElement(Route, {
+					path: "a/:_id",
+					component: require("./apt-detail")
+				}),
+				React.createElement(Route, {
+					path: "account",
+					component: require("./account"),
+					onEnter: this.redirect(null, "/signin")
+				}),
+				React.createElement(Route, {
+					path: "favorite",
+					component: require("./favorite"),
+					onEnter: this.redirect(null, "/signin")
+				}),
+				React.createElement(Route, {
+					path: "posted",
+					component: require("./posted"),
+					onEnter: this.redirect(null, "/signin")
+				}),
+				React.createElement(Route, {
+					path: "search",
+					component: require("./search"),
+					onEnter: this.redirect(null, "/signin")
+				}),
+				React.createElement(Route, {
+					path: "search/new",
+					component: require("./search-full-map-new"),
+					onEnter: this.redirect("/search/new/map", "/search/new/map")
+				}),
+				React.createElement(Route, {
+					path: "search/new/price",
+					component: require("./search-full-price-new")
+				}),
+				React.createElement(Route, {
+					path: "search/new/room",
+					component: require("./search-full-room-new")
+				}),
+				React.createElement(Route, {
+					path: "search/new/map",
+					component: require("./search-full-map-new")
+				}),
+				React.createElement(Route, {
+					path: "search/edit",
+					component: require("./edit")
+				}),
+				React.createElement(Route, {
+					path: "settings",
+					component: require("./settings"),
+					onEnter: this.redirect(null, "/signin")
+				}),
+				React.createElement(Route, {
+					path: "signin",
+					component: require("./signin")
+				}),
+				React.createElement(Route, {
+					path: "signup",
+					component: require("./signup")
+				}),
+				React.createElement(Route, {
+					path: "staff-picks",
+					component: require("./staff-picks")
+				})
+			)
+		);
+	}
+});
 
-var routes = [{
-	path: "/",
-	component: require("./home"),
-	onEnter: redirect("/search", "/staff-picks")
-}, {
-	path: "/",
-	component: require("./app"),
-	childRoutes: [{
-		path: "a/:_id",
-		component: require("./apt-detail")
-	},{
-		path: "account",
-		component: require("./account"),
-		onEnter: redirect(null, "/signin")
-	}, {
-		path: "favorite",
-		component: require("./favorite"),
-		onEnter: redirect(null, "/signin")
-	}, {
-		path: "posted",
-		component: require("./posted"),
-		onEnter: redirect(null, "/signin")
-	}, {
-		path: "search",
-		component: require("./search"),
-		onEnter: redirect(null, "/signin")
-	}, {
-		path: "search/new",
-		component: require("./search-full-map-new"),
-		onEnter: redirect("/search/new/map", "/search/new/map")
-	}, {
-		path: "search/new/price",
-		component: require("./search-full-price-new")
-	}, {
-		path: "search/new/room",
-		component: require("./search-full-room-new")
-	}, {
-		path: "search/new/map",
-		component: require("./search-full-map-new")
-	}, {
-		path: "search/edit",
-		component: require("./edit")
-	}, {
-		path: "settings",
-		component: require("./settings"),
-		onEnter: redirect(null, "/signin")
-	}, {
-		path: "signin",
-		component: require("./signin")
-	}, {
-		path: "signup",
-		component: require("./signup")
-	}, {
-		path: "staff-picks",
-		component: require("./staff-picks")
-	}]
-}];
-
-ReactDOM.render(React.createElement(Router, {
-	history: browserHistory
-}, routes), document.getElementById("container"));
+ReactDOM.render(React.createElement(Boot), document.getElementById("container"));

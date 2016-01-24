@@ -4,7 +4,11 @@ var React = require("react"),
 	Item = require("./sidebar-item");
 
 module.exports = React.createClass({
+	contextTypes: {
+		user: React.PropTypes.string
+	},
 	render: function() {
+		console.log("user: " + this.context.user);
 		return React.createElement("div", {
 				className: "sidebar"
 			},
