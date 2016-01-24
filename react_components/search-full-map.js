@@ -83,10 +83,6 @@ module.exports = React.createClass({
 		//
 		var polygon = new google.maps.Polygon({
 			path: path,
-			fillColor: "#000000",
-			fillOpacity: 0,
-			strokeOpacity: 0,
-			strokeWeight: 0,
 			map: this.map
 		});
 
