@@ -45,76 +45,15 @@ module.exports = React.createClass({
 
 		this.allZone = [];
 
-		var mapOptions = {
-			center: new google.maps.LatLng(45.506, -73.556),
-			zoomControl: false, // Remove +/- buttons from the map
-			streetViewControl: false, // Remove wingman from the map
-			mapTypeControl: false, // Remove Map/Sat choice
-			scrollwheel: false, // Remove scrollwheel zoom handle.
-			draggable: false, // Remove draggable/movable map option.
-			disableDoubleClickZoom: true, // Remove double click zoom option.
-		};
+		this.map = new google.maps.Map(
+			document.getElementById(this.props.id),
+			require("./map-options"));
 
-		// Polygon option definitions.
-		this.polygonOptionOver = {
-			fillColor: "#FF0000",
-			fillOpacity: 0.25,
-			strokeOpacity: 0.1,
-			strokeWeight: 2,
-		};
-
-		this.polygonOptionSelected = {
-			fillColor: "#FF0000",
-			fillOpacity: 0.5,
-			strokeOpacity: 0.1,
-			strokeWeight: 2,
-		};
-
-		this.polygonOptionOut = {
-			fillColor: "#000000",
-			fillOpacity: 0,
-			strokeOpacity: 0,
-			strokeWeight: 0,
-		};
-
-		// Create marker icons (dot and pin)
-		this.markerIconDot = {
-			url: "/img/marker-dot.png",
-			size: new google.maps.Size(10, 10),
-			anchor: new google.maps.Point(5, 5)
-		};
-
-		this.markerIconDotViewed = {
-			url: "/img/marker-dot-viewed.png",
-			size: new google.maps.Size(10, 10),
-			anchor: new google.maps.Point(5, 5)
-		};
-
-		this.markerIcon = this.markerIconDot;
-
-		this.map = new google.maps.Map(document.getElementById(this.props.id), mapOptions);
 		this.bounds = new google.maps.LatLngBounds();
 
 		var styledMap = new google.maps.StyledMapType(require("./map-style"));
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
-
-		// Limit the pan zone.
-		var lastValidCenter = this.map.getCenter();
-
-		this.allowedBounds = new google.maps.LatLngBounds(
-			new google.maps.LatLng(45.392061, -73.981247), //...south-west
-			new google.maps.LatLng(45.772672, -73.331680) //....north-east
-		);
-
-		google.maps.event.addListener(this.map, "center_changed", function() {
-			if (this.allowedBounds.contains(this.map.getCenter())) {
-				lastValidCenter = this.map.getCenter();
-				return;
-			}
-
-			this.map.panTo(lastValidCenter);
-		}.bind(this));
 
 		_.forEach(
 			this.boroughs,
@@ -151,54 +90,30 @@ module.exports = React.createClass({
 			map: this.map
 		});
 
-		// test
-		// polygon.markers = _.map(coordinates, function(coord, i) {
-		// 	var position = new google.maps.LatLng(coord.lat, coord.lng);
-		// 	return new google.maps.Marker({
-		// 		position: position,
-		// 		map: null,
-		// 		title: "Marker #" + i
-		// 	}, this);
-		// }, this);
-		// test
-
 		polygon.zoneSelected = false;
 
-		polygon.setOptions(this.polygonOptionOut);
+		polygon.setOptions(require("./polygon-option-out"));
 
 		google.maps.event.addListener(polygon, "mouseover", function() {
 			if (!polygon.zoneSelected) {
-				polygon.setOptions(this.polygonOptionOver);
+				polygon.setOptions(require("./polygon-option-over"));
 			}
 		}.bind(this));
 
 		google.maps.event.addListener(polygon, "mouseout", function() {
 			if (!polygon.zoneSelected) {
-				polygon.setOptions(this.polygonOptionOut);
+				polygon.setOptions(require("./polygon-option-out"));
 			}
 		}.bind(this));
 
 		google.maps.event.addListener(polygon, "click", function() {
 			if (polygon.zoneSelected) {
-				polygon.setOptions(this.polygonOptionOut);
+				polygon.setOptions(require("./polygon-option-over"));
 				polygon.zoneSelected = false;
 			} else {
-				polygon.setOptions(this.polygonOptionSelected);
+				polygon.setOptions(require("./polygon-option-selected"));
 				polygon.zoneSelected = true;
 			}
-
-			// test
-			// _.forEach(
-			// 	polygon.markers,
-			// 	function(marker) {
-			// 		if (polygon.zoneSelected) {
-			// 			marker.setMap(this.map);
-			// 		} else {
-			// 			marker.setMap(null);
-			// 		}
-			// 	}, this
-			// );
-			// test
 		}.bind(this));
 
 		return polygon;

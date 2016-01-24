@@ -1,0 +1,8 @@
+{
+	"zoomControl": false,
+	"streetViewControl": false,
+	"mapTypeControl": false,
+	"scrollwheel": false,
+	"draggable": false,
+	"disableDoubleClickZoom": true,
+}

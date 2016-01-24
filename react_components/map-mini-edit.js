@@ -54,17 +54,10 @@ module.exports = React.createClass({
 
 		this.bounds = new google.maps.LatLngBounds();
 
-		var mapOptions = {
-			draggable: false,
-			scrollwheel: false,
-			disableDoubleClickZoom: true,
-			zoomControl: false
-		};
-
 		// Create the map.
 		this.map = new google.maps.Map(
 			document.getElementById("map-canvas" + this.props.children.id),
-			mapOptions);
+			require("./map-options"));
 
 		// Draw the borough polygon.
 		if (this.props.children.borough !== undefined) {
@@ -111,13 +104,12 @@ module.exports = React.createClass({
 		//
 		// Draw polygon.
 		//
-		new google.maps.Polygon({
+		var polygon = new google.maps.Polygon({
 			path: this.path,
-			strokeColor: "#FF0000",
-			strokeOpacity: 0.1,
-			strokeWeight: 2,
 			map: this.map
 		});
+
+		polygon.setOptions(require("./polygon-option-selected"));
 
 		//
 		// Compute center of the polygon to place a marker.
