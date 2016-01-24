@@ -8,7 +8,8 @@ var React = require("react"),
 	editSearchRoom = require("./edit-room"),
 	editSearchZone = require("./edit-zone"),
 	_ = require("lodash"),
-	Masonry = require('react-masonry-component')(React);
+	Masonry = require('react-masonry-component')(React),
+	starsLayout = require("./edit-stars");
 
 module.exports = React.createClass({
 	generateEditLayout: function(editElement, i, criteria) {
@@ -17,6 +18,11 @@ module.exports = React.createClass({
 				key: i
 			},
 			React.createElement(editElement, null, criteria),
+			React.createElement("hr", null),
+			React.createElement(
+				starsLayout, {
+					stars: criteria.stars
+				}),
 			React.createElement("div", {
 				className: "edit-search-sep"
 			})
