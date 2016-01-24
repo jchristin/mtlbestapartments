@@ -3,9 +3,6 @@
 "use strict";
 
 var React = require("react"),
-	turfPoint = require("turf-point"),
-	turfFeatureCollection = require("turf-featurecollection"),
-	turfCenter = require("turf-center"),
 	_ = require("lodash");
 
 module.exports = React.createClass({
@@ -86,16 +83,12 @@ module.exports = React.createClass({
 	},
 	drawZone: function(coordinates) {
 		this.path = [];
-		this.turfPoints = [];
 
 		_.forEach(coordinates, function(coord) {
 			var LatLng = new google.maps.LatLng(coord.lat, coord.lng);
 
 			// Add coordinate to the path for the polygon.
 			this.path.push(LatLng);
-
-			// Create a turf polygon.
-			this.turfPoints.push(turfPoint([coord.lng, coord.lat]));
 
 			// Extend bound for the map.
 			this.bounds.extend(LatLng);
@@ -111,19 +104,8 @@ module.exports = React.createClass({
 
 		polygon.setOptions(require("./polygon-option-selected"));
 
-		//
-		// Compute center of the polygon to place a marker.
-		//
-		var turfPointsFeature = turfFeatureCollection(this.turfPoints);
-		var centerPt = turfCenter(turfPointsFeature);
-
-		var center = new google.maps.LatLng(
-			centerPt.geometry.coordinates[1],
-			centerPt.geometry.coordinates[0]
-		);
-
 		new google.maps.Marker({
-			position: center,
+			position: this.bounds.getCenter(),
 			map: this.map,
 		});
 	},
