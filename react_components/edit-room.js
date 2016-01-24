@@ -7,18 +7,10 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	render: function() {
-		return React.createElement("div", {
-				className: "edit-search"
-			},
-			React.createElement("i", {
-				className: "fa fa-bed"
-			}),
-			React.createElement("div", {
-				className: "edit-search-room-caption"
-			}, "Between " + this.props.children.min + " and " + this.props.children.max + " rooms"),
-			React.createElement("hr", {
-				className: "edit-search-price-caption-sep"
-			}),
+		return React.createElement("div", null,
+			React.createElement("div", null,
+				"Between " + this.props.children.min + " and " + this.props.children.max + " rooms"),
+			React.createElement("hr", null),
 			React.createElement(
 				starsLayout, {
 					stars: this.props.children.stars

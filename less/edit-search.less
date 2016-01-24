@@ -1,11 +1,20 @@
 @edit-search-radius: 5px;
-.edit-search {
-	width: 500px;
-	margin-top: 25px;
+@edit-search-margin: 25px;
+@edit-search-width: 500px;
+.edit-search-container {
+	width: @edit-search-width;
 	margin-left: auto;
 	margin-right: auto;
+}
+.edit-search {
+	width: @edit-search-width;
 	background: @white-full;
-	border-radius: @edit-search-radius @edit-search-radius 0 0;
+	margin-top: @edit-search-margin;
+	border-radius: @edit-search-radius;
+}
+.edit-search-sep {
+	background: @lightgray;
+	margin-top: @edit-search-margin;
 }
 .edit-stars {
 	color: @red-500;

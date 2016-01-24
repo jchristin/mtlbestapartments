@@ -11,27 +11,32 @@ var React = require("react"),
 	Masonry = require('react-masonry-component')(React);
 
 module.exports = React.createClass({
+	generateEditLayout: function(editElement, i, criteria) {
+		return React.createElement("div", {
+				className: "edit-search",
+				key: i
+			},
+			React.createElement(editElement, null, criteria),
+			React.createElement("div", {
+				className: "edit-search-sep"
+			})
+		);
+	},
 	generateLayout: function(criterias) {
 		var layout = _.map(criterias, function(criteria, i) {
 
 			if (criteria.type === "price") {
-				return React.createElement(editSearchPrice, {
-					key: i
-				}, criteria);
+				return this.generateEditLayout(editSearchPrice, i, criteria);
 			} else if (criteria.type === "room") {
-				return React.createElement(editSearchRoom, {
-					key: i
-				}, criteria);
+				return this.generateEditLayout(editSearchRoom, i, criteria);
 			} else if (criteria.type === "zone") {
 				criteria.id = i;
-				return React.createElement(editSearchZone, {
-					key: i
-				}, criteria);
+				return this.generateEditLayout(editSearchZone, i, criteria);
 			} else {
 				// Not handled yet
 				console.log(criteria.type);
 			}
-		});
+		}, this);
 
 		this.setState({
 			layout: layout
@@ -55,7 +60,7 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-				className: "edit-search"
+				className: "edit-search-container"
 			},
 			React.createElement(Masonry, {
 				className: "masonry",
