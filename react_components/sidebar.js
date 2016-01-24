@@ -4,17 +4,10 @@ var React = require("react"),
 	Item = require("./sidebar-item");
 
 module.exports = React.createClass({
-	contextTypes: {
-		user: React.PropTypes.string
-	},
-	render: function() {
-		console.log("user: " + this.context.user);
+	getLoggedMenu: function () {
 		return React.createElement("div", {
-				className: "sidebar"
-			},
-			React.createElement("div", {
 				className: "sidebar-top"
-			}),
+			},
 			React.createElement(Item, {
 				icon: "fa-user",
 				path: "/account",
@@ -30,10 +23,36 @@ module.exports = React.createClass({
 				path: "/api/signout",
 				target: "_self",
 				caption: "Sign out"
+			})
+		);
+	},
+	getNotLoggedMenu: function () {
+		return React.createElement("div", {
+				className: "sidebar-top"
+			},
+			React.createElement(Item, {
+				icon: "fa-sign-in",
+				path: "/signin",
+				caption: "Sign in"
 			}),
-			React.createElement("hr", {
-				className: "sidebar-divider"
+			React.createElement(Item, {
+				icon: "fa-sign-up",
+				path: "/signup",
+				caption: "Sign up"
+			})
+		);
+	},
+	contextTypes: {
+		user: React.PropTypes.string
+	},
+	render: function() {
+		return React.createElement("div", {
+				className: "sidebar"
+			},
+			React.createElement("div", {
+				className: "sidebar-top"
 			}),
+			this.context.user ? this.getLoggedMenu() : this.getNotLoggedMenu(),
 			React.createElement("div", {
 				className: "sidebar-list-title"
 			}, "Lists"),
