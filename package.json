@@ -20,12 +20,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://julbaxter@bitbucket.org/julbaxter/flat-finder.git"
+	"url": "https://github.com/julbaxter/fleub.git"
   },
   "contributors": [
     "Mathieu Albrespy <mathieu.albrespy@gmail.com>",
-    "Julien Christin <jul.christin@gmail.com>",
-    "Xavier Koubi <helloxavierk@gmail.com>"
+    "Julien Christin <jul.christin@gmail.com>"
   ],
   "license": "Proprietary",
   "dependencies": {
