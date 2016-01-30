@@ -1,7 +1,8 @@
 "use strict";
 
 var _ = require("lodash"),
-	database = require("../database");
+	database = require("../database"),
+	threshold = 75;
 
 var map = {
 	price: require("./price"),
@@ -19,55 +20,40 @@ var computeScore = function(criteria, apartment, multiplier) {
 	}, 0);
 };
 
-var computeScoreAll = function() {
-	var searches = [];
+var computeScoreSearch = function(search) {
+	var result = [];
 
-	database.users.find().each(function(err, user) {
+	database.apartments.find({
+		active: true
+	}).each(function(err, apartment) {
 		if (err) {
 			console.log(err);
 			return false;
 		}
 
-		if (!user) {
-			database.apartments.find({
-				active: true
-			}).each(function(err, apartment) {
+		if (!apartment) {
+			database.searches.updateOne({
+				_id: search._id
+			}, {
+				$set: {
+					result: result
+				}
+			}, function(err) {
 				if (err) {
 					console.log(err);
-					return false;
 				}
-
-				if (!apartment) {
-					console.log("Done.");
-					setTimeout(computeScoreAll, 3000);
-					return false;
-				}
-
-				database.apartments.updateOne({
-					_id: apartment._id
-				}, {
-					$set: {
-						scores: _.reduce(searches, function(result, search) {
-							result[search._id] = computeScore(search.criteria, apartment, 1);
-							return result;
-						}, {})
-					}
-				}, function(err) {
-					if (err) {
-						console.log(err);
-					}
-				});
 			});
 			return false;
 		}
 
-		searches.push(user.searches[0]);
+		var score = computeScore(search.criteria, apartment, 1);
+		if(score >= threshold) {
+			result.push(apartment._id);
+		}
 	});
 };
 
 module.exports = {
 	computeScore: computeScore,
-	computeScoreAll: computeScoreAll
+	computeScoreSearch: computeScoreSearch
 };
-
-// setTimeout(module.exports.computeScoreAll, 3000);

@@ -1,6 +1,19 @@
 "use strict";
 
-var database = require("./database");
+var database = require("./database"),
+	match = require("./match");
+
+var updateResult = function(user) {
+	database.searches.findOne({
+		user: user._id
+	}, function(err, doc) {
+		if (err) {
+			console.log(err);
+		} else {
+			match.computeScoreSearch(doc);
+		}
+	});
+};
 
 module.exports.getCriteria = function(req, res) {
 	database.searches.findOne({
@@ -32,6 +45,7 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 			res.status(500).send("Server error. Please retry later.");
 		} else {
 			res.end();
+			updateResult(req.user);
 		}
 	});
 };
