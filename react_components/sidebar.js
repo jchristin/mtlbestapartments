@@ -8,6 +8,9 @@ module.exports = React.createClass({
 		return React.createElement("div", {
 				className: "sidebar-top"
 			},
+			React.createElement("div", {
+				className: "name"
+			}, this.context.user.name),
 			React.createElement(Item, {
 				icon: "fa-user",
 				path: "/account",
@@ -43,7 +46,7 @@ module.exports = React.createClass({
 		);
 	},
 	contextTypes: {
-		user: React.PropTypes.string
+		user: React.PropTypes.object
 	},
 	render: function() {
 		return React.createElement("div", {

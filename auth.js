@@ -1,6 +1,7 @@
 "use strict";
 
-var crypto = require("crypto"),
+var _ = require("lodash"),
+	crypto = require("crypto"),
 	passport = require("passport"),
 	LocalStrategy = require("passport-local").Strategy,
 	ObjectID = require("mongodb").ObjectID,
@@ -101,9 +102,9 @@ module.exports.signOut = function(req, res) {
 	res.redirect("/");
 };
 
-module.exports.getUserId = function(req, res) {
+module.exports.getUserInfo = function(req, res) {
 	if (req.user !== undefined) {
-		res.send(req.user._id);
+		res.json(_.pick(req.user, "_id", "name", "email"));
 	} else {
 		res.end();
 	}

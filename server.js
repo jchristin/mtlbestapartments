@@ -53,7 +53,7 @@ server.post("/api/signin", auth.signIn);
 
 server.get("/api/signout", auth.signOut);
 
-server.get("/api/user", auth.getUserId);
+server.get("/api/user", auth.getUserInfo);
 
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 

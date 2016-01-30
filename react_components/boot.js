@@ -13,7 +13,7 @@ var React = require("react"),
 var Boot = React.createClass({
 	redirect: function(pathIfLogged, pathIfNotLogged) {
 		return function(nextState, replaceState) {
-			var isLogged = this.state.user !== "";
+			var isLogged = this.state.user !== undefined;
 			if (pathIfLogged && isLogged) {
 				replaceState({
 					nextPathname: nextState.location.pathname
@@ -29,11 +29,11 @@ var Boot = React.createClass({
 	},
 	getInitialState: function() {
 		return {
-			user: ""
+			user: undefined
 		};
 	},
 	childContextTypes: {
-		user: React.PropTypes.string
+		user: React.PropTypes.object
 	},
 	getChildContext: function() {
 		return {
@@ -48,7 +48,7 @@ var Boot = React.createClass({
 					console.log(err);
 				} else {
 					this.setState({
-						user: res.text
+						user: res.body
 					});
 				}
 			}.bind(this));
