@@ -12,11 +12,6 @@ module.exports = React.createClass({
 				className: "name"
 			}, this.context.user.name),
 			React.createElement(Item, {
-				icon: "fa-user",
-				path: "/account",
-				caption: "My account"
-			}),
-			React.createElement(Item, {
 				icon: "fa-cog",
 				path: "/settings",
 				caption: "Settings"

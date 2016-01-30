@@ -70,11 +70,6 @@ var Boot = React.createClass({
 					component: require("./apt-detail")
 				}),
 				React.createElement(Route, {
-					path: "account",
-					component: require("./account"),
-					onEnter: this.redirect(null, "/signin")
-				}),
-				React.createElement(Route, {
 					path: "favorite",
 					component: require("./favorite"),
 					onEnter: this.redirect(null, "/signin")
