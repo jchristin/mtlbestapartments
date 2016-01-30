@@ -20,11 +20,11 @@ module.exports = React.createClass({
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
 
-		_.forEach(boroughs, function(borough) {
+		_.forEach(boroughs, _.bind(function(borough) {
 				var polygon = this.drawZone(borough.coord);
 				this.allZone.push(polygon);
 			},
-			this
+			this)
 		);
 
 		this.map.fitBounds(this.bounds);
@@ -32,7 +32,7 @@ module.exports = React.createClass({
 	drawZone: function(coordinates) {
 		var path = [];
 
-		_.forEach(coordinates, function(coord) {
+		_.forEach(coordinates, _.bind(function(coord) {
 			var LatLng = new google.maps.LatLng(coord.lat, coord.lng);
 
 			// Add coordinate to the path for the polygon.
@@ -40,7 +40,7 @@ module.exports = React.createClass({
 
 			// Extend bound for the map.
 			this.bounds.extend(LatLng);
-		}, this);
+		}, this));
 
 		//
 		// Draw polygon.

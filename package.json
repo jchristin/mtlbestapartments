@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-	"url": "https://github.com/julbaxter/fleub.git"
+    "url": "https://github.com/julbaxter/fleub.git"
   },
   "contributors": [
     "Mathieu Albrespy <mathieu.albrespy@gmail.com>",
@@ -43,7 +43,7 @@
     "jquery": "^2.1.4",
     "jquery-ui": "^1.10.5",
     "less": "^2.5.1",
-    "lodash": "^3.10.1",
+    "lodash": "^4.1.0",
     "mongodb": "^2.0.48",
     "osm-to-graph": "^0.2.1",
     "passport": "^0.3.2",
@@ -51,7 +51,6 @@
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-masonry-component": "^2.0.0",
-    "react-ribbon": "^0.1.0",
     "react-router": "^1.0.0",
     "reflux": "^0.3.0",
     "serve-favicon": "^2.3.0",

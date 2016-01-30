@@ -81,9 +81,9 @@ module.exports = Reflux.createStore({
 		this.turfPolygon = [];
 
 		// Create a turf polygon.
-		this.turfPolygon = _.map(this.boroughs, function(coords, name) {
+		this.turfPolygon = _.map(this.boroughs, _.bind(function(coords, name) {
 			return this.buildPolygon(name, coords);
-		}, this);
+		}, this));
 
 		// Retrieve all apartments from server.
 		this.allApartments = [];
@@ -94,10 +94,10 @@ module.exports = Reflux.createStore({
 				// turf point.
 				_.forEach(
 					this.allApartments,
-					function(apt) {
+					_.bind(function(apt) {
 						apt.turfPoint = tpoint([apt.coord[1], apt.coord[0]]);
 						apt.borough = this.getAptBorough(apt.turfPoint);
-					}, this
+					}, this)
 				);
 
 				this.trigger(this.filter());
@@ -116,13 +116,13 @@ module.exports = Reflux.createStore({
 	},
 
 	filter: function() {
-		return _.filter(this.allApartments, function(apart) {
+		return _.filter(this.allApartments, _.bind(function(apart) {
 			return apart.price >= this.price[0] &&
 				apart.price <= this.price[1] &&
 				apart.room >= this.bedroom[0] &&
 				apart.room <= this.bedroom[1] &&
 				this.isZoneValid(apart);
-		}, this);
+		}, this));
 	},
 	isZoneValid: function(apart) {
 		return this.zones.length === 0 || _.any(this.zones, function(polygon) {

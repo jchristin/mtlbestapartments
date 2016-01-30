@@ -61,7 +61,7 @@ module.exports = React.createClass({
 		// Check for new marker to create (should run once)
 		_.forEach(
 			filteredApt,
-			function(Apt) {
+			_.bind(function(Apt) {
 				if (Apt.marker === undefined) {
 					this.createMarker(Apt);
 				}
@@ -70,7 +70,7 @@ module.exports = React.createClass({
 					Apt.marker.setMap(this.map);
 				}
 
-			}, this
+			}, this)
 		);
 
 		_.forEach(
@@ -101,10 +101,10 @@ module.exports = React.createClass({
 
 		_.forEach(
 			allZones,
-			function(zone) {
+			_.bind(function(zone) {
 				var polygon = this.drawZone(zone);
 				this.allZone.push(polygon);
-			}, this
+			}, this)
 		);
 	},
 	componentDidMount: function() {

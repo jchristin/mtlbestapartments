@@ -30,7 +30,7 @@ module.exports = React.createClass({
 	},
 	generateLayout: function(criterias) {
 		var zoneIndex = 1;
-		var layout = _.map(criterias, function(criteria, i) {
+		var layout = _.map(criterias, _.bind(function(criteria, i) {
 			if (criteria.type === "price") {
 				return this.generateEditLayout(editSearchPrice, i, criteria);
 			} else if (criteria.type === "room") {
@@ -44,7 +44,7 @@ module.exports = React.createClass({
 				// Not handled yet
 				console.log(criteria.type);
 			}
-		}, this);
+		}, this));
 
 		this.setState({
 			layout: layout

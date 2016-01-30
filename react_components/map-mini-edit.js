@@ -84,7 +84,7 @@ module.exports = React.createClass({
 	drawZone: function(coordinates) {
 		this.path = [];
 
-		_.forEach(coordinates, function(coord) {
+		_.forEach(coordinates, _.bind(function(coord) {
 			var LatLng = new google.maps.LatLng(coord.lat, coord.lng);
 
 			// Add coordinate to the path for the polygon.
@@ -92,7 +92,7 @@ module.exports = React.createClass({
 
 			// Extend bound for the map.
 			this.bounds.extend(LatLng);
-		}, this);
+		}, this));
 
 		//
 		// Draw polygon.
