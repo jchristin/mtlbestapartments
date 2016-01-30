@@ -1,7 +1,6 @@
 "use strict";
 
-var _ = require("lodash"),
-	path = require("path"),
+var path = require("path"),
 	express = require("express"),
 	bodyParser = require("body-parser"),
 	cookieParser = require("cookie-parser"),
@@ -13,6 +12,7 @@ var _ = require("lodash"),
 	port = process.env.PORT || 5000,
 	database = require("./database"),
 	auth = require("./auth"),
+	search = require("./search"),
 	apart = require("./apart");
 
 // Server setup.
@@ -65,37 +65,13 @@ server.post("/api/apart", apart.addApart);
 
 server.get("/api/staff-picks", apart.getStaffPicks);
 
-server.get("/api/search/criteria", function(req, res) {
-	if (req.user.searches.length !== 0) {
-		res.json(req.user.searches[0].criteria);
-	} else {
-		res.sendStatus(404);
-	}
-});
+server.get("/api/search/criteria", auth.isAuthenticated, search.getCriteria);
 
-server.post("/api/search/criteria", function(req, res) {
-	res.end();
-});
+server.post("/api/search/criteria", auth.isAuthenticated, search.createOrUpdateCriteria);
 
-server.get("/api/search/result", auth.isAuthenticated, function(req, res) {
-	var search = req.user.searches[0];
+server.get("/api/search/result", auth.isAuthenticated, search.getResult);
 
-	database.apartments.find({
-		active: true
-			/*$where: function() {
-				return this.scores[req.user.searches[0]] > 80;
-			}*/
-	}).toArray(function(err, docs) {
-		if (err) {
-			console.log(err);
-			res.sendStatus(500);
-		} else {
-			res.json(_.filter(docs, function(doc) {
-				return doc.scores && doc.scores[search._id] > search.threshold;
-			}));
-		}
-	});
-});
+server.delete("/api/search", auth.isAuthenticated, search.remove);
 
 server.get("/api/stations/:city", function(req, res) {
 	if (req.params.city === "montreal") {

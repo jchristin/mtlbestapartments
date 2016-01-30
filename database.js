@@ -8,6 +8,7 @@ module.exports.connect = function() {
 	promise.then(function(database) {
 		module.exports.instance = database;
 		module.exports.users = database.collection("users");
+		module.exports.searches = database.collection("searches");
 		module.exports.apartments = database.collection("apartments");
 	});
 
