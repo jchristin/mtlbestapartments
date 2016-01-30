@@ -3,46 +3,28 @@
 "use strict";
 
 var React = require("react"),
-	request = require("superagent"),
-	gridItem = require("./grid-item"),
-	Masonry = require('react-masonry-component')(React),
-	_ = require("lodash");
+	Layout = require("./layout"),
+	request = require("superagent");
 
 module.exports = React.createClass({
 	getInitialState: function() {
-		return {
-			content: ""
-		};
+		return {apartments: []};
 	},
-	componentDidMount: function() {
+	componentWillMount: function() {
 		request
 			.get("/api/staff-picks")
 			.end(function(err, res) {
 				if (err) {
 					console.log(err);
 				} else {
-					this.setState({
-						content: _.map(res.body, function(apart) {
-							return React.createElement(gridItem, {
-								key: apart._id,
-								apart: apart
-							});
-						})
-					});
+					this.setState({apartments: res.body});
 				}
-			}.bind(this));
+			}.bind(this)
+		);
 	},
 	render: function() {
 		return React.createElement("div", {
-				className: "staff-picks"
-			},
-			React.createElement(Masonry, {
-				className: "masonry",
-				options: {
-					isFitWidth: true
-				},
-				disableImagesLoaded: false
-			}, this.state.content)
-		);
+			className: "staff-picks"
+		}, React.createElement(Layout, {apartments: this.state.apartments}));
 	}
 });
