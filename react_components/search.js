@@ -3,28 +3,18 @@
 "use strict";
 
 var React = require("react"),
+	Layout = require("./layout"),
 	request = require("superagent"),
 	Link = require("react-router").Link;
 
 module.exports = React.createClass({
-	generateLayout: function(apts) {
-		console.log(apts);
+	getInitialState: function() {
+		return {apartments: []};
 	},
-	getAptSearch: function() {
+	componentDidMount: function() {
 		request
 			.get("/api/search/result")
 			.end(function(err, res) {
-				if (err) {
-					console.log(err);
-				} else {
-					this.generateLayout(res.body);
-				}
-			}.bind(this));
-	},
-	componentWillMount: function() {
-		request
-			.get("/api/search/criteria")
-			.end(function(err) {
 				if (err) {
 					if (err.status === 404) {
 						this.props.history.pushState(null, "/search/new/map");
@@ -32,7 +22,7 @@ module.exports = React.createClass({
 						console.log(err);
 					}
 				} else {
-					this.getAptSearch();
+					this.setState({apartments: res.body});
 				}
 			}.bind(this));
 	},
@@ -41,7 +31,8 @@ module.exports = React.createClass({
 			"SEARCH",
 			React.createElement(Link, {
 				to: "/search/edit"
-			}, "Edit")
+			}, "Edit"),
+			React.createElement(Layout, {apartments: this.state.apartments})
 		);
 	}
 });

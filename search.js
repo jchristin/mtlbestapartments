@@ -64,5 +64,28 @@ module.exports.remove = function(req, res) {
 };
 
 module.exports.getResult = function(req, res) {
-	res.json(null);
+	database.searches.findOne({
+		user: req.user._id
+	}, function(err, doc) {
+		if (err) {
+			console.log(err);
+			res.status(500).send("Server error. Please retry later.");
+		} else {
+			if (doc === null) {
+				res.sendStatus(404);
+			} else {
+				database.apartments.find({
+					_id: {
+						$in: doc.result
+					}
+				}).toArray(function(err, docs) {
+					if (err) {
+						console.log(err);
+					} else {
+						res.json(docs);
+					}
+				});
+			}
+		}
+	});
 };
