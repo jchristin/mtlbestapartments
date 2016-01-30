@@ -1,0 +1,23 @@
+{
+	"out": {
+		"strokeColor": "#000000",
+		"strokeOpacity": 0,
+		"strokeWeight": 0,
+		"fillColor": "#000000",
+		"fillOpacity": 0
+	},
+	"over": {
+		"strokeColor": "#FF0000",
+		"strokeOpacity": 0.2,
+		"strokeWeight": 1,
+		"fillColor": "#FF0000",
+		"fillOpacity": 0.2
+	},
+	"selected": {
+		"strokeColor": "#FF0000",
+		"strokeOpacity": 0.4,
+		"strokeWeight": 2,
+		"fillColor": "#FF0000",
+		"fillOpacity": 0.4
+	}
+}

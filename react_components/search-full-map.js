@@ -2,9 +2,10 @@
 
 "use strict";
 
-var React = require("react"),
-	_ = require("lodash"),
-	boroughs = require("../boroughs");
+var _ = require("lodash"),
+	React = require("react"),
+	boroughs = require("../boroughs"),
+	polygonOptions = require("./polygon-options");
 
 module.exports = React.createClass({
 	componentDidMount: function() {
@@ -45,26 +46,26 @@ module.exports = React.createClass({
 
 		polygon.zoneSelected = false;
 
-		polygon.setOptions(require("./polygon-option-out"));
+		polygon.setOptions(polygonOptions.out);
 
 		google.maps.event.addListener(polygon, "mouseover", function() {
 			if (!polygon.zoneSelected) {
-				polygon.setOptions(require("./polygon-option-over"));
+				polygon.setOptions(polygonOptions.over);
 			}
 		}.bind(this));
 
 		google.maps.event.addListener(polygon, "mouseout", function() {
 			if (!polygon.zoneSelected) {
-				polygon.setOptions(require("./polygon-option-out"));
+				polygon.setOptions(polygonOptions.out);
 			}
 		}.bind(this));
 
 		google.maps.event.addListener(polygon, "click", function() {
 			if (polygon.zoneSelected) {
-				polygon.setOptions(require("./polygon-option-over"));
+				polygon.setOptions(polygonOptions.over);
 				polygon.zoneSelected = false;
 			} else {
-				polygon.setOptions(require("./polygon-option-selected"));
+				polygon.setOptions(polygonOptions.selected);
 				polygon.zoneSelected = true;
 			}
 		}.bind(this));

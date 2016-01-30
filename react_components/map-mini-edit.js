@@ -2,8 +2,9 @@
 
 "use strict";
 
-var React = require("react"),
-	_ = require("lodash");
+var _ = require("lodash"),
+	React = require("react"),
+	polygonOptions = require("./polygon-options");
 
 module.exports = React.createClass({
 	componentDidMount: function() {
@@ -102,7 +103,7 @@ module.exports = React.createClass({
 			map: this.map
 		});
 
-		polygon.setOptions(require("./polygon-option-selected"));
+		polygon.setOptions(polygonOptions.selected);
 
 		new google.maps.Marker({
 			position: this.bounds.getCenter(),
