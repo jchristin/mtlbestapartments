@@ -10,9 +10,7 @@ module.exports = React.createClass({
 	componentDidMount: function() {
 		this.allZone = [];
 
-		this.map = new google.maps.Map(
-			document.getElementById(this.props.id),
-			require("./map-options"));
+		this.map = new google.maps.Map(document.getElementById("map-canvas-full"), require("./map-options"));
 
 		this.bounds = new google.maps.LatLngBounds();
 
@@ -21,11 +19,9 @@ module.exports = React.createClass({
 		this.map.setMapTypeId("map-style");
 
 		_.forEach(boroughs, _.bind(function(borough) {
-				var polygon = this.drawZone(borough.coord);
-				this.allZone.push(polygon);
-			},
-			this)
-		);
+			var polygon = this.drawZone(borough.coord);
+			this.allZone.push(polygon);
+		}, this));
 
 		this.map.fitBounds(this.bounds);
 	},
@@ -45,10 +41,7 @@ module.exports = React.createClass({
 		//
 		// Draw polygon.
 		//
-		var polygon = new google.maps.Polygon({
-			path: path,
-			map: this.map
-		});
+		var polygon = new google.maps.Polygon({path: path, map: this.map});
 
 		polygon.zoneSelected = false;
 
@@ -78,14 +71,19 @@ module.exports = React.createClass({
 
 		return polygon;
 	},
+	handleClick: function() {
+		this.props.history.pushState(null, "/search/new/room");
+	},
 	render: function() {
-		return React.createElement("div", {
-			id: this.props.id,
+		return React.createElement("div", null, React.createElement("button", {
+			onClick: this.handleClick
+		}, "Validate"), React.createElement("div", {
+			id: "map-canvas-full",
 			style: {
 				margin: "0px",
 				padding: "0px",
-				height: this.props.height
+				height: "90%"
 			}
-		});
+		}));
 	}
 });

@@ -86,7 +86,7 @@ var Boot = React.createClass({
 				}),
 				React.createElement(Route, {
 					path: "search/new",
-					component: require("./search-full-map-new"),
+					component: require("./search-full-map"),
 					onEnter: this.redirect("/search/new/map", "/search/new/map")
 				}),
 				React.createElement(Route, {
@@ -99,7 +99,7 @@ var Boot = React.createClass({
 				}),
 				React.createElement(Route, {
 					path: "search/new/map",
-					component: require("./search-full-map-new")
+					component: require("./search-full-map")
 				}),
 				React.createElement(Route, {
 					path: "search/edit",
