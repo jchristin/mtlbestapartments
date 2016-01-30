@@ -50,7 +50,7 @@ module.exports = React.createClass({
 			this.setState({stateDisplay: this.stateDisplay});
 		}
 	},
-	handleOnMouseOut: function(starIdx) {
+	handleOnMouseOut: function() {
 		if (this.props.editable) {
 			this.setState({stateDisplay: this.stateFinal});
 		}
@@ -68,14 +68,12 @@ module.exports = React.createClass({
 			var layout = React.createElement("i", {
 				key: i,
 				className: className,
+				onMouseOut: this.handleOnMouseOut,
 				onClick: (function(i) {
 					this.handleOnClick(i);
 				}).bind(this, i),
 				onMouseOver: (function(i) {
 					this.handleOnMouseOver(i);
-				}).bind(this, i),
-				onMouseOut: (function(i) {
-					this.handleOnMouseOut(i);
 				}).bind(this, i)
 			});
 
