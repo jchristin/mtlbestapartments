@@ -91,7 +91,7 @@ var Boot = React.createClass({
 				}),
 				React.createElement(Route, {
 					path: "search/new/price",
-					component: require("./search-full-price-new")
+					component: require("./search-full-price")
 				}),
 				React.createElement(Route, {
 					path: "search/new/room",
