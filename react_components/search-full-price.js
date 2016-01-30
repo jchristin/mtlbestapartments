@@ -25,23 +25,10 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-				id: "search-new-container-price"
+				className: "edit-search",
 			},
-			React.createElement("i", {
-				className: "fa fa-usd"
-			}),
-			React.createElement("div", {
-				className: "edit-search-price-caption"
-			}, "Price between " + this.state.priceMin + "$ and " + this.state.priceMax + "$"),
-			React.createElement("hr", {
-				className: "edit-search-price-caption-sep"
-			}),
-			React.createElement(
-				starsLayout, {
-					stars: this.state.stars
-				}
-			),
-
+			React.createElement("div", null,
+				"Price between " + this.state.priceMin + "$ and " + this.state.priceMax + "$"),
 			React.createElement("input", {
 				type: "range",
 				name: "points",
@@ -59,7 +46,13 @@ module.exports = React.createClass({
 				step: "50",
 				value: this.state.priceMax,
 				onChange: this.changeMaxPrice
-			})
+			}),
+			React.createElement("hr", null),
+			React.createElement(
+				starsLayout, {
+					stars: this.state.stars
+				}
+			)
 		);
 	}
 });
