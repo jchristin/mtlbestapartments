@@ -50,7 +50,8 @@ module.exports = React.createClass({
 			React.createElement("hr", null),
 			React.createElement(
 				starsLayout, {
-					stars: this.state.stars
+					stars: this.state.stars,
+					editable: true
 				}
 			)
 		);
