@@ -8,7 +8,7 @@ module.exports = React.createClass({
 	render: function() {
 		return React.createElement("div", null,
 			React.createElement("div", null,
-				"Between " + this.props.children.min + " and " + this.props.children.max + " rooms")
+				"Between " + this.props.criterion.min + " and " + this.props.criterion.max + " rooms")
 		);
 	}
 });

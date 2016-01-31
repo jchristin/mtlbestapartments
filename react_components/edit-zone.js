@@ -8,8 +8,8 @@ EditMap = require("./edit-map");
 module.exports = React.createClass({
 	render: function() {
 		return React.createElement("div", null,
-			React.createElement("div", null, this.props.children.title),
-			React.createElement(EditMap, null, this.props.children)
+			React.createElement("div", null, this.props.criterion.title),
+			React.createElement(EditMap, {criterion:this.props.criterion})
 		);
 	}
 });

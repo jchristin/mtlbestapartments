@@ -21,7 +21,7 @@ module.exports = React.createClass({
 				key: i,
 				onClick : this.handleClick.bind(this, i)
 			},
-			React.createElement(editElement, null, criterion),
+			React.createElement(editElement, {criterion: criterion}),
 			React.createElement("hr", null),
 			React.createElement(
 				StarsLayout, {

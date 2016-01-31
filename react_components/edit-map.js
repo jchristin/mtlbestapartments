@@ -12,12 +12,12 @@ module.exports = React.createClass({
 
 		// Create the map.
 		this.map = new google.maps.Map(
-			document.getElementById("map-canvas" + this.props.children.id),
+			document.getElementById("map-canvas" + this.props.criterion.id),
 			require("./map-options"));
 
 		// Draw the polygon.
-		if (this.props.children.polygon !== undefined) {
-			this.drawZone(this.props.children.polygon);
+		if (this.props.criterion.polygon !== undefined) {
+			this.drawZone(this.props.criterion.polygon);
 		}
 
 		// Adjust bounds of the map.
@@ -58,7 +58,7 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			id: "map-canvas" + this.props.children.id,
+			id: "map-canvas" + this.props.criterion.id,
 			style: {
 				margin: "0px",
 				padding: "0px",
