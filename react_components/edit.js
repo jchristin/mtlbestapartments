@@ -12,10 +12,14 @@ var _ = require("lodash"),
 	StarsLayout = require("./edit-stars");
 
 module.exports = React.createClass({
+	handleClick: function(i) {
+		this.props.history.pushState(null, "/search/edit/" + (i + 1));
+	},
 	generateEditLayout: function(editElement, i, criteria) {
 		return React.createElement("div", {
 				className: "edit-search",
-				key: i
+				key: i,
+				onClick : this.handleClick.bind(this, i)
 			},
 			React.createElement(editElement, null, criteria),
 			React.createElement("hr", null),
