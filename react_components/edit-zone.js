@@ -3,13 +3,13 @@
 "use strict";
 
 var React = require("react"),
-	miniMapEdit = require("./map-mini-edit");
+EditMap = require("./edit-map");
 
 module.exports = React.createClass({
 	render: function() {
 		return React.createElement("div", null,
 			React.createElement("div", null, this.props.children.title),
-			React.createElement(miniMapEdit, null, this.props.children)
+			React.createElement(EditMap, null, this.props.children)
 		);
 	}
 });
