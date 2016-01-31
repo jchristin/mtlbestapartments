@@ -49,21 +49,23 @@ module.exports = React.createClass({
 			if (!polygon.zoneSelected) {
 				polygon.setOptions(polygonOptions.over);
 			}
-		}.bind(this));
+		});
 
 		google.maps.event.addListener(polygon, "mouseout", function() {
 			if (!polygon.zoneSelected) {
 				polygon.setOptions(polygonOptions.out);
 			}
-		}.bind(this));
+		});
 
 		google.maps.event.addListener(polygon, "click", function() {
 			if (polygon.zoneSelected) {
 				polygon.setOptions(polygonOptions.over);
 				polygon.zoneSelected = false;
+				this.props.criterion.polygon = [];
 			} else {
 				polygon.setOptions(polygonOptions.selected);
 				polygon.zoneSelected = true;
+				this.props.criterion.polygon = coordinates;
 			}
 		}.bind(this));
 	},
