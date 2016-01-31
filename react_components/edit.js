@@ -31,23 +31,27 @@ module.exports = React.createClass({
 	generateLayout: function(criterias) {
 		var zoneIndex = 1;
 		var layout = _.map(criterias, _.bind(function(criteria, i) {
-			if (criteria.type === "price") {
-				return this.generateEditLayout(EditPrice, i, criteria);
-			} else if (criteria.type === "room") {
-				return this.generateEditLayout(EditRoom, i, criteria);
-			} else if (criteria.type === "zone") {
-				criteria.id = i;
-				criteria.title = "Search zone " + zoneIndex;
-				++zoneIndex;
-				return this.generateEditLayout(EditZone, i, criteria);
-			} else {
-				// Not handled yet
-				console.log(criteria.type);
+			switch (criteria.type) {
+				case "price":
+					return this.generateEditLayout(EditPrice, i, criteria);
+
+				case "room":
+					return this.generateEditLayout(EditRoom, i, criteria);
+
+				case "zone":
+					criteria.id = i;
+					criteria.title = "Search zone " + zoneIndex;
+					++zoneIndex;
+					return this.generateEditLayout(EditZone, i, criteria);
+
+				default:
+					// Not handled yet
+					console.log(criteria.type);
 			}
 		}, this));
 
 		this.setState({
-			layout: layout
+			content: layout
 		});
 	},
 	componentDidMount: function() {
@@ -76,7 +80,7 @@ module.exports = React.createClass({
 					isFitWidth: true
 				},
 				disableImagesLoaded: false
-			}, this.state.layout)
+			}, this.state.content)
 		);
 	}
 });
