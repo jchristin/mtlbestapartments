@@ -3,6 +3,7 @@
 "use strict";
 
 var React = require("react"),
+	request = require("superagent"),
 	EditPriceFull = require("./edit-price-full"),
 	EditRoomFull = require("./edit-room-full"),
 	EditMapFull = require("./edit-map-full");
@@ -40,9 +41,16 @@ module.exports = React.createClass({
 	handleClick: function() {
 		var num = parseInt(this.props.params.num) + 1;
 		if(num > 3) {
-			// TODO Post criteria.
-			console.log(this.state.criteria);
-			this.props.history.pushState(null, "/search");
+			request
+				.post("/api/search/criteria")
+				.send(this.state.criteria)
+				.end(function(err) {
+					if (err) {
+						console.log(err);
+					}
+
+					this.props.history.pushState(null, "/search/edit");
+				}.bind(this));
 		} else {
 			this.props.history.pushState(null, "/search/new/" + num);
 		}
