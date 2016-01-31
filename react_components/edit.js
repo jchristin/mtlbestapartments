@@ -2,14 +2,14 @@
 
 "use strict";
 
-var React = require("react"),
+var _ = require("lodash"),
+	React = require("react"),
 	request = require("superagent"),
-	editSearchPrice = require("./edit-price"),
-	editSearchRoom = require("./edit-room"),
-	editSearchZone = require("./edit-zone"),
-	_ = require("lodash"),
+	EditPrice = require("./edit-price"),
+	EditRoom = require("./edit-room"),
+	EditZone = require("./edit-zone"),
 	Masonry = require('react-masonry-component')(React),
-	starsLayout = require("./edit-stars");
+	StarsLayout = require("./edit-stars");
 
 module.exports = React.createClass({
 	generateEditLayout: function(editElement, i, criteria) {
@@ -20,7 +20,7 @@ module.exports = React.createClass({
 			React.createElement(editElement, null, criteria),
 			React.createElement("hr", null),
 			React.createElement(
-				starsLayout, {
+				StarsLayout, {
 					stars: criteria.stars
 				}),
 			React.createElement("div", {
@@ -32,14 +32,14 @@ module.exports = React.createClass({
 		var zoneIndex = 1;
 		var layout = _.map(criterias, _.bind(function(criteria, i) {
 			if (criteria.type === "price") {
-				return this.generateEditLayout(editSearchPrice, i, criteria);
+				return this.generateEditLayout(EditPrice, i, criteria);
 			} else if (criteria.type === "room") {
-				return this.generateEditLayout(editSearchRoom, i, criteria);
+				return this.generateEditLayout(EditRoom, i, criteria);
 			} else if (criteria.type === "zone") {
 				criteria.id = i;
 				criteria.title = "Search zone " + zoneIndex;
 				++zoneIndex;
-				return this.generateEditLayout(editSearchZone, i, criteria);
+				return this.generateEditLayout(EditZone, i, criteria);
 			} else {
 				// Not handled yet
 				console.log(criteria.type);
