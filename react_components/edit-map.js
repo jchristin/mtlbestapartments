@@ -4,34 +4,16 @@
 
 var _ = require("lodash"),
 	React = require("react"),
-	boroughs = require("../boroughs"),
 	polygonOptions = require("./polygon-options");
 
 module.exports = React.createClass({
 	componentDidMount: function() {
-		if ((this.props.children.polygon === undefined) &&
-			(this.props.children.borough === undefined)) {
-			console.log("map-mini-edit: no parameters");
-			return;
-		}
-
 		this.bounds = new google.maps.LatLngBounds();
 
 		// Create the map.
 		this.map = new google.maps.Map(
 			document.getElementById("map-canvas" + this.props.children.id),
 			require("./map-options"));
-
-		// Draw the borough polygon.
-		if (this.props.children.borough !== undefined) {
-			var boroughCoord = boroughs[this.props.children.borough].coord;
-
-			if (boroughCoord !== undefined) {
-				this.drawZone(boroughCoord);
-			} else {
-				console.log("Unknown borough: " + this.props.children.borough);
-			}
-		}
 
 		// Draw the polygon.
 		if (this.props.children.polygon !== undefined) {
