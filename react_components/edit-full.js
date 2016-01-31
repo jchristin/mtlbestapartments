@@ -28,7 +28,16 @@ module.exports = React.createClass({
 		return null;
 	},
 	handleClick: function() {
-		this.props.history.pushState(null, "/search/edit");
+		request
+			.post("/api/search/criteria")
+			.send(this.state.criteria)
+			.end(function(err) {
+				if (err) {
+					console.log(err);
+				}
+
+				this.props.history.pushState(null, "/search/edit");
+			}.bind(this));
 	},
 	getInitialState: function() {
 		return {criteria: undefined};
