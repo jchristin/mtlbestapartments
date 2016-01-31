@@ -85,25 +85,20 @@ var Boot = React.createClass({
 					onEnter: this.redirect(null, "/signin")
 				}),
 				React.createElement(Route, {
-					path: "search/new",
-					component: require("./search-full-map"),
-					onEnter: this.redirect("/search/new/map", "/search/new/map")
-				}),
-				React.createElement(Route, {
-					path: "search/new/price",
-					component: require("./search-full-price")
-				}),
-				React.createElement(Route, {
-					path: "search/new/room",
-					component: require("./search-full-room-new")
-				}),
-				React.createElement(Route, {
-					path: "search/new/map",
-					component: require("./search-full-map")
-				}),
-				React.createElement(Route, {
 					path: "search/edit",
 					component: require("./edit")
+				}),
+				React.createElement(Route, {
+					path: "search/edit/:num",
+					component: require("./edit-full")
+				}),
+				React.createElement(Redirect, {
+					from: "search/new",
+					to: "search/new/1"
+				}),
+				React.createElement(Route, {
+					path: "search/new/:num",
+					component: require("./new-full"),
 				}),
 				React.createElement(Route, {
 					path: "settings",

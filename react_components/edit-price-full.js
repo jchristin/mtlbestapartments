@@ -15,7 +15,6 @@ module.exports = React.createClass({
 	changeMaxPrice: function(event) {
 		this.setState({priceMax: event.target.value});
 	},
-	handleClick: function() {},
 	render: function() {
 		return React.createElement("div", {
 			className: "edit-search"
@@ -38,8 +37,6 @@ module.exports = React.createClass({
 		}), React.createElement("hr", null), React.createElement(starsLayout, {
 			stars: this.state.stars,
 			editable: true
-		}), React.createElement("button", {
-			onClick: this.handleClick
-		}, "Validate"));
+		}));
 	}
 });

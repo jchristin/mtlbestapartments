@@ -72,19 +72,14 @@ module.exports = React.createClass({
 
 		return polygon;
 	},
-	handleClick: function() {
-		this.props.history.pushState(null, "/search/new/room");
-	},
 	render: function() {
-		return React.createElement("div", null, React.createElement("button", {
-			onClick: this.handleClick
-		}, "Validate"), React.createElement("div", {
+		return React.createElement("div", {
 			id: "map-canvas-full",
 			style: {
 				margin: "0px",
 				padding: "0px",
 				height: "90%"
 			}
-		}));
+		});
 	}
 });
