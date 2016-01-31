@@ -9,8 +9,6 @@ var _ = require("lodash"),
 
 module.exports = React.createClass({
 	componentDidMount: function() {
-		this.allZone = [];
-
 		this.map = new google.maps.Map(document.getElementById("map-canvas-full"), require("./map-options"));
 
 		this.bounds = new google.maps.LatLngBounds();
@@ -20,8 +18,7 @@ module.exports = React.createClass({
 		this.map.setMapTypeId("map-style");
 
 		_.forEach(boroughs, _.bind(function(borough) {
-			var polygon = this.drawZone(borough.coord);
-			this.allZone.push(polygon);
+			this.drawZone(borough.coord);
 		}, this));
 
 		this.map.fitBounds(this.bounds);
@@ -69,8 +66,6 @@ module.exports = React.createClass({
 				polygon.zoneSelected = true;
 			}
 		}.bind(this));
-
-		return polygon;
 	},
 	render: function() {
 		return React.createElement("div", {
