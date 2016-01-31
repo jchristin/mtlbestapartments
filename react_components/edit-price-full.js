@@ -6,25 +6,24 @@ var React = require("react"),
 	starsLayout = require("./edit-stars");
 
 module.exports = React.createClass({
-	getInitialState: function() {
-		return {priceMin: 500, priceMax: 1500, stars: 5};
-	},
 	changeMinPrice: function(event) {
-		this.setState({priceMin: event.target.value});
+		this.props.criterion.min = event.target.value;
+		this.forceUpdate();
 	},
 	changeMaxPrice: function(event) {
-		this.setState({priceMax: event.target.value});
+		this.props.criterion.max = event.target.value;
+		this.forceUpdate();
 	},
 	render: function() {
 		return React.createElement("div", {
 			className: "edit-search"
-		}, React.createElement("div", null, "Price between " + this.state.priceMin + "$ and " + this.state.priceMax + "$"), React.createElement("input", {
+		}, React.createElement("div", null, "Price between " + this.props.criterion.min + "$ and " + this.props.criterion.max + "$"), React.createElement("input", {
 			type: "range",
 			name: "points",
 			min: "0",
 			max: "3950",
 			step: "50",
-			value: this.state.priceMin,
+			value: this.props.criterion.min,
 			onChange: this.changeMinPrice
 		}), React.createElement("input", {
 			type: "range",
@@ -32,10 +31,10 @@ module.exports = React.createClass({
 			min: "50",
 			max: "4000",
 			step: "50",
-			value: this.state.priceMax,
+			value: this.props.criterion.max,
 			onChange: this.changeMaxPrice
 		}), React.createElement("hr", null), React.createElement(starsLayout, {
-			stars: this.state.stars,
+			stars: this.props.criterion.stars,
 			editable: true
 		}));
 	}

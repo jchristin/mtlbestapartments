@@ -13,13 +13,15 @@ module.exports = React.createClass({
 		var num = parseInt(this.props.params.num);
 
 		if (this.state.criteria && num <= this.state.criteria.length) {
-			switch (this.state.criteria[num - 1].type) {
+			var criterion = this.state.criteria[num - 1];
+
+			switch (criterion.type) {
 				case "price":
-					return React.createElement(EditPriceFull);
+					return React.createElement(EditPriceFull, {criterion: criterion});
 				case "room":
-					return React.createElement(EditRoomFull);
+					return React.createElement(EditRoomFull, {criterion: criterion});
 				case "zone":
-					return React.createElement(EditMapFull);
+					return React.createElement(EditMapFull, {criterion: criterion});
 			}
 		}
 
