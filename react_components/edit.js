@@ -15,42 +15,42 @@ module.exports = React.createClass({
 	handleClick: function(i) {
 		this.props.history.pushState(null, "/search/edit/" + (i + 1));
 	},
-	generateEditLayout: function(editElement, i, criteria) {
+	generateEditLayout: function(editElement, i, criterion) {
 		return React.createElement("div", {
 				className: "edit-search",
 				key: i,
 				onClick : this.handleClick.bind(this, i)
 			},
-			React.createElement(editElement, null, criteria),
+			React.createElement(editElement, null, criterion),
 			React.createElement("hr", null),
 			React.createElement(
 				StarsLayout, {
-					stars: criteria.stars
+					stars: criterion.stars
 				}),
 			React.createElement("div", {
 				className: "edit-search-sep"
 			})
 		);
 	},
-	generateLayout: function(criterias) {
+	generateLayout: function(criteria) {
 		var zoneIndex = 1;
-		var layout = _.map(criterias, _.bind(function(criteria, i) {
-			switch (criteria.type) {
+		var layout = _.map(criteria, _.bind(function(criterion, i) {
+			switch (criterion.type) {
 				case "price":
-					return this.generateEditLayout(EditPrice, i, criteria);
+					return this.generateEditLayout(EditPrice, i, criterion);
 
 				case "room":
-					return this.generateEditLayout(EditRoom, i, criteria);
+					return this.generateEditLayout(EditRoom, i, criterion);
 
 				case "zone":
-					criteria.id = i;
-					criteria.title = "Search zone " + zoneIndex;
+					criterion.id = i;
+					criterion.title = "Search zone " + zoneIndex;
 					++zoneIndex;
-					return this.generateEditLayout(EditZone, i, criteria);
+					return this.generateEditLayout(EditZone, i, criterion);
 
 				default:
 					// Not handled yet
-					console.log(criteria.type);
+					console.log(criterion.type);
 			}
 		}, this));
 
