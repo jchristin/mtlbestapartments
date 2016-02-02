@@ -106,7 +106,7 @@ module.exports.getUserInfo = function(req, res) {
 	if (req.user !== undefined) {
 		res.json(_.pick(req.user, "_id", "name", "email"));
 	} else {
-		res.end();
+		res.json(null);
 	}
 };
 

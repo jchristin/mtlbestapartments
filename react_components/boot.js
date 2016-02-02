@@ -7,13 +7,14 @@ var React = require("react"),
 	Router = require("react-router").Router,
 	Route = require("react-router").Route,
 	Redirect = require("react-router").Redirect,
+	Loading = require("./loading"),
 	browserHistory = require("history").createHistory(),
 	request = require("superagent");
 
 var Boot = React.createClass({
 	redirect: function(pathIfLogged, pathIfNotLogged) {
 		return function(nextState, replaceState) {
-			var isLogged = this.state.user !== undefined;
+			var isLogged = this.state.user !== null;
 			if (pathIfLogged && isLogged) {
 				replaceState({
 					nextPathname: nextState.location.pathname
@@ -54,6 +55,10 @@ var Boot = React.createClass({
 			}.bind(this));
 	},
 	render: function() {
+		if(this.state.user === undefined) {
+			return React.createElement(Loading);
+		}
+
 		return React.createElement(Router, {
 				history: browserHistory
 			},
