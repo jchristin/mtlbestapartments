@@ -15,6 +15,22 @@ var updateResult = function(user) {
 	});
 };
 
+var invalidateResult = function(user, callback) {
+	database.searches.updateOne({
+		user: user._id
+	}, {
+		$set: {
+			result: null
+		}
+	}, function(err) {
+		if (err) {
+			console.log(err);
+		}
+
+		callback();
+	});
+};
+
 module.exports.getCriteria = function(req, res) {
 	database.searches.findOne({
 		user: req.user._id
@@ -44,7 +60,7 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 			console.log(err);
 			res.status(500).send("Server error. Please retry later.");
 		} else {
-			res.end();
+			invalidateResult(req.user, res.end);
 			updateResult(req.user);
 		}
 	});
@@ -73,6 +89,8 @@ module.exports.getResult = function(req, res) {
 		} else {
 			if (doc === null) {
 				res.sendStatus(404);
+			} else if (doc.result === null) {
+				res.json(null);
 			} else {
 				database.apartments.find({
 					_id: {
