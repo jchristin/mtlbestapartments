@@ -6,6 +6,7 @@ var _ = require("lodash"),
 	turfPoint = require("turf-point"),
 	turfPolygon = require("turf-polygon"),
 	database = require("./database"),
+	match = require("./match"),
 	boroughs = require("./boroughs");
 
 // Construct a turf polygon for each borough.
@@ -28,31 +29,28 @@ var getBoroughName = function(coord) {
 };
 
 var normalizeApart = function(apart) {
+	apart._id = apart._id || new ObjectID();
+	apart.date = apart.date || new Date();
 	apart.borough = getBoroughName(apart.coord);
 };
 
-var addOrUpdateApart = function(apart, callback) {
-	normalizeApart(apart);
+module.exports.addOrUpdateApart = function(req, res) {
+	normalizeApart(req.body);
 
-	database.apartments.update({
-			_id: apart._id
-		}, apart, {
+	database.apartments.updateOne({
+			_id: req.body._id
+		}, req.body, {
 			upsert: true
 		},
 		function(err) {
-			callback(err);
+			if (err) {
+				res.sendStatus(500);
+			} else {
+				res.end();
+				match.computeScoreApartement(req.body);
+			}
 		}
 	);
-};
-
-module.exports.addApart = function(req, res) {
-	addOrUpdateApart(req.body, function(err) {
-		if (err) {
-			res.sendStatus(500);
-		} else {
-			res.end();
-		}
-	});
 };
 
 module.exports.updateApart = function(req, res) {

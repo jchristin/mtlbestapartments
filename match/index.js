@@ -53,7 +53,36 @@ var computeScoreSearch = function(search) {
 	});
 };
 
+var computeScoreApartement = function(apartment) {
+	database.searches.find().each(function(err, search) {
+		if (err) {
+			console.log(err);
+			return false;
+		}
+
+		if (!search) {
+			return false;
+		}
+
+		var score = computeScore(search.criteria, apartment, 1);
+		if(score >= threshold) {
+			database.searches.updateOne({
+				_id: search._id
+			}, {
+				$addToSet: {
+					result: apartment._id
+				}
+			}, function(err) {
+				if (err) {
+					console.log(err);
+				}
+			});
+		}
+	});
+};
+
 module.exports = {
 	computeScore: computeScore,
-	computeScoreSearch: computeScoreSearch
+	computeScoreSearch: computeScoreSearch,
+	computeScoreApartement: computeScoreApartement
 };

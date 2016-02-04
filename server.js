@@ -59,9 +59,7 @@ server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 
 server.get("/api/apart/:id", apart.getApart);
 
-server.put("/api/apart/:id", apart.updateApart);
-
-server.post("/api/apart", apart.addApart);
+server.post("/api/apart", apart.addOrUpdateApart);
 
 server.get("/api/staff-picks", apart.getStaffPicks);
 

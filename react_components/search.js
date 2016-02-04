@@ -21,6 +21,8 @@ module.exports = React.createClass({
 				} else {
 					if(res.body === null) {
 						this.timer = setTimeout(this.getResult(), 1000);
+					} else {
+						this.timer = setTimeout(this.getResult(), 1000);
 					}
 
 					this.setState({apartments: res.body});
