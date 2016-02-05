@@ -29,8 +29,9 @@ var getBoroughName = function(coord) {
 };
 
 var normalizeApart = function(apart) {
-	apart._id = apart._id || new ObjectID();
-	apart.date = apart.date || new Date();
+	apart._id = new ObjectID(apart._id);
+	apart.date = new Date(apart.date);
+	apart.last = new Date();
 	apart.borough = getBoroughName(apart.coord);
 };
 
@@ -53,9 +54,16 @@ module.exports.addOrUpdateApart = function(req, res) {
 	);
 };
 
-module.exports.updateApart = function(req, res) {
-	addOrUpdateApart(req.body, function(err) {
+module.exports.deactivateApart = function(req, res) {
+	database.apartments.updateOne({
+		_id: new ObjectID(req.body._id)
+	}, {
+		$set: {
+			active: false
+		}
+	}, function(err) {
 		if (err) {
+			console.log(err);
 			res.sendStatus(500);
 		} else {
 			res.end();
