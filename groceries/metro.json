@@ -1,0 +1,189 @@
+[{
+	"type": "metro",
+	"name": "Metro Anjou",
+	"address": "6500, Boul. Joseph-Renaud, Montréal, Québec",
+	"tel": "514-354-0282",
+	"lat": 45.604511,
+	"lng": -73.551472
+}, {
+	"type": "metro",
+	"name": "Metro Avenue du Parc",
+	"address": "3575, Avenue Du Parc, Suite 5100, Montréal, Québec",
+	"tel": "514-843-3530",
+	"lat": 45.510333,
+	"lng": -73.575022
+}, {
+	"type": "metro",
+	"name": "Metro Beaubien",
+	"address": "6333, Rue Beaubien Est, Montréal, Québec",
+	"tel": "514-254-6081",
+	"lat": 45.584945,
+	"lng": -73.563196
+}, {
+	"type": "metro",
+	"name": "Metro Beaulieu Laurier",
+	"address": "1293, Rue Laurier Est, Montréal, Québec",
+	"tel": "514-524-8788",
+	"lat": 45.532946,
+	"lng": -73.584620
+}, {
+	"type": "metro",
+	"name": "Metro Bellemare Verdun",
+	"address": "349, Avenue De L'église, Montréal, Québec",
+	"tel": "514-761-3406",
+	"lat": 45.463073,
+	"lng": -73.568471
+}, {
+	"type": "metro",
+	"name": "Metro Bigras",
+	"address": "2008, Rue Gauthier, Montréal, Québec",
+	"tel": "514-523-5882",
+	"lat": 45.531211,
+	"lng": -73.565423
+}, {
+	"type": "metro",
+	"name": "Metro Côte-des-Neiges",
+	"address": "5150, Chemin De La Côte-Des-Neiges, Montréal, Québec",
+	"tel": "514-738-7377",
+	"lat": 45.494907,
+	"lng": -73.619996
+}, {
+	"name": "Metro E. Bourdon &amp; Fils",
+	"address": "760, Rue Jean-Talon Est, Montréal, Québec",
+	"tel": "514-270-5226",
+	"lat": 45.539901,
+	"lng": -73.613421
+}, {
+	"type": "metro",
+	"name": "Metro Lebel Mont-Royal",
+	"address": "2275, avenue Mont-Royal Est, Montréal, Québec",
+	"tel": "514-522-5146",
+	"lat": 45.537370,
+	"lng": -73.570777
+}, {
+	"type": "metro",
+	"name": "Metro Marcanio",
+	"address": "1550, Rue Bélanger, Montréal, Québec",
+	"tel": "514-729-1866",
+	"lat": 45.545306,
+	"lng": -73.604023
+}, {
+	"type": "metro",
+	"name": "Metro Morgan",
+	"address": "4405, Rue Ste-Catherine Est, Montréal, Québec",
+	"tel": "514-254-0126",
+	"lat": 45.551930,
+	"lng": -73.533557
+}, {
+	"type": "metro",
+	"name": "Metro Notre-Dame",
+	"address": "8355, Rue Notre-Dame Est, Montréal, Québec",
+	"tel": "514-352-0181",
+	"lat": 45.594465,
+	"lng": -73.511567
+}, {
+	"type": "metro",
+	"name": "Metro Ontario",
+	"address": "3800, Rue Ontario Est, Montréal, Québec",
+	"tel": "514-524-8850",
+	"lat": 45.547330,
+	"lng": -73.543016
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus André-Grasset",
+	"address": "8935, Rue André-Grasset, Montréal, Québec",
+	"tel": "514-382-1465",
+	"lat": 45.558383,
+	"lng": -73.636785
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus Côte Vertu",
+	"address": "740, Boul. De La Côte-Vertu, Bureau 134, Montréal, Québec",
+	"tel": "514-747-3145",
+	"lat": 45.558383,
+	"lng": -73.636785
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus De la Montagne",
+	"address": "1230, Rue Notre-Dame Ouest, Montréal, Québec",
+	"tel": "514-938-4747",
+	"lat": 45.520604,
+	"lng": -73.673827
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus Dollard",
+	"address": "1880, Avenue Dollard, Montréal, Québec",
+	"tel": "514-364-3492",
+	"lat": 45.430043,
+	"lng": -73.633595
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus Domaine",
+	"address": "6550, Rue Sherbrooke Est, Montréal, Québec",
+	"tel": "514-259-8403",
+	"lat": 45.582043,
+	"lng": -73.542744
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus Dorion Ste-Catherine",
+	"address": "1955, Rue Ste-Catherine Est, Montréal, Québec",
+	"tel": "514-525-5090",
+	"lat": 45.524107,
+	"lng": -73.551472
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus Fleury",
+	"address": "1745, Rue Fleury Est, Montréal, Québec",
+	"tel": "514-385-1760",
+	"lat": 45.566957,
+	"lng": -73.654500
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus Lafrance Anjou",
+	"address": "7172, Rue Bombardier, Montréal, Québec",
+	"tel": "514-352-5447",
+	"lat": 45.607095,
+	"lng": -73.584965
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus Pie IX",
+	"address": "4290, Rue Jean-Talon Est, Montréal, Québec",
+	"tel": "514-725-9321",
+	"lat": 45.567934,
+	"lng": -73.589276
+}, {
+	"type": "metro-plus",
+	"name": "Metro Plus St-Joseph",
+	"address": "3600, Boul. St-Joseph Est, Montréal, Québec",
+	"tel": "514-254-6689",
+	"lat": 45.551681,
+	"lng": -73.564216
+}, {
+	"type": "metro",
+	"name": "Metro Queen Mary",
+	"address": "5201, Chemin Queen Mary, Montréal, Québec",
+	"tel": "514-488-5171",
+	"lat": 45.484837,
+	"lng": -73.628715
+}, {
+	"type": "metro",
+	"name": "Metro Somerled",
+	"address": "6645, Avenue Somerled, Montréal, Québec",
+	"tel": "514-486-3042",
+	"lat": 45.466503,
+	"lng": -73.639854
+}, {
+	"type": "metro",
+	"name": "Metro St-Hubert",
+	"address": "5300, Rue St-Hubert, Montréal, Québec",
+	"tel": "514-272-1832",
+	"lat": 45.530216,
+	"lng": -73.591048
+}, {
+	"type": "metro",
+	"name": "Metro Wilderton",
+	"address": "2875, Avenue Van-Horne, Montréal, Québec",
+	"tel": "514-739-3139",
+	"lat": 45.508551,
+	"lng": -73.625781
+}]

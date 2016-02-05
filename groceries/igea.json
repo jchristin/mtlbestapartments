@@ -1,0 +1,351 @@
+[{
+	"type": "IGEA",
+	"name": "Alimentation Claude Sauro",
+	"address": "2600 rue Ontario Est, Montréal, Québec, H2K4K4",
+	"tel": "514-525-4281",
+	"lat": 45.533899,
+	"lng": -73.550890
+}, {
+	"type": "IGEA",
+	"name": "Marché Louise Ménard inc",
+	"address": "865 rue Sainte-Catherine Est, Montréal, Québec, H2L2E4",
+	"tel": "514-844-1625",
+	"lat": 45.516096,
+	"lng": -73.558450
+}, {
+	"type": "IGEA",
+	"name": "Marché Louise Ménard",
+	"address": "Complexe Desjardins, Montréal, Québec, H5B1B5",
+	"tel": "514-843-6116",
+	"lat": 45.507370,
+	"lng": -73.564101
+}, {
+	"type": "IGEA",
+	"name": "Épicerie F.Chartrand inc.",
+	"address": "2340, boulevard Rosemont, Montréal, Québec, H2G1T7",
+	"tel": "514-279-3138",
+	"lat": 45.544832,
+	"lng": -73.587347
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA Extra Place Longueuil",
+	"address": "825 rue Saint-Laurent Ouest, Longueuil, Québec, J4K2V1",
+	"tel": "450-677-5238",
+	"lat": 45.528798,
+	"lng": -73.515463
+}, {
+	"type": "IGEA",
+	"name": "Marché Barcelo",
+	"address": "900 rue Saint-Zotique Est, Montréal, Québec, H2S1M8",
+	"tel": "514-270-9440",
+	"lat": 45.538112,
+	"lng": -73.605833
+}, {
+	"type": "IGEA",
+	"name": "Marché Louise Ménard inc.",
+	"address": "371 avenue Victoria, Saint-Lambert, Québec, J4P2H7",
+	"tel": "450-466-3880",
+	"lat": 45.502493,
+	"lng": -73.514381
+}, {
+	"type": "IGEA",
+	"name": "Marché Tellier Beaubien inc.",
+	"address": "5000 rue Beaubien Est, Montréal, Québec, H1T1V5",
+	"tel": "514-259-8281",
+	"lat": 45.572011,
+	"lng": -73.571132
+}, {
+	"type": "IGEA",
+	"name": "IGA Atwater",
+	"address": "1500 rue Atwater, Westmount, Québec, H3Z1X5",
+	"tel": "514-933-0995",
+	"lat": 45.488900,
+	"lng": -73.585955
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA extra Marché Tellier",
+	"address": "5000 Jean-Talon Est, Saint-Léonard, Québec, H1S1K6",
+	"tel": "514-728-3535",
+	"lat": 45.575316,
+	"lng": -73.584249
+}, {
+	"type": "IGEA",
+	"name": "Les marchés Lacoste Hébert",
+	"address": "1401 chemin Chambly, Longueuil, Québec, J4J3X6",
+	"tel": "450-677-2869",
+	"lat": 45.531286,
+	"lng": -73.484588
+}, {
+	"type": "IGEA",
+	"name": "Supermarché Déziel inc.",
+	"address": "1155 rue Jarry Est, Montréal, Québec, H2P1W9",
+	"tel": "514-725-9323",
+	"lat": 45.548473,
+	"lng": -73.624532
+}, {
+	"type": "IGEA",
+	"name": "Marché Louise Ménard (Préville) Inc",
+	"address": "299 boulevard Sir Wilfrid-Laurier, Saint-Lambert, Québec, J4R2L1",
+	"tel": "450-923-9399",
+	"lat": 45.493474,
+	"lng": -73.502917
+}, {
+	"type": "IGEA",
+	"name": "Super Marché Étop Inc.",
+	"address": "2600 rue Mullins, Pointe Saint-Charles, Québec, H3K1P2",
+	"tel": "514-932-8155",
+	"lat": 45.476821,
+	"lng": -73.567489
+}, {
+	"type": "IGEA",
+	"name": "Supermarché Toppetta inc.",
+	"address": "3964 rue Notre-Dame Ouest, Montréal, Québec, H4C1R1",
+	"tel": "514-937-7722",
+	"lat": 45.477993,
+	"lng": -73.583575
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA Extra Langelier",
+	"address": "7150 boulevard Langelier, Montréal, Québec, H1S2X6",
+	"tel": "514-254-5454",
+	"lat": 45.589701,
+	"lng": -73.569065
+}, {
+	"type": "IGEA",
+	"name": "Supermarché DJS Cousineau inc.",
+	"address": "455 boulevard Jean-Paul-Vincent, Longueuil, Québec, J4G1R3",
+	"tel": "450-646-4302",
+	"lat": 45.565772,
+	"lng": -73.479673
+}, {
+	"type": "IGEA",
+	"name": "Marché Louise Ménard inc.",
+	"address": "30 Place du Commerce, Verdun, Québec, H3E1V7",
+	"tel": "514-362-6330",
+	"lat": 45.468067,
+	"lng": -73.539758
+}, {
+	"type": "IGEA",
+	"name": "Alimentation Hochelaga G.S. Inc.",
+	"address": "7975 rue Hochelaga, Montréal, Québec, H1L2K9",
+	"tel": "514-351-7340",
+	"lat": 45.594277,
+	"lng": -73.524409
+}, {
+	"type": "IGEA",
+	"name": "IGA Van Horne",
+	"address": "4885 rue Van Horne, Montréal, Québec, H3W1J2",
+	"tel": "514-731-8336",
+	"lat": 45.492959,
+	"lng": -73.638866
+}, {
+	"type": "IGEA",
+	"name": "Supermarché Denis Deschenes",
+	"address": "4500 rue Wellington, Verdun, Québec, H4G1W7",
+	"tel": "514-766-7540",
+	"lat": 45.459043,
+	"lng": -73.567012
+}, {
+	"type": "IGEA Extra",
+	"name": "Marché Vincent inc.",
+	"address": "3315 chemin de Chambly, Longueuil, Québec, J4L4K5",
+	"tel": "450-670-6135",
+	"lat": 45.516581,
+	"lng": -73.448256
+}, {
+	"type": "IGEA",
+	"name": "IGA Gérard Champagne Ltée",
+	"address": "5144 rue Bannantyne, Verdun, Québec, H4G1G5",
+	"tel": "514-766-3536",
+	"lat": 45.455109,
+	"lng": -73.576378
+}, {
+	"type": "IGEA Extra",
+	"name": "Marché du Faubourg Greenfield Park",
+	"address": "300 rue Auguste, Greenfield Park, Québec, J4V3R4",
+	"tel": "450-656-7055",
+	"lat": 45.486090,
+	"lng": -73.464891
+}, {
+	"type": "IGEA",
+	"name": "Marché Dama inc.",
+	"address": "10760 avenue Millen, Montréal, Québec, H2C0A5",
+	"tel": "438-382-9963",
+	"lat": 45.556828,
+	"lng": -73.668286
+}, {
+	"type": "IGEA",
+	"name": "IGA Plaza Monk",
+	"address": "6675 boulevard Monk, Montréal, Québec, H4E3J2",
+	"tel": "514-767-5323",
+	"lat": 45.452201,
+	"lng": -73.593957
+}, {
+	"type": "IGEA Extra",
+	"name": "Marché CDL Tellier inc.",
+	"address": "6190 boulevard Henri-Bourassa est, Montréal-Nord, Québec, H1G5X3",
+	"tel": "514-321-0120",
+	"lat": 45.608482,
+	"lng": -73.614418
+}, {
+	"type": "IGEA Mini",
+	"name": "IGA mini",
+	"address": "6505 boulevard Henri-Bourassa, Montréal, Québec, H1G2V5",
+	"tel": "514-955-9337",
+	"lat": 45.610767,
+	"lng": -73.608614
+}, {
+	"type": "IGEA",
+	"name": "Les Alimentations Shaidman Pagano inc.",
+	"address": "5800, boulevard Cavendish, Côte Saint-Luc, Québec, H4W2T5",
+	"tel": "514-482-4710",
+	"lat": 45.475877,
+	"lng": -73.666079
+}, {
+	"type": "IGEA",
+	"name": "Supermarché Pagano, Shnaidman inc.",
+	"address": "7151 chemin de la Côte Saint-Luc, Montréal, Québec, H4V1J2",
+	"tel": "514-486-3254",
+	"lat": 45.465892,
+	"lng": -73.654978
+}, {
+	"type": "IGEA Mini",
+	"name": "IGA mini St-Hubert",
+	"address": "5175, boulevard Cousineau, Longueuil, Québec, J3Y3K7",
+	"tel": "450-676-4653",
+	"lat": 45.502488,
+	"lng": -73.426381
+}, {
+	"type": "IGEA Extra",
+	"name": "Marché d'alimentation Martin Lamarr",
+	"address": "3260 boulevard Lapinière, Brossard, Québec, J4Z3L8",
+	"tel": "450-445-1224",
+	"lat": 45.463442,
+	"lng": -73.454547
+}, {
+	"type": "IGEA",
+	"name": "IGA Michaud et fils",
+	"address": "4411, boulevard de la Concorde est, Laval, Québec, H7C1M4",
+	"tel": "450-664-3444",
+	"lat": 45.602562,
+	"lng": -73.647230
+}, {
+	"type": "IGEA Extra",
+	"name": "Supermarché Pierre Leduc inc.",
+	"address": "2820 rue de Salaberry, Montréal, Québec, H3M1L3",
+	"tel": "514-745-1640",
+	"lat": 45.536476,
+	"lng": -73.698109
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA Extra des-Rapides",
+	"address": "307 boulevard Cartier Ouest, Laval, Québec, H7N2J1",
+	"tel": "450-669-7501",
+	"lat": 45.557520,
+	"lng": -73.698818
+}, {
+	"type": "IGEA Extra",
+	"name": "Supermarché Gilles Bariteau inc.",
+	"address": "6250 boulevard Cousineau, Saint-Hubert, Québec, J3Y8X9",
+	"tel": "450-462-4420",
+	"lat": 45.494504,
+	"lng": -73.406375
+}, {
+	"type": "IGEA Extra",
+	"name": "Supermarché Picard inc.",
+	"address": "9105 boulevard Taschereau, Brossard, Québec, J4Y3B8",
+	"tel": "450-444-8747",
+	"lat": 45.436884,
+	"lng": -73.472993
+}, {
+	"type": "IGEA",
+	"name": "Marché Duchemin et Frères inc.",
+	"address": "1947 boulevard Keller, Saint-Laurent, Québec, H4K2V6",
+	"tel": "514-336-8085",
+	"lat": 45.523419,
+	"lng": -73.713857
+}, {
+	"type": "IGEA Extra",
+	"name": "Marché d'alimentation Beck inc.",
+	"address": "8130 boulevard Champlain, LaSalle, Québec, H8P1B4",
+	"tel": "514-364-4777",
+	"lat": 45.426749,
+	"lng": -73.612379
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA Bourgault et Sanzone inc.",
+	"address": "12285 boulevard Rodolphe Forget, Rivière-des-Prairies, Québec, H1E0A2",
+	"tel": "514-648-2355",
+	"lat": 45.647887,
+	"lng": -73.576862
+}, {
+	"type": "IGEA",
+	"name": "Roland Lavallée",
+	"address": "1535, boulevard Le Corbusier, Laval, Québec, H7S1Z3",
+	"tel": "450-934-9044",
+	"lat": 45.562839,
+	"lng": -73.726886
+}, {
+	"type": "IGEA Extra",
+	"name": "Alimentation C.C. Sévigny inc.",
+	"address": "5805 boulevard Robert-Bourassa, Laval, Québec, H7E0A4",
+	"tel": "450-665-4441",
+	"lat": 45.612734,
+	"lng": -73.698605
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA Leblanc",
+	"address": "13155 rue Sherbrooke Est, Pointe-aux-Trembles, Québec, H1A1B9",
+	"tel": "514-498-2220",
+	"lat": 45.657683,
+	"lng": -73.509213
+}, {
+	"type": "IGEA Extra",
+	"name": "Alimentation J.G.D. inc.",
+	"address": "975 boulevard Taschereau, La Prairie, Québec, J5R1W7",
+	"tel": "450-659-3341",
+	"lat": 45.406033,
+	"lng": -73.496110
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA extra Vallée",
+	"address": "490 28ième Avenue, Lachine, Québec, H8S3Z4",
+	"tel": "514-634-0124",
+	"lat": 45.437447,
+	"lng": -73.687565
+}, {
+	"type": "IGEA Extra",
+	"name": "Supermarché IGA Gagnon & Filles Inc",
+	"address": "2137 boulevard Labelle, Laval, Québec, H7T1L4",
+	"tel": "450-682-3660",
+	"lat": 45.556688,
+	"lng": -73.764414
+}, {
+	"type": "IGEA Extra",
+	"name": "IGA Extra marché Lambert",
+	"address": "58 route 132, Delson, Québec, J5B0A1",
+	"tel": "450-635-7534",
+	"lat": 45.384042,
+	"lng": -73.542338
+}, {
+	"type": "IGEA Express",
+	"name": "IGA express Laval",
+	"address": "4055,boulevard Industriel, Laval, Québec, H7L4S3",
+	"tel": "450-963-8813",
+	"lat": 45.598304,
+	"lng": -73.751179
+}, {
+	"type": "IGEA Extra",
+	"name": "Les Marchés Lambert et frères inc.",
+	"address": "23 boulevard Seigneurial Ouest, Saint-Bruno-de-Montarville, Québec, J3V2G9",
+	"tel": "450-653-4466",
+	"lat": 45.524295,
+	"lng": -73.339880
+}, {
+	"type": "IGEA Mini",
+	"name": "Marché Lambert et Frères inc.",
+	"address": "1700 rue Montarville, Saint-Bruno, Québec, J3V3V1",
+	"tel": "450-441-1860",
+	"lat": 45.524796,
+	"lng": -73.337972
+}]
