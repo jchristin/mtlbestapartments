@@ -30,7 +30,7 @@ var getBoroughName = function(coord) {
 
 var normalizeApart = function(apart) {
 	apart._id = new ObjectID(apart._id);
-	apart.date = new Date(apart.date);
+	apart.date = apart.date ? new Date(apart.date) : new Date();
 	apart.last = new Date();
 	apart.borough = getBoroughName(apart.coord);
 };
