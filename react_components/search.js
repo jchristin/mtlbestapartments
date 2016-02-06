@@ -20,9 +20,11 @@ module.exports = React.createClass({
 					}
 				} else {
 					if(res.body === null) {
+						// Refresh every seconds to check if matching is done.
 						this.timer = setTimeout(this.getResult(), 1000);
 					} else {
-						this.timer = setTimeout(this.getResult(), 1000);
+						// Refresh every 5 seconds to check for new result.
+						this.timer = setTimeout(this.getResult(), 5000);
 					}
 
 					this.setState({apartments: res.body});
