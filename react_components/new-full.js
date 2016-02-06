@@ -13,15 +13,18 @@ module.exports = React.createClass({
 		return {
 			criteria: [
 				{
-					type: "zone"
+					type: "zone",
+					stars: 5
 				}, {
 					type: "room",
 					min: 0,
-					max: 5
+					max: 5,
+					stars: 5
 				}, {
 					type: "price",
 					min: 0,
-					max: 4000
+					max: 4000,
+					stars: 5
 				}
 			]
 		};

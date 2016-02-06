@@ -55,6 +55,8 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 		$set: {
 			criteria: req.body
 		}
+	}, {
+		upsert: true
 	}, function(err) {
 		if (err) {
 			console.log(err);
