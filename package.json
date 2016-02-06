@@ -30,6 +30,7 @@
   "dependencies": {
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.5",
+    "bootstrap-slider": "^6.0.16",
     "browserify": "^12.0.1",
     "clean-css": "^3.4.7",
     "co": "^4.6.0",
@@ -41,7 +42,6 @@
     "google-maps-infobox": "^1.1.13",
     "history": "^1.12.0",
     "jquery": "^2.1.4",
-    "jquery-ui": "^1.10.5",
     "less": "^2.5.1",
     "lodash": "^4.1.0",
     "mongodb": "^2.1.5",
