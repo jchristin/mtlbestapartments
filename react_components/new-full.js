@@ -44,6 +44,11 @@ module.exports = React.createClass({
 	handleClick: function() {
 		var num = parseInt(this.props.params.num) + 1;
 		if(num > 3) {
+			// Remove zone criterion if not defined by the user.
+			if(!this.state.criteria[0].polygon) {
+				this.state.criteria.splice(0, 1);
+			}
+
 			request
 				.post("/api/search/criteria")
 				.send(this.state.criteria)
