@@ -19,15 +19,17 @@ module.exports = React.createClass({
 						console.log(err);
 					}
 				} else {
-					if(res.body === null) {
-						// Refresh every seconds to check if matching is done.
-						this.timer = setTimeout(this.getResult(), 1000);
-					} else {
-						// Refresh every 5 seconds to check for new result.
-						this.timer = setTimeout(this.getResult(), 5000);
-					}
+					if(this.isMounted) {
+						if(res.body === null) {
+							// Refresh every seconds to check if matching is done.
+							this.timer = setTimeout(this.getResult(), 1000);
+						} else {
+							// Refresh every 5 seconds to check for new result.
+							this.timer = setTimeout(this.getResult(), 5000);
+						}
 
-					this.setState({apartments: res.body});
+						this.setState({apartments: res.body});
+					}
 				}
 			}.bind(this));
 	},
@@ -35,10 +37,12 @@ module.exports = React.createClass({
 		return {apartments: null};
 	},
 	componentDidMount: function() {
+		this.isMounted = true;
 		this.getResult();
 	},
 	componentWillUnmount: function() {
 		clearTimeout(this.timer);
+		this.isMounted = false;
 	},
 	render: function() {
 		var content;
