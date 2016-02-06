@@ -96,7 +96,7 @@ module.exports.getResult = function(req, res) {
 					_id: {
 						$in: doc.result
 					}
-				}).sort({date: -1}).toArray(function(err, docs) {
+				}).sort({date: -1}).limit(50).toArray(function(err, docs) {
 					if (err) {
 						console.log(err);
 					} else {
