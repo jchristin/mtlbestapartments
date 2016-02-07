@@ -6,6 +6,10 @@ var _ = require("lodash"),
 	inside = require("turf-inside");
 
 module.exports = function(criteria, apartment) {
+	if (criteria.polygon.length === 0) {
+		return 0;
+	}
+
 	var points = _.map(criteria.polygon, function(point) {
 		return [point.lng, point.lat];
 	});
