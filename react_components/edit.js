@@ -15,21 +15,44 @@ module.exports = React.createClass({
 	handleClick: function(i) {
 		this.props.history.pushState(null, "/search/edit/" + (i + 1));
 	},
+	handleDeleteCriterion: function(i) {
+		request
+			.post("/api/search/criteria")
+			.send(this.state.criteria)
+			.end(function(err) {
+				if (err) {
+					console.log(err);
+				} else {
+					_.pullAt(this.state.criteria, i);
+
+					this.setState({
+						criteria: this.state.criteria
+					});
+				}
+			}.bind(this));
+	},
 	generateEditLayout: function(editElement, i, criterion) {
 		return React.createElement("div", {
-				className: "edit-search",
 				key: i,
-				onClick : this.handleClick.bind(this, i)
+				className: "edit-search"
 			},
-			React.createElement(editElement, {criterion: criterion}),
-			React.createElement("hr", null),
-			React.createElement(
-				StarsLayout, {
-					stars: criterion.stars
-				}),
+			React.createElement("i", {
+				className: "fa fa-trash",
+				onClick : this.handleDeleteCriterion.bind(this, i)
+			}),
 			React.createElement("div", {
-				className: "edit-search-sep"
-			})
+					onClick : this.handleClick.bind(this, i)
+				},
+				React.createElement(editElement, {criterion: criterion}),
+				React.createElement("hr", null),
+				React.createElement(
+					StarsLayout, {
+						stars: criterion.stars
+					}),
+					React.createElement("div", {
+						className: "edit-search-sep"
+					})
+				)
 		);
 	},
 	generateLayout: function() {
