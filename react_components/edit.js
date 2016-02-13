@@ -16,18 +16,18 @@ module.exports = React.createClass({
 		this.props.history.pushState(null, "/search/edit/" + (i + 1));
 	},
 	handleDeleteCriterion: function(i) {
+		_.pullAt(this.state.criteria, i);
+
+		this.setState({
+			criteria: this.state.criteria
+		});
+
 		request
 			.post("/api/search/criteria")
 			.send(this.state.criteria)
 			.end(function(err) {
 				if (err) {
 					console.log(err);
-				} else {
-					_.pullAt(this.state.criteria, i);
-
-					this.setState({
-						criteria: this.state.criteria
-					});
 				}
 			}.bind(this));
 	},
@@ -102,20 +102,44 @@ module.exports = React.createClass({
 	getInitialState: function() {
 		return {
 			requestGet: false,
-			criteria: undefined
+			criteria: []
 		};
 	},
 	handleAddZone: function() {
-
-		var criterion = {
+		this.state.criteria.push({
 			type: "zone",
 			stars: 5,
 			borough: "",
 			polygon: []
-		};
+		});
 
-		this.state.criteria.push(criterion);
+		this.setState({
+			criteria: this.state.criteria
+		});
 
+		this.addCriterion();
+	},
+	handleAddPrice: function() {
+		this.state.criteria.push({
+			type: "price",
+			stars: 5,
+			min: 0,
+			max: 4000
+		});
+
+		this.addCriterion();
+	},
+	handleAddRoom: function() {
+		this.state.criteria.push({
+			type: "room",
+			stars: 5,
+			min: 1,
+			max: 5
+		});
+
+		this.addCriterion();
+	},
+	addCriterion: function() {
 		request
 			.post("/api/search/criteria")
 			.send(this.state.criteria)
@@ -132,8 +156,17 @@ module.exports = React.createClass({
 	render: function() {
 		return React.createElement("div", {
 				className: "edit-search-container"
-			}, React.createElement("i", {
-				className: "fa fa-plus-square",
+			},
+			React.createElement("i", {
+				className: "fa fa-usd",
+				onClick: this.handleAddPrice
+			}),
+			React.createElement("i", {
+				className: "fa fa-bed",
+				onClick: this.handleAddRoom
+			}),
+			React.createElement("i", {
+				className: "fa fa-globe",
 				onClick: this.handleAddZone
 			}),
 			React.createElement(Masonry, {
