@@ -2,44 +2,33 @@
 
 "use strict";
 
-var React = require("react"),
+var _ = require("lodash"),
+	React = require("react"),
 	request = require("superagent"),
-	EditPriceFull = require("./edit-price-full"),
-	EditRoomFull = require("./edit-room-full"),
-	EditMapFull = require("./edit-map-full");
+	criteriaManagers = require("../criteria-managers"),
+	criteriaManagersWanted = [
+		criteriaManagers.zone,
+		criteriaManagers.bedroom,
+		criteriaManagers.price
+	];
 
 module.exports = React.createClass({
 	getInitialState : function() {
 		return {
-			criteria: [
-				{
-					type: "zone",
-					stars: 5
-				}, {
-					type: "room",
-					min: 0,
-					max: 5,
-					stars: 5
-				}, {
-					type: "price",
-					min: 0,
-					max: 4000,
-					stars: 5
-				}
-			]
+			criteria: _.map(criteriaManagersWanted, function(criteriaManager) {
+				return _.cloneDeep(criteriaManager.default);
+			})
 		};
 	},
 	getChildren: function() {
-		switch (this.props.params.num) {
-			case "1":
-				return React.createElement(EditMapFull, {criterion: this.state.criteria[0]});
-			case "2":
-				return React.createElement(EditRoomFull, {criterion: this.state.criteria[1]});
-			case "3":
-				return React.createElement(EditPriceFull, {criterion: this.state.criteria[2]});
+		var criterionIndex = this.props.params.num	;
+		if(criterionIndex > criteriaManagersWanted.length) {
+			return;
 		}
 
-		return null;
+		return React.createElement(criteriaManagersWanted[criterionIndex - 1].LargeCard, {
+			criterion: this.state.criteria[criterionIndex - 1]
+		});
 	},
 	handleClick: function() {
 		var num = parseInt(this.props.params.num) + 1;

@@ -1,19 +1,21 @@
-/* global module:true, google, document */
+/* global google, document */
 
 "use strict";
 
 var _ = require("lodash"),
 	React = require("react"),
-	boroughs = require("../boroughs"),
-	polygonOptions = require("./polygon-options");
+	boroughs = require("../../boroughs"),
+	mapSettings = require("../map-settings");
 
 module.exports = React.createClass({
 	componentDidMount: function() {
-		this.map = new google.maps.Map(document.getElementById("map-canvas-full"), require("./map-options"));
+		this.map = new google.maps.Map(
+			document.getElementById("map-canvas-full"),
+			mapSettings.options);
 
 		this.bounds = new google.maps.LatLngBounds();
 
-		var styledMap = new google.maps.StyledMapType(require("./map-style"));
+		var styledMap = new google.maps.StyledMapType(mapSettings.style);
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
 
@@ -43,27 +45,27 @@ module.exports = React.createClass({
 
 		polygon.zoneSelected = false;
 
-		polygon.setOptions(polygonOptions.out);
+		polygon.setOptions(mapSettings.polygon.out);
 
 		google.maps.event.addListener(polygon, "mouseover", function() {
 			if (!polygon.zoneSelected) {
-				polygon.setOptions(polygonOptions.over);
+				polygon.setOptions(mapSettings.polygon.over);
 			}
 		});
 
 		google.maps.event.addListener(polygon, "mouseout", function() {
 			if (!polygon.zoneSelected) {
-				polygon.setOptions(polygonOptions.out);
+				polygon.setOptions(mapSettings.polygon.out);
 			}
 		});
 
 		google.maps.event.addListener(polygon, "click", function() {
 			if (polygon.zoneSelected) {
-				polygon.setOptions(polygonOptions.over);
+				polygon.setOptions(mapSettings.polygon.over);
 				polygon.zoneSelected = false;
 				this.props.criterion.polygon = [];
 			} else {
-				polygon.setOptions(polygonOptions.selected);
+				polygon.setOptions(mapSettings.polygon.selected);
 				polygon.zoneSelected = true;
 				this.props.criterion.polygon = coordinates;
 			}

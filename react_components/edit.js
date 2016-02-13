@@ -5,9 +5,7 @@
 var _ = require("lodash"),
 	React = require("react"),
 	request = require("superagent"),
-	EditPrice = require("./edit-price"),
-	EditRoom = require("./edit-room"),
-	EditZone = require("./edit-zone"),
+	criteriaManagers = require("../criteria-managers"),
 	Masonry = require('react-masonry-component')(React),
 	StarsLayout = require("./edit-stars");
 
@@ -31,7 +29,7 @@ module.exports = React.createClass({
 				}
 			}.bind(this));
 	},
-	generateEditLayout: function(editElement, i, criterion) {
+	generateEditLayout: function(Card, i, criterion) {
 		return React.createElement("div", {
 				key: i,
 				className: "edit-search"
@@ -43,7 +41,7 @@ module.exports = React.createClass({
 			React.createElement("div", {
 					onClick : this.handleClick.bind(this, i)
 				},
-				React.createElement(editElement, {criterion: criterion}),
+				React.createElement(Card, {criterion: criterion}),
 				React.createElement("hr", null),
 				React.createElement(
 					StarsLayout, {
@@ -57,25 +55,15 @@ module.exports = React.createClass({
 	},
 	generateLayout: function() {
 		if (this.state.criteria) {
-			var zoneIndex = 1;
 			var layout = _.map(this.state.criteria, _.bind(function(criterion, i) {
-				switch (criterion.type) {
-					case "price":
-						return this.generateEditLayout(EditPrice, i, criterion);
-
-					case "room":
-						return this.generateEditLayout(EditRoom, i, criterion);
-
-					case "zone":
-						criterion.id = i;
-						criterion.title = "Search zone " + zoneIndex;
-						++zoneIndex;
-						return this.generateEditLayout(EditZone, i, criterion);
-
-					default:
-						// Not handled yet
-						console.log(criterion.type);
+				var criterionManager = criteriaManagers[criterion.type];
+				if(!criterionManager){
+					// Not handled yet
+					console.log(criterion.type);
+					return;
 				}
+
+				return this.generateEditLayout(criterionManager.Card, i, criterion);
 			}, this));
 
 			return layout;
@@ -131,7 +119,7 @@ module.exports = React.createClass({
 	},
 	handleAddRoom: function() {
 		this.state.criteria.push({
-			type: "room",
+			type: "bedroom",
 			stars: 5,
 			min: 1,
 			max: 5

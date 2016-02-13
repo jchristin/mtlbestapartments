@@ -4,9 +4,7 @@
 
 var React = require("react"),
 	request = require("superagent"),
-	EditPriceFull = require("./edit-price-full"),
-	EditRoomFull = require("./edit-room-full"),
-	EditMapFull = require("./edit-map-full");
+	criteriaManagers = require("../criteria-managers");
 
 module.exports = React.createClass({
 	getChildren: function() {
@@ -14,15 +12,13 @@ module.exports = React.createClass({
 
 		if (this.state.criteria && num <= this.state.criteria.length) {
 			var criterion = this.state.criteria[num - 1];
-
-			switch (criterion.type) {
-				case "price":
-					return React.createElement(EditPriceFull, {criterion: criterion});
-				case "room":
-					return React.createElement(EditRoomFull, {criterion: criterion});
-				case "zone":
-					return React.createElement(EditMapFull, {criterion: criterion});
+			var criterionManager = criteriaManagers[criterion.type];
+			if(!criterionManager) {
+				console.log("Criterion not supported:" + criterion.type);
+				return;
 			}
+
+			return React.createElement(criterionManager.LargeCard, {criterion: criterion});
 		}
 
 		return null;

@@ -1,13 +1,10 @@
-/* global module:true */
-
 "use strict";
 
-var React = require("react"),
-	Slider = require("bootstrap-slider"),
-	starsLayout = require("./edit-stars");
+var React = require("react");
 
 module.exports = React.createClass({
 	componentDidMount: function() {
+		var Slider = require("bootstrap-slider");
 		this.slider = new Slider("#slider-room", {
 			min: 1,
 			max: 5,
@@ -28,11 +25,6 @@ module.exports = React.createClass({
 			React.createElement("input", {
 				type: "text",
 				id: "slider-room",
-			}),
-			React.createElement("hr", null),
-			React.createElement(starsLayout, {
-				stars: this.props.criterion.stars,
-				editable: true
 			})
 		);
 	}

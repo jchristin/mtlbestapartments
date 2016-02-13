@@ -4,7 +4,7 @@
 	"min": 500,
 	"max": 1200
 }, {
-	"type": "room",
+	"type": "bedroom",
 	"stars": 4,
 	"min": 2,
 	"max": 5

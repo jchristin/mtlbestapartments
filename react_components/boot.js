@@ -95,7 +95,7 @@ var Boot = React.createClass({
 				}),
 				React.createElement(Route, {
 					path: "search/edit/:num",
-					component: require("./edit-full")
+					component: require("./edit-large")
 				}),
 				React.createElement(Redirect, {
 					from: "search/new",
@@ -103,7 +103,7 @@ var Boot = React.createClass({
 				}),
 				React.createElement(Route, {
 					path: "search/new/:num",
-					component: require("./new-full"),
+					component: require("./new-large"),
 				}),
 				React.createElement(Route, {
 					path: "settings",

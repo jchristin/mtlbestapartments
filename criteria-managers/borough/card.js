@@ -4,7 +4,7 @@
 
 var _ = require("lodash"),
 	React = require("react"),
-	polygonOptions = require("./polygon-options");
+	mapSettings = require("../map-settings");
 
 module.exports = React.createClass({
 	componentDidMount: function() {
@@ -13,7 +13,8 @@ module.exports = React.createClass({
 		// Create the map.
 		this.map = new google.maps.Map(
 			document.getElementById("map-canvas" + this.props.criterion.id),
-			require("./map-options"));
+			mapSettings.options
+		);
 
 		// Draw the polygon.
 		if (this.props.criterion.polygon !== undefined) {
@@ -24,7 +25,7 @@ module.exports = React.createClass({
 		this.map.fitBounds(this.bounds);
 
 		// Apply style to the map.
-		var styledMap = new google.maps.StyledMapType(require("./map-style"));
+		var styledMap = new google.maps.StyledMapType(mapSettings.style);
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
 	},
@@ -49,7 +50,7 @@ module.exports = React.createClass({
 			map: this.map
 		});
 
-		polygon.setOptions(polygonOptions.selected);
+		polygon.setOptions(mapSettings.polygon.selected);
 
 		new google.maps.Marker({
 			position: this.bounds.getCenter(),

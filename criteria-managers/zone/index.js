@@ -5,12 +5,12 @@ var _ = require("lodash"),
 	polygon = require("turf-polygon"),
 	inside = require("turf-inside");
 
-module.exports = function(criteria, apartment) {
-	if (criteria.polygon.length === 0) {
+function computeScore(criterion, apartment) {
+	if (criterion.polygon.length === 0) {
 		return 0;
 	}
 
-	var points = _.map(criteria.polygon, function(point) {
+	var points = _.map(criterion.polygon, function(point) {
 		return [point.lng, point.lat];
 	});
 
@@ -19,4 +19,11 @@ module.exports = function(criteria, apartment) {
 	}
 
 	return 0;
+}
+
+module.exports = {
+	Card: require("./card"),
+	LargeCard: require("./large-card"),
+	computeScore: computeScore,
+	default: require("./default")
 };

@@ -1,0 +1,140 @@
+{
+	"options": {
+		"zoomControl": false,
+		"streetViewControl": false,
+		"mapTypeControl": false,
+		"scrollwheel": false,
+		"draggable": false,
+		"disableDoubleClickZoom": true
+	},
+	"style": [{
+		"stylers": [{
+			"visibility": "on"
+		}, {
+			"saturation": -100
+		}, {
+			"gamma": 0.54
+		}]
+	}, {
+		"featureType": "all",
+		"elementType": "labels.text.fill",
+		"stylers": [{
+			"saturation": 100
+		}, {
+			"color": "#1e292c"
+		}]
+	}, {
+		"featureType": "poi",
+		"elementType": "labels.icon",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "poi",
+		"elementType": "labels.text",
+		"stylers": [{
+			"visibility": "simplified"
+		}]
+	}, {
+		"featureType": "road",
+		"elementType": "labels.icon",
+		"stylers": [{
+			"visibility": "off"
+		}]
+	}, {
+		"featureType": "road",
+		"elementType": "geometry.fill",
+		"stylers": [{
+			"color": "#ffffff"
+		}]
+	}, {
+		"featureType": "road.local",
+		"elementType": "labels.text",
+		"stylers": [{
+			"visibility": "simplified"
+		}]
+	}, {
+		"featureType": "road",
+		"elementType": "geometry.stroke",
+		"stylers": [{
+			"gamma": 7.18
+		}]
+	}, {
+		"featureType": "road.highway",
+		"elementType": "geometry",
+		"stylers": [{
+			"hue": "#0e1b1f"
+		}, {
+			"saturation": -88
+		}, {
+			"lightness": 54
+		}, {
+			"visibility": "simplified"
+		}]
+	}, {
+		"featureType": "water",
+		"elementType": "labels.text.fill",
+		"stylers": [{
+			"color": "#0e1b1f"
+		}]
+	}, {
+		"featureType": "water",
+		"elementType": "geometry",
+		"stylers": [{
+			"color": "#91bed4"
+		}]
+	}, {
+		"featureType": "poi",
+		"elementType": "all",
+		"stylers": [{
+			"color": "#dbdbdb"
+		}]
+	}, {
+		"featureType": "poi.park",
+		"elementType": "geometry.fill",
+		"stylers": [{
+			"color": "#cbdfaa"
+		}]
+	}, {
+		"featureType": "transit.station",
+		"elementType": "labels.icon",
+		"stylers": [{
+			"hue": "#85a0a7"
+		}, {
+			"saturation": 50
+		}, {
+			"visibility": "simplified"
+		}]
+	}, {
+		"featureType": "transit.line",
+		"elementType": "geometry",
+		"stylers": [{
+			"gamma": 0.48
+		}, {
+			"visibility": "off"
+		}]
+	}],
+	"polygon": {
+		"out": {
+			"strokeColor": "#000000",
+			"strokeOpacity": 0,
+			"strokeWeight": 0,
+			"fillColor": "#000000",
+			"fillOpacity": 0
+		},
+		"over": {
+			"strokeColor": "#FF0000",
+			"strokeOpacity": 0.2,
+			"strokeWeight": 1,
+			"fillColor": "#FF0000",
+			"fillOpacity": 0.2
+		},
+		"selected": {
+			"strokeColor": "#FF0000",
+			"strokeOpacity": 0.4,
+			"strokeWeight": 2,
+			"fillColor": "#FF0000",
+			"fillOpacity": 0.4
+		}
+	}
+}
