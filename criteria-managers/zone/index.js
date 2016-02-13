@@ -25,5 +25,6 @@ module.exports = {
 	Card: require("./card"),
 	LargeCard: require("./large-card"),
 	computeScore: computeScore,
-	default: require("./default")
+	default: require("./default"),
+	icon: "fa-globe"
 };

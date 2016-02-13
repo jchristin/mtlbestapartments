@@ -10,7 +10,7 @@ var _ = require("lodash"),
 	StarsLayout = require("./edit-stars");
 
 module.exports = React.createClass({
-	handleClick: function(i) {
+	handleEditClick: function(i) {
 		this.props.history.pushState(null, "/search/edit/" + (i + 1));
 	},
 	handleDeleteCriterion: function(i) {
@@ -29,7 +29,7 @@ module.exports = React.createClass({
 				}
 			}.bind(this));
 	},
-	generateEditLayout: function(Card, i, criterion) {
+	generateCardLayout: function(Card, i, criterion) {
 		return React.createElement("div", {
 				key: i,
 				className: "edit-search"
@@ -39,7 +39,7 @@ module.exports = React.createClass({
 				onClick : this.handleDeleteCriterion.bind(this, i)
 			}),
 			React.createElement("div", {
-					onClick : this.handleClick.bind(this, i)
+					onClick : this.handleEditClick.bind(this, i)
 				},
 				React.createElement(Card, {criterion: criterion}),
 				React.createElement("hr", null),
@@ -63,7 +63,7 @@ module.exports = React.createClass({
 					return;
 				}
 
-				return this.generateEditLayout(criterionManager.Card, i, criterion);
+				return this.generateCardLayout(criterionManager.Card, i, criterion);
 			}, this));
 
 			return layout;
@@ -93,41 +93,9 @@ module.exports = React.createClass({
 			criteria: []
 		};
 	},
-	handleAddZone: function() {
-		this.state.criteria.push({
-			type: "zone",
-			stars: 5,
-			borough: "",
-			polygon: []
-		});
+	handleAddCriterion: function(type) {
+		this.state.criteria.push(_.cloneDeep(criteriaManagers[type].default));
 
-		this.setState({
-			criteria: this.state.criteria
-		});
-
-		this.addCriterion();
-	},
-	handleAddPrice: function() {
-		this.state.criteria.push({
-			type: "price",
-			stars: 5,
-			min: 0,
-			max: 4000
-		});
-
-		this.addCriterion();
-	},
-	handleAddRoom: function() {
-		this.state.criteria.push({
-			type: "bedroom",
-			stars: 5,
-			min: 1,
-			max: 5
-		});
-
-		this.addCriterion();
-	},
-	addCriterion: function() {
 		request
 			.post("/api/search/criteria")
 			.send(this.state.criteria)
@@ -145,18 +113,13 @@ module.exports = React.createClass({
 		return React.createElement("div", {
 				className: "edit-search-container"
 			},
-			React.createElement("i", {
-				className: "fa fa-usd",
-				onClick: this.handleAddPrice
-			}),
-			React.createElement("i", {
-				className: "fa fa-bed",
-				onClick: this.handleAddRoom
-			}),
-			React.createElement("i", {
-				className: "fa fa-globe",
-				onClick: this.handleAddZone
-			}),
+			_.map(criteriaManagers, _.bind(function(criterionManager, type) {
+				return React.createElement("i", {
+					className: "fa " + criterionManager.icon,
+					key: type,
+					onClick: this.handleAddCriterion.bind(this, type)
+				});
+			}, this)),
 			React.createElement(Masonry, {
 				className: "masonry",
 				options: {
