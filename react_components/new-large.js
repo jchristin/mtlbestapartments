@@ -13,6 +13,9 @@ var _ = require("lodash"),
 	];
 
 module.exports = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
 	getInitialState : function() {
 		return {
 			criteria: _.map(criteriaManagersWanted, function(criteriaManager) {
@@ -46,10 +49,10 @@ module.exports = React.createClass({
 						console.log(err);
 					}
 
-					this.props.history.pushState(null, "/search/edit");
+					this.context.router.push("/search/edit");
 				}.bind(this));
 		} else {
-			this.props.history.pushState(null, "/search/new/" + num);
+			this.context.router.push("/search/new/" + num);
 		}
 	},
 	render: function() {

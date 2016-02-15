@@ -8,13 +8,16 @@ var React = require("react"),
 	Link = require("react-router").Link;
 
 module.exports = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
 	getResult: function () {
 		request
 			.get("/api/search/result")
 			.end(function(err, res) {
 				if (err) {
 					if (err.status === 404) {
-						this.props.history.pushState(null, "/search/new");
+						this.context.router.push("/search/new");
 					} else {
 						console.log(err);
 					}

@@ -7,6 +7,9 @@ var React = require("react"),
 	criteriaManagers = require("../criteria-managers");
 
 module.exports = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
 	getChildren: function() {
 		var num = parseInt(this.props.params.num);
 
@@ -32,7 +35,7 @@ module.exports = React.createClass({
 					console.log(err);
 				}
 
-				this.props.history.pushState(null, "/search/edit");
+				this.context.router.push("/search/edit");
 			}.bind(this));
 	},
 	getInitialState: function() {

@@ -7,9 +7,9 @@ var React = require("react"),
 	Router = require("react-router").Router,
 	Route = require("react-router").Route,
 	Redirect = require("react-router").Redirect,
-	Loading = require("./loading"),
-	browserHistory = require("history").createHistory(),
-	request = require("superagent");
+	browserHistory = require("react-router").browserHistory,
+	request = require("superagent"),
+	Loading = require("./loading");
 
 var Boot = React.createClass({
 	redirect: function(pathIfLogged, pathIfNotLogged) {

@@ -10,8 +10,11 @@ var _ = require("lodash"),
 	StarsLayout = require("./edit-stars");
 
 module.exports = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
 	handleEditClick: function(i) {
-		this.props.history.pushState(null, "/search/edit/" + (i + 1));
+		this.context.router.push("/search/edit/" + (i + 1));
 	},
 	handleDeleteCriterion: function(i) {
 		_.pullAt(this.state.criteria, i);
@@ -104,9 +107,7 @@ module.exports = React.createClass({
 					console.log(err);
 				}
 
-				this.props.history.pushState(
-					null, "/search/edit/" + (this.state.criteria.length)
-				);
+				this.context.router.push("/search/edit/" + this.state.criteria.length);
 			}.bind(this));
 	},
 	render: function() {
