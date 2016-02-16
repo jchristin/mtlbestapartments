@@ -4,7 +4,7 @@
 
 var _ = require("lodash"),
 	React = require("react"),
-	Masonry = require("react-masonry-component")(React),
+	Masonry = require("react-masonry-component"),
 	GridItem = require("./grid-item");
 
 module.exports = React.createClass({

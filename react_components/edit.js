@@ -6,7 +6,7 @@ var _ = require("lodash"),
 	React = require("react"),
 	request = require("superagent"),
 	criteriaManagers = require("../criteria-managers"),
-	Masonry = require('react-masonry-component')(React),
+	Masonry = require("react-masonry-component"),
 	StarsLayout = require("./edit-stars");
 
 module.exports = React.createClass({
