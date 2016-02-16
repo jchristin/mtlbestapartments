@@ -61,7 +61,7 @@ module.exports.isAuthenticated = function(req, res, next) {
 
 module.exports.signUp = function(req, res) {
 	database.users.findOne({
-		_id: req.body.email
+		email: req.body.email
 	}, function(err, doc) {
 		if (err) {
 			console.log(err);
