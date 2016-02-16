@@ -4,9 +4,9 @@
 
 var React = require("react"),
 	Sidebar = require("./sidebar"),
-	SupportKit = require("supportkit");
+	Smooch = require("smooch");
 
-SupportKit.init({
+Smooch.init({
 	appToken: "9vodhu6slw13v5t866npfylpx"
 });
 
