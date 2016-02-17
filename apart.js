@@ -45,6 +45,7 @@ module.exports.addOrUpdateApart = function(req, res) {
 		},
 		function(err) {
 			if (err) {
+				console.log(err);
 				res.sendStatus(500);
 			} else {
 				res.end();
