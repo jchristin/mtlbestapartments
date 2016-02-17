@@ -13,18 +13,14 @@ var React = require("react"),
 
 var Boot = React.createClass({
 	redirect: function(pathIfLogged, pathIfNotLogged) {
-		return function(nextState, replaceState) {
+		return function(nextState, replace) {
 			var isLogged = this.state.user !== null;
 			if (pathIfLogged && isLogged) {
-				replaceState({
-					nextPathname: nextState.location.pathname
-				}, pathIfLogged);
+				replace(pathIfLogged);
 			}
 
 			if (pathIfNotLogged && !isLogged) {
-				replaceState({
-					nextPathname: nextState.location.pathname
-				}, pathIfNotLogged);
+				replace(pathIfNotLogged);
 			}
 		}.bind(this);
 	},
