@@ -73,25 +73,27 @@ var Boot = React.createClass({
 				React.createElement(Route, {
 					path: "favorite",
 					component: require("./favorite"),
-					onEnter: this.redirect(null, "/signin")
+					onEnter: this.redirect(null, "/signin?next=/favorite")
 				}),
 				React.createElement(Route, {
 					path: "posted",
 					component: require("./posted"),
-					onEnter: this.redirect(null, "/signin")
+					onEnter: this.redirect(null, "/signin?next=/posted")
 				}),
 				React.createElement(Route, {
 					path: "search",
 					component: require("./search"),
-					onEnter: this.redirect(null, "/signin")
+					onEnter: this.redirect(null, "/signin?next=/search")
 				}),
 				React.createElement(Route, {
 					path: "search/edit",
-					component: require("./edit")
+					component: require("./edit"),
+					onEnter: this.redirect(null, "/signin?next=/search/edit")
 				}),
 				React.createElement(Route, {
 					path: "search/edit/:num",
-					component: require("./edit-large")
+					component: require("./edit-large"),
+					onEnter: this.redirect(null, "/signin?next=/search/edit")
 				}),
 				React.createElement(Redirect, {
 					from: "search/new",
@@ -100,11 +102,12 @@ var Boot = React.createClass({
 				React.createElement(Route, {
 					path: "search/new/:num",
 					component: require("./new-large"),
+					onEnter: this.redirect(null, "/signin?next=/search/new")
 				}),
 				React.createElement(Route, {
 					path: "settings",
 					component: require("./settings"),
-					onEnter: this.redirect(null, "/signin")
+					onEnter: this.redirect(null, "/signin?next=/settings")
 				}),
 				React.createElement(Route, {
 					path: "signin",
@@ -112,7 +115,8 @@ var Boot = React.createClass({
 				}),
 				React.createElement(Route, {
 					path: "signup",
-					component: require("./signup")
+					component: require("./signup"),
+					onEnter: this.redirect("/", null)
 				}),
 				React.createElement(Route, {
 					path: "staff-picks",

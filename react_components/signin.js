@@ -9,7 +9,7 @@ module.exports = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"form", {
-				action: "/api/signin",
+				action: "/api/signin" + this.props.location.search,
 				method: "post"
 			},
 			React.createElement(

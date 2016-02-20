@@ -92,10 +92,12 @@ module.exports.signUp = function(req, res) {
 	});
 };
 
-module.exports.signIn = passport.authenticate("local", {
-	successRedirect: "/",
-	failureRedirect: "/signin"
-});
+module.exports.signIn = function(req, res, next) {
+	passport.authenticate("local", {
+		successRedirect: req.query.next || "/",
+		failureRedirect: req.query.next ? "/signin?next=" + req.query.next : "/signin"
+	})(req, res, next);
+};
 
 module.exports.signOut = function(req, res) {
 	req.logout();
