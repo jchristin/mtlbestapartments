@@ -14,13 +14,13 @@ module.exports = React.createClass({
 
 		return "- $ CAD";
 	},
-	getRoomString: function() {
-		var room = this.props.apart.room;
-		if (room) {
-			return room + " room";
+	getBedroomString: function() {
+		var bedroom = this.props.apart.bedroom;
+		if (bedroom) {
+			return bedroom + " bedroom";
 		}
 
-		return "- room";
+		return "- bedroom";
 	},
 	render: function() {
 		return React.createElement("div", {
@@ -39,8 +39,8 @@ module.exports = React.createClass({
 					className: "grid-item-detail-price",
 				}, this.getPriceString()),
 				React.createElement("div", {
-					className: "grid-item-detail-room",
-				}, this.getRoomString()),
+					className: "grid-item-detail-bedroom",
+				}, this.getBedroomString()),
 				React.createElement("div", {
 					className: "grid-item-detail-borough",
 				}, this.props.apart.borough)

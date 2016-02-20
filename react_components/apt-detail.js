@@ -19,12 +19,12 @@ module.exports = React.createClass({
 
 		return "- $ CAD";
 	},
-	getRoomString: function(room) {
-		if (room) {
-			return room + " room";
+	getBedroomString: function(bedroom) {
+		if (bedroom) {
+			return bedroom + " bedroom";
 		}
 
-		return "- room";
+		return "- bedroom";
 	},
 	generateLayout: function(apart) {
 		var layout = React.createElement("div", {
@@ -41,8 +41,8 @@ module.exports = React.createClass({
 				className: "apt-detail-price",
 			}, this.getPriceString(apart.price)),
 			React.createElement("div", {
-				className: "apt-detail-room",
-			}, this.getRoomString(apart.room)),
+				className: "apt-detail-bedroom",
+			}, this.getBedroomString(apart.bedroom)),
 			React.createElement(
 				miniMap, {
 					coord: apart.coord

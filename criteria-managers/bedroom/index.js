@@ -1,7 +1,7 @@
 "use strict";
 
 function computeScore (criterion, apartment) {
-	if (apartment.room >= criterion.min && apartment.room <= criterion.max) {
+	if (apartment.bedroom >= criterion.min && apartment.bedroom <= criterion.max) {
 		return 5;
 	}
 
