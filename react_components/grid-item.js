@@ -30,7 +30,7 @@ module.exports = React.createClass({
 					to: "/a/" + this.props.apart._id,
 				},
 				React.createElement("img", {
-					src: this.props.apart.image,
+					src: this.props.apart.images[0],
 				})
 			),
 			React.createElement("div", {

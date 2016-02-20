@@ -34,7 +34,7 @@ module.exports = React.createClass({
 				href: apart.url,
 				target: "_blank"
 			}, React.createElement("img", {
-					src: apart.image
+					src: apart.images[0]
 				})
 			),
 			React.createElement("div", {
