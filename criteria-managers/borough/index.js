@@ -3,7 +3,7 @@
 var _ = require("lodash");
 
 function computeScore(criterion, apartment) {
-	return _.find(criterion.boroughs, apartment.borough) ? 5 : 0;
+	return criterion.boroughs.indexOf(apartment.borough) != -1 ? 5 : 0;
 }
 
 module.exports = {
@@ -11,5 +11,5 @@ module.exports = {
 	LargeCard: require("./large-card"),
 	computeScore: computeScore,
 	default: require("./default"),
-	icon: "fa-globe"
+	icon: "fa-map-signs"
 };

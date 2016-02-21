@@ -4,62 +4,51 @@
 
 var _ = require("lodash"),
 	React = require("react"),
+	boroughs = require("../../boroughs"),
 	mapSettings = require("../map-settings");
 
 module.exports = React.createClass({
+	componentWillMount: function() {
+		this.mapUid = _.uniqueId("map-canvas-");
+	},
 	componentDidMount: function() {
-		this.bounds = new google.maps.LatLngBounds();
-
 		// Create the map.
-		this.map = new google.maps.Map(
-			document.getElementById("map-canvas" + this.props.criterion.id),
+		var map = new google.maps.Map(
+			document.getElementById(this.mapUid),
 			mapSettings.options
 		);
 
-		// Draw the polygon.
-		if (this.props.criterion.polygon !== undefined) {
-			this.drawZone(this.props.criterion.polygon);
-		}
+		var bounds = new google.maps.LatLngBounds();
+		
+		// Draw the boroughs.
+		_.forEach(this.props.criterion.boroughs, _.bind(function(borough) {
+			var path = [];
+
+			_.forEach(boroughs[borough].coord, _.bind(function(coord) {
+				var latLng = new google.maps.LatLng(coord.lat, coord.lng);
+				path.push(latLng);
+				bounds.extend(latLng);
+			}, this));
+
+			var polygon = new google.maps.Polygon({
+				path: path,
+				map: map
+			});
+
+			polygon.setOptions(mapSettings.polygon.selected);
+		}, this));
 
 		// Adjust bounds of the map.
-		this.map.fitBounds(this.bounds);
+		map.fitBounds(bounds);
 
 		// Apply style to the map.
 		var styledMap = new google.maps.StyledMapType(mapSettings.style);
-		this.map.mapTypes.set("map-style", styledMap);
-		this.map.setMapTypeId("map-style");
-	},
-	drawZone: function(coordinates) {
-		this.path = [];
-
-		_.forEach(coordinates, _.bind(function(coord) {
-			var LatLng = new google.maps.LatLng(coord.lat, coord.lng);
-
-			// Add coordinate to the path for the polygon.
-			this.path.push(LatLng);
-
-			// Extend bound for the map.
-			this.bounds.extend(LatLng);
-		}, this));
-
-		//
-		// Draw polygon.
-		//
-		var polygon = new google.maps.Polygon({
-			path: this.path,
-			map: this.map
-		});
-
-		polygon.setOptions(mapSettings.polygon.selected);
-
-		new google.maps.Marker({
-			position: this.bounds.getCenter(),
-			map: this.map,
-		});
+		map.mapTypes.set("map-style", styledMap);
+		map.setMapTypeId("map-style");
 	},
 	render: function() {
 		return React.createElement("div", {
-			id: "map-canvas" + this.props.criterion.id,
+			id: this.mapUid,
 			style: {
 				margin: "0px",
 				padding: "0px",

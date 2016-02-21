@@ -19,33 +19,30 @@ module.exports = React.createClass({
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
 
-		_.forEach(boroughs, _.bind(function(borough) {
-			this.drawZone(borough.coord);
+		_.forEach(boroughs, _.bind(function(borough, id) {
+			this.drawBorough(borough, id);
 		}, this));
 
 		this.map.fitBounds(this.bounds);
 	},
-	drawZone: function(coordinates) {
+	drawBorough: function(borough, id) {
 		var path = [];
 
-		_.forEach(coordinates, _.bind(function(coord) {
-			var LatLng = new google.maps.LatLng(coord.lat, coord.lng);
-
-			// Add coordinate to the path for the polygon.
-			path.push(LatLng);
-
-			// Extend bound for the map.
-			this.bounds.extend(LatLng);
+		_.forEach(borough.coord, _.bind(function(coord) {
+			var latLng = new google.maps.LatLng(coord.lat, coord.lng);
+			path.push(latLng);
+			this.bounds.extend(latLng);
 		}, this));
 
-		//
 		// Draw polygon.
-		//
 		var polygon = new google.maps.Polygon({path: path, map: this.map});
 
-		polygon.zoneSelected = false;
-
-		polygon.setOptions(mapSettings.polygon.out);
+		polygon.zoneSelected = this.props.criterion.boroughs.indexOf(id) != -1;
+		if (polygon.zoneSelected) {
+			polygon.setOptions(mapSettings.polygon.selected);
+		} else {
+			polygon.setOptions(mapSettings.polygon.out);
+		}
 
 		google.maps.event.addListener(polygon, "mouseover", function() {
 			if (!polygon.zoneSelected) {
@@ -63,11 +60,11 @@ module.exports = React.createClass({
 			if (polygon.zoneSelected) {
 				polygon.setOptions(mapSettings.polygon.over);
 				polygon.zoneSelected = false;
-				this.props.criterion.polygon = [];
+				_.pull(this.props.criterion.boroughs, id);
 			} else {
 				polygon.setOptions(mapSettings.polygon.selected);
 				polygon.zoneSelected = true;
-				this.props.criterion.polygon = coordinates;
+				this.props.criterion.boroughs.push(id);
 			}
 		}.bind(this));
 	},
