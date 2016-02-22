@@ -4,23 +4,14 @@
 
 var React = require("react"),
 	_ = require("lodash"),
-	request = require("superagent");
+	request = require("superagent"),
+	mapSettings = require("../criteria-managers/map-settings");
 
 module.exports = React.createClass({
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
 	componentDidMount: function() {
-		var center = new google.maps.LatLng(45.501689, -73.567256);
-
-		var mapOptions = {
-			center: center,
-			zoom: 13,
-			// draggable: false,
-			// scrollwheel: false,
-			// disableDoubleClickZoom: true,
-			// zoomControl: false
-		};
 
 		// Create marker icons (dot and pin)
 		this.markerIconDot = {
@@ -38,7 +29,7 @@ module.exports = React.createClass({
 		this.markerIcon = this.markerIconDot;
 
 		// Create the map.
-		this.map = new google.maps.Map(document.getElementById("map-canvas-full"), mapOptions);
+		this.map = new google.maps.Map(document.getElementById("map-canvas-full"), mapSettings.options);
 
 		// Apply style to the map.
 		var styledMap = new google.maps.StyledMapType(require("./map-style"));
@@ -46,7 +37,6 @@ module.exports = React.createClass({
 		this.map.setMapTypeId("map-style");
 
 		this.bounds = new google.maps.LatLngBounds();
-		this.map.fitBounds(this.bounds);
 
 		// Place marker.
 		this.marker = [];
@@ -63,6 +53,8 @@ module.exports = React.createClass({
 
 			return marker;
 		}, this));
+
+		this.map.fitBounds(this.bounds);
 	},
 	render: function() {
 		return React.createElement("div", {id: "map-canvas-full"});
