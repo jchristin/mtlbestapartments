@@ -1,7 +1,5 @@
 "use strict";
 
-var _ = require("lodash");
-
 function computeScore(criterion, apartment) {
 	return criterion.boroughs.indexOf(apartment.borough) != -1 ? 5 : 0;
 }
