@@ -51,7 +51,6 @@
     "react-dom": "^0.14.7",
     "react-masonry-component": "^4.0.0",
     "react-router": "^2.0.0",
-    "reflux": "^0.3.0",
     "serve-favicon": "^2.3.0",
     "smooch": "^2.1.6",
     "superagent": "^1.7.2",
