@@ -34,11 +34,8 @@ module.exports = React.createClass({
 			}
 		}.bind(this));
 	},
-	handleLayoutChange: function(type) {
-		this.setState({layoutType: type});
-	},
 	getInitialState: function() {
-		return {apartments: null, layoutType: "card"};
+		return {apartments: null};
 	},
 	componentDidMount: function() {
 		this.isMounted = true;
@@ -56,20 +53,11 @@ module.exports = React.createClass({
 		} else if (this.state.apartments.length === 0) {
 			content = React.createElement("div", null, "No match found.");
 		} else {
-			content = React.createElement(Layout, {
-				apartments: this.state.apartments,
-				type: this.state.layoutType
-			});
+			content = React.createElement(Layout, {apartments: this.state.apartments});
 		}
 
 		return React.createElement("div", null, React.createElement(Link, {
 			to: "/search/edit"
-		}, "Edit"), React.createElement("i", {
-			className: "fa fa-square-o",
-			onClick: this.handleLayoutChange.bind(this, "card")
-		}), React.createElement("i", {
-			className: "fa fa-map",
-			onClick: this.handleLayoutChange.bind(this, "map")
-		}), content);
+		}, "Edit"), content);
 	}
 });

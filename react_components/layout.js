@@ -7,18 +7,39 @@ var React = require("react"),
 	LayoutMap = require("./layout-map");
 
 module.exports = React.createClass({
+	getInitialState: function() {
+		return {
+			layoutType: (this.props.type || "card")
+		};
+	},
+	handleLayoutChange: function(type) {
+		this.setState({layoutType: type});
+	},
 	render: function() {
-		var type = (this.props.type || "card");
-		switch (type) {
+		var content;
+
+		switch (this.state.layoutType) {
 			case "card":
-				return React.createElement(LayoutCard, {apartments: this.props.apartments});
+				content = React.createElement(LayoutCard, {apartments: this.props.apartments});
+				break;
 
 			case "map":
-				return React.createElement(LayoutMap, {apartments: this.props.apartments});
+				content = React.createElement(LayoutMap, {apartments: this.props.apartments});
+				break;
 
 			default:
 				// Not handled yet
-				console.log(this.props.type);
+				console.log(this.state.layoutType);
+				content = null;
+				break;
 		}
+
+		return React.createElement("div", null, React.createElement("button", {
+			className: "fa fa-square-o",
+			onClick: this.handleLayoutChange.bind(this, "card")
+		}), React.createElement("button", {
+			className: "fa fa-map",
+			onClick: this.handleLayoutChange.bind(this, "map")
+		}), content);
 	}
 });
