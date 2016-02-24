@@ -1,10 +1,9 @@
-/* global module:true */
+/* global module:true, google, document */
 
 "use strict";
 
 var React = require("react"),
 	_ = require("lodash"),
-	request = require("superagent"),
 	mapSettings = require("../criteria-managers/map-settings");
 
 module.exports = React.createClass({
