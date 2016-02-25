@@ -1,11 +1,11 @@
-/* global module:true */
-
 "use strict";
 
-var React = require("react"),
-	Link = require("react-router").Link;
+var React = require("react");
 
 module.exports = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
 	getPriceString: function() {
 		var price = this.props.apart.price;
 		if (price) {
@@ -22,17 +22,18 @@ module.exports = React.createClass({
 
 		return "- bedroom";
 	},
+	handleClick: function()
+	{
+		this.context.router.push("/a/" + this.props.apart._id);
+	},
 	render: function() {
 		return React.createElement("div", {
+				onClick: this.handleClick,
 				className: "grid-item",
 			},
-			React.createElement(Link, {
-					to: "/a/" + this.props.apart._id,
-				},
-				React.createElement("img", {
-					src: this.props.apart.images[0],
-				})
-			),
+			React.createElement("img", {
+				src: this.props.apart.images[0],
+			}),
 			React.createElement("div", {
 					className: "grid-item-detail",
 				}, React.createElement("div", {
