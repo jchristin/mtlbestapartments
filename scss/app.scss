@@ -3,32 +3,33 @@
 }
 
 .main {
-	background: @lightgray;
+	background: $lightgray;
 	position: relative;
 	float: right;
-	width: calc(~"100% - "@sidebar-width);
+	width: calc(100% - #{$sidebar-width});
 	height: 100%;
 	overflow: auto;
-	@media (max-width: @screen-sm-max) {
+	@media (max-width: 768px) {
 		width: 100%;
 		transition: transform .3s ease;
 	}
 	&.main.expanded {
-		@media (max-width: @screen-sm-max) {
-			transform: translate3d(@sidebar-width, 0px, 0px);
+		@media (max-width: 768px) {
+			transform: translate3d($sidebar-width, 0px, 0px);
 			transition: transform .3s ease;
 		}
 	}
 }
 
 .toolbar {
-	background: @red-strong;
-	height: @toolbar-height;
+	background: $red-strong;
+	height: $toolbar-height;
 }
 
 .sidebar-toggle {
-	width: @toolbar-height;
-	height: @toolbar-height;
+	display: inline-block;
+	width: $toolbar-height;
+	height: $toolbar-height;
 	text-align: center;
 	padding-top: 17px;
 	border-right: solid 1px black;

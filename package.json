@@ -8,11 +8,11 @@
     "npm": "3.x"
   },
   "scripts": {
-    "less": "lessc less/index.less > public/bundle.css",
+    "sass": "node-sass --include-path scss scss/index.scss public/bundle.css",
     "browserify": "browserify react_components/boot.js -o public/bundle.js",
     "uglifyjs": "uglifyjs public/bundle.js -m -o public/bundle.js",
     "cleancss": "cleancss -o public/bundle.css public/bundle.css",
-    "build": "npm run browserify && npm run less",
+    "build": "npm run browserify && npm run sass",
     "release": "npm run build && npm run uglifyjs && npm run cleancss",
     "test": "mocha --recursive --require should",
     "postinstall": "npm run release",
@@ -29,7 +29,7 @@
   "license": "Proprietary",
   "dependencies": {
     "body-parser": "^1.15.0",
-    "bootstrap": "^3.3.6",
+    "bootstrap": "github:twbs/bootstrap#v4-dev",
     "bootstrap-slider": "^6.1.1",
     "browserify": "^13.0.0",
     "clean-css": "^3.4.10",
@@ -42,9 +42,9 @@
     "font-awesome": "^4.5.0",
     "google-maps-infobox": "^1.1.13",
     "jquery": "^2.2.0",
-    "less": "^2.6.1",
     "lodash": "^4.6.1",
     "mongodb": "^2.1.7",
+    "node-sass": "^3.4.2",
     "osm-to-graph": "^0.2.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

@@ -33,7 +33,7 @@ module.exports = React.createClass({
 						className: "toolbar"
 					},
 					React.createElement("a", {
-							className: "sidebar-toggle visible-xs-inline-block visible-sm-inline-block",
+							className: "sidebar-toggle hidden-md-up",
 							onClick: this.toggle
 						},
 						React.createElement("i", {
