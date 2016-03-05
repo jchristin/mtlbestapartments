@@ -1,6 +1,7 @@
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	moment = require("moment");
 
 module.exports = React.createClass({
 	contextTypes: {
@@ -33,15 +34,17 @@ module.exports = React.createClass({
 			}),
 			React.createElement("div", {
 					className: "card-block",
-				}, React.createElement("div", {
-					className: "grid-item-detail-price",
-				}, this.getPriceString()),
+				},
+				React.createElement("div", null, this.getPriceString()),
+				React.createElement("div", null, this.getBedroomString()),
+				React.createElement("div", null, this.props.apart.borough),
 				React.createElement("div", {
-					className: "grid-item-detail-bedroom",
-				}, this.getBedroomString()),
-				React.createElement("div", {
-					className: "grid-item-detail-borough",
-				}, this.props.apart.borough)
+						className: "date"
+					},
+					React.createElement("small", {
+						className: "text-muted"
+					}, "Posted " + moment(this.props.apart.date).fromNow())
+				)
 			)
 		);
 	}

@@ -43,6 +43,7 @@
     "google-maps-infobox": "^1.1.13",
     "jquery": "^2.2.0",
     "lodash": "^4.6.1",
+    "moment": "^2.11.2",
     "mongodb": "^2.1.7",
     "node-sass": "^3.4.2",
     "osm-to-graph": "^0.2.1",
