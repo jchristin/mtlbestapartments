@@ -4,13 +4,5 @@
 	bottom: 0;
 	width: $sidebar-width;
 	padding: 8px;
-	background: $fleub-color-primary;
-	color: #fff;
-
-	a {
-		color: white;
-		&:hover {
-			color: white;
-		}
-	}
+	border-right: solid 1px $card-border-color;
 }
