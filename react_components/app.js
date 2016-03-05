@@ -16,14 +16,22 @@ module.exports = React.createClass({
 			expanded: false
 		};
 	},
-	toggle: function() {
+	toggle: function(event) {
+		event.stopPropagation();
+
 		this.setState({
 			expanded: !this.state.expanded
 		});
 	},
+	collapse : function() {
+		this.setState({
+			expanded: false
+		});
+	},
 	render: function() {
 		return React.createElement("div", {
-				className: "app"
+				className: "app",
+				onClick: this.collapse
 			},
 			React.createElement(Sidebar),
 			React.createElement("div", {
