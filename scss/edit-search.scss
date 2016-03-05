@@ -8,16 +8,16 @@ $edit-search-width: 500px;
 }
 .edit-search {
 	width: $edit-search-width;
-	background: $white-full;
+	background: $fleub-color-white;
 	margin-top: $edit-search-margin;
 	border-radius: $edit-search-radius;
 	text-align: center;
 	cursor: pointer;
 }
 .edit-search-sep {
-	background: $lightgray;
+	background: $fleub-color-lightgray;
 	margin-top: $edit-search-margin;
 }
 .edit-stars {
-	color: $red-500;
+	color: $fleub-color-primary;
 }

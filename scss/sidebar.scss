@@ -3,6 +3,14 @@
 	top: 0;
 	bottom: 0;
 	width: $sidebar-width;
-	background: #0e1b1f;
+	padding: 8px;
+	background: $fleub-color-primary;
 	color: #fff;
+
+	a {
+		color: white;
+		&:hover {
+			color: white;
+		}
+	}
 }

@@ -1,4 +1,6 @@
-// Other libraries
+@import "variables";
+
+// Other libraries.
 @import "../node_modules/bootstrap/scss/custom";
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
@@ -10,8 +12,7 @@
 @import "../node_modules/flexslider/flexslider";
 @import "../node_modules/font-awesome/scss/font-awesome";
 
-// Fleub
-@import "fleub";
+// Fleub.
 @import "apt-detail";
 @import "grid-item";
 @import "sidebar";

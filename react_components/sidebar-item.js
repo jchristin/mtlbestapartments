@@ -21,8 +21,7 @@ module.exports = React.createClass({
 			},
 			React.createElement("span", null, React.createElement("i", {
 				className: "fa " + this.props.icon
-			})),
-			React.createElement("span", null, this.props.caption)
+			})), " " + this.props.caption
 		);
 	}
 });

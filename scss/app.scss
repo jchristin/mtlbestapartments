@@ -3,7 +3,7 @@
 }
 
 .main {
-	background: $lightgray;
+	background: $fleub-color-lightgray;
 	position: relative;
 	float: right;
 	width: calc(100% - #{$sidebar-width});
@@ -22,7 +22,7 @@
 }
 
 .toolbar {
-	background: $red-strong;
+	background: $fleub-color-white;
 	height: $toolbar-height;
 }
 
@@ -34,6 +34,7 @@
 	padding-top: 17px;
 	border-right: solid 1px black;
 	font-size: 20px;
+	color: $fleub-color-primary;
 }
 
 .new-full,

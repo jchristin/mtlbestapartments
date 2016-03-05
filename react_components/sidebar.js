@@ -9,8 +9,10 @@ module.exports = React.createClass({
 				className: "sidebar-top"
 			},
 			React.createElement("div", {
-				className: "name"
-			}, this.context.user.name),
+					className: "name"
+				},
+				React.createElement("h4", null, this.context.user.name)
+			),
 			React.createElement(Item, {
 				icon: "fa-cog",
 				path: "/settings",
@@ -52,8 +54,10 @@ module.exports = React.createClass({
 			}),
 			this.context.user ? this.getLoggedMenu() : this.getNotLoggedMenu(),
 			React.createElement("div", {
-				className: "sidebar-list-title"
-			}, "Lists"),
+					className: "sidebar-list-title"
+				},
+				React.createElement("h4", null, "Lists")
+			),
 			React.createElement(Item, {
 				icon: "fa-circle",
 				path: "/favorite",
