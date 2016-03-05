@@ -9,18 +9,14 @@ module.exports = React.createClass({
 	getPriceString: function() {
 		var price = this.props.apart.price;
 		if (price) {
-			return price + " $ CAD";
+			return "$" + price;
 		}
-
-		return "- $ CAD";
 	},
 	getBedroomString: function() {
 		var bedroom = this.props.apart.bedroom;
 		if (bedroom) {
 			return bedroom + " bedroom";
 		}
-
-		return "- bedroom";
 	},
 	handleClick: function()
 	{

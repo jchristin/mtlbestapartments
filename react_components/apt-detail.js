@@ -16,17 +16,13 @@ module.exports = React.createClass({
 	},
 	getPriceString: function(price) {
 		if (price) {
-			return price + " $ CAD";
+			return "$" + price;
 		}
-
-		return "- $ CAD";
 	},
 	getBedroomString: function(bedroom) {
 		if (bedroom) {
 			return bedroom + " bedroom";
 		}
-
-		return "- bedroom";
 	},
 	generateSlide: function(image, index) {
 		return React.createElement("li", {
