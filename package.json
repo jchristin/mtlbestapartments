@@ -38,6 +38,7 @@
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "flexslider": "^2.6.0",
     "font-awesome": "^4.5.0",
     "google-maps-infobox": "^1.1.13",
     "jquery": "^2.2.0",

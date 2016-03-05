@@ -2,7 +2,9 @@
 
 "use strict";
 
-var React = require("react"),
+var _ = require("lodash"),
+	React = require("react"),
+	jQuery = require("jquery"),
 	request = require("superagent"),
 	miniMap = require("./map-mini");
 
@@ -26,16 +28,30 @@ module.exports = React.createClass({
 
 		return "- bedroom";
 	},
+	generateSlide: function(image, index) {
+		return React.createElement("li", {
+				key: index
+			},
+			React.createElement("img", {
+				src: image
+			})
+		);
+	},
+	getDescription: function(description) {
+		return {__html: description};
+	},
 	generateLayout: function(apart) {
 		var layout = React.createElement("div", {
 				className: "apt-detail"
 			},
-			React.createElement("a", {
-				href: apart.url,
-				target: "_blank"
-			}, React.createElement("img", {
-					src: apart.images[0]
-				})
+			React.createElement("div", {
+					className: "flexslider carousel"
+				},
+				React.createElement("ul", {
+						className: "slides"
+					},
+					_.map(apart.images, this.generateSlide)
+				)
 			),
 			React.createElement("div", {
 				className: "apt-detail-price",
@@ -43,6 +59,15 @@ module.exports = React.createClass({
 			React.createElement("div", {
 				className: "apt-detail-bedroom",
 			}, this.getBedroomString(apart.bedroom)),
+			React.createElement("div", {
+				className: "apt-detail-desc",
+				dangerouslySetInnerHTML: this.getDescription(apart.description)
+			}),
+			React.createElement("a", {
+				className: "apt-detail-link",
+				href: apart.url,
+				target: "_blank",
+			}, "Kijiji link"),
 			React.createElement(
 				miniMap, {
 					coord: apart.coord
@@ -55,6 +80,9 @@ module.exports = React.createClass({
 		});
 	},
 	componentDidMount: function() {
+		global.jQuery = jQuery;
+		require("flexslider");
+
 		request
 			.get("/api/apart/" + this.props.params._id)
 			.end(function(err, res) {
@@ -64,6 +92,13 @@ module.exports = React.createClass({
 					this.generateLayout(res.body);
 				}
 			}.bind(this));
+	},
+	componentDidUpdate : function() {
+		jQuery(".flexslider").flexslider({
+			animation: "slide",
+			slideshow: false,
+			smoothHeight: true
+		  });
 	},
 	render: function() {
 		return React.createElement("div", {
