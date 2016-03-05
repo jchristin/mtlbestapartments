@@ -29,13 +29,14 @@ module.exports = React.createClass({
 	render: function() {
 		return React.createElement("div", {
 				onClick: this.handleClick,
-				className: "grid-item",
+				className: "grid-item card",
 			},
 			React.createElement("img", {
-				src: this.props.apart.images[0],
+				className: "card-img-top",
+				src: this.props.apart.images[0]
 			}),
 			React.createElement("div", {
-					className: "grid-item-detail",
+					className: "card-block",
 				}, React.createElement("div", {
 					className: "grid-item-detail-price",
 				}, this.getPriceString()),

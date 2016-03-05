@@ -41,7 +41,9 @@ module.exports = React.createClass({
 						})
 					)
 				),
-				this.props.children
+				React.createElement("div", {
+					className: "container"
+				}, this.props.children)
 			)
 		);
 	}
