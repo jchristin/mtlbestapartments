@@ -38,7 +38,7 @@ module.exports = React.createClass({
 	},
 	generateLayout: function(apart) {
 		var layout = React.createElement("div", {
-				className: "apt-detail"
+				className: "col-md-6 offset-md-3"
 			},
 			React.createElement("div", {
 					className: "flexslider carousel"
@@ -49,14 +49,9 @@ module.exports = React.createClass({
 					_.map(apart.images, this.generateSlide)
 				)
 			),
-			React.createElement("div", {
-				className: "apt-detail-price",
-			}, this.getPriceString(apart.price)),
-			React.createElement("div", {
-				className: "apt-detail-bedroom",
-			}, this.getBedroomString(apart.bedroom)),
-			React.createElement("div", {
-				className: "apt-detail-desc",
+			React.createElement("h6", null, this.getPriceString(apart.price)),
+			React.createElement("h6", null, this.getBedroomString(apart.bedroom)),
+			React.createElement("p", {
 				dangerouslySetInnerHTML: this.getDescription(apart.description)
 			}),
 			React.createElement("a", {
@@ -98,7 +93,7 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			className: "apt-detail-container"
+			className: "row apt-detail"
 		}, this.state.layout);
 	}
 });
