@@ -7,7 +7,7 @@ var _ = require("lodash"),
 	request = require("superagent"),
 	criteriaManagers = require("../criteria-managers"),
 	criteriaManagersWanted = [
-		criteriaManagers.zone,
+		criteriaManagers.borough,
 		criteriaManagers.bedroom,
 		criteriaManagers.price
 	];
