@@ -70,12 +70,7 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			id: "map-canvas-full",
-			style: {
-				margin: "0px",
-				padding: "0px",
-				height: "90%"
-			}
+			id: "map-canvas-full"
 		});
 	}
 });
