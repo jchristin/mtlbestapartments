@@ -91,6 +91,11 @@ var Boot = React.createClass({
 					onEnter: this.redirect(null, "/signin?next=/search/edit")
 				}),
 				React.createElement(Route, {
+					path: "search/edit2",
+					component: require("./edit2"),
+					onEnter: this.redirect(null, "/signin?next=/search/edit2")
+				}),
+				React.createElement(Route, {
 					path: "search/edit/:num",
 					component: require("./edit-large"),
 					onEnter: this.redirect(null, "/signin?next=/search/edit")
