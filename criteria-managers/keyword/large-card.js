@@ -9,6 +9,8 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", null, React.createElement("input", {
+			className: "form-control",
+			placeholder: "ex: garden, brick",
 			defaultValue: this.props.criterion.keywords,
 			onChange: this.handleChange
 		}));
