@@ -38,6 +38,25 @@
 	color: $fleub-color-primary;
 }
 
+.container {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.slider.slider-horizontal {
+	width: 100%;
+}
+
+.slider-handle {
+	background-color: hsl(0, 0%, 50%);
+	background-image: none;
+}
+
+.slider-selection {
+	background-color: hsl(0, 0%, 85%);
+	background-image: none;
+}
+
 .new-full,
 .edit-full {
 	text-align: center;
