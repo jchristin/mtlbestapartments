@@ -15,5 +15,6 @@ module.exports = {
 	LargeCard: require("./large-card"),
 	computeScore: computeScore,
 	default: require("./default"),
-	icon: "fa-terminal"
+	icon: "fa-terminal",
+	name: "Keyword"
 };

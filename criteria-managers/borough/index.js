@@ -9,5 +9,6 @@ module.exports = {
 	LargeCard: require("./large-card"),
 	computeScore: computeScore,
 	default: require("./default"),
-	icon: "fa-map-signs"
+	icon: "fa-map-signs",
+	name: "Borough"
 };

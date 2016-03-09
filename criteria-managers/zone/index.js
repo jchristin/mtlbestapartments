@@ -26,5 +26,6 @@ module.exports = {
 	LargeCard: require("./large-card"),
 	computeScore: computeScore,
 	default: require("./default"),
-	icon: "fa-globe"
+	icon: "fa-globe",
+	name: "Zone"
 };

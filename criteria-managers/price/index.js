@@ -13,5 +13,6 @@ module.exports = {
 	LargeCard: require("./large-card"),
 	computeScore: computeScore,
 	default: require("./default"),
-	icon: "fa-usd"
+	icon: "fa-usd",
+	name: "Price"
 };
