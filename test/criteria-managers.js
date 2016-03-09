@@ -12,7 +12,8 @@ describe("criteria managers", function() {
 			"LargeCard",
 			"computeScore",
 			"default",
-			"icon"
+			"icon",
+			"name"
 		];
 
 		_.forEach(criteriaManagers, function(manager) {
