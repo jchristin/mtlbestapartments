@@ -29,7 +29,7 @@ module.exports = React.createClass({
 		var path = [];
 
 		_.forEach(coordinates, _.bind(function(coord) {
-			var LatLng = new google.maps.LatLng(coord.lat, coord.lng);
+			var LatLng = new google.maps.LatLng(coord[1], coord[0]);
 
 			// Add coordinate to the path for the polygon.
 			path.push(LatLng);

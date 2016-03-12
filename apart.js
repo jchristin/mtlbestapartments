@@ -12,7 +12,7 @@ var _ = require("lodash"),
 // Construct a turf polygon for each borough.
 _.forEach(boroughs, function(borough, key) {
 	var turfCoords = _.map(borough.coord, function(coord) {
-		return [coord.lng, coord.lat];
+		return [coord[0], coord[1]];
 	});
 
 	borough.turfPolygon = turfPolygon([turfCoords], {

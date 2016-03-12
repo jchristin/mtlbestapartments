@@ -25,7 +25,7 @@ module.exports = React.createClass({
 			var path = [];
 
 			_.forEach(boroughs[borough].coord, _.bind(function(coord) {
-				var latLng = new google.maps.LatLng(coord.lat, coord.lng);
+				var latLng = new google.maps.LatLng(coord[1], coord[0]);
 				path.push(latLng);
 				bounds.extend(latLng);
 			}, this));
