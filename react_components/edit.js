@@ -115,7 +115,7 @@ module.exports = React.createClass({
 				className: "edit-search-container"
 			},
 			_.map(criteriaManagers, _.bind(function(criterionManager, type) {
-				return React.createElement("i", {
+				return React.createElement("button", {
 					className: "fa " + criterionManager.icon,
 					key: type,
 					onClick: this.handleAddCriterion.bind(this, type)
