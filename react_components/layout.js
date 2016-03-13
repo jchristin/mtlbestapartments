@@ -4,7 +4,8 @@
 
 var React = require("react"),
 	LayoutCard = require("./layout-card"),
-	LayoutMap = require("./layout-map");
+	LayoutMap = require("./layout-map"),
+	LayoutList = require("./layout-list");
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -27,6 +28,10 @@ module.exports = React.createClass({
 				content = React.createElement(LayoutMap, {apartments: this.props.apartments});
 				break;
 
+			case "list":
+				content = React.createElement(LayoutList, {apartments: this.props.apartments});
+				break;
+
 			default:
 				// Not handled yet
 				console.log(this.state.layoutType);
@@ -40,6 +45,9 @@ module.exports = React.createClass({
 		}), React.createElement("button", {
 			className: "fa fa-map",
 			onClick: this.handleLayoutChange.bind(this, "map")
+		}), React.createElement("button", {
+			className: "fa fa-list",
+			onClick: this.handleLayoutChange.bind(this, "list")
 		}), content);
 	}
 });
