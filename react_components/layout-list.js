@@ -2,7 +2,7 @@
 
 var _ = require("lodash"),
 	React = require("react"),
-	ListItem = require("./List-item");
+	ListItem = require("./list-item");
 
 module.exports = React.createClass({
 	render: function() {
