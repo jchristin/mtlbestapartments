@@ -2,7 +2,7 @@ $list-group-item: 100%;
 $list-img: 10%;
 $list-item-price: 20%;
 $list-item-bedroom: 25%;
-$list-item-borought: 45%;
+$list-item-borough: 45%;
 
 .list-group-item {
 	cursor: pointer;
@@ -20,8 +20,8 @@ $list-item-borought: 45%;
 		text-align: right;
 	}
 
-	.list-item-borought {
-		width: $list-item-borought;
+	.list-item-borough {
+		width: $list-item-borough;
 		display: inline-block;
 		text-align: center;
 	}

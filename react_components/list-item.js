@@ -40,7 +40,7 @@ module.exports = React.createClass({
 		}, this.getPriceString()), React.createElement("div", {
 			className: "list-item-bedroom"
 		}, this.getBedroomString()), React.createElement("div", {
-			className: "list-item-borought"
+			className: "list-item-borough"
 		}, this.props.apart.borough));
 	}
 });
