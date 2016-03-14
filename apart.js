@@ -5,6 +5,8 @@ var _ = require("lodash"),
 	turfInside = require("turf-inside"),
 	turfPoint = require("turf-point"),
 	turfPolygon = require("turf-polygon"),
+	turfFeaturecollection = require("turf-featurecollection"),
+	turfConvex = require("turf-convex"),
 	database = require("./database"),
 	match = require("./match"),
 	boroughs = require("./boroughs");
@@ -15,6 +17,28 @@ _.forEach(boroughs, function(borough, key) {
 		name: key
 	});
 });
+
+var filterApts = function(aparts) {
+	// Build Montreal turf polygon.
+	var points = [];
+	_.forEach(boroughs, function(borough) {
+		_.forEach(borough.coord, function(coordinate) {
+			points.push(turfPoint(coordinate));
+		});
+	});
+
+	var fcpoints = turfFeaturecollection(points);
+	var turfPolygonMontreal = turfConvex(fcpoints);
+
+	_.remove(aparts, function(apart) {
+		if (turfInside(turfPoint(apart.coord), turfPolygonMontreal)) {
+			return false;
+		} else {
+			console.log("Removed : " + apart.url);
+			return true;
+		}
+	});
+};
 
 var getBoroughName = function(coord) {
 	var borough = _.find(boroughs, function(b) {
@@ -76,6 +100,7 @@ module.exports.getApart = function(req, res) {
 			console.log(err);
 			res.sendStatus(404);
 		} else {
+			filterApts(doc);
 			res.json(doc);
 		}
 	});
@@ -90,6 +115,7 @@ module.exports.getStaffPicks = function(req, res) {
 		if (err) {
 			console.log(err);
 		} else {
+			filterApts(docs);
 			res.json(docs);
 		}
 	});
