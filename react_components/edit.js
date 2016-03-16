@@ -4,77 +4,53 @@
 
 var _ = require("lodash"),
 	React = require("react"),
+	Link = require("react-router").Link,
 	request = require("superagent"),
-	criteriaManagers = require("../criteria-managers"),
-	Masonry = require("react-masonry-component"),
-	StarsLayout = require("./edit-stars");
+	criteriaManagers = require("../criteria-managers");
 
 module.exports = React.createClass({
+	createCard: function(criterion) {
+		var criterionManager = criteriaManagers[criterion.type];
+		return React.createElement("div", {
+				className: "card",
+				key: criterion.type
+			},
+			React.createElement("div", {
+					className: "card-block",
+				},
+				React.createElement("h4", {
+					className: "card-title",
+				}, criterionManager.name),
+				React.createElement(criterionManager.LargeCard, {criterion: criterion})
+			)
+		);
+	},
+	createLoading: function() {
+		if(this.state.criteria === null) {
+			return React.createElement("i", {
+				className: "fa fa-refresh fa-spin"
+			});
+		}
+	},
+	getAllCriteria: function(criteria) {
+		var allCriteria = _.map(criteriaManagers, function(criterionManager) {
+			return _.cloneDeep(criterionManager.default);
+		});
+
+		_.forEach(criteria, function(criterion) {
+			var index = _.findIndex(allCriteria, ["type", criterion.type]);
+			if(index !== -1) {
+				allCriteria[index] = criterion;
+			}
+		});
+
+		return allCriteria;
+	},
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
-	handleEditClick: function(i) {
-		this.context.router.push("/search/edit/" + (i + 1));
-	},
-	handleDeleteCriterion: function(i) {
-		_.pullAt(this.state.criteria, i);
-
-		this.setState({
-			criteria: this.state.criteria
-		});
-
-		request
-			.post("/api/search/criteria")
-			.send(this.state.criteria)
-			.end(function(err) {
-				if (err) {
-					console.log(err);
-				}
-			}.bind(this));
-	},
-	generateCardLayout: function(Card, i, criterion) {
-		return React.createElement("div", {
-				key: i,
-				className: "edit-search"
-			},
-			React.createElement("i", {
-				className: "fa fa-trash",
-				onClick : this.handleDeleteCriterion.bind(this, i)
-			}),
-			React.createElement("div", {
-					onClick : this.handleEditClick.bind(this, i)
-				},
-				React.createElement(Card, {criterion: criterion}),
-				React.createElement("hr", null),
-				React.createElement(
-					StarsLayout, {
-						stars: criterion.stars
-					}),
-					React.createElement("div", {
-						className: "edit-search-sep"
-					})
-				)
-		);
-	},
-	generateLayout: function() {
-		if (this.state.criteria) {
-			var layout = _.map(this.state.criteria, _.bind(function(criterion, i) {
-				var criterionManager = criteriaManagers[criterion.type];
-				if(!criterionManager){
-					// Not handled yet
-					console.log(criterion.type);
-					return;
-				}
-
-				return this.generateCardLayout(criterionManager.Card, i, criterion);
-			}, this));
-
-			return layout;
-		} else if (this.state.requestGet) {
-			return "No criteria found !";
-		} else {
-			return "";
-		}
+	getInitialState: function() {
+		return { criteria: null };
 	},
 	componentDidMount: function() {
 		request
@@ -84,50 +60,28 @@ module.exports = React.createClass({
 					console.log(err);
 				} else {
 					this.setState({
-						requestGet: true,
-						criteria: res.body
+						criteria: this.getAllCriteria(res.body)
 					});
 				}
 			}.bind(this));
 	},
-	getInitialState: function() {
-		return {
-			requestGet: false,
-			criteria: []
-		};
-	},
-	handleAddCriterion: function(type) {
-		this.state.criteria.push(_.cloneDeep(criteriaManagers[type].default));
-
-		request
-			.post("/api/search/criteria")
-			.send(this.state.criteria)
-			.end(function(err) {
-				if (err) {
-					console.log(err);
-				}
-
-				this.context.router.push("/search/edit/" + this.state.criteria.length);
-			}.bind(this));
-	},
 	render: function() {
 		return React.createElement("div", {
-				className: "edit-search-container"
+				className: "row"
 			},
-			_.map(criteriaManagers, _.bind(function(criterionManager, type) {
-				return React.createElement("button", {
-					className: "fa " + criterionManager.icon,
-					key: type,
-					onClick: this.handleAddCriterion.bind(this, type)
-				});
-			}, this)),
-			React.createElement(Masonry, {
-				className: "masonry",
-				options: {
-					isFitWidth: true
+			React.createElement("div", {
+					className: "col-md-6 offset-md-3"
 				},
-				disableImagesLoaded: false
-			}, this.generateLayout())
+				React.createElement(Link, {
+					to: "/search"
+				}, React.createElement("i", {
+					className: "fa fa-long-arrow-left"
+				} , " Back to search result")),
+				React.createElement("h1", {
+					className : "m-t-1"
+				}, "Search criteria", this.createLoading()),
+				_.map(this.state.criteria, this.createCard)
+			)
 		);
 	}
 });
