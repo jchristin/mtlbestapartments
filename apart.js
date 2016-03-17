@@ -18,26 +18,22 @@ _.forEach(boroughs, function(borough, key) {
 	});
 });
 
-var filterApts = function(aparts) {
-	// Build Montreal turf polygon.
-	var points = [];
-	_.forEach(boroughs, function(borough) {
-		_.forEach(borough.coord, function(coordinate) {
-			points.push(turfPoint(coordinate));
-		});
+// Construct a turf polygon for Montreal.
+var points = [];
+_.forEach(boroughs, function(borough) {
+	_.forEach(borough.coord, function(coordinate) {
+		points.push(turfPoint(coordinate));
 	});
+});
 
-	var fcpoints = turfFeaturecollection(points);
-	var turfPolygonMontreal = turfConvex(fcpoints);
+var turfPolygonMontreal = turfConvex(turfFeaturecollection(points));
 
-	_.remove(aparts, function(apart) {
-		if (turfInside(turfPoint(apart.coord), turfPolygonMontreal)) {
-			return false;
-		} else {
-			console.log("Removed : " + apart.url);
-			return true;
-		}
-	});
+var filterApart = function(apart) {
+	if (!turfInside(turfPoint(apart.coord), turfPolygonMontreal)) {
+		return false;
+	}
+
+	return true;
 };
 
 var getBoroughName = function(coord) {
@@ -56,6 +52,11 @@ var normalizeApart = function(apart) {
 };
 
 module.exports.addOrUpdateApart = function(req, res) {
+	if(!filterApart(req.body)) {
+		res.sendStatus(400);
+		return;
+	}
+
 	normalizeApart(req.body);
 
 	database.apartments.updateOne({
@@ -100,7 +101,6 @@ module.exports.getApart = function(req, res) {
 			console.log(err);
 			res.sendStatus(404);
 		} else {
-			filterApts(doc);
 			res.json(doc);
 		}
 	});
@@ -115,7 +115,6 @@ module.exports.getStaffPicks = function(req, res) {
 		if (err) {
 			console.log(err);
 		} else {
-			filterApts(docs);
 			res.json(docs);
 		}
 	});
