@@ -3,17 +3,14 @@
 var _ = require("lodash"),
 	database = require("./database"),
 	criteriaManagers = require("./criteria-managers"),
-	threshold = 75;
+	threshold = 99.9;
 
-var computeScore = function(search, apartment, multiplier) {
-	var unit = 20 / _.reduce(search.criteria, function(result, criterion) {
-		return result + Math.pow(criterion.stars, multiplier);
-	}, 0);
+var computeScore = function(search, apartment) {
+	var score = _.sumBy(search.criteria, function(criterion) {
+		return criteriaManagers[criterion.type].computeScore(criterion, apartment);
+	});
 
-	return _.reduce(search.criteria, function(total, criterion) {
-		var score = criteriaManagers[criterion.type].computeScore(criterion, apartment);
-		return total + Math.pow(criterion.stars, multiplier) * unit * score;
-	}, 0);
+	return (100/5) * score / search.criteria.length;
 };
 
 var computeScoreSearch = function(search) {
@@ -39,10 +36,11 @@ var computeScoreSearch = function(search) {
 					console.log(err);
 				}
 			});
+
 			return false;
 		}
 
-		var score = computeScore(search, apartment, 1);
+		var score = computeScore(search, apartment);
 		if(score >= threshold) {
 			result.push(apartment._id);
 		}
@@ -60,7 +58,7 @@ var computeScoreApartement = function(apartment) {
 			return false;
 		}
 
-		var score = computeScore(search, apartment, 1);
+		var score = computeScore(search, apartment);
 		if(score >= threshold) {
 			database.searches.updateOne({
 				_id: search._id

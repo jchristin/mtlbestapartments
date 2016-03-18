@@ -3,6 +3,10 @@
 var _ = require("lodash");
 
 function computeScore(criterion, apartment) {
+	if(criterion.keywords.length === 0) {
+		return 5;
+	}
+
 	var description = _.deburr(_.toLower(apartment.description));
 
 	return _.every(criterion.keywords, function(keyword) {
