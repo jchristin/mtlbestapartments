@@ -15,7 +15,7 @@ module.exports = React.createClass({
 		request.get("/api/search/result").end(function(err, res) {
 			if (err) {
 				if (err.status === 404) {
-					this.context.router.push("/search/new");
+					this.context.router.push("/search/edit");
 				} else {
 					console.log(err);
 				}

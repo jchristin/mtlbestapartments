@@ -56,12 +56,23 @@ module.exports = React.createClass({
 		request
 			.get("/api/search/criteria")
 			.end(function(err, res) {
-				if (err) {
+				if (err && err.status !== 404) {
 					console.log(err);
 				} else {
 					this.setState({
 						criteria: this.getAllCriteria(res.body)
 					});
+				}
+			}.bind(this));
+	},
+	componentWillUnmount: function()
+	{
+		request
+			.post("/api/search/criteria")
+			.send(this.state.criteria)
+			.end(function(err) {
+				if (err) {
+					console.log(err);
 				}
 			}.bind(this));
 	},
