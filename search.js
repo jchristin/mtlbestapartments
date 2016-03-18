@@ -22,6 +22,8 @@ var invalidateResult = function(user, callback) {
 		$set: {
 			result: null
 		}
+	}, {
+		upsert: true
 	}, function(err) {
 		if (err) {
 			console.log(err);
@@ -49,6 +51,8 @@ module.exports.getCriteria = function(req, res) {
 };
 
 module.exports.createOrUpdateCriteria = function(req, res) {
+	invalidateResult(req.user, res.end);
+
 	database.searches.updateOne({
 		user: req.user._id
 	}, {
@@ -62,7 +66,6 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 			console.log(err);
 			res.status(500).send("Server error. Please retry later.");
 		} else {
-			invalidateResult(req.user, res.end);
 			updateResult(req.user);
 		}
 	});
