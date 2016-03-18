@@ -1,6 +1,5 @@
 {
 	"type": "price",
-	"stars": 5,
 	"min": 500,
 	"max": 1000
 }
