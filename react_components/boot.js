@@ -6,6 +6,7 @@ var React = require("react"),
 	ReactDOM = require("react-dom"),
 	Router = require("react-router").Router,
 	Route = require("react-router").Route,
+	IndexRoute = require("react-router").IndexRoute,
 	Redirect = require("react-router").Redirect,
 	browserHistory = require("react-router").browserHistory,
 	request = require("superagent"),
@@ -58,14 +59,13 @@ var Boot = React.createClass({
 		return React.createElement(Router, {
 				history: browserHistory
 			},
-			React.createElement(Redirect, {
-				from: "/",
-				to: this.state.user ? "/search" : "/staff-picks"
-			}),
 			React.createElement(Route, {
 					path: "/",
 					component: require("./app")
 				},
+				React.createElement(IndexRoute, {
+					component: require("./staff-picks")
+				}),
 				React.createElement(Route, {
 					path: "a/:_id",
 					component: require("./apt-detail")
