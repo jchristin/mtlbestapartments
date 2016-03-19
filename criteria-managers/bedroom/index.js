@@ -1,11 +1,15 @@
 "use strict";
 
-function computeScore (criterion, apartment) {
-	if (apartment.bedroom >= criterion.min && apartment.bedroom <= criterion.max) {
+var _ = require("lodash");
+
+function computeScore(criterion, apartment) {
+	if (_.every(criterion.bedrooms, function(x) {
+			return !x;
+		})) {
 		return 5;
 	}
 
-	return 0;
+	return (criterion.bedrooms[apartment.bedroom] === true) ? 5 : 0;
 }
 
 module.exports = {

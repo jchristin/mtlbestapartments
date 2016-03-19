@@ -3,29 +3,34 @@
 var React = require("react");
 
 module.exports = React.createClass({
-	componentDidMount: function() {
-		var Slider = require("bootstrap-slider");
-		this.slider = new Slider("#slider", {
-			min: 0,
-			max: 4,
-			step: 1,
-			value: [this.props.criterion.min, this.props.criterion.max],
-			tooltip: "hide"
-		});
+	handleChange: function(number, checked) {
+		this.props.criterion.bedrooms[number] = checked;
+		this.forceUpdate();
+	},
+	createButton: function(number, label) {
+		var checked = this.props.criterion.bedrooms[number];
 
-		this.slider.on("slide", function(event) {
-			this.props.criterion.min = event[0];
-			this.props.criterion.max = event[1];
-			this.forceUpdate();
-		}.bind(this));
+		return React.createElement("label", {
+				className: "btn btn-secondary" + (checked ? " active" : "")
+			},
+			React.createElement("input", {
+				type: "checkbox",
+				autoComplete: "off",
+				onChange: this.handleChange.bind(this, number, !checked)
+			}), label
+		);
 	},
 	render: function() {
-		return React.createElement("div", null,
-			React.createElement("div", null, "Number of bedrooms between " + this.props.criterion.min + " and " + this.props.criterion.max),
-			React.createElement("input", {
-				type: "text",
-				id: "slider",
-			})
+		return React.createElement("div", {
+				className: "btn-group",
+				"data-toggle":
+				"buttons"
+			},
+			this.createButton(0, "Studio"),
+			this.createButton(1, "1"),
+			this.createButton(2, "2"),
+			this.createButton(3, "3"),
+			this.createButton(4, "4+")
 		);
 	}
 });

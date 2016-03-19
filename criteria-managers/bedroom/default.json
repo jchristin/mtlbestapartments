@@ -1,5 +1,4 @@
 {
 	"type": "bedroom",
-	"min": 1,
-	"max": 2
+	"bedrooms": [false, true, true, false, false]
 }
