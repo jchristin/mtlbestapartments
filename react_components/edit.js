@@ -90,7 +90,7 @@ module.exports = React.createClass({
 				} , " Back to search result")),
 				React.createElement("h1", {
 					className : "m-t-1"
-				}, "Search criteria", this.createLoading()),
+				}, "Search criteria ", this.createLoading()),
 				_.map(this.state.criteria, this.createCard)
 			)
 		);
