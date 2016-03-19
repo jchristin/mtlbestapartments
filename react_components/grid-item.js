@@ -14,9 +14,24 @@ module.exports = React.createClass({
 		}
 	},
 	getBedroomString: function() {
-		var bedroom = this.props.apart.bedroom;
-		if (bedroom) {
-			return bedroom + " bedroom";
+		switch (this.props.apart.bedroom) {
+			case 0:
+				return "Studio";
+
+			case 1:
+				return "1 bedroom";
+
+			case 2:
+				return "2 bedrooms";
+
+			case 3:
+				return "3 bedrooms";
+
+			case 4:
+				return "4+ bedrooms";
+
+			default:
+				return "";
 		}
 	},
 	handleClick: function()
