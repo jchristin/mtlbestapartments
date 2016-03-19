@@ -54,7 +54,9 @@ module.exports = React.createClass({
 				break;
 		}
 
-		return React.createElement("div", null, React.createElement("div", {
+		return React.createElement("div", {
+			className: "layout-btn-group"
+		}, React.createElement("div", {
 			className: "btn-group",
 			"data-toggle": "buttons"
 		}, _.map(LayoutButtons, _.bind(function(layoutbutton, key) {
