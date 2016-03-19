@@ -77,14 +77,16 @@ module.exports.signUp = function(req, res) {
 
 				database.users.insertOne({
 					name: req.body.name,
-					email: req.body.email,
+					email: req.body.username,
 					password: shasum.digest("hex")
 				}, function(err) {
 					if (err) {
 						console.log(err);
 						res.status(500).send("Server error. Please retry later.");
 					} else {
-						res.send("Ok");
+						passport.authenticate("local")(req, res, function(){
+							res.sendStatus(200);
+						});
 					}
 				});
 			}

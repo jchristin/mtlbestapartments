@@ -33,7 +33,8 @@ module.exports = React.createClass({
 								React.createElement("input", {
 									className: "form-control",
 									type: "text",
-									name: "username"
+									name: "username",
+									required: true
 								})
 							),
 							React.createElement("div", {
@@ -43,7 +44,8 @@ module.exports = React.createClass({
 								React.createElement("input", {
 									className: "form-control",
 									type: "password",
-									name: "password"
+									name: "password",
+									required: true
 								})
 							),
 							React.createElement("button", {
