@@ -54,7 +54,6 @@
     "react-masonry-component": "^4.0.0",
     "react-router": "^2.0.1",
     "serve-favicon": "^2.3.0",
-    "smooch": "^2.1.10",
     "superagent": "^1.8.0",
     "turf-center": "^1.0.3",
     "turf-convex": "^1.0.1",

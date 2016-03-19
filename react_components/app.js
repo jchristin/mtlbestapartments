@@ -3,12 +3,7 @@
 "use strict";
 
 var React = require("react"),
-	Sidebar = require("./sidebar"),
-	Smooch = require("smooch");
-
-Smooch.init({
-	appToken: "9vodhu6slw13v5t866npfylpx"
-});
+	Sidebar = require("./sidebar");
 
 module.exports = React.createClass({
 	getInitialState: function() {
