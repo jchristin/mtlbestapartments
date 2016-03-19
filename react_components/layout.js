@@ -5,7 +5,9 @@
 var React = require("react"),
 	LayoutCard = require("./layout-card"),
 	LayoutMap = require("./layout-map"),
-	LayoutList = require("./layout-list");
+	LayoutList = require("./layout-list"),
+	LayoutButtons = require("../layout"),
+	_ = require("lodash");
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -13,8 +15,21 @@ module.exports = React.createClass({
 			layoutType: (this.props.type || "card")
 		};
 	},
-	handleLayoutChange: function(type) {
+	handleChange: function(type, checked) {
+		LayoutButtons[type].checked = checked;
 		this.setState({layoutType: type});
+		this.forceUpdate();
+	},
+	createButton: function(type, label, checked) {
+
+		return React.createElement("label", {
+			key: type,
+			className: "btn btn-secondary" + (checked ? " active" : "")
+		}, React.createElement("input", {
+			type: "checkbox",
+			autoComplete: "off",
+			onChange: this.handleChange.bind(this, type, !checked)
+		}), label);
 	},
 	render: function() {
 		var content;
@@ -39,15 +54,12 @@ module.exports = React.createClass({
 				break;
 		}
 
-		return React.createElement("div", null, React.createElement("button", {
-			className: "fa fa-square-o",
-			onClick: this.handleLayoutChange.bind(this, "card")
-		}), React.createElement("button", {
-			className: "fa fa-map",
-			onClick: this.handleLayoutChange.bind(this, "map")
-		}), React.createElement("button", {
-			className: "fa fa-list",
-			onClick: this.handleLayoutChange.bind(this, "list")
-		}), content);
+		return React.createElement("div", null, React.createElement("div", {
+			className: "btn-group",
+			"data-toggle": "buttons"
+		}, _.map(LayoutButtons, _.bind(function(layoutbutton, key) {
+			layoutbutton.checked = (this.state.layoutType === layoutbutton.type);
+			return this.createButton(key, layoutbutton.label, layoutbutton.checked);
+		}, this))), content);
 	}
 });
