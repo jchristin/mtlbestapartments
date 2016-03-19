@@ -6,36 +6,22 @@
 	background: $gray-lighter;
 	position: relative;
 	float: right;
-	width: calc(100% - #{$sidebar-width});
+	width: 100%;
 	height: 100%;
 	overflow: auto;
-	@media (max-width: 768px) {
-		width: 100%;
-		transition: transform .3s ease;
-	}
+	transition: transform .3s ease;
 	&.main.expanded {
-		@media (max-width: 768px) {
-			transform: translate3d($sidebar-width, 0px, 0px);
-			transition: transform .3s ease;
-		}
+		transform: translate3d($sidebar-width, 0px, 0px);
 	}
 }
 
-.toolbar {
-	height: $toolbar-height;
+.navbar {
 	background: $fleub-color-white;
 	border-bottom: solid 1px $card-border-color;
-}
 
-.sidebar-toggle {
-	display: inline-block;
-	width: $toolbar-height;
-	height: $toolbar-height;
-	text-align: center;
-	padding-top: 17px;
-	border-right: solid 1px $card-border-color;
-	font-size: 20px;
-	color: $fleub-color-primary;
+	.navbar-brand i {
+		padding-top: 6px;
+	}
 }
 
 .container {
@@ -55,11 +41,6 @@
 .slider-selection {
 	background-color: hsl(0, 0%, 85%);
 	background-image: none;
-}
-
-.new-full,
-.edit-full {
-	text-align: center;
 }
 
 .col-xs-center {

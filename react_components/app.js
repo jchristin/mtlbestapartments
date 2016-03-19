@@ -32,16 +32,21 @@ module.exports = React.createClass({
 			React.createElement("div", {
 					className: "main" + (this.state.expanded ? " expanded" : "")
 				},
-				React.createElement("div", {
-						className: "toolbar"
+				React.createElement("nav", {
+						className: "navbar"
 					},
 					React.createElement("a", {
-							className: "sidebar-toggle hidden-md-up",
+							className: "navbar-brand",
 							onClick: this.toggle
 						},
 						React.createElement("i", {
 							className: "fa fa-bars"
 						})
+					),
+					React.createElement("a", {
+							href: "/",
+							className: "navbar-brand",
+						},"Fleub"
 					)
 				),
 				React.createElement("div", {
