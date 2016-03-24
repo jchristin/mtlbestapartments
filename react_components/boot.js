@@ -64,7 +64,7 @@ var Boot = React.createClass({
 					component: require("./app")
 				},
 				React.createElement(IndexRoute, {
-					component: require("./staff-picks")
+					component: require("./latest")
 				}),
 				React.createElement(Route, {
 					path: "a/:_id",
@@ -103,10 +103,6 @@ var Boot = React.createClass({
 					path: "signup",
 					component: require("./signup"),
 					onEnter: this.redirect("/", null)
-				}),
-				React.createElement(Route, {
-					path: "staff-picks",
-					component: require("./staff-picks")
 				})
 			)
 		);

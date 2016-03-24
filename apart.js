@@ -106,7 +106,7 @@ module.exports.getApart = function(req, res) {
 	});
 };
 
-module.exports.getStaffPicks = function(req, res) {
+module.exports.getLatest = function(req, res) {
 	database.apartments.find({
 		active: true,
 	}).sort({

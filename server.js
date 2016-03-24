@@ -63,7 +63,7 @@ server.post("/api/apart", apart.addOrUpdateApart);
 
 server.delete("/api/apart", apart.deactivateApart);
 
-server.get("/api/staff-picks", apart.getStaffPicks);
+server.get("/api/latest", apart.getLatest);
 
 server.get("/api/search/criteria", auth.isAuthenticated, search.getCriteria);
 

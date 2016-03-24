@@ -25,11 +25,6 @@ module.exports = React.createClass({
 			}),
 			React.createElement(Item, {
 				icon: "fa-circle",
-				path: "/staff-picks",
-				caption: "Staff picks"
-			}),
-			React.createElement(Item, {
-				icon: "fa-circle",
 				path: "/posted",
 				caption: "Posted apartments"
 			})

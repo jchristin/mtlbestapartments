@@ -12,7 +12,7 @@ module.exports = React.createClass({
 	},
 	componentWillMount: function() {
 		request
-			.get("/api/staff-picks")
+			.get("/api/latest")
 			.end(function(err, res) {
 				if (err) {
 					console.log(err);
@@ -24,7 +24,8 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", {
-			className: "staff-picks"
-		}, React.createElement(Layout, {apartments: this.state.apartments}));
+			className: "row"
+		},
+		React.createElement(Layout, {apartments: this.state.apartments}));
 	}
 });
