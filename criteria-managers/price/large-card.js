@@ -14,10 +14,18 @@ module.exports = React.createClass({
 		});
 
 		this.slider.on("slide", function(event) {
-			this.props.criterion.min = event[0];
-			this.props.criterion.max = event[1];
-			this.forceUpdate();
+			this.updateUi(event);
 		}.bind(this));
+
+		this.slider.on("slideStop", function(event) {
+			this.updateUi(event);
+		}.bind(this));
+
+	},
+	updateUi: function(event) {
+		this.props.criterion.min = event[0];
+		this.props.criterion.max = event[1];
+		this.forceUpdate();
 	},
 	render: function() {
 		return React.createElement("div", null,
