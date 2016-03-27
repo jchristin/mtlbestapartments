@@ -7,13 +7,46 @@ var React = require("react"),
 	LayoutMap = require("./layout-map"),
 	LayoutList = require("./layout-list"),
 	LayoutButtons = require("../layout"),
-	_ = require("lodash");
+	_ = require("lodash"),
+	request = require("superagent");
 
 module.exports = React.createClass({
 	getInitialState: function() {
 		return {
-			layoutType: (this.props.type || "card")
+			layoutType: null
 		};
+	},
+	componentWillMount: function() {
+		request
+			.get("/api/layout")
+			.end(function(err, res) {
+				if (err && err.status !== 404) {
+					console.log(err);
+				} else {
+					if (res.body !== null) {
+						this.setState({
+							layoutType: res.body
+						});
+					} else {
+						this.setState({
+							layoutType: "card"
+						});
+					}
+				}
+			}.bind(this));
+	},
+	componentWillUnmount: function() {
+		request
+			.post("/api/layout")
+			.send({
+				type: "layout",
+				layout: this.state.layoutType
+			})
+			.end(function(err) {
+				if (err) {
+					console.log(err);
+				}
+			}.bind(this));
 	},
 	handleChange: function(type, checked) {
 		LayoutButtons[type].checked = checked;

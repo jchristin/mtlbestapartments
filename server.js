@@ -73,6 +73,10 @@ server.get("/api/search/result", auth.isAuthenticated, search.getResult);
 
 server.delete("/api/search", auth.isAuthenticated, search.remove);
 
+server.get("/api/layout", auth.isAuthenticated, auth.getLayout);
+
+server.post("/api/layout", auth.isAuthenticated, auth.updateLayout);
+
 server.get("/api/stations/:city", function(req, res) {
 	if (req.params.city === "montreal") {
 		var stations = [{

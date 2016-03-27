@@ -84,7 +84,7 @@ module.exports.signUp = function(req, res) {
 						console.log(err);
 						res.status(500).send("Server error. Please retry later.");
 					} else {
-						passport.authenticate("local")(req, res, function(){
+						passport.authenticate("local")(req, res, function() {
 							res.sendStatus(200);
 						});
 					}
@@ -124,6 +124,40 @@ module.exports.deleteUser = function(req, res) {
 		} else {
 			req.logout();
 			res.end();
+		}
+	});
+};
+
+module.exports.updateLayout = function(req, res) {
+	database.users.updateOne({
+		_id: req.user._id
+	}, {
+		$set: {
+			layout: req.body.layout
+		}
+	}, function(err) {
+		if (err) {
+			console.log(err);
+			res.status(500).send("Server error. Please retry later.");
+		} else {
+			res.end();
+		}
+	});
+};
+
+module.exports.getLayout = function(req, res) {
+	database.users.findOne({
+		_id: req.user._id
+	}, function(err, doc) {
+		if (err) {
+			console.log(err);
+			res.status(500).send("Server error. Please retry later.");
+		} else {
+			if (doc === null) {
+				res.sendStatus(404);
+			} else {
+				res.json(doc.layout);
+			}
 		}
 	});
 };
