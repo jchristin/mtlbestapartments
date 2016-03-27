@@ -82,7 +82,10 @@ module.exports = React.createClass({
 
 			default:
 				// Not handled yet
-				console.log(this.state.layoutType);
+				if (this.state.layoutType) {
+					console.log(this.state.layoutType);
+				}
+
 				content = null;
 				break;
 		}
