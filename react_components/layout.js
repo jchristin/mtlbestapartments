@@ -35,12 +35,12 @@ module.exports = React.createClass({
 				}
 			}.bind(this));
 	},
-	componentWillUnmount: function() {
+	storeLayoutType: function(layoutType) {
 		request
 			.post("/api/layout")
 			.send({
 				type: "layout",
-				layout: this.state.layoutType
+				layout: layoutType
 			})
 			.end(function(err) {
 				if (err) {
@@ -51,6 +51,7 @@ module.exports = React.createClass({
 	handleChange: function(type, checked) {
 		LayoutButtons[type].checked = checked;
 		this.setState({layoutType: type});
+		this.storeLayoutType(type);
 		this.forceUpdate();
 	},
 	createButton: function(type, label, checked) {
