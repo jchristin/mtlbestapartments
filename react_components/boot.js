@@ -7,7 +7,6 @@ var React = require("react"),
 	Router = require("react-router").Router,
 	Route = require("react-router").Route,
 	IndexRoute = require("react-router").IndexRoute,
-	Redirect = require("react-router").Redirect,
 	browserHistory = require("react-router").browserHistory,
 	request = require("superagent"),
 	Loading = require("./loading");
