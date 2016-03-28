@@ -20,16 +20,16 @@ module.exports = React.createClass({
 				return "Studio";
 
 			case 1:
-				return "1 bedroom";
+				return "1";
 
 			case 2:
-				return "2 bedrooms";
+				return "2";
 
 			case 3:
-				return "3 bedrooms";
+				return "3";
 
 			case 4:
-				return "4+ bedrooms";
+				return "4+";
 
 			default:
 				return "";
