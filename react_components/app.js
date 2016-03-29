@@ -59,7 +59,7 @@ module.exports = React.createClass({
 					}, "Sign out")
 				)
 			)
-		)
+		);
 	},
 	createNotLoggedMenu: function () {
 		return React.createElement("ul", {
@@ -73,7 +73,7 @@ module.exports = React.createClass({
 					className: "nav-link"
 				}, "Sign in")
 			)
-		)
+		);
 	},
 	componentDidMount: function() {
 		global.jQuery = require("jquery");
