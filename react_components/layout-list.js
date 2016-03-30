@@ -9,7 +9,6 @@ module.exports = React.createClass({
 		return {apartments: this.props.apartments};
 	},
 	sortCallback: function(type, up) {
-		console.log("sortCallback");
 		this.state.apartments = _.sortBy(this.props.apartments, function(apart) {
 			var data;
 			switch (type) {
