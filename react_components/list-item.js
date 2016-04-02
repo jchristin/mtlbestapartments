@@ -1,18 +1,11 @@
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	priceFormater = require("./price-formater");
 
 module.exports = React.createClass({
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
-	},
-	getPriceString: function() {
-		var price = this.props.apart.price;
-		if (price) {
-			return "$" + price;
-		} else {
-			return "$ -";
-		}
 	},
 	getBedroomString: function() {
 		switch (this.props.apart.bedroom) {
@@ -50,7 +43,7 @@ module.exports = React.createClass({
 			src: this.props.apart.images[0]
 		})), React.createElement("div", {
 			className: "list-item-price"
-		}, this.getPriceString()), React.createElement("div", {
+		}, React.createElement(priceFormater, {price: this.props.apart.price})), React.createElement("div", {
 			className: "list-item-bedroom"
 		}, this.getBedroomString()), React.createElement("div", {
 			className: "list-item-borough"

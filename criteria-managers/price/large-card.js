@@ -1,6 +1,7 @@
 "use strict";
 
-var React = require("react");
+var React = require("react"),
+	priceFormater = require("../../react_components/price-formater");
 
 module.exports = React.createClass({
 	componentDidMount: function() {
@@ -29,7 +30,12 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement("div", null,
-			React.createElement("div", null, "Price between " + this.props.criterion.min + "$ and " + this.props.criterion.max + "$"),
+		React.createElement("div", null,
+			React.createElement("span", null, "Price between "),
+			React.createElement(priceFormater, {price: this.props.criterion.min}),
+			React.createElement("span", null, " and "),
+			React.createElement(priceFormater, {price: this.props.criterion.max})
+		),
 			React.createElement("input", {
 				type: "text",
 				id: "slider-price"
