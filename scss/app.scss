@@ -1,16 +1,16 @@
 // For some reasons, Bootstrap treats links without href differently.
 a:not([href]) {
-  color: $link-color;
-  text-decoration: $link-decoration;
+	color: $link-color;
+	text-decoration: $link-decoration;
 
-  @include hover-focus {
-    color: $link-hover-color;
-    text-decoration: $link-hover-decoration;
-  }
+	@include hover-focus {
+		color: $link-hover-color;
+		text-decoration: $link-hover-decoration;
+	}
 
-  &:focus {
-    @include tab-focus();
-  }
+	&:focus {
+		@include tab-focus();
+	}
 }
 
 .app {
