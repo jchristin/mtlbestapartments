@@ -13,7 +13,7 @@ module.exports = React.createClass({
 	},
 	createNotification: function(message)
 	{
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "alert alert-danger",
 				role: "alert"
 			}, message
@@ -41,32 +41,32 @@ module.exports = React.createClass({
 		return false;
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "row"
 			},
-			React.createElement("div", {
+			React.DOM.div({
 					className: "col-xs-center"
 				},
-				React.createElement("h2", {
+				React.DOM.h2({
 					className: "text-xs-center"
 				}, "Create an account"),
 				this.state.notification,
-				React.createElement("div", {
+				React.DOM.div({
 						className: "card"
 					},
-					React.createElement("div", {
+					React.DOM.div({
 							className: "card-block"
 						},
-						React.createElement("form", {
+						React.DOM.form({
 								name: "form",
 								noValidate: "",
 								onSubmit: this.handleSubmit
 							},
-							React.createElement("div", {
+							React.DOM.div({
 									className: "form-group"
 								},
-								React.createElement("label", null, "Name"),
-								React.createElement("input", {
+								React.DOM.label(null, "Name"),
+								React.DOM.input({
 									className: "form-control",
 									type: "text",
 									ref: "name",
@@ -74,11 +74,11 @@ module.exports = React.createClass({
 									required: true
 								})
 							),
-							React.createElement("div", {
+							React.DOM.div({
 									className: "form-group"
 								},
-								React.createElement("label", null, "Email"),
-								React.createElement("input", {
+								React.DOM.label(null, "Email"),
+								React.DOM.input({
 									className: "form-control",
 									type: "text",
 									ref: "email",
@@ -86,11 +86,11 @@ module.exports = React.createClass({
 									required: true,
 								})
 							),
-							React.createElement("div", {
+							React.DOM.div({
 									className: "form-group"
 								},
-								React.createElement("label", null, "Password"),
-								React.createElement("input", {
+								React.DOM.label(null, "Password"),
+								React.DOM.input({
 									className: "form-control",
 									type: "password",
 									ref: "password",
@@ -98,7 +98,7 @@ module.exports = React.createClass({
 									required: true
 								})
 							),
-							React.createElement("button", {
+							React.DOM.button({
 								className: "btn btn-lg btn-primary btn-block",
 								type: "submit"
 							}, "Sign up")

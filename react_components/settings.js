@@ -16,9 +16,9 @@ module.exports = React.createClass({
 		});
 	},
 	render: function() {
-		return React.createElement("div", null,
+		return React.DOM.div(null,
 			"SETTINGS",
-			React.createElement("button", {
+			React.DOM.button({
 				onClick: this.handleClick
 			}, "Delete account")
 		);

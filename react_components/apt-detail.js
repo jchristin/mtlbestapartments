@@ -19,23 +19,23 @@ module.exports = React.createClass({
 		}
 	},
 	generateSlide: function(image, index) {
-		return React.createElement("li", {
+		return React.DOM.li({
 			key: index
-		}, React.createElement("img", {src: image}));
+		}, React.DOM.img({src: image}));
 	},
 	getDescription: function(description) {
 		return {__html: description};
 	},
 	generateLayout: function(apart) {
-		var layout = React.createElement("div", {
+		var layout = React.DOM.div({
 			className: "col-md-6 offset-md-3"
-		}, React.createElement("div", {
+		}, React.DOM.div({
 			className: "flexslider carousel"
-		}, React.createElement("ul", {
+		}, React.DOM.ul({
 			className: "slides"
-		}, _.map(apart.images, this.generateSlide))), React.createElement("h6", null, React.createElement(priceFormater, {price: apart.price})), React.createElement("h6", null, this.getBedroomString(apart.bedroom)), React.createElement("p", {
+		}, _.map(apart.images, this.generateSlide))), React.DOM.h6(null, React.createElement(priceFormater, {price: apart.price})), React.DOM.h6(null, this.getBedroomString(apart.bedroom)), React.DOM.p({
 			dangerouslySetInnerHTML: this.getDescription(apart.description)
-		}), React.createElement("a", {
+		}), React.DOM.a({
 			className: "apt-detail-link",
 			href: apart.url,
 			target: "_blank"
@@ -59,7 +59,7 @@ module.exports = React.createClass({
 		jQuery(".flexslider").flexslider({animation: "slide", slideshow: false, smoothHeight: true});
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			className: "row apt-detail"
 		}, this.state.layout);
 	}

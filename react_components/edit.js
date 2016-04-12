@@ -11,14 +11,14 @@ var _ = require("lodash"),
 module.exports = React.createClass({
 	createCard: function(criterion) {
 		var criterionManager = criteriaManagers[criterion.type];
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "card",
 				key: criterion.type
 			},
-			React.createElement("div", {
+			React.DOM.div({
 					className: "card-block",
 				},
-				React.createElement("h4", {
+				React.DOM.h4({
 					className: "card-title",
 				}, criterionManager.name),
 				React.createElement(criterionManager.LargeCard, {criterion: criterion})
@@ -27,7 +27,7 @@ module.exports = React.createClass({
 	},
 	createLoading: function() {
 		if(this.state.criteria === null) {
-			return React.createElement("i", {
+			return React.DOM.i({
 				className: "fa fa-refresh fa-spin"
 			});
 		}
@@ -77,18 +77,18 @@ module.exports = React.createClass({
 			}.bind(this));
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "row"
 			},
-			React.createElement("div", {
+			React.DOM.div({
 					className: "col-md-6 offset-md-3"
 				},
 				React.createElement(Link, {
 					to: "/search"
-				}, React.createElement("i", {
+				}, React.DOM.i({
 					className: "fa fa-long-arrow-left"
 				} , " Back to search result")),
-				React.createElement("h1", {
+				React.DOM.h1({
 					className : "m-t-1"
 				}, "Search criteria ", this.createLoading()),
 				_.map(this.state.criteria, this.createCard)

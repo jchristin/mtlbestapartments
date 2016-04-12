@@ -56,10 +56,10 @@ module.exports = React.createClass({
 	},
 	createButton: function(type, label, checked) {
 
-		return React.createElement("label", {
+		return React.DOM.label({
 			key: type,
 			className: "btn btn-secondary" + (checked ? " active" : "")
-		}, React.createElement("input", {
+		}, React.DOM.input({
 			type: "checkbox",
 			autoComplete: "off",
 			onChange: this.handleChange.bind(this, type, !checked)
@@ -91,9 +91,9 @@ module.exports = React.createClass({
 				break;
 		}
 
-		return React.createElement("div", {
+		return React.DOM.div({
 			className: "layout-btn-group"
-		}, React.createElement("div", {
+		}, React.DOM.div({
 			className: "btn-group",
 			"data-toggle": "buttons"
 		}, _.map(LayoutButtons, _.bind(function(layoutbutton, key) {

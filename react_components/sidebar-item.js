@@ -19,7 +19,7 @@ module.exports = React.createClass({
 				className: "sidebar-item",
 				target: this.props.target
 			},
-			React.createElement("span", null, React.createElement("i", {
+			React.DOM.span(null, React.DOM.i({
 				className: "fa " + this.props.icon
 			})), " " + this.props.caption
 		);

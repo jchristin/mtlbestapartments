@@ -57,7 +57,7 @@ module.exports = React.createClass({
 		});
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			id: "map-canvas" + this.props.criterion.id,
 			style: {
 				margin: "0px",

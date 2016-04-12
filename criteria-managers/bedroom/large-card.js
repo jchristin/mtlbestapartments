@@ -10,10 +10,10 @@ module.exports = React.createClass({
 	createButton: function(number, label) {
 		var checked = this.props.criterion.bedrooms[number];
 
-		return React.createElement("label", {
+		return React.DOM.label({
 				className: "btn btn-secondary" + (checked ? " active" : "")
 			},
-			React.createElement("input", {
+			React.DOM.input({
 				type: "checkbox",
 				autoComplete: "off",
 				onChange: this.handleChange.bind(this, number, !checked)
@@ -21,7 +21,7 @@ module.exports = React.createClass({
 		);
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "btn-group",
 				"data-toggle":
 				"buttons"

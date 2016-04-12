@@ -36,31 +36,31 @@ module.exports = React.createClass({
 		this.setState({apartments: this.state.apartments});
 	},
 	generateSortIcon: function(captionname, type) {
-		return React.createElement("div", {
+		return React.DOM.div({
 			className: "sorticons"
-		}, React.createElement("i", {
+		}, React.DOM.i({
 			className: "fa fa-sort-asc",
 			onClick: this.sortCallback.bind(this, type, true)
-		}), React.createElement("i", {
+		}), React.DOM.i({
 			className: "fa fa-sort-desc",
 			onClick: this.sortCallback.bind(this, type, false)
-		}), React.createElement("strong", null, captionname));
+		}), React.DOM.strong(null, captionname));
 	},
 	generateHeader: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			className: "list-group-item"
-		}, React.createElement("div", {className: "list-img"}), React.createElement("div", {
+		}, React.DOM.div({className: "list-img"}), React.DOM.div({
 			className: "list-item-price"
-		}, this.generateSortIcon("Price", "price")), React.createElement("div", {
+		}, this.generateSortIcon("Price", "price")), React.DOM.div({
 			className: "list-item-bedroom"
-		}, this.generateSortIcon("Bedroom(s)", "bedroom")), React.createElement("div", {
+		}, this.generateSortIcon("Bedroom(s)", "bedroom")), React.DOM.div({
 			className: "list-item-borough"
 		}, this.generateSortIcon("Borough", "borough")));
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			className: "layout"
-		}, React.createElement("div", {
+		}, React.DOM.div({
 			className: "list-group"
 		}, this.generateHeader(), _.map(this.state.apartments, function(apart, key) {
 			return React.createElement(ListItem, {

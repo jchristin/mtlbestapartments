@@ -5,13 +5,13 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "sidebar"
 			},
-			React.createElement("div", {
+			React.DOM.div({
 					className: "sidebar-list-title"
 				},
-				React.createElement("h4", null, "Lists")
+				React.DOM.h4(null, "Lists")
 			),
 			React.createElement(Item, {
 				icon: "fa-circle",
