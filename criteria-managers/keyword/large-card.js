@@ -8,7 +8,7 @@ module.exports = React.createClass({
 		this.props.criterion.keywords = _.words(e.target.value);
 	},
 	render: function() {
-		return React.createElement("div", null, React.createElement("input", {
+		return React.DOM.div(null, React.DOM.input({
 			className: "form-control",
 			placeholder: "ex: garden, brick",
 			defaultValue: this.props.criterion.keywords,

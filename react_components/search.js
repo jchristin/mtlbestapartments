@@ -49,14 +49,14 @@ module.exports = React.createClass({
 		var content;
 
 		if (this.state.apartments === null) {
-			content = React.createElement("div", null, "Finding matches...");
+			content = React.DOM.div(null, "Finding matches...");
 		} else if (this.state.apartments.length === 0) {
-			content = React.createElement("div", null, "No match found.");
+			content = React.DOM.div(null, "No match found.");
 		} else {
 			content = React.createElement(Layout, {apartments: this.state.apartments});
 		}
 
-		return React.createElement("div", null, React.createElement(Link, {
+		return React.DOM.div(null, React.createElement(Link, {
 			to: "/search/edit"
 		}, "Edit"), content);
 	}

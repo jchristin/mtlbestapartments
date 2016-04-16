@@ -23,7 +23,7 @@ module.exports = React.createClass({
 		);
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			className: "row"
 		},
 		React.createElement(Layout, {apartments: this.state.apartments}));

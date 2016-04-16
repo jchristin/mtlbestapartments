@@ -72,7 +72,7 @@ module.exports = React.createClass({
 		}.bind(this));
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			id: "map-canvas-full",
 			style: {
 				margin: "0px",

@@ -29,14 +29,14 @@ module.exports = React.createClass({
 		this.forceUpdate();
 	},
 	render: function() {
-		return React.createElement("div", null,
-		React.createElement("div", null,
-			React.createElement("span", null, "Price between "),
+		return React.DOM.div(null,
+		React.DOM.div(null,
+			React.DOM.span(null, "Price between "),
 			React.createElement(priceFormater, {price: this.props.criterion.min}),
-			React.createElement("span", null, " and "),
+			React.DOM.span(null, " and "),
 			React.createElement(priceFormater, {price: this.props.criterion.max})
 		),
-			React.createElement("input", {
+			React.DOM.input({
 				type: "text",
 				id: "slider-price"
 			})

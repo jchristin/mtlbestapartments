@@ -7,58 +7,58 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "row"
 			},
-			React.createElement("div", {
+			React.DOM.div({
 					className: "col-xs-center"
 				},
-				React.createElement("h2", {
+				React.DOM.h2({
 					className: "text-xs-center"
 				}, "Sign in to Fleub"),
-				React.createElement("div", {
+				React.DOM.div({
 						className: "card"
 					},
-					React.createElement("div", {
+					React.DOM.div({
 							className: "card-block"
 						},
-						React.createElement("form", {
+						React.DOM.form({
 								action: "/api/signin" + this.props.location.search,
 								method: "post"
 							},
-							React.createElement("div", {
+							React.DOM.div({
 									className: "form-group"
 								},
-								React.createElement("label", null, "Email"),
-								React.createElement("input", {
+								React.DOM.label(null, "Email"),
+								React.DOM.input({
 									className: "form-control",
 									type: "text",
 									name: "username",
 									required: true
 								})
 							),
-							React.createElement("div", {
+							React.DOM.div({
 									className: "form-group"
 								},
-								React.createElement("label", null, "Password"),
-								React.createElement("input", {
+								React.DOM.label(null, "Password"),
+								React.DOM.input({
 									className: "form-control",
 									type: "password",
 									name: "password",
 									required: true
 								})
 							),
-							React.createElement("button", {
+							React.DOM.button({
 								className: "btn btn-lg btn-primary btn-block",
 								type: "submit"
 							}, "Sign in")
 						)
 					)
 				),
-				React.createElement("div", {
+				React.DOM.div({
 						className: "card"
 					},
-					React.createElement("div", {
+					React.DOM.div({
 							className: "card-block"
 						},
 						"New to Fleub? ",

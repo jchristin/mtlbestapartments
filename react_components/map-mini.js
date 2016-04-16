@@ -35,7 +35,7 @@ module.exports = React.createClass({
 		});
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			id: "map-canvas"
 		});
 	}

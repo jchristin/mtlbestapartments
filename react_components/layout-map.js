@@ -56,6 +56,6 @@ module.exports = React.createClass({
 		this.map.fitBounds(this.bounds);
 	},
 	render: function() {
-		return React.createElement("div", {id: "map-canvas-full"});
+		return React.DOM.div({id: "map-canvas-full"});
 	}
 });

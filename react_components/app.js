@@ -28,13 +28,13 @@ module.exports = React.createClass({
 		});
 	},
 	createLoggedMenu: function () {
-		return React.createElement("ul", {
+		return React.DOM.ul({
 				className: "nav navbar-nav pull-xs-right",
 			},
-			React.createElement("li", {
+			React.DOM.li({
 					className: "nav-item dropdown"
 				},
-				React.createElement("a", {
+				React.DOM.a({
 					id: "account",
 					href: "#",
 					"data-toggle": "dropdown",
@@ -42,18 +42,18 @@ module.exports = React.createClass({
 					"aria-expanded": false,
 					className: "nav-link"
 				}, "Account"),
-				React.createElement("div", {
+				React.DOM.div({
 						className: "dropdown-menu dropdown-menu-right",
 						"aria-labelledby": "account"
 					},
-					React.createElement("h6", {
+					React.DOM.h6({
 						className: "dropdown-header"
 					}, this.context.user.name),
 					React.createElement(Link, {
 						to: "/settings",
 						className: "dropdown-item"
 					}, "Settings"),
-					React.createElement("a", {
+					React.DOM.a({
 						href: "/api/signout",
 						className: "dropdown-item"
 					}, "Sign out")
@@ -62,10 +62,10 @@ module.exports = React.createClass({
 		);
 	},
 	createNotLoggedMenu: function () {
-		return React.createElement("ul", {
+		return React.DOM.ul({
 					className: "nav navbar-nav pull-xs-right",
 			},
-			React.createElement("li", {
+			React.DOM.li({
 					className: "nav-item"
 				},
 				React.createElement(Link, {
@@ -80,22 +80,22 @@ module.exports = React.createClass({
 		require("../node_modules/bootstrap/dist/js/umd/dropdown");
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 				className: "app",
 				onClick: this.collapse
 			},
 			React.createElement(Sidebar),
-			React.createElement("div", {
+			React.DOM.div({
 					className: "main" + (this.state.expanded ? " expanded" : "")
 				},
-				React.createElement("nav", {
+				React.DOM.nav({
 						className: "navbar"
 					},
-					React.createElement("a", {
+					React.DOM.a({
 							className: "navbar-brand",
 							onClick: this.toggle
 						},
-						React.createElement("i", {
+						React.DOM.i({
 							className: "fa fa-bars"
 						})
 					),
@@ -106,7 +106,7 @@ module.exports = React.createClass({
 					),
 					this.context.user ? this.createLoggedMenu() : this.createNotLoggedMenu()
 				),
-				React.createElement("div", {
+				React.DOM.div({
 					className: "container"
 				}, this.props.children)
 			)

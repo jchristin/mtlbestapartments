@@ -47,7 +47,7 @@ module.exports = React.createClass({
 		map.setMapTypeId("map-style");
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			id: this.mapUid,
 			style: {
 				margin: "0px",

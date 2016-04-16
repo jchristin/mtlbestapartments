@@ -9,7 +9,7 @@ var _ = require("lodash"),
 
 module.exports = React.createClass({
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			className: "layout"
 		}, React.createElement(Masonry, {
 			className: "masonry",

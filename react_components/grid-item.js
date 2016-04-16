@@ -33,17 +33,17 @@ module.exports = React.createClass({
 		this.context.router.push("/a/" + this.props.apart._id);
 	},
 	render: function() {
-		return React.createElement("div", {
+		return React.DOM.div({
 			onClick: this.handleClick,
 			className: "grid-item card"
-		}, React.createElement("img", {
+		}, React.DOM.img({
 			className: "card-img-top",
 			src: this.props.apart.images[0]
-		}), React.createElement("div", {
+		}), React.DOM.div({
 			className: "card-block"
-		}, React.createElement(priceFormater, {price: this.props.apart.price}), React.createElement("div", null, this.getBedroomString()), React.createElement("div", null, this.props.apart.borough), React.createElement("div", {
+		}, React.createElement(priceFormater, {price: this.props.apart.price}), React.DOM.div(null, this.getBedroomString()), React.DOM.div(null, this.props.apart.borough), React.DOM.div({
 			className: "date"
-		}, React.createElement("small", {
+		}, React.DOM.small({
 			className: "text-muted"
 		}, "Posted " + moment(this.props.apart.date).fromNow()))));
 	}
