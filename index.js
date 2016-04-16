@@ -8,7 +8,7 @@ co(function*() {
 	console.log("Database connected.");
 
 	// Run server.
-	require("./server").listen();
+	require("./server").listen(process.env.PORT || 5000);
 	console.log("Server listening...");
 }).catch(function(err) {
 	console.log(err);

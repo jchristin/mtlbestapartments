@@ -9,7 +9,6 @@ var path = require("path"),
 	MongoStore = require("connect-mongo")(session),
 	server = express(),
 	cacheMaxAge = process.env.NODE_ENV === "development" ? 0 : 3600000,
-	port = process.env.PORT || 5000,
 	database = require("./database"),
 	auth = require("./auth"),
 	search = require("./search"),
@@ -131,7 +130,4 @@ server.get("*", function(req, res) {
 	res.sendFile(__dirname + "/public/index.html");
 });
 
-// Start server.
-module.exports.listen = function() {
-	server.listen(port);
-};
+module.exports = server;
