@@ -51,7 +51,7 @@
     "passport-local": "^1.0.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "react-intl": "^2.0.0-rc-1",
+    "react-intl": "^2.0.1",
     "react-masonry-component": "^4.0.0",
     "react-router": "^2.0.1",
     "serve-favicon": "^2.3.0",
