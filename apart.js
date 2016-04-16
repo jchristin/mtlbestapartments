@@ -1,7 +1,9 @@
 "use strict";
 
 var _ = require("lodash"),
+	co = require("co"),
 	ObjectID = require("mongodb").ObjectID,
+	request = require("superagent"),
 	turfInside = require("turf-inside"),
 	turfPoint = require("turf-point"),
 	turfPolygon = require("turf-polygon"),
@@ -37,6 +39,10 @@ var filterApart = function(apart) {
 };
 
 var getBoroughName = function(coord) {
+	if(!coord) {
+		return "Montreal";
+	}
+
 	var borough = _.find(boroughs, function(b) {
 		return turfInside(turfPoint(coord), b.turfPolygon);
 	});
@@ -44,36 +50,53 @@ var getBoroughName = function(coord) {
 	return borough !== undefined ? borough.turfPolygon.properties.name : "Montreal";
 };
 
-var normalizeApart = function(apart) {
+var normalizeApart = co.wrap(function* (apart) {
 	apart._id = new ObjectID(apart._id);
 	apart.date = apart.date ? new Date(apart.date) : new Date();
 	apart.last = new Date();
+
+	var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+		_.words(_.deburr(apart.address)) +
+		"&components=administrative_area:QC&key=" +
+		process.env.GOOGLE_API_KEY;
+
+	var response = yield request.get(url);
+	var result = response.body.results[0];
+
+	apart.formattedAddress = result.formatted_address;
+	apart.coord = [result.geometry.location.lng, result.geometry.location.lat];
 	apart.borough = getBoroughName(apart.coord);
-};
+});
 
-module.exports.addOrUpdateApart = function(req, res) {
-	if(!filterApart(req.body)) {
-		res.sendStatus(400);
-		return;
-	}
-
-	normalizeApart(req.body);
-
-	database.apartments.updateOne({
-			_id: req.body._id
-		}, req.body, {
+var updateApart = function(apart) {
+	return function(done) {
+		database.apartments.updateOne({
+			_id: apart._id
+		}, apart, {
 			upsert: true
 		},
 		function(err) {
-			if (err) {
-				console.log(err);
-				res.sendStatus(500);
-			} else {
-				res.end();
-				match.computeScoreApartement(req.body);
-			}
+			done(err);
+		});
+	};
+};
+
+module.exports.addOrUpdateApart = function(req, res) {
+	co(function* () {
+		yield normalizeApart(req.body);
+
+		if(!filterApart(req.body)) {
+			res.sendStatus(400);
+		} else {
+			yield updateApart(req.body);
+
+			res.end();
+			match.computeScoreApartement(req.body);
 		}
-	);
+	}).catch(function (err) {
+		console.log(err);
+		res.sendStatus(500);
+	});
 };
 
 module.exports.deactivateApart = function(req, res) {
