@@ -5,9 +5,10 @@
 var React = require("react"),
 	Layout = require("./layout"),
 	request = require("superagent"),
-	Link = require("react-router").Link;
+	Link = require("react-router").Link,
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
@@ -46,18 +47,25 @@ module.exports = React.createClass({
 		this.isMounted = false;
 	},
 	render: function() {
-		var content;
+		var content,
+			formatMessage = this.props.intl.formatMessage;
 
 		if (this.state.apartments === null) {
-			content = React.DOM.div(null, "Finding matches...");
+			content = React.DOM.div(null, formatMessage({
+					id: "search-finding-matches"
+				}));
 		} else if (this.state.apartments.length === 0) {
-			content = React.DOM.div(null, "No match found.");
+			content = React.DOM.div(null, formatMessage({
+					id: "search-no-match-found"
+				}));
 		} else {
 			content = React.createElement(Layout, {apartments: this.state.apartments});
 		}
 
 		return React.DOM.div(null, React.createElement(Link, {
 			to: "/search/edit"
-		}, "Edit"), content);
+		}, formatMessage({
+				id: "search-edit"
+			})), content);
 	}
-});
+}));

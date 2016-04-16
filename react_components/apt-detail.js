@@ -7,15 +7,20 @@ var _ = require("lodash"),
 	jQuery = require("jquery"),
 	request = require("superagent"),
 	miniMap = require("./map-mini"),
-	priceFormater = require("./price-formater");
+	priceFormater = require("./price-formater"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	getInitialState: function() {
 		return {layout: ""};
 	},
 	getBedroomString: function(bedroom) {
 		if (bedroom) {
-			return bedroom + " bedroom";
+			var formatMessage = this.props.intl.formatMessage;
+
+			return bedroom + " " + formatMessage({
+					id: "apt-detail-bedroom"
+				});
 		}
 	},
 	generateSlide: function(image, index) {
@@ -27,19 +32,27 @@ module.exports = React.createClass({
 		return {__html: description};
 	},
 	generateLayout: function(apart) {
+
+		var formatMessage = this.props.intl.formatMessage;
+
 		var layout = React.DOM.div({
 			className: "col-md-6 offset-md-3"
 		}, React.DOM.div({
 			className: "flexslider carousel"
 		}, React.DOM.ul({
 			className: "slides"
-		}, _.map(apart.images, this.generateSlide))), React.DOM.h6(null, React.createElement(priceFormater, {price: apart.price})), React.DOM.h6(null, this.getBedroomString(apart.bedroom)), React.DOM.p({
+		}, _.map(apart.images, this.generateSlide))),
+		React.DOM.h6(null, React.createElement(priceFormater, {price: apart.price})),
+		React.DOM.h6(null, this.getBedroomString(apart.bedroom)),
+		React.DOM.p({
 			dangerouslySetInnerHTML: this.getDescription(apart.description)
 		}), React.DOM.a({
 			className: "apt-detail-link",
 			href: apart.url,
 			target: "_blank"
-		}, "Kijiji link"), React.createElement(miniMap, {coord: apart.coord}));
+		}, formatMessage({
+				id: "apt-detail-kijiji-link"
+			})), React.createElement(miniMap, {coord: apart.coord}));
 
 		this.setState({layout: layout});
 	},
@@ -63,4 +76,4 @@ module.exports = React.createClass({
 			className: "row apt-detail"
 		}, this.state.layout);
 	}
-});
+}));

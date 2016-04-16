@@ -8,9 +8,10 @@ var React = require("react"),
 	LayoutList = require("./layout-list"),
 	LayoutButtons = require("../layout"),
 	_ = require("lodash"),
-	request = require("superagent");
+	request = require("superagent"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	getInitialState: function() {
 		return {
 			layoutType: null
@@ -54,7 +55,30 @@ module.exports = React.createClass({
 		this.storeLayoutType(type);
 		this.forceUpdate();
 	},
-	createButton: function(type, label, checked) {
+	createButton: function(type, checked) {
+
+		var formatMessage = this.props.intl.formatMessage;
+
+		var message;
+		switch (type) {
+			case "map":
+				message = formatMessage({
+						id: "layout-index-map"
+					});
+				break;
+			case "card":
+				message = formatMessage({
+						id: "layout-index-card"
+					});
+				break;
+			case "list":
+				message = formatMessage({
+						id: "layout-index-list"
+					});
+				break;
+			default:
+				break;
+		}
 
 		return React.DOM.label({
 			key: type,
@@ -63,7 +87,7 @@ module.exports = React.createClass({
 			type: "checkbox",
 			autoComplete: "off",
 			onChange: this.handleChange.bind(this, type, !checked)
-		}), label);
+		}), message);
 	},
 	render: function() {
 		var content;
@@ -98,7 +122,7 @@ module.exports = React.createClass({
 			"data-toggle": "buttons"
 		}, _.map(LayoutButtons, _.bind(function(layoutbutton, key) {
 			layoutbutton.checked = (this.state.layoutType === layoutbutton.type);
-			return this.createButton(key, layoutbutton.label, layoutbutton.checked);
+			return this.createButton(key, layoutbutton.checked);
 		}, this))), content);
 	}
-});
+}));

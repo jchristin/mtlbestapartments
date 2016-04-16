@@ -1,10 +1,13 @@
 "use strict";
 
 var React = require("react"),
-	Item = require("./sidebar-item");
+	Item = require("./sidebar-item"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	render: function() {
+		var formatMessage = this.props.intl.formatMessage;
+
 		return React.DOM.div({
 				className: "sidebar"
 			},
@@ -16,18 +19,24 @@ module.exports = React.createClass({
 			React.createElement(Item, {
 				icon: "fa-circle",
 				path: "/favorite",
-				caption: "Favorite"
+				caption: formatMessage({
+						id: "sidebar-favorite"
+					})
 			}),
 			React.createElement(Item, {
 				icon: "fa-circle",
 				path: "/search",
-				caption: "Search"
+				caption: formatMessage({
+						id: "sidebar-search"
+					})
 			}),
 			React.createElement(Item, {
 				icon: "fa-circle",
 				path: "/posted",
-				caption: "Posted apartments"
+				caption: formatMessage({
+						id: "sidebar-posted-apt"
+					})
 			})
 		);
 	}
-});
+}));

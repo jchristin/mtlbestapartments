@@ -1,0 +1,63 @@
+{
+	"app-account": "Acount",
+	"app-sign-in": "Sign in",
+	"app-sign-out": "Sign out",
+
+	"layout-list-price": "Price",
+	"layout-list-bedroom": "Bedroom(s)",
+	"layout-list-borough": "Borough",
+
+	"apt-detail-kijiji-link": "Kijiji link",
+	"apt-detail-bedroom": "bedroom(s)",
+
+	"edit-search-criteria": "Search criteria",
+
+	"favorite-title": "Favorite",
+
+	"home-title": "Home",
+	"home-sign-in": "Sign In",
+	"home-sign-up": "Sign Up",
+
+	"grid-item-bedroom-0": "Studio",
+	"grid-item-bedroom-1": "1 bedroom",
+	"grid-item-bedroom-2": "2 bedrooms",
+	"grid-item-bedroom-3": "3 bedrooms",
+	"grid-item-bedroom-4+": "4+ bedrooms",
+
+	"grid-item-posted": "Posted",
+
+	"layout-index-map": "Map",
+	"layout-index-card": "Card",
+	"layout-index-list": "List",
+
+	"posted-title": "Posted",
+
+	"search-finding-matches": "Finding matches...",
+	"search-no-match-found": "No match found",
+	"search-edit": "Edit",
+
+	"settings-title":	"Settings",
+	"settings-delete-account": "Delete account",
+
+	"sidebar-favorite": "Favorite",
+	"sidebar-search": "Search",
+	"sidebar-posted-apt": "Posted apartments",
+
+	"signin-sign-in-to-fleub": "Sign in to Fleub",
+	"signin-email": "Email",
+	"signin-name-username": "username",
+	"signin-password": "Password",
+	"signin-name-password": "password",
+	"signin-signin": "Sign in",
+	"signin-new-to-fleub": "New to Fleub? ",
+	"signin-create-an-account": "Create an account",
+
+	"signup-create-an-account": "Create an account",
+	"signup-name": "Name",
+	"signup-name-name": "name",
+	"signup-email": "Email",
+	"signup-name-email": "email",
+	"signup-password": "Password",
+	"signup-name-password": "password",
+	"signup-signup": "Sign up",
+}

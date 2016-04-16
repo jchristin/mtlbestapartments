@@ -3,9 +3,10 @@
 "use strict";
 
 var React = require("react"),
-	request = require("superagent");
+	request = require("superagent"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	getInitialState: function() {
 		return {
 			notification: null
@@ -41,6 +42,8 @@ module.exports = React.createClass({
 		return false;
 	},
 	render: function() {
+		var formatMessage = this.props.intl.formatMessage;
+
 		return React.DOM.div({
 				className: "row"
 			},
@@ -49,7 +52,9 @@ module.exports = React.createClass({
 				},
 				React.DOM.h2({
 					className: "text-xs-center"
-				}, "Create an account"),
+				}, formatMessage({
+						id: "signup-create-an-account"
+					})),
 				this.state.notification,
 				React.DOM.div({
 						className: "card"
@@ -65,47 +70,61 @@ module.exports = React.createClass({
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, "Name"),
+								React.DOM.label(null, formatMessage({
+										id: "signup-name"
+									})),
 								React.DOM.input({
 									className: "form-control",
 									type: "text",
 									ref: "name",
-									name: "name",
+									name: formatMessage({
+											id: "signup-name-name"
+										}),
 									required: true
 								})
 							),
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, "Email"),
+								React.DOM.label(null, formatMessage({
+										id: "signup-email"
+									})),
 								React.DOM.input({
 									className: "form-control",
 									type: "text",
 									ref: "email",
-									name: "email",
+									name: formatMessage({
+											id: "signup-name-email"
+										}),
 									required: true,
 								})
 							),
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, "Password"),
+								React.DOM.label(null, formatMessage({
+										id: "signup-password"
+									})),
 								React.DOM.input({
 									className: "form-control",
 									type: "password",
 									ref: "password",
-									name: "password",
+									name: formatMessage({
+											id: "signup-name-password"
+										}),
 									required: true
 								})
 							),
 							React.DOM.button({
 								className: "btn btn-lg btn-primary btn-block",
 								type: "submit"
-							}, "Sign up")
+							}, formatMessage({
+									id: "signup-signup"
+								}))
 						)
 					)
 				)
 			)
 		);
 	}
-});
+}));

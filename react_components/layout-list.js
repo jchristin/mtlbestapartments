@@ -2,9 +2,10 @@
 
 var _ = require("lodash"),
 	React = require("react"),
-	ListItem = require("./list-item");
+	ListItem = require("./list-item"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	getInitialState: function() {
 		return {apartments: this.props.apartments};
 	},
@@ -47,15 +48,23 @@ module.exports = React.createClass({
 		}), React.DOM.strong(null, captionname));
 	},
 	generateHeader: function() {
+		var formatMessage = this.props.intl.formatMessage;
+
 		return React.DOM.div({
 			className: "list-group-item"
 		}, React.DOM.div({className: "list-img"}), React.DOM.div({
 			className: "list-item-price"
-		}, this.generateSortIcon("Price", "price")), React.DOM.div({
+		}, this.generateSortIcon(formatMessage({
+				id: "layout-list-price"
+			}), "price")), React.DOM.div({
 			className: "list-item-bedroom"
-		}, this.generateSortIcon("Bedroom(s)", "bedroom")), React.DOM.div({
+		}, this.generateSortIcon(formatMessage({
+				id: "layout-list-bedroom"
+			}), "bedroom")), React.DOM.div({
 			className: "list-item-borough"
-		}, this.generateSortIcon("Borough", "borough")));
+		}, this.generateSortIcon(formatMessage({
+				id: "layout-list-borough"
+			}), "borough")));
 	},
 	render: function() {
 		return React.DOM.div({
@@ -69,4 +78,4 @@ module.exports = React.createClass({
 			});
 		})));
 	}
-});
+}));

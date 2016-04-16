@@ -2,28 +2,41 @@
 
 var React = require("react"),
 	moment = require("moment"),
-	priceFormater = require("./price-formater");
+	priceFormater = require("./price-formater"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
 	getBedroomString: function() {
+		var formatMessage = this.props.intl.formatMessage;
+
 		switch (this.props.apart.bedroom) {
 			case 0:
-				return "Studio";
+				return formatMessage({
+						id: "grid-item-bedroom-0"
+					});
 
 			case 1:
-				return "1 bedroom";
+				return formatMessage({
+						id: "grid-item-bedroom-1"
+					});
 
 			case 2:
-				return "2 bedrooms";
+				return formatMessage({
+						id: "grid-item-bedroom-2"
+					});
 
 			case 3:
-				return "3 bedrooms";
+				return formatMessage({
+						id: "grid-item-bedroom-3"
+					});
 
 			case 4:
-				return "4+ bedrooms";
+				return formatMessage({
+						id: "grid-item-bedroom-4+"
+					});
 
 			default:
 				return "";
@@ -47,4 +60,4 @@ module.exports = React.createClass({
 			className: "text-muted"
 		}, "Posted " + moment(this.props.apart.date).fromNow()))));
 	}
-});
+}));

@@ -3,10 +3,13 @@
 "use strict";
 
 var React = require("react"),
-	Link = require("react-router").Link;
+	Link = require("react-router").Link,
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	render: function() {
+		var formatMessage = this.props.intl.formatMessage;
+
 		return React.DOM.div({
 				className: "row"
 			},
@@ -15,7 +18,9 @@ module.exports = React.createClass({
 				},
 				React.DOM.h2({
 					className: "text-xs-center"
-				}, "Sign in to Fleub"),
+				}, formatMessage({
+						id: "signin-sign-in-to-fleub"
+					})),
 				React.DOM.div({
 						className: "card"
 					},
@@ -29,29 +34,39 @@ module.exports = React.createClass({
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, "Email"),
+								React.DOM.label(null, formatMessage({
+										id: "signin-email"
+									})),
 								React.DOM.input({
 									className: "form-control",
 									type: "text",
-									name: "username",
+									name: formatMessage({
+											id: "signin-name-username"
+										}),
 									required: true
 								})
 							),
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, "Password"),
+								React.DOM.label(null, formatMessage({
+										id: "signin-password"
+									})),
 								React.DOM.input({
 									className: "form-control",
 									type: "password",
-									name: "password",
+									name: formatMessage({
+											id: "signin-name-password"
+										}),
 									required: true
 								})
 							),
 							React.DOM.button({
 								className: "btn btn-lg btn-primary btn-block",
 								type: "submit"
-							}, "Sign in")
+							}, formatMessage({
+									id: "signin-signin"
+								}))
 						)
 					)
 				),
@@ -61,13 +76,17 @@ module.exports = React.createClass({
 					React.DOM.div({
 							className: "card-block"
 						},
-						"New to Fleub? ",
+						formatMessage({
+								id: "signin-new-to-fleub"
+							}),
 						React.createElement(Link, {
 							to: "/signup"
-						}, "Create an account"), "."
+						}, formatMessage({
+								id: "signin-create-an-account"
+							})), "."
 					)
 				)
 			)
 		);
 	}
-});
+}));

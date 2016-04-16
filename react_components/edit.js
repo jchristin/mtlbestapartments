@@ -6,9 +6,10 @@ var _ = require("lodash"),
 	React = require("react"),
 	Link = require("react-router").Link,
 	request = require("superagent"),
-	criteriaManagers = require("../criteria-managers");
+	criteriaManagers = require("../criteria-managers"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	createCard: function(criterion) {
 		var criterionManager = criteriaManagers[criterion.type];
 		return React.DOM.div({
@@ -77,6 +78,8 @@ module.exports = React.createClass({
 			}.bind(this));
 	},
 	render: function() {
+		var formatMessage = this.props.intl.formatMessage;
+
 		return React.DOM.div({
 				className: "row"
 			},
@@ -90,9 +93,11 @@ module.exports = React.createClass({
 				} , " Back to search result")),
 				React.DOM.h1({
 					className : "m-t-1"
-				}, "Search criteria ", this.createLoading()),
+				}, formatMessage({
+						id: "edit-search-criteria"
+					}), this.createLoading()),
 				_.map(this.state.criteria, this.createCard)
 			)
 		);
 	}
-});
+}));
