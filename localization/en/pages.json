@@ -1,5 +1,5 @@
 {
-	"app-account": "Acount",
+	"app-account": "Account",
 	"app-sign-in": "Sign in",
 	"app-sign-out": "Sign out",
 
@@ -60,4 +60,8 @@
 	"signup-password": "Password",
 	"signup-name-password": "password",
 	"signup-signup": "Sign up",
+
+	"logmenu-account": "Account",
+	"logmenu-signin": "Sign in",
+	"logmenu-signout": "Sign out",
 }

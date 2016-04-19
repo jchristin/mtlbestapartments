@@ -5,14 +5,12 @@
 var React = require("react"),
 	Link = require("react-router").Link,
 	Sidebar = require("./sidebar"),
+	LogMenu = require("./logmenu"),
 	ReactIntl = require("react-intl"),
 	addLocaleData = ReactIntl.addLocaleData,
 	IntlProvider = ReactIntl.IntlProvider;
 
 module.exports = React.createClass({
-	contextTypes: {
-		user: React.PropTypes.object
-	},
 	getInitialState: function() {
 		return {expanded: false};
 	},
@@ -25,42 +23,6 @@ module.exports = React.createClass({
 	},
 	collapse: function() {
 		this.setState({expanded: false});
-	},
-	createLoggedMenu: function() {
-
-		return React.DOM.ul({
-			className: "nav navbar-nav pull-xs-right"
-		}, React.DOM.li({
-			className: "nav-item dropdown"
-		}, React.DOM.a({
-			id: "account",
-			href: "#",
-			"data-toggle": "dropdown",
-			"aria-haspopup": true,
-			"aria-expanded": false,
-			className: "nav-link"
-		}, "Account"), React.DOM.div({
-			className: "dropdown-menu dropdown-menu-right",
-			"aria-labelledby": "Sign in"
-		}, React.DOM.h6({
-			className: "dropdown-header"
-		}, this.context.user.name), React.createElement(Link, {
-			to: "/settings",
-			className: "dropdown-item"
-		}, "Settings"), React.DOM.a({
-			href: "/api/signout",
-			className: "dropdown-item"
-		}, "Sign out"))));
-	},
-	createNotLoggedMenu: function() {
-		return React.DOM.ul({
-			className: "nav navbar-nav pull-xs-right"
-		}, React.DOM.li({
-			className: "nav-item"
-		}, React.createElement(Link, {
-			to: "/signin",
-			className: "nav-link"
-		}, "Sign in")));
 	},
 	componentDidMount: function() {
 		global.jQuery = require("jquery");
@@ -93,7 +55,7 @@ module.exports = React.createClass({
 		}, React.DOM.i({className: "fa fa-bars"})), React.createElement(Link, {
 			to: "/",
 			className: "navbar-brand"
-		}, "Fleub"), this.context.user ? this.createLoggedMenu() : this.createNotLoggedMenu()), React.DOM.div({
+		}, "Fleub"), React.createElement(LogMenu)), React.DOM.div({
 			className: "container"
 		}, this.props.children))));
 	}

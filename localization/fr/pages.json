@@ -60,4 +60,8 @@
 	"signup-password": "Mot de passe",
 	"signup-name-password": "mot de passe",
 	"signup-signup": "S'inscrire",
+
+	"logmenu-account": "Compte",
+	"logmenu-signin": "S'inscrire",
+	"logmenu-signout": "Se deconnecter",
 }
