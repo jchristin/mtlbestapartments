@@ -63,6 +63,8 @@ var normalizeApart = co.wrap(function* (apart) {
 	var response = yield request.get(url);
 	var result = response.body.results[0];
 
+	console.log(response.body);
+
 	apart.formattedAddress = result.formatted_address;
 	apart.coord = [result.geometry.location.lng, result.geometry.location.lat];
 	apart.borough = getBoroughName(apart.coord);
@@ -142,3 +144,5 @@ module.exports.getLatest = function(req, res) {
 		}
 	});
 };
+
+module.exports.normalizeApart = normalizeApart;
