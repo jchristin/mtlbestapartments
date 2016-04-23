@@ -30,7 +30,12 @@ _.forEach(boroughs, function(borough) {
 
 var turfPolygonMontreal = turfConvex(turfFeaturecollection(points));
 
+// Return false is apart is not valid.
 var filterApart = function(apart) {
+	if(!apart.coord) {
+		return false;
+	}
+
 	if (!turfInside(turfPoint(apart.coord), turfPolygonMontreal)) {
 		return false;
 	}
@@ -50,22 +55,44 @@ var getBoroughName = function(coord) {
 	return borough !== undefined ? borough.turfPolygon.properties.name : "Montreal";
 };
 
-var normalizeApart = co.wrap(function* (apart) {
-	apart._id = new ObjectID(apart._id);
-	apart.date = apart.date ? new Date(apart.date) : new Date();
-	apart.last = new Date();
-
+var checkAddress = co.wrap(function* (address) {
 	var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-		_.words(_.deburr(apart.address)) +
-		"&components=administrative_area:QC&key=" +
+		address +
+		"&components=administrative_area:Québec&key=" +
 		process.env.GOOGLE_API_KEY;
 
 	var response = yield request.get(url);
 	var result = response.body.results[0];
 
-	apart.formattedAddress = result.formatted_address;
-	apart.coord = [result.geometry.location.lng, result.geometry.location.lat];
-	apart.borough = getBoroughName(apart.coord);
+	if( !result || result.formatted_address == "Québec, Canada") {
+		return null;
+	}
+
+	return result;
+});
+
+var normalizeAddress = co.wrap(function* (address) {
+	var result = yield checkAddress(encodeURIComponent(address));
+
+	// If fails, try another address form.
+	if(!result) {
+		result = yield checkAddress(_.words(_.deburr(address)));
+	}
+
+	return result;
+});
+
+var normalizeApart = co.wrap(function* (apart) {
+	apart._id = new ObjectID(apart._id);
+	apart.date = apart.date ? new Date(apart.date) : new Date();
+	apart.last = new Date();
+
+	var result = yield normalizeAddress(apart.address);
+	if(result) {
+		apart.formattedAddress = result.formatted_address;
+		apart.coord = [result.geometry.location.lng, result.geometry.location.lat];
+		apart.borough = getBoroughName(apart.coord);
+	}
 });
 
 var updateApart = function(apart) {
