@@ -62,13 +62,18 @@ var checkAddress = co.wrap(function* (address) {
 		process.env.GOOGLE_API_KEY;
 
 	var response = yield request.get(url);
-	var result = response.body.results[0];
 
-	if( !result || result.formatted_address == "Québec, Canada") {
-		return null;
+	switch(response.body.status) {
+		case "OK":
+			var result = response.body.results[0];
+			return result.formatted_address == "Québec, Canada" ? null : result;
+
+		case "ZERO_RESULTS":
+			return null;
+
+		default:
+			throw new Error(response.body.status);
 	}
-
-	return result;
 });
 
 var normalizeAddress = co.wrap(function* (address) {

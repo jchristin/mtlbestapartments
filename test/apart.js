@@ -15,7 +15,7 @@ describe.skip("Apart", function() {
 				formatted: "Avenue Mercier, Anjou, QC H1K, Canada"
 			}, {
 				raw: "Rue Saint-Urbain & Avenue du Mont-Royal O, Montréal, QC H2T, Canada",
-				formatted : "Rue Saint-Urbain & Avenue du Mont-Royal O, Montréal, QC H2T, Canada"
+				formatted: "Rue Saint-Urbain & Avenue du Mont-Royal O, Montréal, QC H2T, Canada"
 			}
 		];
 
