@@ -90,7 +90,6 @@ var normalizeAddress = co.wrap(function* (address) {
 var normalizeApart = co.wrap(function* (apart) {
 	apart._id = new ObjectID(apart._id);
 	apart.date = apart.date ? new Date(apart.date) : new Date();
-	apart.last = new Date();
 
 	var result = yield normalizeAddress(apart.address);
 	if(result) {
