@@ -26,6 +26,7 @@ module.exports = React.createClass({
 		return React.DOM.div({
 			className: "row"
 		},
+		React.createElement("h1", null, "Recently added"),
 		React.createElement(Layout, {apartments: this.state.apartments}));
 	}
 });
