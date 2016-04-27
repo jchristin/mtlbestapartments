@@ -1,7 +1,21 @@
+@mixin media-grid-col($name, $count, $breakpoints: $grid-breakpoints) {
+	$min: map-get($breakpoints, $name);
+	$size: 100 / $count;
+	$gutter: 14 * ($count - 1) / $count;
+	@media (min-width: $min) {
+		width: calc(#{$size}% - #{$gutter}px);
+	}
+}
+
 .grid-item {
-	width: 300px;
-	margin: 8px;
+	width: 100%;
+	margin-bottom: 14px;
 	cursor: pointer;
+
+	@include media-grid-col(sm, 2);
+	@include media-grid-col(md, 3);
+	@include media-grid-col(lg, 3);
+	@include media-grid-col(xl, 4);
 
 	.card-img-top {
 		width: 100%;

@@ -14,7 +14,7 @@ module.exports = React.createClass({
 		}, React.createElement(Masonry, {
 			className: "masonry",
 			options: {
-				isFitWidth: true
+				gutter: 14
 			},
 			disableImagesLoaded: false
 		}, _.map(this.props.apartments, function(apart) {
