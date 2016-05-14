@@ -6,6 +6,11 @@ var _ = require("lodash"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
+	componentDidUpdate: function() {
+		if ((this.props.apartments.length !== 0) && (this.state.apartments !== this.props.apartments)) {
+			this.setState({apartments: this.props.apartments});
+		}
+	},
 	getInitialState: function() {
 		return {apartments: this.props.apartments};
 	},
