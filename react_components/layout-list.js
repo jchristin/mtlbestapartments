@@ -10,7 +10,6 @@ module.exports = injectIntl(React.createClass({
 		if ((this.props.apartments.length !== 0) &&
 			(this.state.apartments.length === 0) &&
 			(this.state.apartments !== this.props.apartments)) {
-			console.log("Update");
 			this.setState({apartments: this.props.apartments});
 		}
 	},
