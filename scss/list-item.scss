@@ -6,6 +6,17 @@ $list-item-borough: 45%;
 .list-group-item {
 	cursor: pointer;
 	width: $list-group-item;
+	.list-item-sorticons {
+		display: inline-block;
+		vertical-align: middle;
+		.fa {
+			display: block;
+			width: 30;
+		}
+	}
+	.list-item-caption {
+		display: inline-block;
+	}
 	.list-item-price {
 		width: $list-item-price;
 		display: inline-block;

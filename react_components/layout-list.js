@@ -41,16 +41,20 @@ module.exports = injectIntl(React.createClass({
 
 		this.setState({apartments: this.state.apartments});
 	},
-	generateSortIcon: function (captionname, type) {
+	generateSortIcon: function (type) {
 		return React.DOM.div({
-			className: "sorticons"
-		}, React.DOM.i({
-			className: "fa fa-sort-asc",
-			onClick: this.sortCallback.bind(this, type, true)
-		}), React.DOM.i({
-			className: "fa fa-sort-desc",
+			className: "list-item-sorticons"
+		}, React.DOM.div({
+			className: "list-item-sorticons-up"
+		}, React.DOM.div({
+			className: "fa fa-caret-up",
 			onClick: this.sortCallback.bind(this, type, false)
-		}), React.DOM.strong(null, captionname));
+		})), React.DOM.div({
+			className: "list-item-sorticons-down"
+		}, React.DOM.div({
+			className: "fa fa-caret-down",
+			onClick: this.sortCallback.bind(this, type, true)
+		})));
 	},
 	generateHeader: function () {
 		var formatMessage = this.props.intl.formatMessage;
@@ -59,11 +63,17 @@ module.exports = injectIntl(React.createClass({
 			className: "list-group-item"
 		}, React.DOM.div({className: "list-img"}), React.DOM.div({
 			className: "list-item-price"
-		}, this.generateSortIcon(formatMessage({id: "layout-list-price"}), "price")), React.DOM.div({
+		}, this.generateSortIcon("price"), React.DOM.div({
+			className: "list-item-caption"
+		}, React.DOM.strong(null, formatMessage({id: "layout-list-price"})))), React.DOM.div({
 			className: "list-item-bedroom"
-		}, this.generateSortIcon(formatMessage({id: "layout-list-bedroom"}), "bedroom")), React.DOM.div({
+		}, this.generateSortIcon("bedroom"), React.DOM.div({
+			className: "list-item-caption"
+		}, React.DOM.strong(null, formatMessage({id: "layout-list-bedroom"})))), React.DOM.div({
 			className: "list-item-borough"
-		}, this.generateSortIcon(formatMessage({id: "layout-list-borough"}), "borough")));
+		}, this.generateSortIcon("borough"), React.DOM.div({
+			className: "list-item-caption"
+		}, React.DOM.strong(null, formatMessage({id: "layout-list-borough"})))));
 	},
 	render: function () {
 		return React.DOM.div({
