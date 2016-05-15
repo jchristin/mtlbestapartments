@@ -3,34 +3,28 @@ $list-img: 10%;
 $list-item-price: 20%;
 $list-item-bedroom: 25%;
 $list-item-borough: 45%;
-
 .list-group-item {
 	cursor: pointer;
 	width: $list-group-item;
-
 	.list-item-price {
 		width: $list-item-price;
 		display: inline-block;
 		text-align: center;
 	}
-
 	.list-item-bedroom {
 		width: $list-item-bedroom;
 		display: inline-block;
 		text-align: center;
 	}
-
 	.list-item-borough {
 		width: $list-item-borough;
 		display: inline-block;
 		text-align: center;
 	}
-
 	.list-img {
 		width: $list-img;
 		display: inline-block;
 		text-align: center;
-
 		.list-img-content {
 			height: 40px;
 		}
