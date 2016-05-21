@@ -39,9 +39,9 @@
 	"settings-title":	"Settings",
 	"settings-delete-account": "Delete account",
 
-	"sidebar-favorite": "Favorite",
-	"sidebar-search": "Search",
-	"sidebar-posted-apt": "Posted apartments",
+	"navbar-favorite": "Favorite",
+	"navbar-search": "Search",
+	"navbar-posted-apt": "Posted apartments",
 
 	"signin-sign-in-to-fleub": "Sign in to Fleub",
 	"signin-email": "Email",

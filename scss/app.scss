@@ -14,20 +14,8 @@ a:not([href]) {
 }
 
 .app {
-	overflow-x: hidden;
-}
-
-.main {
 	background: $gray-lighter;
-	position: relative;
-	float: right;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	transition: transform .3s ease;
-	&.main.expanded {
-		transform: translate3d($sidebar-width, 0px, 0px);
-	}
+	min-height: 100%;
 }
 
 .navbar {

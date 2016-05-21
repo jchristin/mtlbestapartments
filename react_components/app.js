@@ -4,26 +4,12 @@
 
 var React = require("react"),
 	Link = require("react-router").Link,
-	Sidebar = require("./sidebar"),
 	LogMenu = require("./logmenu"),
 	ReactIntl = require("react-intl"),
 	addLocaleData = ReactIntl.addLocaleData,
 	IntlProvider = ReactIntl.IntlProvider;
 
 module.exports = React.createClass({
-	getInitialState: function() {
-		return {expanded: false};
-	},
-	toggle: function(event) {
-		event.stopPropagation();
-
-		this.setState({
-			expanded: !this.state.expanded
-		});
-	},
-	collapse: function() {
-		this.setState({expanded: false});
-	},
 	componentDidMount: function() {
 		global.jQuery = require("jquery");
 		require("../node_modules/bootstrap/dist/js/umd/dropdown");
@@ -43,20 +29,21 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.createElement(IntlProvider, this.getLocalizationProps(), React.DOM.div({
-			className: "app",
-			onClick: this.collapse
-		}, React.createElement(Sidebar), React.DOM.div({
-			className: "main" + (this.state.expanded ? " expanded" : "")
+			className: "app"
 		}, React.DOM.nav({
 			className: "navbar"
-		}, React.DOM.a({
-			className: "navbar-brand",
-			onClick: this.toggle
-		}, React.DOM.i({className: "fa fa-bars"})), React.createElement(Link, {
+		}, React.createElement(Link, {
 			to: "/",
 			className: "navbar-brand"
-		}, "Fleub"), React.createElement(LogMenu)), React.DOM.div({
+		}, "Fleub"), React.DOM.ul({
+			className: "nav navbar-nav"
+		}, React.DOM.li({
+			className: "nav-item"
+		}, React.createElement(Link, {
+			to: "/search",
+			className: "nav-link"
+		}, "Search"))), React.createElement(LogMenu)), React.DOM.div({
 			className: "container"
-		}, this.props.children))));
+		}, this.props.children)));
 	}
 });
