@@ -1,11 +1,9 @@
 [{
 	"type": "price",
-	"stars": 5,
 	"min": 500,
 	"max": 1200
 }, {
 	"type": "bedroom",
-	"stars": 4,
 	"min": 2,
 	"max": 5
 }]
