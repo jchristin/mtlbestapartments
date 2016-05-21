@@ -52,7 +52,6 @@ module.exports = injectIntl(React.createClass({
 	handleChange: function(type, checked) {
 		this.setState({layoutType: type});
 		this.storeLayoutType(type);
-		this.forceUpdate();
 	},
 	createButton: function(type, checked) {
 
