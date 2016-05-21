@@ -6,7 +6,7 @@ var React = require("react"),
 	LayoutCard = require("./layout-card"),
 	LayoutMap = require("./layout-map"),
 	LayoutList = require("./layout-list"),
-	LayoutButtons = require("../layout"),
+	Layouts = require("./layouts"),
 	_ = require("lodash"),
 	request = require("superagent"),
 	injectIntl = require("react-intl").injectIntl;
@@ -49,43 +49,23 @@ module.exports = injectIntl(React.createClass({
 				}
 			}.bind(this));
 	},
-	handleChange: function(type, checked) {
+	handleChange: function(type) {
 		this.setState({layoutType: type});
 		this.storeLayoutType(type);
 	},
-	createButton: function(type, checked) {
-
+	createButton: function(layout, checked) {
 		var formatMessage = this.props.intl.formatMessage;
 
-		var message;
-		switch (type) {
-			case "map":
-				message = formatMessage({
-						id: "layout-index-map"
-					});
-				break;
-			case "card":
-				message = formatMessage({
-						id: "layout-index-card"
-					});
-				break;
-			case "list":
-				message = formatMessage({
-						id: "layout-index-list"
-					});
-				break;
-			default:
-				break;
-		}
-
 		return React.DOM.label({
-			key: type,
+			key: layout.type,
 			className: "btn btn-secondary" + (checked ? " active" : "")
 		}, React.DOM.input({
 			type: "checkbox",
 			autoComplete: "off",
-			onChange: this.handleChange.bind(this, type, !checked)
-		}), message);
+			onChange: this.handleChange.bind(this, layout.type)
+		}), formatMessage({
+				id: layout.id
+			}));
 	},
 	render: function() {
 		var content;
@@ -109,7 +89,6 @@ module.exports = injectIntl(React.createClass({
 					console.log(this.state.layoutType);
 				}
 
-				content = null;
 				break;
 		}
 
@@ -118,8 +97,8 @@ module.exports = injectIntl(React.createClass({
 		}, React.DOM.div({
 			className: "btn-group",
 			"data-toggle": "buttons"
-		}, _.map(LayoutButtons, _.bind(function(layoutbutton, key) {
-			return this.createButton(key, this.state.layoutType === layoutbutton.type);
+		}, _.map(Layouts, _.bind(function(layout) {
+			return this.createButton(layout, this.state.layoutType === layout.type);
 		}, this))), content);
 	}
 }));

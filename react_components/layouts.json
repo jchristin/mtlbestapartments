@@ -1,0 +1,17 @@
+{
+	"map": {
+		"type": "map",
+		"icon": "fa-map",
+		"id": "layout-index-map"
+	},
+	"card": {
+		"type": "card",
+		"icon": "fa-square-o",
+		"id": "layout-index-map"
+	},
+	"list": {
+		"type": "list",
+		"icon": "fa-list",
+		"id": "layout-index-list"
+	}
+}
