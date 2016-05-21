@@ -50,7 +50,6 @@ module.exports = injectIntl(React.createClass({
 			}.bind(this));
 	},
 	handleChange: function(type, checked) {
-		LayoutButtons[type].checked = checked;
 		this.setState({layoutType: type});
 		this.storeLayoutType(type);
 		this.forceUpdate();
@@ -121,8 +120,7 @@ module.exports = injectIntl(React.createClass({
 			className: "btn-group",
 			"data-toggle": "buttons"
 		}, _.map(LayoutButtons, _.bind(function(layoutbutton, key) {
-			layoutbutton.checked = (this.state.layoutType === layoutbutton.type);
-			return this.createButton(key, layoutbutton.checked);
+			return this.createButton(key, this.state.layoutType === layoutbutton.type);
 		}, this))), content);
 	}
 }));

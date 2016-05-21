@@ -3,17 +3,14 @@
 module.exports = {
 	"map": {
 		type: "map",
-		icon: "fa-map",
-		checked: false,
+		icon: "fa-map"
 	},
 	"card": {
 		type: "card",
-		icon: "fa-square-o",
-		checked: false,
+		icon: "fa-square-o"
 	},
 	"list": {
 		type: "list",
-		icon: "fa-list",
-		checked: false,
+		icon: "fa-list"
 	}
 };
