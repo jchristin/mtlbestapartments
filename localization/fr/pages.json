@@ -10,7 +10,12 @@
 	"apt-detail-kijiji-link": "Lien Kijiji",
 	"apt-detail-bedroom": "chambre(s)",
 
-	"edit-search-criteria": "Critères de recherche",
+	"search-result": "Resultat de recherche ",
+	"search-no-match-found": "Pas de correspondance trouvé",
+	"search-edit": "Editer les critères",
+
+	"edit-search-criteria": "Critères de recherche ",
+	"edit-search-validate": "Valider",
 
 	"favorite-title": "Favoris",
 
@@ -31,10 +36,6 @@
 	"layout-index-list": "Liste",
 
 	"posted-title": "Posté(s)",
-
-	"search-finding-matches": "Recherche de correspondances...",
-	"search-no-match-found": "Pas de correspondance trouvé",
-	"search-edit": "Editer",
 
 	"settings-title":	"Paramètres",
 	"settings-delete-account": "Supprimer le compte",

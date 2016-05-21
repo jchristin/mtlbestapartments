@@ -10,7 +10,12 @@
 	"apt-detail-kijiji-link": "Kijiji link",
 	"apt-detail-bedroom": "bedroom(s)",
 
-	"edit-search-criteria": "Search criteria",
+	"search-result": "Search result ",
+	"search-no-match-found": "No match found",
+	"search-edit": "Edit criteria",
+
+	"edit-search-criteria": "Search criteria ",
+	"edit-search-validate": "Validate",
 
 	"favorite-title": "Favorite",
 
@@ -31,10 +36,6 @@
 	"layout-index-list": "List",
 
 	"posted-title": "Posted",
-
-	"search-finding-matches": "Finding matches...",
-	"search-no-match-found": "No match found",
-	"search-edit": "Edit",
 
 	"settings-title":	"Settings",
 	"settings-delete-account": "Delete account",

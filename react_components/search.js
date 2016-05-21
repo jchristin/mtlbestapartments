@@ -35,6 +35,13 @@ module.exports = injectIntl(React.createClass({
 			}
 		}.bind(this));
 	},
+	createLoading: function() {
+		if(this.state.apartments === null) {
+			return React.DOM.i({
+				className: "fa fa-refresh fa-spin"
+			});
+		}
+	},
 	getInitialState: function() {
 		return {apartments: null};
 	},
@@ -50,22 +57,20 @@ module.exports = injectIntl(React.createClass({
 		var content,
 			formatMessage = this.props.intl.formatMessage;
 
-		if (this.state.apartments === null) {
-			content = React.DOM.div(null, formatMessage({
-					id: "search-finding-matches"
-				}));
-		} else if (this.state.apartments.length === 0) {
-			content = React.DOM.div(null, formatMessage({
-					id: "search-no-match-found"
-				}));
-		} else {
-			content = React.createElement(Layout, {apartments: this.state.apartments});
+		if (this.state.apartments !== null) {
+			if (this.state.apartments.length === 0) {
+				content = React.DOM.div(null, formatMessage({id: "search-no-match-found"}));
+			} else {
+				content = React.createElement(Layout, {apartments: this.state.apartments});
+			}
 		}
 
-		return React.DOM.div(null, React.createElement(Link, {
-			to: "/search/edit"
-		}, formatMessage({
-				id: "search-edit"
-			})), content);
+		return React.DOM.div(null, React.DOM.h1({
+			className: "m-t-1"
+		}, formatMessage({id: "search-result"}), this.createLoading()), React.createElement(Link, {
+			to: "/search/edit",
+			className: "btn btn-primary",
+			role: "button"
+		}, formatMessage({id: "search-edit"})), content);
 	}
 }));
