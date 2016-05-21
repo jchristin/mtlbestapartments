@@ -13,41 +13,27 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	getInitialState: function() {
-		return {
-			layoutType: null
-		};
+		return {layoutType: null};
 	},
 	componentWillMount: function() {
-		request
-			.get("/api/layout")
-			.end(function(err, res) {
-				if (err && err.status !== 404) {
-					console.log(err);
+		request.get("/api/layout").end(function(err, res) {
+			if (err && err.status !== 404) {
+				console.log(err);
+			} else {
+				if (res.body !== null) {
+					this.setState({layoutType: res.body});
 				} else {
-					if (res.body !== null) {
-						this.setState({
-							layoutType: res.body
-						});
-					} else {
-						this.setState({
-							layoutType: "card"
-						});
-					}
+					this.setState({layoutType: "card"});
 				}
-			}.bind(this));
+			}
+		}.bind(this));
 	},
 	storeLayoutType: function(layoutType) {
-		request
-			.post("/api/layout")
-			.send({
-				type: "layout",
-				layout: layoutType
-			})
-			.end(function(err) {
-				if (err) {
-					console.log(err);
-				}
-			}.bind(this));
+		request.post("/api/layout").send({type: "layout", layout: layoutType}).end(function(err) {
+			if (err) {
+				console.log(err);
+			}
+		}.bind(this));
 	},
 	handleChange: function(type) {
 		this.setState({layoutType: type});
@@ -58,14 +44,14 @@ module.exports = injectIntl(React.createClass({
 
 		return React.DOM.label({
 			key: layout.type,
-			className: "btn btn-secondary" + (checked ? " active" : "")
+			className: "btn btn-secondary" + (checked
+				? " active"
+				: "")
 		}, React.DOM.input({
 			type: "checkbox",
 			autoComplete: "off",
 			onChange: this.handleChange.bind(this, layout.type)
-		}), formatMessage({
-				id: layout.id
-			}));
+		}), formatMessage({id: layout.id}));
 	},
 	render: function() {
 		var content;
@@ -92,13 +78,13 @@ module.exports = injectIntl(React.createClass({
 				break;
 		}
 
-		return React.DOM.div({
-			className: "layout-btn-group"
+		return React.DOM.div(null, React.DOM.div({
+			className: "text-xs-right"
 		}, React.DOM.div({
 			className: "btn-group",
 			"data-toggle": "buttons"
 		}, _.map(Layouts, _.bind(function(layout) {
 			return this.createButton(layout, this.state.layoutType === layout.type);
-		}, this))), content);
+		}, this)))), content);
 	}
 }));
