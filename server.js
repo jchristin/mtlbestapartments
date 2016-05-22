@@ -12,7 +12,12 @@ var path = require("path"),
 	database = require("./database"),
 	auth = require("./auth"),
 	search = require("./search"),
-	apart = require("./apart");
+	apart = require("./apart"),
+	fs = require("fs"),
+	_ = require("lodash"),
+	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, "/public/index.tpl"), {
+		encoding: "utf8"
+	}));
 
 // Server setup.
 server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
@@ -127,7 +132,7 @@ server.get("/api/polygon", function(req, res) {
 });
 
 server.get("*", function(req, res) {
-	res.sendFile(__dirname + "/public/index.html");
+	res.send(indexTemplate({lang: "en"}));
 });
 
 module.exports = server;
