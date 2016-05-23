@@ -61,7 +61,7 @@ module.exports = injectIntl(React.createClass({
 			if (this.state.apartments.length === 0) {
 				content = React.DOM.div(null, formatMessage({id: "search-no-match-found"}));
 			} else {
-				content = React.createElement(Layout, {apartments: this.state.apartments});
+				content = React.createElement(Layout, {apartments: this.state.apartments, lang: this.props.params.lang});
 			}
 		}
 

@@ -20,7 +20,7 @@ module.exports = React.createClass({
 			var marker = new google.maps.Marker({position: position, map: this.map, icon: this.markerIcon});
 
 			marker.addListener('click', function() {
-				this.context.router.push("/a/" + apart._id);
+				this.context.router.push("/" + this.props.lang + "/a/" + apart._id);
 			}.bind(this));
 
 			return marker;

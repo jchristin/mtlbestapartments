@@ -20,7 +20,8 @@ module.exports = React.createClass({
 		}, _.map(this.props.apartments, function(apart) {
 			return React.createElement(GridItem, {
 				key: apart._id,
-				apart: apart
+				apart: apart,
+				lang: this.props.lang
 			});
 		})));
 	}

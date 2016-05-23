@@ -43,7 +43,7 @@ module.exports = injectIntl(React.createClass({
 		}
 	},
 	handleClick: function() {
-		this.context.router.push("/a/" + this.props.apart._id);
+		this.context.router.push("/" + this.props.lang + "/a/" + this.props.apart._id);
 	},
 	render: function() {
 		return React.DOM.div({
