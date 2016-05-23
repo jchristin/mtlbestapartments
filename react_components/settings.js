@@ -12,7 +12,7 @@ module.exports = injectIntl(React.createClass({
 			if (err) {
 				console.log(err);
 			} else {
-				window.location = "/";
+				window.location = "/" + this.props.params.lang + "/";
 			}
 		});
 	},

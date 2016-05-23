@@ -16,7 +16,7 @@ module.exports = injectIntl(React.createClass({
 		request.get("/api/search/result").end(function(err, res) {
 			if (err) {
 				if (err.status === 404) {
-					this.context.router.push("/search/edit");
+					this.context.router.push("/" + this.props.params.lang + "/search/edit");
 				} else {
 					console.log(err);
 				}
@@ -68,7 +68,7 @@ module.exports = injectIntl(React.createClass({
 		return React.DOM.div(null, React.DOM.h1({
 			className: "m-t-1"
 		}, formatMessage({id: "search-result"}), this.createLoading()), React.createElement(Link, {
-			to: "/search/edit",
+			to: "/" + this.props.params.lang + "/search/edit",
 			className: "btn btn-primary",
 			role: "button"
 		}, formatMessage({id: "search-edit"})), content);

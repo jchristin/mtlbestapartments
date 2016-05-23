@@ -80,7 +80,7 @@ module.exports = injectIntl(React.createClass({
 								id: "signin-new-to-fleub"
 							}),
 						React.createElement(Link, {
-							to: "/signup"
+							to: "/" + this.props.params.lang + "/signup"
 						}, formatMessage({
 								id: "signin-create-an-account"
 							})), "."

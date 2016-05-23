@@ -16,11 +16,11 @@ var Boot = React.createClass({
 		return function(nextState, replace) {
 			var isLogged = this.state.user !== null;
 			if (pathIfLogged && isLogged) {
-				replace(pathIfLogged);
+				replace(pathIfLogged.split("/").join("/" + nextState.params.lang + "/"));
 			}
 
 			if (pathIfNotLogged && !isLogged) {
-				replace(pathIfNotLogged);
+				replace(pathIfNotLogged.split("/").join("/" + nextState.params.lang + "/"));
 			}
 		}.bind(this);
 	},
@@ -59,7 +59,7 @@ var Boot = React.createClass({
 				history: browserHistory
 			},
 			React.createElement(Route, {
-					path: "/",
+					path: "/:lang",
 					component: require("./app")
 				},
 				React.createElement(IndexRoute, {

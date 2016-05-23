@@ -35,7 +35,7 @@ module.exports = injectIntl(React.createClass({
 						notification: this.createNotification(res.text)
 					});
 				} else {
-					window.location = "/";
+					window.location = "/" + this.props.params.lang + "/";
 				}
 			}.bind(this));
 

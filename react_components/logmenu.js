@@ -34,7 +34,7 @@ module.exports = injectIntl(React.createClass({
 		}, React.DOM.h6({
 			className: "dropdown-header"
 		}, this.context.user.name), React.createElement(Link, {
-			to: "/settings",
+			to: "/" + this.props.lang + "/settings",
 			className: "dropdown-item"
 		}, "Settings"), React.DOM.a({
 			href: "/api/signout",
@@ -51,7 +51,7 @@ module.exports = injectIntl(React.createClass({
 		}, React.DOM.li({
 			className: "nav-item"
 		}, React.createElement(Link, {
-			to: "/signin",
+			to: "/" + this.props.lang + "/signin",
 			className: "nav-link"
 		}, formatMessage({
 				id: "logmenu-signin"
