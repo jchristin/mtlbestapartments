@@ -7,7 +7,8 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		lang: React.PropTypes.string
 	},
 	getBedroomString: function() {
 		var formatMessage = this.props.intl.formatMessage;
@@ -43,7 +44,7 @@ module.exports = injectIntl(React.createClass({
 		}
 	},
 	handleClick: function() {
-		this.context.router.push("/" + this.props.lang + "/a/" + this.props.apart._id);
+		this.context.router.push("/" + this.context.lang + "/a/" + this.props.apart._id);
 	},
 	render: function() {
 		return React.DOM.div({

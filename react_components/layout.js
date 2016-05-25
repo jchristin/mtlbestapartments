@@ -14,10 +14,6 @@ var React = require("react"),
 module.exports = injectIntl(React.createClass({
 	displayName: 'Layout',
 	
-	propTypes: {
-		lang: React.PropTypes.string.isRequired // Needed to route list elements to the right localized URL 
-	},
-	
 	getInitialState: function() {
 		return {layoutType: null};
 	},
@@ -64,15 +60,15 @@ module.exports = injectIntl(React.createClass({
 
 		switch (this.state.layoutType) {
 			case "card":
-				content = React.createElement(LayoutCard, {apartments: this.props.apartments, lang: this.props.lang});
+				content = React.createElement(LayoutCard, {apartments: this.props.apartments});
 				break;
 
 			case "map":
-				content = React.createElement(LayoutMap, {apartments: this.props.apartments, lang: this.props.lang});
+				content = React.createElement(LayoutMap, {apartments: this.props.apartments});
 				break;
 
 			case "list":
-				content = React.createElement(LayoutList, {apartments: this.props.apartments, lang: this.props.lang});
+				content = React.createElement(LayoutList, {apartments: this.props.apartments});
 				break;
 
 			default:

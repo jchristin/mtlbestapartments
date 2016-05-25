@@ -14,6 +14,17 @@ module.exports = React.createClass({
 		global.jQuery = require("jquery");
 		require("../node_modules/bootstrap/dist/js/umd/dropdown");
 	},
+    
+	childContextTypes: {
+		lang: React.PropTypes.string
+	},
+	
+    getChildContext: function() {
+		return {
+			lang: this.props.params.lang
+		};
+	},
+    
 	getLocalizationProps: function() {
 		switch (this.props.params.lang) {
 			case "en":

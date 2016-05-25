@@ -7,6 +7,11 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
+	
+	contextTypes: {
+		lang: React.PropTypes.string
+	},
+	
 	getInitialState: function() {
 		return {
 			notification: null
@@ -35,7 +40,7 @@ module.exports = injectIntl(React.createClass({
 						notification: this.createNotification(res.text)
 					});
 				} else {
-					window.location = "/" + this.props.params.lang + "/";
+					window.location = "/" + this.context.lang + "/";
 				}
 			}.bind(this));
 

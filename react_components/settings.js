@@ -7,12 +7,17 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
+	
+	contextTypes: {
+		lang: React.PropTypes.string
+	},
+	
 	handleClick: function() {
 		request.del("/api/user").end(function(err) {
 			if (err) {
 				console.log(err);
 			} else {
-				window.location = "/" + this.props.params.lang + "/";
+				window.location = "/" + this.context.lang + "/";
 			}
 		});
 	},

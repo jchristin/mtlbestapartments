@@ -83,8 +83,7 @@ module.exports = injectIntl(React.createClass({
 		}, this.generateHeader(), _.map(this.state.apartments, function (apart, key) {
 			return React.createElement(ListItem, {
 				key: key,
-				apart: apart,
-				lang: this.props.lang
+				apart: apart
 			});
 		})));
 	}

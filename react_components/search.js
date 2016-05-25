@@ -10,13 +10,14 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		lang: React.PropTypes.string
 	},
 	getResult: function() {
 		request.get("/api/search/result").end(function(err, res) {
 			if (err) {
 				if (err.status === 404) {
-					this.context.router.push("/" + this.props.params.lang + "/search/edit");
+					this.context.router.push("/" + this.context.lang + "/search/edit");
 				} else {
 					console.log(err);
 				}
@@ -61,14 +62,14 @@ module.exports = injectIntl(React.createClass({
 			if (this.state.apartments.length === 0) {
 				content = React.DOM.div(null, formatMessage({id: "search-no-match-found"}));
 			} else {
-				content = React.createElement(Layout, {apartments: this.state.apartments, lang: this.props.params.lang});
+				content = React.createElement(Layout, {apartments: this.state.apartments});
 			}
 		}
 
 		return React.DOM.div(null, React.DOM.h1({
 			className: "m-t-1"
 		}, formatMessage({id: "search-result"}), this.createLoading()), React.createElement(Link, {
-			to: "/" + this.props.params.lang + "/search/edit",
+			to: "/" + this.context.lang + "/search/edit",
 			className: "btn btn-primary",
 			role: "button"
 		}, formatMessage({id: "search-edit"})), content);

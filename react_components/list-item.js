@@ -5,7 +5,8 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		lang: React.PropTypes.string
 	},
 	getBedroomString: function() {
 		switch (this.props.apart.bedroom) {
@@ -29,7 +30,7 @@ module.exports = React.createClass({
 		}
 	},
 	handleClick: function() {
-		this.context.router.push("/" + this.props.lang + "/a/" + this.props.apart._id);
+		this.context.router.push("/" + this.context.lang + "/a/" + this.props.apart._id);
 	},
 	render: function() {
 		return React.DOM.div({
