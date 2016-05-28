@@ -1,18 +1,17 @@
-/* global module:true, window:true */
+/* global module:true, window:true, ga:true */
 
 "use strict";
 
 var React = require("react"),
+	Link = require("react-router").Link,
 	request = require("superagent"),
 	queryString = require('query-string'),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
-
 	contextTypes: {
 		lang: React.PropTypes.string
 	},
-
 	getInitialState: function() {
 		return {
 			notification: null
@@ -41,6 +40,8 @@ module.exports = injectIntl(React.createClass({
 						notification: this.createNotification(res.text)
 					});
 				} else {
+					ga("send", "pageview", "/signup-success");
+
 					var parsed = queryString.parse(this.props.location.search);
 					if(parsed.next) {
 						window.location = parsed.next;
@@ -133,6 +134,19 @@ module.exports = injectIntl(React.createClass({
 									id: "signup-signup"
 								}))
 						)
+					)
+				),
+				React.DOM.div({
+						className: "card"
+					},
+					React.DOM.div({
+							className: "card-block"
+						},
+						React.createElement(Link, {
+							to: "/" + this.context.lang + "/signin" + this.props.location.search
+						}, formatMessage({
+								id: "signup-already-have-account"
+							}))
 					)
 				)
 			)

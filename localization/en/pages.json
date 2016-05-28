@@ -69,6 +69,7 @@
 	"signup-password": "Password",
 	"signup-name-password": "password",
 	"signup-signup": "Sign up",
+	"signup-already-have-account": "I already have an account.",
 
 	"logmenu-account": "Account",
 	"logmenu-signin": "Sign in",

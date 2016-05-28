@@ -78,7 +78,8 @@ module.exports.signUp = function(req, res) {
 				database.users.insertOne({
 					name: req.body.name,
 					email: req.body.username,
-					password: shasum.digest("hex")
+					password: shasum.digest("hex"),
+					date: new Date()
 				}, function(err) {
 					if (err) {
 						console.log(err);

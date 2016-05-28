@@ -9,7 +9,11 @@ var _ = require("lodash"),
 	turfPolygon = require("turf-polygon"),
 	database = require("./database"),
 	match = require("./match"),
-	boroughs = require("./boroughs");
+	boroughs = require("./boroughs"),
+	googleApiKeys = [
+		process.env.GOOGLE_API_KEY,
+		process.env.GOOGLE_API_KEY_2,
+	];
 
 // Construct a turf polygon for each borough.
 _.forEach(boroughs, function(borough) {
@@ -45,7 +49,7 @@ var checkAddress = co.wrap(function* (address) {
 	var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
 		address +
 		"&components=administrative_area:Québec&key=" +
-		process.env.GOOGLE_API_KEY;
+		googleApiKeys[0];
 
 	var response = yield request.get(url);
 
@@ -56,6 +60,9 @@ var checkAddress = co.wrap(function* (address) {
 
 		case "ZERO_RESULTS":
 			return null;
+
+		case "OVER_QUERY_LIMIT":
+			googleApiKeys.push(googleApiKeys.shift());
 
 		default:
 			throw new Error(response.body.status);
