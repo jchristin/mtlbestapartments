@@ -7,8 +7,6 @@ var _ = require("lodash"),
 	turfInside = require("turf-inside"),
 	turfPoint = require("turf-point"),
 	turfPolygon = require("turf-polygon"),
-	turfFeaturecollection = require("turf-featurecollection"),
-	turfConvex = require("turf-convex"),
 	database = require("./database"),
 	match = require("./match"),
 	boroughs = require("./boroughs");
@@ -20,39 +18,27 @@ _.forEach(boroughs, function(borough) {
 	});
 });
 
-// Construct a turf polygon for Montreal.
-var points = [];
-_.forEach(boroughs, function(borough) {
-	_.forEach(borough.coord, function(coordinate) {
-		points.push(turfPoint(coordinate));
-	});
-});
-
-var turfPolygonMontreal = turfConvex(turfFeaturecollection(points));
-
 // Return false is apart is not valid.
 var filterApart = function(apart) {
-	if(!apart.coord) {
-		return false;
-	}
-
-	if (!turfInside(turfPoint(apart.coord), turfPolygonMontreal)) {
+	if(!apart.borough) {
 		return false;
 	}
 
 	return true;
 };
 
-var getBoroughName = function(coord) {
+var getBorough = function(coord) {
 	if(!coord) {
-		return "Montreal";
+		return null;
 	}
 
-	var borough = _.find(boroughs, function(b) {
-		return turfInside(turfPoint(coord), b.turfPolygon);
+	_.forEach(boroughs, function(value, key) {
+		if(turfInside(turfPoint(coord), value.turfPolygon)) {
+			return key;
+		}
 	});
 
-	return borough !== undefined ? borough.turfPolygon.properties.name : "Montreal";
+	return null;
 };
 
 var checkAddress = co.wrap(function* (address) {
@@ -91,12 +77,14 @@ var normalizeApart = co.wrap(function* (apart) {
 	apart._id = new ObjectID(apart._id);
 	apart.date = apart.date ? new Date(apart.date) : new Date();
 
+	apart.coord = null;
 	var result = yield normalizeAddress(apart.address);
 	if(result) {
 		apart.formattedAddress = result.formatted_address;
 		apart.coord = [result.geometry.location.lng, result.geometry.location.lat];
-		apart.borough = getBoroughName(apart.coord);
 	}
+
+	apart.borough = getBorough(apart.coord);
 });
 
 var updateApart = function(apart) {

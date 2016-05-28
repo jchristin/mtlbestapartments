@@ -1,7 +1,8 @@
 "use strict";
 
 var React = require("react"),
-	priceFormater = require("./price-formater");
+	priceFormater = require("./price-formater"),
+	boroughs = require("../boroughs");
 
 module.exports = React.createClass({
 	contextTypes: {
@@ -32,6 +33,9 @@ module.exports = React.createClass({
 		this.context.router.push("/a/" + this.props.apart._id);
 	},
 	render: function() {
+		var borough = boroughs[this.props.apart.borough];
+		var boroughName = borough ? borough.name : "Montreal";
+
 		return React.DOM.div({
 			className: "list-group-item",
 			key: this.props.apart._id,
@@ -47,6 +51,6 @@ module.exports = React.createClass({
 			className: "list-item-bedroom"
 		}, this.getBedroomString()), React.DOM.div({
 			className: "list-item-borough"
-		}, this.props.apart.borough));
+		}, boroughName));
 	}
 });
