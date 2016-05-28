@@ -56,6 +56,9 @@ module.exports = injectIntl(React.createClass({
       id: this.props.id
     },
       React.DOM.hr(null),
+      React.DOM.div(null, formatMessage({
+				id: "postapt-price-title"
+			})),
       React.DOM.i(null, formatMessage({
 				id: "postapt-price-caption"
 			})),
