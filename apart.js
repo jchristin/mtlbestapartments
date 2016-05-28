@@ -36,13 +36,15 @@ var getBorough = function(coord) {
 		return null;
 	}
 
+	var borough = null;
 	_.forEach(boroughs, function(value, key) {
 		if(turfInside(turfPoint(coord), value.turfPolygon)) {
-			return key;
+			borough = key;
+			return false;
 		}
 	});
 
-	return null;
+	return borough;
 };
 
 var checkAddress = co.wrap(function* (address) {
