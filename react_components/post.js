@@ -6,9 +6,10 @@ var React = require("react"),
 	PostMap = require("./post-map"),
 	PostBed = require("./post-bed"),
 	PostPrice = require("./post-price"),
+	PostPics = require("./post-pics"),
 	injectIntl = require("react-intl").injectIntl;
 
-var stateId = ["#map", "bed", "#price"];
+var stateId = ["#map", "bed", "#price", "#pics"];
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
@@ -52,6 +53,14 @@ module.exports = injectIntl(React.createClass({
 					break;
 				case 2:
 					content.push(React.createElement(PostPrice, {
+						location: this.props.location,
+						callback: this.callback,
+						key: i + 1,
+						id: stateId[i]
+					}));
+					break;
+				case 3:
+					content.push(React.createElement(PostPics, {
 						location: this.props.location,
 						callback: this.callback,
 						key: i + 1,
