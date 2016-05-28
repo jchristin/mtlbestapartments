@@ -7,8 +7,6 @@ var _ = require("lodash"),
 	turfInside = require("turf-inside"),
 	turfPoint = require("turf-point"),
 	turfPolygon = require("turf-polygon"),
-	turfFeaturecollection = require("turf-featurecollection"),
-	turfConvex = require("turf-convex"),
 	database = require("./database"),
 	match = require("./match"),
 	boroughs = require("./boroughs");
@@ -20,23 +18,9 @@ _.forEach(boroughs, function(borough) {
 	});
 });
 
-// Construct a turf polygon for Montreal.
-var points = [];
-_.forEach(boroughs, function(borough) {
-	_.forEach(borough.coord, function(coordinate) {
-		points.push(turfPoint(coordinate));
-	});
-});
-
-var turfPolygonMontreal = turfConvex(turfFeaturecollection(points));
-
 // Return false is apart is not valid.
 var filterApart = function(apart) {
-	if(!apart.coord) {
-		return false;
-	}
-
-	if (!turfInside(turfPoint(apart.coord), turfPolygonMontreal)) {
+	if(!apart.borough) {
 		return false;
 	}
 
