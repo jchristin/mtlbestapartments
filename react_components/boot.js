@@ -63,16 +63,12 @@ var Boot = React.createClass({
 					component: require("./app")
 				},
 				React.createElement(IndexRoute, {
-					component: require("./latest")
+					component: require("./search"),
+					onEnter: this.redirect(null, "/signup")
 				}),
 				React.createElement(Route, {
 					path: "a/:_id",
 					component: require("./apt-detail")
-				}),
-				React.createElement(Route, {
-					path: "favorite",
-					component: require("./favorite"),
-					onEnter: this.redirect(null, "/signin?next=/favorite")
 				}),
 				React.createElement(Route, {
 					path: "posted",
