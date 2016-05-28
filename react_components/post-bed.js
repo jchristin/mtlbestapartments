@@ -68,6 +68,7 @@ module.exports = injectIntl(React.createClass({
 		return React.DOM.div({
       id: "bedroom"
     },
+      React.DOM.hr(null),
       React.DOM.div(null, formatMessage({
 				id: "postapt-bed-title"
 			})), React.DOM.div({

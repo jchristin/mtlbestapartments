@@ -112,6 +112,7 @@ module.exports = injectIntl(React.createClass({
 		return React.DOM.div({
       id: "map"
     },
+      React.DOM.hr(null),
       React.DOM.div(null, formatMessage({
 				id: "postapt-map-title"
 			})),
