@@ -3,6 +3,7 @@
 "use strict";
 
 var React = require("react"),
+	Link = require("react-router").Link,
 	request = require("superagent"),
 	queryString = require('query-string'),
 	injectIntl = require("react-intl").injectIntl;
@@ -133,6 +134,19 @@ module.exports = injectIntl(React.createClass({
 									id: "signup-signup"
 								}))
 						)
+					)
+				),
+				React.DOM.div({
+						className: "card"
+					},
+					React.DOM.div({
+							className: "card-block"
+						},
+						React.createElement(Link, {
+							to: "/" + this.context.lang + "/signin" + this.props.location.search
+						}, formatMessage({
+								id: "signup-already-have-account"
+							}))
 					)
 				)
 			)
