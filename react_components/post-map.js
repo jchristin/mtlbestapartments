@@ -110,7 +110,7 @@ module.exports = injectIntl(React.createClass({
     var style = this.state.buttondisable ? " btn-default" : " btn-success";
 
 		return React.DOM.div({
-      id: "map"
+      id: this.props.id
     },
       React.DOM.hr(null),
       React.DOM.div(null, formatMessage({

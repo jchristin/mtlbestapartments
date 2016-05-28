@@ -52,7 +52,9 @@ module.exports = injectIntl(React.createClass({
     var disabled = this.state.buttondisable ? " disabled" : "";
     var style = this.state.buttondisable ? " btn-default" : " btn-success";
 
-    return React.DOM.div(null,
+    return React.DOM.div({
+      id: this.props.id
+    },
       React.DOM.hr(null),
       React.DOM.i(null, formatMessage({
 				id: "postapt-price-caption"
