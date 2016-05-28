@@ -6,7 +6,8 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		lang: React.PropTypes.string
 	},
 	getBedroomString: function() {
 		switch (this.props.apart.bedroom) {
@@ -30,7 +31,7 @@ module.exports = React.createClass({
 		}
 	},
 	handleClick: function() {
-		this.context.router.push("/a/" + this.props.apart._id);
+		this.context.router.push("/" + this.context.lang + "/a/" + this.props.apart._id);
 	},
 	render: function() {
 		var borough = boroughs[this.props.apart.borough];

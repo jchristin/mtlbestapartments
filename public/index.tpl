@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang=<%= lang %>>
 
 <head>
 	<meta charset="utf-8">

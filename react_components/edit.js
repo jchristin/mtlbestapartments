@@ -41,7 +41,8 @@ module.exports = injectIntl(React.createClass({
 		return allCriteria;
 	},
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		lang: React.PropTypes.string
 	},
 	getInitialState: function() {
 		return {criteria: null};
@@ -66,7 +67,7 @@ module.exports = injectIntl(React.createClass({
 				console.log(err);
 			}
 
-			this.props.history.push('/search');
+			this.props.history.push("/" + this.context.lang + "/search");
 		}.bind(this));
 	},
 	render: function() {

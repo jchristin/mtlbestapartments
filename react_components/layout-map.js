@@ -8,7 +8,8 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		lang: React.PropTypes.string
 	},
 	placeMarker: function() {
 		this.marker = [];
@@ -20,7 +21,7 @@ module.exports = React.createClass({
 			var marker = new google.maps.Marker({position: position, map: this.map, icon: this.markerIcon});
 
 			marker.addListener('click', function() {
-				this.context.router.push("/a/" + apart._id);
+				this.context.router.push("/" + this.context.lang + "/a/" + apart._id);
 			}.bind(this));
 
 			return marker;

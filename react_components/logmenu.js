@@ -8,7 +8,8 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
-		user: React.PropTypes.object
+		user: React.PropTypes.object,
+		lang: React.PropTypes.string
 	},
 	createLoggedMenu: function() {
 		var formatMessage = this.props.intl.formatMessage;
@@ -34,7 +35,7 @@ module.exports = injectIntl(React.createClass({
 		}, React.DOM.h6({
 			className: "dropdown-header"
 		}, this.context.user.name), React.createElement(Link, {
-			to: "/settings",
+			to: "/" + this.context.lang + "/settings",
 			className: "dropdown-item"
 		}, "Settings"), React.DOM.a({
 			href: "/api/signout",
@@ -51,7 +52,7 @@ module.exports = injectIntl(React.createClass({
 		}, React.DOM.li({
 			className: "nav-item"
 		}, React.createElement(Link, {
-			to: "/signin",
+			to: "/" + this.context.lang + "/signin",
 			className: "nav-link"
 		}, formatMessage({
 				id: "logmenu-signin"

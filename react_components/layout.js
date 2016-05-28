@@ -12,6 +12,8 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
+	displayName: 'Layout',
+	
 	getInitialState: function() {
 		return {layoutType: null};
 	},

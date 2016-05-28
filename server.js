@@ -12,7 +12,13 @@ var path = require("path"),
 	database = require("./database"),
 	auth = require("./auth"),
 	search = require("./search"),
-	apart = require("./apart");
+	apart = require("./apart"),
+	fs = require("fs"),
+	_ = require("lodash"),
+	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, "/public/index.tpl"), {
+		encoding: "utf8"
+	})),
+	url = require("url");
 
 // Server setup.
 server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
@@ -45,6 +51,25 @@ server.use(auth.session());
 server.use(express.static(path.join(__dirname, "public"), {
 	maxAge: cacheMaxAge
 }));
+
+server.use(function(req, res, next) {
+	var urlObj = url.parse(req.url);
+	var regexp = /\/((?:en)|(?:fr))\//;
+	var regexpAPI = /\/((?:api))\//;
+
+	if (urlObj.pathname.match(regexpAPI)) {
+		// If the request comes to the /api, don't redirect it
+		next();
+	}
+	else if (urlObj.pathname.match(regexp)) {
+		// If we have the locale param in the URL, pass the request along
+		next();
+	} else {
+		// If not, redirect the request to /en
+		urlObj.pathname = "/en" + urlObj.pathname;
+		res.redirect(301, url.format(urlObj));
+	}
+});
 
 server.post("/api/signup", auth.signUp);
 
@@ -127,7 +152,7 @@ server.get("/api/polygon", function(req, res) {
 });
 
 server.get("*", function(req, res) {
-	res.sendFile(__dirname + "/public/index.html");
+	res.send(indexTemplate({lang: req.params.lang}));
 });
 
 module.exports = server;
