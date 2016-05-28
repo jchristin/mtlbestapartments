@@ -14,17 +14,17 @@ module.exports = React.createClass({
 		global.jQuery = require("jquery");
 		require("../node_modules/bootstrap/dist/js/umd/dropdown");
 	},
-    
+
 	childContextTypes: {
 		lang: React.PropTypes.string
 	},
-	
+
     getChildContext: function() {
 		return {
 			lang: this.props.params.lang
 		};
 	},
-    
+
 	getLocalizationProps: function() {
 		switch (this.props.params.lang) {
 			case "en":
@@ -46,14 +46,7 @@ module.exports = React.createClass({
 		}, React.createElement(Link, {
 			to: "/" + this.props.params.lang + "/",
 			className: "navbar-brand"
-		}, "Fleub"), React.DOM.ul({
-			className: "nav navbar-nav"
-		}, React.DOM.li({
-			className: "nav-item"
-		}, React.createElement(Link, {
-			to: "/" + this.props.params.lang + "/search",
-			className: "nav-link"
-		}, "Search"))), React.createElement(LogMenu, { lang: this.props.params.lang })), React.DOM.div({
+		}, "Fleub"), React.createElement(LogMenu, { lang: this.props.params.lang })), React.DOM.div({
 			className: "container"
 		}, this.props.children)));
 	}
