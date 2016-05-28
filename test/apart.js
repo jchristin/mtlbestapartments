@@ -6,23 +6,27 @@ var Apart = require("../apart");
 
 describe("Apart", function() {
 	this.timeout(0);
-	it("should normalize address", function(done) {
-		var addresses = [{
-				raw: "8303 Rue Louis-Quatorze, St-Léonard H1P3G2 QC",
-				formatted: "8303 Rue Louis Xiv, Saint-Léonard, QC H1R 3G2, Canada"
+	it("should normalize apartement", function(done) {
+		var apartements = [{
+				address: "8303 Rue Louis-Quatorze, St-Léonard H1P3G2 QC",
+				formattedAddress: "8303 Rue Louis Xiv, Saint-Léonard, QC H1R 3G2, Canada",
+				borough: "saint-leonard"
 			}, {
-				raw: "25xx Av. Mercier, Anjou H1K 3J4 QC",
-				formatted: "Avenue Mercier, Anjou, QC H1K, Canada"
+				address: "25xx Av. Mercier, Anjou H1K 3J4 QC",
+				formattedAddress: "Avenue Mercier, Anjou, QC H1K, Canada",
+				borough: "mercier-hochelaga-maisonneuve"
 			}, {
-				raw: "Rue Saint-Urbain & Avenue du Mont-Royal O, Montréal, QC H2T, Canada",
-				formatted: "Rue Saint-Urbain & Avenue du Mont-Royal O, Montréal, QC H2T, Canada"
+				address: "Rue Saint-Urbain & Avenue du Mont-Royal O, Montréal, QC H2T, Canada",
+				formattedAddress: "Rue Saint-Urbain & Avenue du Mont-Royal O, Montréal, QC H2T, Canada",
+				borough: "le-plateau-mont-royal"
 			}
 		];
 
-		var promises = addresses.map(function(address) {
-			var apart = {address: address.raw};
+		var promises = apartements.map(function(apartement) {
+			var apart = {address: apartement.address};
 			return Apart.normalizeApart(apart).then(function() {
-				apart.formattedAddress.should.be.equal(address.formatted);
+				apart.formattedAddress.should.be.equal(apartement.formattedAddress);
+				apart.borough.should.be.equal(apartement.borough);
 			});
 		});
 
