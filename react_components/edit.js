@@ -67,7 +67,7 @@ module.exports = injectIntl(React.createClass({
 				console.log(err);
 			}
 
-			this.props.history.push("/" + this.context.lang + "/search");
+			this.context.router.push("/" + this.context.lang + "/search");
 		}.bind(this));
 	},
 	render: function() {
