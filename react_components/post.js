@@ -5,7 +5,10 @@
 var React = require("react"),
 	PostMap = require("./post-map"),
 	PostBed = require("./post-bed"),
+	PostPrice = require("./post-price"),
 	injectIntl = require("react-intl").injectIntl;
+
+var stateId = ["#map", "bed", "#price"];
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
@@ -15,9 +18,15 @@ module.exports = injectIntl(React.createClass({
 		return {uiIndex: 0};
 	},
 	callback: function () {
-		this.setState({
-			uiIndex: this.state.uiIndex + 1
-		});
+
+		if ((this.state.uiIndex + 1) < stateId.length) {
+			this.setState({
+				uiIndex: this.state.uiIndex + 1
+			});
+		} else {
+			console.log("last state reached");
+		}
+
 	},
 	render: function () {
 		var formatMessage = this.props.intl.formatMessage;
@@ -30,7 +39,7 @@ module.exports = injectIntl(React.createClass({
 						location: this.props.location,
 						callback: this.callback,
 						key: i + 1,
-						id: "#map"
+						id: stateId[i]
 					}));
 					break;
 				case 1:
@@ -38,13 +47,22 @@ module.exports = injectIntl(React.createClass({
 						location: this.props.location,
 						callback: this.callback,
 						key: i + 1,
-						id: "#bed"
+						id: stateId[i]
+					}));
+					break;
+				case 2:
+					content.push(React.createElement(PostPrice, {
+						location: this.props.location,
+						callback: this.callback,
+						key: i + 1,
+						id: stateId[i]
 					}));
 					break;
 				default:
 					break;
 			}
 		}
+
 		return React.DOM.div({className: "post-apt"},
 			React.DOM.strong(null, formatMessage({id: "postapt-title"})),
 			React.DOM.div(null, content),
