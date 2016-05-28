@@ -37,6 +37,14 @@
 
 	"posted-title": "Posted",
 
+	"postapt-title": "Post a new appartement",
+	"postapt-button": "Validate",
+
+	"postapt-map-title": "Enter your address",
+	"postapt-map-input-caption": "Enter your address",
+
+	"postapt-bed-title": "Number of bedrooms",
+
 	"settings-title":	"Settings",
 	"settings-delete-account": "Delete account",
 

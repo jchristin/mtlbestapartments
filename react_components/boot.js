@@ -80,6 +80,11 @@ var Boot = React.createClass({
 					onEnter: this.redirect(null, "/signin?next=/posted")
 				}),
 				React.createElement(Route, {
+					path: "post",
+					component: require("./post"),
+					onEnter: this.redirect(null, "/signin?next=/post")
+				}),
+				React.createElement(Route, {
 					path: "search",
 					component: require("./search"),
 					onEnter: this.redirect(null, "/signin?next=/search")

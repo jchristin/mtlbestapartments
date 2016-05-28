@@ -8,7 +8,7 @@
 
 	<link rel="stylesheet" href="/bundle.css">
 
-	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&v=3.exp"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&v=3.exp&libraries=places"></script>
 
 	<script>
 		(function(i, s, o, g, r, a, m) {
