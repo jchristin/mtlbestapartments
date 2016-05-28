@@ -7,11 +7,9 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
-	
 	contextTypes: {
 		lang: React.PropTypes.string
 	},
-	
 	render: function() {
 		var formatMessage = this.props.intl.formatMessage;
 
@@ -85,7 +83,7 @@ module.exports = injectIntl(React.createClass({
 								id: "signin-new-to-fleub"
 							}),
 						React.createElement(Link, {
-							to: "/" + this.context.lang + "/signup"
+							to: "/" + this.context.lang + "/signup" + this.props.location.search
 						}, formatMessage({
 								id: "signin-create-an-account"
 							})), "."

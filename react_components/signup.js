@@ -4,14 +4,15 @@
 
 var React = require("react"),
 	request = require("superagent"),
+	queryString = require('query-string'),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
-	
+
 	contextTypes: {
 		lang: React.PropTypes.string
 	},
-	
+
 	getInitialState: function() {
 		return {
 			notification: null
@@ -40,7 +41,12 @@ module.exports = injectIntl(React.createClass({
 						notification: this.createNotification(res.text)
 					});
 				} else {
-					window.location = "/" + this.context.lang + "/";
+					var parsed = queryString.parse(this.props.location.search);
+					if(parsed.next) {
+						window.location = parsed.next;
+					} else {
+						window.location = "/" + this.context.lang + "/";
+					}
 				}
 			}.bind(this));
 
