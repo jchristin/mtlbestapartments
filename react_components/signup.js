@@ -40,7 +40,7 @@ module.exports = injectIntl(React.createClass({
 						notification: this.createNotification(res.text)
 					});
 				} else {
-					ga("send", "pageview", "/information-request-form-submitted");
+					ga("send", "pageview", "/signup-success");
 
 					var parsed = queryString.parse(this.props.location.search);
 					if(parsed.next) {
