@@ -7,7 +7,7 @@
 	"card": {
 		"type": "card",
 		"icon": "fa-square-o",
-		"id": "layout-index-map"
+		"id": "layout-index-card"
 	},
 	"list": {
 		"type": "list",
