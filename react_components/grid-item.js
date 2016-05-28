@@ -3,6 +3,7 @@
 var React = require("react"),
 	moment = require("moment"),
 	priceFormater = require("./price-formater"),
+	boroughs = require("../boroughs"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
@@ -46,6 +47,9 @@ module.exports = injectIntl(React.createClass({
 		this.context.router.push("/a/" + this.props.apart._id);
 	},
 	render: function() {
+		var borough = boroughs[this.props.apart.borough];
+		var boroughName = borough ? borough.name : "Montreal";
+
 		return React.DOM.div({
 			onClick: this.handleClick,
 			className: "grid-item card"
@@ -54,7 +58,7 @@ module.exports = injectIntl(React.createClass({
 			src: this.props.apart.images[0]
 		}), React.DOM.div({
 			className: "card-block"
-		}, React.createElement(priceFormater, {price: this.props.apart.price}), React.DOM.div(null, this.getBedroomString()), React.DOM.div(null, this.props.apart.borough), React.DOM.div({
+		}, React.createElement(priceFormater, {price: this.props.apart.price}), React.DOM.div(null, this.getBedroomString()), React.DOM.div(null, boroughName), React.DOM.div({
 			className: "date"
 		}, React.DOM.small({
 			className: "text-muted"

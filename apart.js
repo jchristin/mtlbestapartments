@@ -27,16 +27,18 @@ var filterApart = function(apart) {
 	return true;
 };
 
-var getBoroughName = function(coord) {
+var getBorough = function(coord) {
 	if(!coord) {
-		return "Montreal";
+		return null;
 	}
 
-	var borough = _.find(boroughs, function(b) {
-		return turfInside(turfPoint(coord), b.turfPolygon);
+	_.forEach(boroughs, function(value, key) {
+		if(turfInside(turfPoint(coord), value.turfPolygon)) {
+			return key;
+		}
 	});
 
-	return borough !== undefined ? borough.turfPolygon.properties.name : "Montreal";
+	return null;
 };
 
 var checkAddress = co.wrap(function* (address) {
@@ -75,12 +77,14 @@ var normalizeApart = co.wrap(function* (apart) {
 	apart._id = new ObjectID(apart._id);
 	apart.date = apart.date ? new Date(apart.date) : new Date();
 
+	apart.coord = null;
 	var result = yield normalizeAddress(apart.address);
 	if(result) {
 		apart.formattedAddress = result.formatted_address;
 		apart.coord = [result.geometry.location.lng, result.geometry.location.lat];
-		apart.borough = getBoroughName(apart.coord);
 	}
+
+	apart.borough = getBorough(apart.coord);
 });
 
 var updateApart = function(apart) {
