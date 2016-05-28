@@ -1,4 +1,4 @@
-/* global module:true, window:true */
+/* global module:true, window:true, ga:true */
 
 "use strict";
 
@@ -9,11 +9,9 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
-
 	contextTypes: {
 		lang: React.PropTypes.string
 	},
-
 	getInitialState: function() {
 		return {
 			notification: null
@@ -42,6 +40,8 @@ module.exports = injectIntl(React.createClass({
 						notification: this.createNotification(res.text)
 					});
 				} else {
+					ga("send", "pageview", "/information-request-form-submitted");
+
 					var parsed = queryString.parse(this.props.location.search);
 					if(parsed.next) {
 						window.location = parsed.next;
