@@ -11,8 +11,10 @@ var _ = require("lodash"),
 	match = require("./match"),
 	boroughs = require("./boroughs"),
 	googleApiKeys = [
-		process.env.GOOGLE_API_KEY,
+		process.env.GOOGLE_API_KEY_1,
 		process.env.GOOGLE_API_KEY_2,
+		process.env.GOOGLE_API_KEY_3,
+		process.env.GOOGLE_API_KEY_4,
 	];
 
 // Construct a turf polygon for each borough.
