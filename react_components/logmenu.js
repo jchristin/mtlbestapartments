@@ -4,9 +4,13 @@
 
 var React = require("react"),
 	Link = require("react-router").Link,
-	injectIntl = require("react-intl").injectIntl;
+	injectIntl = require("react-intl").injectIntl,
+	LanguageChooser = require("./language-chooser");
 
 module.exports = injectIntl(React.createClass({
+	
+	displayName: "Logmenu",
+	
 	contextTypes: {
 		user: React.PropTypes.object,
 		lang: React.PropTypes.string
@@ -16,7 +20,8 @@ module.exports = injectIntl(React.createClass({
 
 		return React.DOM.ul({
 			className: "nav navbar-nav pull-xs-right"
-		}, React.DOM.li({
+		}, React.createElement(LanguageChooser),
+		React.DOM.li({
 			className: "nav-item dropdown"
 		}, React.DOM.a({
 			id: "account",
@@ -48,15 +53,19 @@ module.exports = injectIntl(React.createClass({
 		var formatMessage = this.props.intl.formatMessage;
 
 		return React.DOM.ul({
-			className: "nav navbar-nav pull-xs-right"
-		}, React.DOM.li({
-			className: "nav-item"
-		}, React.createElement(Link, {
-			to: "/" + this.context.lang + "/signin",
-			className: "nav-link"
-		}, formatMessage({
-				id: "logmenu-signin"
-			}))));
+				className: "nav navbar-nav pull-xs-right"
+			}, 
+			React.createElement(LanguageChooser),
+			React.DOM.li({
+					className: "nav-item"
+				}, React.createElement(Link, {
+					to: "/" + this.context.lang + "/signin",
+					className: "nav-link"
+				}, formatMessage({
+					id: "logmenu-signin"
+				}))
+			)
+		);
 	},
 	render: function() {
 		return this.context.user ? this.createLoggedMenu() : this.createNotLoggedMenu();
