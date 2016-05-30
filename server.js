@@ -36,7 +36,7 @@ server.use(bodyParser.urlencoded({
 server.use(cookieParser());
 
 server.use(session({
-	secret: "fleuby",
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: false,
 	store: new MongoStore({
