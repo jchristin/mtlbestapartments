@@ -11,6 +11,11 @@ var React = require("react"),
 	request = require("superagent"),
 	Loading = require("./loading");
 
+// Intl polyfill (mainly for Safari)
+require('intl');
+require('intl/locale-data/jsonp/en.js');
+require('intl/locale-data/jsonp/fr.js');
+
 var Boot = React.createClass({
 	redirect: function(pathIfLogged, pathIfNotLogged) {
 		return function(nextState, replace) {
