@@ -2,6 +2,11 @@
 
 var co = require("co");
 
+// Unhandled exception handler.
+process.on("uncaughtException", function(err) {
+	console.log(err);
+});
+
 co(function*() {
 	// Wait for database to connect.
 	yield require("./database").connect();

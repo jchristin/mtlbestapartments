@@ -155,4 +155,10 @@ server.get("*", function(req, res) {
 	res.send(indexTemplate({lang: req.params.lang}));
 });
 
+// Unhandled exception handler.
+server.use(function(err, req, res, next) {
+	console.log(err);
+	res.sendStatus(500);
+});
+
 module.exports = server;
