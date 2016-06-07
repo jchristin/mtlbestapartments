@@ -43,9 +43,7 @@ module.exports = injectIntl(React.createClass({
 								React.DOM.input({
 									className: "form-control",
 									type: "text",
-									name: formatMessage({
-											id: "signin-name-username"
-										}),
+									name: "username",
 									required: true
 								})
 							),
@@ -58,9 +56,7 @@ module.exports = injectIntl(React.createClass({
 								React.DOM.input({
 									className: "form-control",
 									type: "password",
-									name: formatMessage({
-											id: "signin-name-password"
-										}),
+									name: "password",
 									required: true
 								})
 							),
