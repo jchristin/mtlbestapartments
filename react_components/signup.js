@@ -89,9 +89,7 @@ module.exports = injectIntl(React.createClass({
 									className: "form-control",
 									type: "text",
 									ref: "name",
-									name: formatMessage({
-											id: "signup-name-name"
-										}),
+									name: "name",
 									required: true
 								})
 							),
@@ -105,9 +103,7 @@ module.exports = injectIntl(React.createClass({
 									className: "form-control",
 									type: "text",
 									ref: "email",
-									name: formatMessage({
-											id: "signup-name-email"
-										}),
+									name: "email",
 									required: true,
 								})
 							),
@@ -121,9 +117,7 @@ module.exports = injectIntl(React.createClass({
 									className: "form-control",
 									type: "password",
 									ref: "password",
-									name: formatMessage({
-											id: "signup-name-password"
-										}),
+									name: "password",
 									required: true
 								})
 							),
