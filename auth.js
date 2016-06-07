@@ -96,9 +96,22 @@ module.exports.signUp = function(req, res) {
 };
 
 module.exports.signIn = function(req, res, next) {
-	passport.authenticate("local", {
-		successRedirect: req.query.next || "/",
-		failureRedirect: req.query.next ? "/signin?next=" + req.query.next : "/signin"
+	passport.authenticate("local", function(err, user, info) {
+		if (err) {
+			return next(err);
+		}
+
+		if (!user) {
+			return res.sendStatus(400);
+		}
+
+		req.logIn(user, function(err) {
+			if (err) {
+				return next(err);
+			}
+
+			return res.sendStatus(200);
+		});
 	})(req, res, next);
 };
 

@@ -4,11 +4,51 @@
 
 var React = require("react"),
 	Link = require("react-router").Link,
+	request = require("superagent"),
+	queryString = require('query-string'),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
 		lang: React.PropTypes.string
+	},
+	getInitialState: function() {
+		return {
+			notification: null
+		};
+	},
+	createNotification: function(message)
+	{
+		return React.DOM.div({
+				className: "alert alert-danger",
+				role: "alert"
+			}, message
+		);
+	},
+	handleSubmit: function(e) {
+		e.preventDefault();
+		request
+			.post("/api/signin")
+			.send({
+				username: this.refs.username.value.trim(),
+				password: this.refs.password.value.trim()
+			})
+			.end(function(err, res) {
+				if (err) {
+					this.setState({
+						notification: this.createNotification(res.text)
+					});
+				} else {
+					var parsed = queryString.parse(this.props.location.search);
+					if(parsed.next) {
+						window.location = parsed.next;
+					} else {
+						window.location = "/" + this.context.lang + "/";
+					}
+				}
+			}.bind(this));
+
+		return false;
 	},
 	render: function() {
 		var formatMessage = this.props.intl.formatMessage;
@@ -24,6 +64,7 @@ module.exports = injectIntl(React.createClass({
 				}, formatMessage({
 						id: "signin-sign-in-to-fleub"
 					})),
+				this.state.notification,
 				React.DOM.div({
 						className: "card"
 					},
@@ -31,8 +72,9 @@ module.exports = injectIntl(React.createClass({
 							className: "card-block"
 						},
 						React.DOM.form({
-								action: "/api/signin" + this.props.location.search,
-								method: "post"
+								name: "form",
+								noValidate: "",
+								onSubmit: this.handleSubmit
 							},
 							React.DOM.div({
 									className: "form-group"
@@ -43,6 +85,7 @@ module.exports = injectIntl(React.createClass({
 								React.DOM.input({
 									className: "form-control",
 									type: "text",
+									ref: "username",
 									name: "username",
 									required: true
 								})
@@ -56,6 +99,7 @@ module.exports = injectIntl(React.createClass({
 								React.DOM.input({
 									className: "form-control",
 									type: "password",
+									ref: "password",
 									name: "password",
 									required: true
 								})
