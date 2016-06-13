@@ -41,6 +41,7 @@ module.exports = injectIntl(React.createClass({
 		return allCriteria;
 	},
 	contextTypes: {
+		track: React.PropTypes.func,
 		router: React.PropTypes.object.isRequired,
 		lang: React.PropTypes.string
 	},
@@ -48,6 +49,8 @@ module.exports = injectIntl(React.createClass({
 		return {criteria: null};
 	},
 	componentDidMount: function() {
+		this.context.track("watchCriteria", this.state.criteria);
+
 		request.get("/api/search/criteria").end(function(err, res) {
 			if (err && err.status !== 404) {
 				console.log(err);
@@ -67,6 +70,7 @@ module.exports = injectIntl(React.createClass({
 				console.log(err);
 			}
 
+			this.context.track("saveCriteria", this.state.criteria);
 			this.context.router.push("/" + this.context.lang + "/search");
 		}.bind(this));
 	},

@@ -9,7 +9,12 @@ var React = require("react"),
 	IndexRoute = require("react-router").IndexRoute,
 	browserHistory = require("react-router").browserHistory,
 	request = require("superagent"),
-	Loading = require("./loading");
+	Loading = require("./loading"),
+	Keen = require("keen-js"),
+	client = new Keen({
+		projectId: process.env.KEEN_PROJECT_ID,
+		writeKey: process.env.KEEN_WRITE_KEY
+	});
 
 // Intl polyfill (mainly for Safari)
 require('intl');
@@ -17,6 +22,9 @@ require('intl/locale-data/jsonp/en.js');
 require('intl/locale-data/jsonp/fr.js');
 
 var Boot = React.createClass({
+	track: function(type, value) {
+		client.addEvent("app", {user: this.state.user, type: type, value: value});
+	},
 	redirect: function(pathIfLogged, pathIfNotLogged) {
 		return function(nextState, replace) {
 			var isLogged = this.state.user !== null;
@@ -35,11 +43,13 @@ var Boot = React.createClass({
 		};
 	},
 	childContextTypes: {
-		user: React.PropTypes.object
+		user: React.PropTypes.object,
+		track: React.PropTypes.func
 	},
 	getChildContext: function() {
 		return {
-			user: this.state.user
+			user: this.state.user,
+			track: this.track
 		};
 	},
 	componentWillMount: function() {

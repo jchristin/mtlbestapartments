@@ -10,6 +10,7 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
+		track: React.PropTypes.func,
 		router: React.PropTypes.object.isRequired,
 		lang: React.PropTypes.string
 	},
@@ -31,6 +32,7 @@ module.exports = injectIntl(React.createClass({
 						this.timer = setTimeout(this.getResult, 5000);
 					}
 
+					this.context.track("getResult", res.body.length);
 					this.setState({apartments: res.body});
 				}
 			}

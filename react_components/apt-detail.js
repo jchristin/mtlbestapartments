@@ -11,6 +11,9 @@ var _ = require("lodash"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
+	contextTypes: {
+		track: React.PropTypes.func
+	},
 	getInitialState: function() {
 		return {layout: ""};
 	},
@@ -49,6 +52,7 @@ module.exports = injectIntl(React.createClass({
 		}), React.DOM.a({
 			className: "apt-detail-link",
 			href: apart.url,
+			onClick: this.context.track.bind(null, "clickKijijiLink", apart.url),
 			target: "_blank"
 		}, formatMessage({
 				id: "apt-detail-kijiji-link"
@@ -57,6 +61,8 @@ module.exports = injectIntl(React.createClass({
 		this.setState({layout: layout});
 	},
 	componentDidMount: function() {
+		this.context.track("watchApartDetail", this.props.params._id);
+
 		global.jQuery = jQuery;
 		require("flexslider");
 

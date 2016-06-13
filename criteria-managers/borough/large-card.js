@@ -8,6 +8,9 @@ var _ = require("lodash"),
 	mapSettings = require("../map-settings");
 
 module.exports = React.createClass({
+	contextTypes: {
+		track: React.PropTypes.func
+	},
 	componentDidMount: function() {
 		this.map = new google.maps.Map(
 			document.getElementById("map-canvas-full"),
@@ -66,6 +69,8 @@ module.exports = React.createClass({
 				polygon.zoneSelected = true;
 				this.props.criterion.boroughs.push(id);
 			}
+
+			this.context.track("setBorough", {id: id, checked: polygon.zoneSelected});
 		}.bind(this));
 	},
 	render: function() {

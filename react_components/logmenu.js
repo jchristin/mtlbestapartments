@@ -8,10 +8,9 @@ var React = require("react"),
 	LanguageChooser = require("./language-chooser");
 
 module.exports = injectIntl(React.createClass({
-	
 	displayName: "Logmenu",
-	
 	contextTypes: {
+		track: React.PropTypes.func,
 		user: React.PropTypes.object,
 		lang: React.PropTypes.string
 	},
@@ -44,7 +43,8 @@ module.exports = injectIntl(React.createClass({
 			className: "dropdown-item"
 		}, "Settings"), React.DOM.a({
 			href: "/api/signout",
-			className: "dropdown-item"
+			className: "dropdown-item",
+			onClick: this.context.track.bind(null, "signOut", null)
 		}, formatMessage({
 				id: "logmenu-signout"
 			})))));
@@ -54,7 +54,7 @@ module.exports = injectIntl(React.createClass({
 
 		return React.DOM.ul({
 				className: "nav navbar-nav pull-xs-right"
-			}, 
+			},
 			React.createElement(LanguageChooser),
 			React.DOM.li({
 					className: "nav-item"

@@ -2,5 +2,6 @@
 /public/bundle.css
 /public/bundle.js
 npm-debug.log
+npm-build
 npm-start
 npm-test

@@ -10,6 +10,7 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
+		track: React.PropTypes.func,
 		lang: React.PropTypes.string
 	},
 	getInitialState: function() {
@@ -36,13 +37,14 @@ module.exports = injectIntl(React.createClass({
 			})
 			.end(function(err, res) {
 				if (err) {
+					this.context.track("signUpFailed", err);
 					this.setState({
 						notification: this.createNotification(res.text)
 					});
 				} else {
 					ga("send", "pageview", "/signup-success");
-
 					var parsed = queryString.parse(this.props.location.search);
+					this.context.track("signUpSucceeded", parsed.next);
 					if(parsed.next) {
 						window.location = parsed.next;
 					} else {

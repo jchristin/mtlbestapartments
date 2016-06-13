@@ -3,8 +3,12 @@
 var React = require("react");
 
 module.exports = React.createClass({
+	contextTypes: {
+		track: React.PropTypes.func
+	},
 	handleChange: function(number, checked) {
 		this.props.criterion.bedrooms[number] = checked;
+		this.context.track("setBedroom", {number: number, checked: checked});
 		this.forceUpdate();
 	},
 	createButton: function(number, label) {

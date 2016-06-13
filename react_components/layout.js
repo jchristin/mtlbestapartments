@@ -12,8 +12,10 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
-	displayName: 'Layout',
-	
+	displayName: "Layout",
+	contextTypes: {
+		track: React.PropTypes.func
+	},
 	getInitialState: function() {
 		return {layoutType: null};
 	},
@@ -38,6 +40,7 @@ module.exports = injectIntl(React.createClass({
 		}.bind(this));
 	},
 	handleChange: function(type) {
+		this.context.track("changeLayout", type);
 		this.setState({layoutType: type});
 		this.storeLayoutType(type);
 	},
