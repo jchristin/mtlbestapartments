@@ -12,7 +12,7 @@ var React = require("react"),
 module.exports = React.createClass({
 	componentDidMount: function() {
 		global.jQuery = require("jquery");
-		require("../node_modules/bootstrap/dist/js/umd/dropdown");
+		require("../node_modules/bootstrap/dist/js/bootstrap");
 	},
 
 	childContextTypes: {
