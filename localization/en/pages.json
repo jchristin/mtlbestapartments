@@ -1,8 +1,4 @@
 {
-	"app-account": "Account",
-	"app-sign-in": "Sign in",
-	"app-sign-out": "Sign out",
-
 	"layout-list-price": "Price",
 	"layout-list-bedroom": "Bedroom(s)",
 	"layout-list-borough": "Borough",
@@ -31,7 +27,7 @@
 
 	"posted-title": "Posted",
 
-	"settings-title":	"Settings",
+	"settings-title": "Settings",
 	"settings-delete-account": "Delete account",
 
 	"navbar-search": "Search",

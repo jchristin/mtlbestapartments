@@ -1,8 +1,4 @@
 {
-	"app-account": "Compte",
-	"app-sign-in": "Se connecter",
-	"app-sign-out": "Se deconnecter",
-
 	"layout-list-price": "Prix",
 	"layout-list-bedroom": "Chambre(s)",
 	"layout-list-borough": "Quartier",
@@ -31,7 +27,7 @@
 
 	"posted-title": "Posté(s)",
 
-	"settings-title":	"Paramètres",
+	"settings-title": "Paramètres",
 	"settings-delete-account": "Supprimer le compte",
 
 	"navbar-search": "Recherche",
