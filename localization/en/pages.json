@@ -17,8 +17,6 @@
 	"edit-search-criteria": "Search criteria ",
 	"edit-search-validate": "Validate",
 
-	"favorite-title": "Favorite",
-
 	"grid-item-bedroom-0": "Studio",
 	"grid-item-bedroom-1": "1 bedroom",
 	"grid-item-bedroom-2": "2 bedrooms",
@@ -36,7 +34,6 @@
 	"settings-title":	"Settings",
 	"settings-delete-account": "Delete account",
 
-	"navbar-favorite": "Favorite",
 	"navbar-search": "Search",
 	"navbar-posted-apt": "Posted apartments",
 
