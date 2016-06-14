@@ -39,24 +39,19 @@ module.exports = injectIntl(React.createClass({
 			}
 		}.bind(this));
 	},
-	handleChange: function(type) {
+	handleClick: function(type) {
 		this.context.track("changeLayout", type);
 		this.setState({layoutType: type});
 		this.storeLayoutType(type);
 	},
 	createButton: function(layout, checked) {
 		var formatMessage = this.props.intl.formatMessage;
-
-		return React.DOM.label({
+		return React.DOM.button({
 			key: layout.type,
-			className: "btn btn-secondary" + (checked
-				? " active"
-				: "")
-		}, React.DOM.input({
-			type: "checkbox",
-			autoComplete: "off",
-			onChange: this.handleChange.bind(this, layout.type)
-		}), formatMessage({id: layout.id}));
+			type: "button",
+			onClick: this.handleClick.bind(this, layout.type),
+			className: "btn btn-secondary" + (checked ? " active" : "")
+		}, formatMessage({id: layout.id}));
 	},
 	render: function() {
 		var content;
@@ -86,8 +81,8 @@ module.exports = injectIntl(React.createClass({
 		return React.DOM.div(null, React.DOM.div({
 			className: "text-xs-right"
 		}, React.DOM.div({
-			className: "btn-group",
-			"data-toggle": "buttons"
+			className: "btn-group layout-selector",
+			role: "group"
 		}, _.map(Layouts, _.bind(function(layout) {
 			return this.createButton(layout, this.state.layoutType === layout.type);
 		}, this)))), content);

@@ -6,29 +6,23 @@ module.exports = React.createClass({
 	contextTypes: {
 		track: React.PropTypes.func
 	},
-	handleChange: function(number, checked) {
+	handleClick: function(number, checked) {
 		this.props.criterion.bedrooms[number] = checked;
 		this.context.track("setBedroom", {number: number, checked: checked});
 		this.forceUpdate();
 	},
 	createButton: function(number, label) {
 		var checked = this.props.criterion.bedrooms[number];
-
-		return React.DOM.label({
-				className: "btn btn-secondary" + (checked ? " active" : "")
-			},
-			React.DOM.input({
-				type: "checkbox",
-				autoComplete: "off",
-				onChange: this.handleChange.bind(this, number, !checked)
-			}), label
-		);
+		return React.DOM.button({
+			type: "button",
+			className: "btn btn-secondary" + (checked ? " active" : ""),
+			onClick: this.handleClick.bind(this, number, !checked)
+		}, label);
 	},
 	render: function() {
 		return React.DOM.div({
 				className: "btn-group",
-				"data-toggle":
-				"buttons"
+				role: "group"
 			},
 			this.createButton(0, "Studio"),
 			this.createButton(1, "1"),

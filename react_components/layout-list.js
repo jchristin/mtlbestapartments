@@ -77,14 +77,12 @@ module.exports = injectIntl(React.createClass({
 	},
 	render: function () {
 		return React.DOM.div({
-			className: "layout"
-		}, React.DOM.div({
 			className: "list-group"
 		}, this.generateHeader(), _.map(this.state.apartments, function (apart, key) {
 			return React.createElement(ListItem, {
 				key: key,
 				apart: apart
 			});
-		})));
+		}));
 	}
 }));

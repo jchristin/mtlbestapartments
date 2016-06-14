@@ -9,9 +9,7 @@ var _ = require("lodash"),
 
 module.exports = React.createClass({
 	render: function() {
-		return React.DOM.div({
-			className: "layout"
-		}, React.createElement(Masonry, {
+		return React.createElement(Masonry, {
 			className: "masonry",
 			options: {
 				gutter: 14
@@ -22,6 +20,6 @@ module.exports = React.createClass({
 				key: apart._id,
 				apart: apart
 			});
-		})));
+		}));
 	}
 });
