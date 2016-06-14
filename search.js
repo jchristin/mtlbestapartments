@@ -33,13 +33,12 @@ var invalidateResult = function(user, callback) {
 	});
 };
 
-module.exports.getCriteria = function(req, res) {
+module.exports.getCriteria = function(req, res, next) {
 	database.searches.findOne({
 		user: req.user._id
 	}, function(err, doc) {
 		if (err) {
-			console.log(err);
-			res.status(500).send("Server error. Please retry later.");
+			next(err);
 		} else {
 			if (doc === null) {
 				res.sendStatus(404);
@@ -50,7 +49,7 @@ module.exports.getCriteria = function(req, res) {
 	});
 };
 
-module.exports.createOrUpdateCriteria = function(req, res) {
+module.exports.createOrUpdateCriteria = function(req, res, next) {
 	invalidateResult(req.user, res.end);
 
 	database.searches.updateOne({
@@ -63,34 +62,31 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 		upsert: true
 	}, function(err) {
 		if (err) {
-			console.log(err);
-			res.status(500).send("Server error. Please retry later.");
+			next(err);
 		} else {
 			updateResult(req.user);
 		}
 	});
 };
 
-module.exports.remove = function(req, res) {
+module.exports.remove = function(req, res, next) {
 	database.searches.deleteOne({
 		name: req.user._id
 	}, function(err) {
 		if (err) {
-			console.log(err);
-			res.status(500).end();
+			next(err);
 		} else {
 			res.end();
 		}
 	});
 };
 
-module.exports.getResult = function(req, res) {
+module.exports.getResult = function(req, res, next) {
 	database.searches.findOne({
 		user: req.user._id
 	}, function(err, doc) {
 		if (err) {
-			console.log(err);
-			res.status(500).send("Server error. Please retry later.");
+			next(err);
 		} else {
 			if (doc === null) {
 				res.sendStatus(404);
@@ -103,7 +99,7 @@ module.exports.getResult = function(req, res) {
 					}
 				}).sort({date: -1}).limit(50).toArray(function(err, docs) {
 					if (err) {
-						console.log(err);
+						next(err);
 					} else {
 						res.json(docs);
 					}

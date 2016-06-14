@@ -59,13 +59,12 @@ module.exports.isAuthenticated = function(req, res, next) {
 	}
 };
 
-module.exports.signUp = function(req, res) {
+module.exports.signUp = function(req, res, next) {
 	database.users.findOne({
 		email: req.body.email
 	}, function(err, doc) {
 		if (err) {
-			console.log(err);
-			res.status(500).send("Server error. Please retry later.");
+			next(err);
 		} else {
 			// Checks if email is already used.
 			if (doc !== null) {
@@ -82,8 +81,7 @@ module.exports.signUp = function(req, res) {
 					date: new Date()
 				}, function(err) {
 					if (err) {
-						console.log(err);
-						res.status(500).send("Server error. Please retry later.");
+						next(err);
 					} else {
 						passport.authenticate("local")(req, res, function() {
 							res.sendStatus(200);
@@ -128,13 +126,12 @@ module.exports.getUserInfo = function(req, res) {
 	}
 };
 
-module.exports.deleteUser = function(req, res) {
+module.exports.deleteUser = function(req, res, next) {
 	database.users.deleteOne({
 		_id: req.user._id
 	}, function(err) {
 		if (err) {
-			console.log(err);
-			res.status(500).end();
+			next(err);
 		} else {
 			req.logout();
 			res.end();
@@ -142,7 +139,7 @@ module.exports.deleteUser = function(req, res) {
 	});
 };
 
-module.exports.updateLayout = function(req, res) {
+module.exports.updateLayout = function(req, res, next) {
 	database.users.updateOne({
 		_id: req.user._id
 	}, {
@@ -151,21 +148,19 @@ module.exports.updateLayout = function(req, res) {
 		}
 	}, function(err) {
 		if (err) {
-			console.log(err);
-			res.status(500).send("Server error. Please retry later.");
+			next(err);
 		} else {
 			res.end();
 		}
 	});
 };
 
-module.exports.getLayout = function(req, res) {
+module.exports.getLayout = function(req, res, next) {
 	database.users.findOne({
 		_id: req.user._id
 	}, function(err, doc) {
 		if (err) {
-			console.log(err);
-			res.status(500).send("Server error. Please retry later.");
+			next(err);
 		} else {
 			if (doc === null) {
 				res.sendStatus(404);

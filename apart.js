@@ -112,7 +112,7 @@ var updateApart = function(apart) {
 	};
 };
 
-module.exports.addOrUpdateApart = function(req, res) {
+module.exports.addOrUpdateApart = function(req, res, next) {
 	co(function* () {
 		yield normalizeApart(req.body);
 
@@ -125,12 +125,11 @@ module.exports.addOrUpdateApart = function(req, res) {
 			match.computeScoreApartement(req.body);
 		}
 	}).catch(function (err) {
-		console.log(err);
-		res.sendStatus(500);
+		next(err);
 	});
 };
 
-module.exports.deactivateApart = function(req, res) {
+module.exports.deactivateApart = function(req, res, next) {
 	database.apartments.updateOne({
 		_id: new ObjectID(req.body._id)
 	}, {
@@ -139,8 +138,7 @@ module.exports.deactivateApart = function(req, res) {
 		}
 	}, function(err) {
 		if (err) {
-			console.log(err);
-			res.sendStatus(500);
+			next(err);
 		} else {
 			res.end();
 		}
