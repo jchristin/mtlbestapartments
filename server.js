@@ -101,56 +101,6 @@ server.get("/api/layout", auth.isAuthenticated, auth.getLayout);
 
 server.post("/api/layout", auth.isAuthenticated, auth.updateLayout);
 
-server.get("/api/stations/:city", function(req, res) {
-	if (req.params.city === "montreal") {
-		var stations = [{
-			key: "green",
-			color: "#00CC00",
-			data: require("./metro/green-line.json"),
-		}, {
-			key: "orange",
-			color: "#D62D20",
-			data: require("./metro/orange-line.json"),
-		}, {
-			key: "yellow",
-			color: "#f4ea03",
-			data: require("./metro/yellow-line.json"),
-		}, {
-			key: "blue",
-			color: "#0099CC",
-			data: require("./metro/blue-line.json"),
-		}];
-
-		res.json(stations);
-	} else {
-		res.status(404).send("Invalid city.");
-	}
-});
-
-server.get("/api/polygon", function(req, res) {
-	if ((typeof req.query.traveltype === "undefined") ||
-		(typeof req.query.timeinmin === "undefined") ||
-		(typeof req.query.lat === "undefined") ||
-		(typeof req.query.long === "undefined")) {
-		res.json({
-			"status": "error",
-			"data": null,
-			/* or optional error payload */
-			"message": "Wrong parameters to polygon"
-		});
-	}
-
-	// Compute distance in meter, according to the travel type and the time.
-	//var distmeter = Math.ComputeDistance(
-	//	req.query.traveltype,
-	//	req.query.timeinmin
-	//);
-
-	//var hull = polygon(graph, distmeter, req.query.lat, req.query.long);
-	//res.json(hull);
-	res.end();
-});
-
 server.get("*", function(req, res) {
 	res.send(indexTemplate({lang: req.params.lang}));
 });
