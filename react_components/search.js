@@ -27,12 +27,13 @@ module.exports = injectIntl(React.createClass({
 					if (res.body === null) {
 						// Refresh every seconds to check if matching is done.
 						this.timer = setTimeout(this.getResult, 1000);
+						this.context.track("getResult", null);
 					} else {
 						// Refresh every 5 seconds to check for new result.
 						this.timer = setTimeout(this.getResult, 5000);
+						this.context.track("getResult", res.body.length);
 					}
 
-					this.context.track("getResult", res.body.length);
 					this.setState({apartments: res.body});
 				}
 			}
