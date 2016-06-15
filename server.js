@@ -102,7 +102,10 @@ server.get("/api/layout", auth.isAuthenticated, auth.getLayout);
 server.post("/api/layout", auth.isAuthenticated, auth.updateLayout);
 
 server.get("*", function(req, res) {
-	res.send(indexTemplate({lang: req.params.lang}));
+	res.send(indexTemplate({
+		lang: req.params.lang,
+		googleMapApiKey: process.env.GOOGLE_MAP_API_KEY
+	}));
 });
 
 // Unhandled exception handler.
