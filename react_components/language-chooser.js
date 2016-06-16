@@ -3,99 +3,46 @@
 "use strict";
 
 var React = require("react"),
-	injectIntl = require("react-intl").injectIntl,
+	Link = require("react-router").Link,
 	langNames = require("../localization/language-names"),
-	languages = ["en", "pt"];
+	langs = Object.keys(langNames);
 
-module.exports = injectIntl(React.createClass({
-
-	displayName: "langChooser",
-
-	getInitialState: function() {
-		return {
-			isDropdownOpen: false
-		};
+module.exports = React.createClass({
+	displayName: "LanguageChooser",
+	
+	contextTypes: {
+		lang: React.PropTypes.string
 	},
-
-	getTitle: function() {
-		var formatMessage = this.props.intl.formatMessage;
-
-		if (langNames[this.props.currentLanguage] !== undefined) {
-			return langNames[this.props.currentLanguage];
+	
+	createLink: function () {
+		// Find the currently displayed language
+		var currentLangIndex = langs.indexOf(this.context.lang);
+		// Increment index for the next one
+		var nextLangIndex = currentLangIndex + 1;
+		
+		// If the currently diplayed language is the last in the list, loop back to the first one 
+		if (currentLangIndex === langs.length - 1) {
+			nextLangIndex = 0;
 		}
-
-		return formatMessage({
-			id: "lang-chooser-choose-language"
-		});
-	},
-
-	openDropdown: function() {
-		this.setState({
-			isDropdownOpen: true
-		});
-	},
-
-	closeDropdown: function() {
-		this.setState({
-			isDropdownOpen: false
-		});
-	},
-
-	componentDidMount: function() {
-		global.jQuery = require("jquery");
-		global.jQuery(".dropdown").on('show.bs.dropdown', this.openDropdown);
-		global.jQuery(".dropdown").on('hide.bs.dropdown', this.closeDropdown);
-	},
-
-	changeLanguage: function(lang, e) {
-		e.preventDefault();
-
-		var split = window.location.pathname.split("/");
-		split[1] = lang;
-		window.location.href = split.join("/");
-	},
-
-	buildDropdown: function() {
-		var list = [];
-		languages.forEach(function(language, languageIndex) {
-			list.push(
-				React.DOM.li({
-						key: languageIndex,
-						onClick: this.changeLanguage.bind(this, language)
-					},
-					React.DOM.a({
-						href: "#"
-					}, langNames[language])
-				)
-			);
-		}.bind(this));
-
-		return React.DOM.ul({
-				className: "dropdown-menu"
-			},
-			list
+		
+		// Keep the current page URL, but replace the lang param
+		var url = "/" + langs[nextLangIndex] + window.location.pathname.substring(3);
+		var title = langs[nextLangIndex].toUpperCase();
+		
+		return (
+			React.createElement(Link, {
+				to: url ,
+				className: "nav-link"
+			}, title)
 		);
 	},
-
+	
 	render: function() {
-
-		var stateIcon = React.DOM.i({
-			className: this.state.isDropdownOpen ? "fa fa-caret-up" : "fa fa-caret-down"
-		});
-
-		return React.DOM.div({
-				className: "dropdown",
-				ref: "dropdownParent"
-			},
-			React.DOM.a({
-					id: "language-chooser",
-					"data-toggle": "dropdown",
-					className: this.state.isDropdownOpen ? "open" : null,
-				},
-				this.getTitle(),
-				stateIcon
-			),
-			this.buildDropdown()
+		return (
+			React.DOM.li({
+					className: "nav-item"
+				}, this.createLink()
+			)
 		);
 	}
-}));
+});

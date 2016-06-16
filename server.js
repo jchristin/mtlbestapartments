@@ -36,7 +36,7 @@ server.use(bodyParser.urlencoded({
 server.use(cookieParser());
 
 server.use(session({
-	secret: "fleuby",
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: false,
 	store: new MongoStore({
@@ -153,6 +153,12 @@ server.get("/api/polygon", function(req, res) {
 
 server.get("*", function(req, res) {
 	res.send(indexTemplate({lang: req.params.lang}));
+});
+
+// Unhandled exception handler.
+server.use(function(err, req, res, next) {
+	console.log(err);
+	res.sendStatus(500);
 });
 
 module.exports = server;
