@@ -15,7 +15,6 @@
     "build": "npm run browserify && npm run sass",
     "release": "npm run build && npm run uglifyjs && npm run cleancss",
     "test": "mocha --recursive --require should",
-    "postinstall": "npm run release",
     "start": "node index.js"
   },
   "repository": {
