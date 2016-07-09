@@ -2,8 +2,21 @@
 
 var _ = require("lodash"),
 	database = require("./database"),
+	notification = require("./notification"),
 	criteriaManagers = require("./criteria-managers"),
 	threshold = 99.9;
+
+var notify = function(userId, apartment) {
+	database.users.findOne({
+		_id: userId
+	}, function(err, doc) {
+		if (err) {
+			console.log(err);
+		} else {
+			notification.notify(doc, apartment);
+		}
+	});
+};
 
 var computeScore = function(search, apartment) {
 	var score = _.sumBy(search.criteria, function(criterion) {
@@ -69,6 +82,8 @@ var computeScoreApartement = function(apartment) {
 			}, function(err) {
 				if (err) {
 					console.log(err);
+				} else {
+					notify(search.user, apartment);
 				}
 			});
 		}
