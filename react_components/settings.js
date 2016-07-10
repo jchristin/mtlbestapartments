@@ -7,12 +7,12 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
-	
 	contextTypes: {
+		track: React.PropTypes.func,
 		lang: React.PropTypes.string
 	},
-	
 	handleClick: function() {
+		this.context.track("deleteAccount", null);
 		request.del("/api/user").end(function(err) {
 			if (err) {
 				console.log(err);
