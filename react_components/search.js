@@ -50,6 +50,8 @@ module.exports = injectIntl(React.createClass({
 			}
 		});
 
+		this.context.track("updateNotification", state);
+
 		this.setState({
 			notification: !this.state.notification
 		});
