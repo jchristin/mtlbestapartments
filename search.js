@@ -81,6 +81,22 @@ module.exports.remove = function(req, res, next) {
 	});
 };
 
+module.exports.updateNotification = function(req, res, next) {
+	database.searches.updateOne({
+		user: req.user._id
+	}, {
+		$set: {
+			notification: req.params.state === "on"
+		}
+	}, function(err) {
+		if (err) {
+			next(err);
+		} else {
+			res.end();
+		}
+	});
+};
+
 module.exports.getResult = function(req, res, next) {
 	database.searches.findOne({
 		user: req.user._id
@@ -101,7 +117,7 @@ module.exports.getResult = function(req, res, next) {
 					if (err) {
 						next(err);
 					} else {
-						res.json(docs);
+						res.json({apartments: docs, notification: doc.notification});
 					}
 				});
 			}

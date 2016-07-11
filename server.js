@@ -93,6 +93,8 @@ server.get("/api/search/criteria", auth.isAuthenticated, search.getCriteria);
 
 server.post("/api/search/criteria", auth.isAuthenticated, search.createOrUpdateCriteria);
 
+server.post("/api/search/notification/:state", auth.isAuthenticated, search.updateNotification);
+
 server.get("/api/search/result", auth.isAuthenticated, search.getResult);
 
 server.delete("/api/search", auth.isAuthenticated, search.remove);

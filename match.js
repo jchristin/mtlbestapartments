@@ -83,7 +83,9 @@ var computeScoreApartement = function(apartment) {
 				if (err) {
 					console.log(err);
 				} else {
-					notify(search.user, apartment);
+					if(search.notification) {
+						notify(search.user, apartment);
+					}
 				}
 			});
 		}

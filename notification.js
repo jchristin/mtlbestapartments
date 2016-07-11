@@ -4,10 +4,6 @@ var helper = require("sendgrid").mail,
 	sg = require("sendgrid").SendGrid(process.env.SENDGRID_API_KEY);
 
 function notify(user, apartment) {
-	if(!user.notification) {
-		return;
-	}
-
 	var personalization = new helper.Personalization();
 	personalization.addTo(new helper.Email(user.email, user.name));
 

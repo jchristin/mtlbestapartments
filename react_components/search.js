@@ -34,10 +34,25 @@ module.exports = injectIntl(React.createClass({
 						this.context.track("getResult", res.body.length);
 					}
 
-					this.setState({apartments: res.body});
+					this.setState({
+						apartments: res.body.apartments,
+						notification: res.body.notification
+					});
 				}
 			}
 		}.bind(this));
+	},
+	handleChangeNotification: function(e) {
+		var state = this.state.notification ? "off" : "on";
+		request.post("/api/search/notification/" + state).end(function(err, res) {
+			if (err) {
+				console.log(err);
+			}
+		});
+
+		this.setState({
+			notification: !this.state.notification
+		});
 	},
 	createLoading: function() {
 		if(this.state.apartments === null) {
@@ -47,7 +62,10 @@ module.exports = injectIntl(React.createClass({
 		}
 	},
 	getInitialState: function() {
-		return {apartments: null};
+		return {
+			apartments: null,
+			notification: false
+		};
 	},
 	componentDidMount: function() {
 		this.isMounted = true;
@@ -69,12 +87,30 @@ module.exports = injectIntl(React.createClass({
 			}
 		}
 
-		return React.DOM.div(null, React.DOM.h1({
-			className: "m-t-1"
-		}, formatMessage({id: "search-result"}), this.createLoading()), React.createElement(Link, {
-			to: "/" + this.context.lang + "/search/edit",
-			className: "btn btn-primary",
-			role: "button"
-		}, formatMessage({id: "search-edit"})), content);
+		return React.DOM.div(null,
+			React.DOM.h1({
+				className: "m-t-1"
+			}, formatMessage({id: "search-result"}), this.createLoading()),
+			React.createElement(Link, {
+				to: "/" + this.context.lang + "/search/edit",
+				className: "btn btn-primary",
+				role: "button"
+			}, formatMessage({id: "search-edit"})),
+			React.DOM.label({
+					className: "custom-control custom-checkbox m-l-1"
+				},
+				React.DOM.input({
+					type: "checkbox",
+					checked: this.state.notification,
+					onChange: this.handleChangeNotification,
+					className: "custom-control-input"
+				}),
+				React.DOM.span({
+					className: "custom-control-indicator"
+				}),
+				formatMessage({id: "search-email-notification"})
+			),
+			content
+		);
 	}
 }));
