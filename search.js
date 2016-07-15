@@ -15,6 +15,21 @@ var updateResult = function(user) {
 	});
 };
 
+var enableNotificationIfNotSet = function(user) {
+	database.searches.updateOne({
+		user: user._id,
+		notification: {$exists: false}
+	}, {
+		$set: {
+			notification: true
+		}
+	}, function(err) {
+		if (err) {
+			console.log(err);
+		}
+	});
+}
+
 var invalidateResult = function(user, callback) {
 	database.searches.updateOne({
 		user: user._id
@@ -49,9 +64,11 @@ module.exports.getCriteria = function(req, res, next) {
 	});
 };
 
-module.exports.createOrUpdateCriteria = function(req, res, next) {
+module.exports.createOrUpdateCriteria = function(req, res) {
+	// Clear the old results.
 	invalidateResult(req.user, res.end);
 
+	// Save the new criteria and re-calculate the matches.
 	database.searches.updateOne({
 		user: req.user._id
 	}, {
@@ -62,9 +79,10 @@ module.exports.createOrUpdateCriteria = function(req, res, next) {
 		upsert: true
 	}, function(err) {
 		if (err) {
-			next(err);
+			console.log(err);
 		} else {
 			updateResult(req.user);
+			enableNotificationIfNotSet(req.user);
 		}
 	});
 };
