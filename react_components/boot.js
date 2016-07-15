@@ -86,6 +86,11 @@ var Boot = React.createClass({
 					component: require("./apt-detail")
 				}),
 				React.createElement(Route, {
+					path: "admin",
+					component: require("./admin"),
+					onEnter: this.redirect(null, "/signin?next=/admin")
+				}),
+				React.createElement(Route, {
 					path: "posted",
 					component: require("./posted"),
 					onEnter: this.redirect(null, "/signin?next=/posted")
