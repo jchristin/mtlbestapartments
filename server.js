@@ -65,8 +65,8 @@ server.use(function(req, res, next) {
 		// If we have the locale param in the URL, pass the request along
 		next();
 	} else {
-		// If not, redirect the request to /en
-		urlObj.pathname = "/en" + urlObj.pathname;
+		// If not, redirect the request to /fr
+		urlObj.pathname = "/fr" + urlObj.pathname;
 		res.redirect(301, url.format(urlObj));
 	}
 });
