@@ -46,7 +46,7 @@
     "jquery": "^2.2.4",
     "keen-js": "^3.4.1",
     "lodash": "^4.13.1",
-    "moment": "^2.13.0",
+    "moment": "^2.14.1",
     "mongodb": "^2.1.7",
     "node-sass": "^3.7.0",
     "osm-to-graph": "^0.2.1",

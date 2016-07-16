@@ -4,7 +4,7 @@
 
 var React = require("react"),
 	Link = require("react-router").Link,
-	langNames = require("../localization/language-names"),
+	langNames = require("../locale/language-names"),
 	langs = Object.keys(langNames);
 
 module.exports = React.createClass({

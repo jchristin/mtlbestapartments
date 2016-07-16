@@ -4,38 +4,47 @@
 
 var React = require("react"),
 	Link = require("react-router").Link,
+	moment = require("moment"),
 	LogMenu = require("./logmenu"),
 	ReactIntl = require("react-intl"),
+	criteriaManagers = require("../criteria-managers"),
 	addLocaleData = ReactIntl.addLocaleData,
-	IntlProvider = ReactIntl.IntlProvider;
+	IntlProvider = ReactIntl.IntlProvider,
+	locales = {
+		en: require("../locale/en"),
+		fr: require("../locale/fr")
+	}
 
 module.exports = React.createClass({
+	childContextTypes: {
+		lang: React.PropTypes.string
+	},
 	componentDidMount: function() {
 		global.jQuery = require("jquery");
 		require("../node_modules/bootstrap/dist/js/bootstrap");
 	},
-
-	childContextTypes: {
-		lang: React.PropTypes.string
-	},
-
     getChildContext: function() {
 		return {
 			lang: this.props.params.lang
 		};
 	},
-
+	getLocaleMessages: function(lang) {
+		return _.merge(locales[lang], _.reduce(criteriaManagers, function(result, criterionManager) {
+			return _.merge(result, criterionManager.locale[lang]);
+		}, {}));
+	},
 	getLocalizationProps: function() {
 		switch (this.props.params.lang) {
 			case "en":
+				moment.locale("en");
 				addLocaleData(require("react-intl/locale-data/en"));
-				return {locale: "en", messages: require("../localization/en/pages")};
-			case "fr":
-				addLocaleData(require("react-intl/locale-data/fr"));
-				return {locale: "fr", messages: require("../localization/fr/pages")};
+				return {locale: "en", messages: this.getLocaleMessages("en")};
 			default:
-				addLocaleData(require("react-intl/locale-data/en"));
-				return {locale: "en", messages: require("../localization/en/pages")};
+			case "fr":
+				require("moment/locale/fr");
+				moment.locale("fr");
+				addLocaleData(require("react-intl/locale-data/fr"));
+				return {locale: "fr", messages: this.getLocaleMessages("fr")};
 		}
 	},
 	render: function() {

@@ -11,15 +11,27 @@ var _ = require("lodash"),
 
 module.exports = injectIntl(React.createClass({
 	createCard: function(criterion) {
+		var formatMessage = this.props.intl.formatMessage;
 		var criterionManager = criteriaManagers[criterion.type];
+
 		return React.DOM.div({
-			className: "card",
-			key: criterion.type
-		}, React.DOM.div({
-			className: "card-block"
-		}, React.DOM.h4({
-			className: "card-title"
-		}, criterionManager.name), React.createElement(criterionManager.LargeCard, {criterion: criterion})));
+				className: "card",
+				key: criterion.type
+			},
+			React.DOM.div({
+					className: "card-block"
+				},
+				React.DOM.h4({
+						className: "card-title"
+					},
+					formatMessage({ id: criterionManager.name })
+				),
+				React.createElement(criterionManager.LargeCard, {
+						criterion: criterion
+					}
+				)
+			)
+		);
 	},
 	createLoading: function() {
 		if (this.state.criteria === null) {

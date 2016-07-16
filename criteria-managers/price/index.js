@@ -14,5 +14,9 @@ module.exports = {
 	computeScore: computeScore,
 	default: require("./default"),
 	icon: "fa-usd",
-	name: "Price"
+	name: "price-name",
+	locale: {
+		en: require("./locale/en"),
+		fr: require("./locale/fr")
+	}
 };

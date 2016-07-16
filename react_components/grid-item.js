@@ -48,21 +48,37 @@ module.exports = injectIntl(React.createClass({
 		this.context.router.push("/" + this.context.lang + "/a/" + this.props.apart._id);
 	},
 	render: function() {
+		var formatMessage = this.props.intl.formatMessage;
 		var borough = boroughs[this.props.apart.borough];
 		var boroughName = borough ? borough.name : "Montreal";
 
 		return React.DOM.div({
-			onClick: this.handleClick,
-			className: "grid-item card"
-		}, React.DOM.img({
-			className: "card-img-top",
-			src: this.props.apart.images[0]
-		}), React.DOM.div({
-			className: "card-block"
-		}, React.createElement(priceFormater, {price: this.props.apart.price}), React.DOM.div(null, this.getBedroomString()), React.DOM.div(null, boroughName), React.DOM.div({
-			className: "date"
-		}, React.DOM.small({
-			className: "text-muted"
-		}, "Posted " + moment(this.props.apart.date).fromNow()))));
+				onClick: this.handleClick,
+				className: "grid-item card"
+			},
+			React.DOM.img({
+				className: "card-img-top",
+				src: this.props.apart.images[0]
+			}),
+			React.DOM.div({
+					className: "card-block"
+				},
+				React.createElement(priceFormater, {
+						price: this.props.apart.price
+					}
+				),
+				React.DOM.div(null, this.getBedroomString()),
+				React.DOM.div(null, boroughName),
+				React.DOM.div({
+						className: "date"
+					},
+					React.DOM.small({
+							className: "text-muted"
+						},
+						formatMessage({id: "grid-item-posted"}) + " " + moment(this.props.apart.date).fromNow()
+					)
+				)
+			)
+		);
 	}
 }));

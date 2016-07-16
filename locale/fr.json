@@ -20,7 +20,7 @@
 	"grid-item-bedroom-3": "3 chambres",
 	"grid-item-bedroom-4+": "4+ chambres",
 
-	"grid-item-posted": "Postés",
+	"grid-item-posted": "Posté",
 
 	"layout-index-map": "Plan",
 	"layout-index-card": "Carte",
@@ -50,5 +50,5 @@
 
 	"logmenu-account": "Compte",
 	"logmenu-signin": "S'inscrire",
-	"logmenu-signout": "Se deconnecter",
+	"logmenu-signout": "Se deconnecter"
 }
