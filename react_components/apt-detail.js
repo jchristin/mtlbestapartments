@@ -35,28 +35,33 @@ module.exports = injectIntl(React.createClass({
 		return {__html: description};
 	},
 	generateLayout: function(apart) {
-
 		var formatMessage = this.props.intl.formatMessage;
 
 		var layout = React.DOM.div({
-			className: "col-md-6 offset-md-3"
-		}, React.DOM.div({
-			className: "flexslider carousel"
-		}, React.DOM.ul({
-			className: "slides"
-		}, _.map(apart.images, this.generateSlide))),
-		React.DOM.h6(null, React.createElement(priceFormater, {price: apart.price})),
-		React.DOM.h6(null, this.getBedroomString(apart.bedroom)),
-		React.DOM.p({
-			dangerouslySetInnerHTML: this.getDescription(apart.description)
-		}), React.DOM.a({
-			className: "apt-detail-link",
-			href: apart.url,
-			onClick: this.context.track.bind(null, "clickKijijiLink", apart.url),
-			target: "_blank"
-		}, formatMessage({
-				id: "apt-detail-kijiji-link"
-			})), React.createElement(miniMap, {coord: apart.coord}));
+				className: "col-md-6 offset-md-3"
+			},
+			React.DOM.div({
+					className: "flexslider carousel"
+				},
+				React.DOM.ul({
+					className: "slides"
+				}, _.map(apart.images, this.generateSlide))
+			),
+			React.DOM.h6(null, React.createElement(priceFormater, {price: apart.price})),
+			React.DOM.h6(null, this.getBedroomString(apart.bedroom)),
+			React.DOM.p({
+				dangerouslySetInnerHTML: this.getDescription(apart.description)
+			}),
+			React.DOM.a({
+					className: "apt-detail-link",
+					href: apart.url,
+					onClick: this.context.track.bind(null, "clickKijijiLink", apart.url),
+					target: "_blank"
+				},
+				formatMessage({ id: "apt-detail-kijiji-link" })
+			),
+			React.createElement(miniMap, {coord: apart.coord})
+		);
 
 		this.setState({layout: layout});
 	},
@@ -75,7 +80,11 @@ module.exports = injectIntl(React.createClass({
 		}.bind(this));
 	},
 	componentDidUpdate: function() {
-		jQuery(".flexslider").flexslider({animation: "slide", slideshow: false, smoothHeight: true});
+		jQuery(".flexslider").flexslider({
+			animation: "slide",
+			slideshow: false,
+			smoothHeight: true}
+		);
 	},
 	render: function() {
 		return React.DOM.div({
