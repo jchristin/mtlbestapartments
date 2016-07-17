@@ -83,7 +83,7 @@ var Boot = React.createClass({
 				}),
 				React.createElement(Route, {
 					path: "a/:_id",
-					component: require("./apt-detail")
+					component: require("./apartment")
 				}),
 				React.createElement(Route, {
 					path: "admin",

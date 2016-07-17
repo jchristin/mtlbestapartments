@@ -22,7 +22,7 @@ module.exports = injectIntl(React.createClass({
 			var formatMessage = this.props.intl.formatMessage;
 
 			return bedroom + " " + formatMessage({
-					id: "apt-detail-bedroom"
+					id: "apartment-bedroom"
 				});
 		}
 	},
@@ -53,12 +53,12 @@ module.exports = injectIntl(React.createClass({
 				dangerouslySetInnerHTML: this.getDescription(apart.description)
 			}),
 			React.DOM.a({
-					className: "apt-detail-link",
+					className: "apartment-link",
 					href: apart.url,
 					onClick: this.context.track.bind(null, "clickKijijiLink", apart.url),
 					target: "_blank"
 				},
-				formatMessage({ id: "apt-detail-kijiji-link" })
+				formatMessage({ id: "apartment-kijiji-link" })
 			),
 			React.createElement(miniMap, {coord: apart.coord})
 		);
@@ -88,7 +88,7 @@ module.exports = injectIntl(React.createClass({
 	},
 	render: function() {
 		return React.DOM.div({
-			className: "row apt-detail"
+			className: "row apartment"
 		}, this.state.layout);
 	}
 }));

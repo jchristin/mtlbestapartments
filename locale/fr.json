@@ -3,8 +3,8 @@
 	"layout-list-bedroom": "Chambre(s)",
 	"layout-list-borough": "Quartier",
 
-	"apt-detail-kijiji-link": "Lien Kijiji",
-	"apt-detail-bedroom": "chambre(s)",
+	"apartment-kijiji-link": "Lien Kijiji",
+	"apartment-bedroom": "chambre(s)",
 
 	"search-result": "Resultat de recherche ",
 	"search-no-match-found": "Pas de correspondance trouvé",
