@@ -18,8 +18,9 @@ module.exports = injectIntl(React.createClass({
 	onDrop: function (files) {
 		this.setState({files: this.state.files.concat(files)});
 	},
-	handleMouseOver: function (key) {
-		console.log("key = " + key);
+	handleClick: function (key) {
+		_.pullAt(this.state.files, key);
+		this.forceUpdate();
 	},
 	render: function () {
 		var formatMessage = this.props.intl.formatMessage;
@@ -39,9 +40,16 @@ module.exports = injectIntl(React.createClass({
 		}, _.map(this.state.files, _.bind(function (file, key) {
 			return React.DOM.div({
 				className: "thumbnail",
-				key: key,
-				onMouseOver: this.handleMouseOver.bind(this, key)
-			}, React.DOM.img({className: "thumbnail-img", src: file.preview}));
+				key: key
+			}, React.DOM.div({
+				className: "thumbnail-img-container"
+			}, React.DOM.img({className: "thumbnail-img", src: file.preview}),
+			React.DOM.a({
+				className: "thumbnail-img-options"
+			}, React.DOM.span({
+				className: "fa fa-trash-o fa-2x",
+				onClick: this.handleClick.bind(this, key)
+			}))));
 		}, this)))));
 	}
 }));
