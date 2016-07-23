@@ -4,10 +4,9 @@
 
 var React = require("react"),
 	injectIntl = require("react-intl").injectIntl,
-  Dropzone = require('react-dropzone'),
-  _ = require("lodash"),
+	Dropzone = require('react-dropzone'),
+	_ = require("lodash"),
 	Masonry = require("react-masonry-component");
-  // umbnail = require("./thumbnail");
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
@@ -19,7 +18,7 @@ module.exports = injectIntl(React.createClass({
 	onDrop: function (files) {
 		this.setState({files: this.state.files.concat(files)});
 	},
-	handleMouseOver: function(key) {
+	handleMouseOver: function (key) {
 		console.log("key = " + key);
 	},
 	render: function () {
@@ -28,12 +27,8 @@ module.exports = injectIntl(React.createClass({
 		return React.DOM.div({
 			id: this.props.id,
 			className: "layout"
-		},
-		React.DOM.div(null, formatMessage({id: "postapt-pics-title"})),
-		React.createElement(Dropzone, {
-        onDrop: this.onDrop
-	  }),
-		React.DOM.div({
+		}, React.DOM.div(null, formatMessage({id: "postapt-pics-title"})),
+		React.createElement(Dropzone, {onDrop: this.onDrop}), React.DOM.div({
 			className: "thumbnail-pics"
 		}, React.createElement(Masonry, {
 			className: "masonry",
@@ -46,11 +41,7 @@ module.exports = injectIntl(React.createClass({
 				className: "thumbnail",
 				key: key,
 				onMouseOver: this.handleMouseOver.bind(this, key)
-			}, React.DOM.img({
-				className: "thumbnail-img",
-				src: file.preview
-			}));
-		}, this))))
-	);
+			}, React.DOM.img({className: "thumbnail-img", src: file.preview}));
+		}, this)))));
 	}
 }));
