@@ -1,7 +1,14 @@
 .post-apt {
 	text-align: center;
-
 	.post-apt-empty-end {
 		height: 100vh;
+	}
+	.thumbnail {
+		height: 180px;
+		width: 160px;
+		margin-bottom: 14px;
+	}
+	.thumbnail-img {
+		width: 100%;
 	}
 }
