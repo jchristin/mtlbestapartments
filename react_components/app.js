@@ -13,7 +13,7 @@ var React = require("react"),
 	locales = {
 		en: require("../locale/en"),
 		fr: require("../locale/fr")
-	}
+	};
 
 module.exports = React.createClass({
 	childContextTypes: {
@@ -23,7 +23,7 @@ module.exports = React.createClass({
 		global.jQuery = require("jquery");
 		require("../node_modules/bootstrap/dist/js/bootstrap");
 	},
-    getChildContext: function() {
+	getChildContext: function() {
 		return {
 			lang: this.props.params.lang
 		};
@@ -48,15 +48,25 @@ module.exports = React.createClass({
 		}
 	},
 	render: function() {
-		return React.createElement(IntlProvider, this.getLocalizationProps(), React.DOM.div({
-			className: "app"
-		}, React.DOM.nav({
-			className: "navbar"
-		}, React.createElement(Link, {
-			to: "/" + this.props.params.lang + "/",
-			className: "navbar-brand"
-		}, "Fleub"), React.createElement(LogMenu, { lang: this.props.params.lang })), React.DOM.div({
-			className: "container"
-		}, this.props.children)));
+		return React.createElement(IntlProvider, this.getLocalizationProps(),
+			React.DOM.div({
+					className: "app"
+				},
+				React.DOM.nav({
+						className: "navbar"
+					},
+					React.createElement(Link, {
+						to: "/" + this.props.params.lang + "/",
+						className: "navbar-brand"
+					}, "Fleub"),
+					React.createElement(LogMenu, {
+						lang: this.props.params.lang
+					})
+				),
+				React.DOM.div({
+					className: "container"
+				}, this.props.children)
+			)
+		);
 	}
 });
