@@ -7,6 +7,8 @@ var React = require("react"),
 	LayoutMap = require("./layout-map"),
 	LayoutList = require("./layout-list"),
 	Layouts = require("./layouts"),
+	Modal = require("./modal"),
+	Apartment = require("./apartment"),
 	_ = require("lodash"),
 	request = require("superagent"),
 	injectIntl = require("react-intl").injectIntl;
@@ -14,10 +16,15 @@ var React = require("react"),
 module.exports = injectIntl(React.createClass({
 	displayName: "Layout",
 	contextTypes: {
-		track: React.PropTypes.func
+		track: React.PropTypes.func,
+		router: React.PropTypes.object.isRequired,
+		lang: React.PropTypes.string
 	},
 	getInitialState: function() {
-		return { layoutType: null };
+		return {
+			layoutType: null,
+			currentApartmentId: this.props.currentApartmentId
+		};
 	},
 	componentWillMount: function() {
 		request.get("/api/layout").end(function(err, res) {
@@ -31,6 +38,14 @@ module.exports = injectIntl(React.createClass({
 				}
 			}
 		}.bind(this));
+	},
+	handleModalClose: function() {
+		this.context.router.push("/" + this.context.lang + "/");
+	},
+	componentWillReceiveProps: function(nextProps) {
+		this.setState({
+			currentApartmentId: nextProps.currentApartmentId
+		});
 	},
 	storeLayoutType: function(layoutType) {
 		request
@@ -64,15 +79,21 @@ module.exports = injectIntl(React.createClass({
 
 		switch (this.state.layoutType) {
 			case "card":
-				content = React.createElement(LayoutCard, { apartments: this.props.apartments });
+				content = React.createElement(LayoutCard, {
+					apartments: this.props.apartments
+				});
 				break;
 
 			case "map":
-				content = React.createElement(LayoutMap, { apartments: this.props.apartments });
+				content = React.createElement(LayoutMap, {
+					apartments: this.props.apartments
+				});
 				break;
 
 			case "list":
-				content = React.createElement(LayoutList, { apartments: this.props.apartments });
+				content = React.createElement(LayoutList, {
+					apartments: this.props.apartments
+				});
 				break;
 
 			default:
@@ -97,7 +118,12 @@ module.exports = injectIntl(React.createClass({
 					}, this))
 				)
 			),
-			content
+			content,
+			this.state.currentApartmentId ? React.createElement(Modal, {
+					onRequestClose: this.handleModalClose
+				},
+				React.createElement(Apartment, { apartmentId: this.state.currentApartmentId })
+			) : null
 		);
 	}
 }));

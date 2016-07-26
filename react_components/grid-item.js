@@ -45,7 +45,7 @@ module.exports = injectIntl(React.createClass({
 		}
 	},
 	handleClick: function() {
-		this.context.router.push("/" + this.context.lang + "/a/" + this.props.apart._id);
+		this.context.router.push("/" + this.context.lang + "/apt/" + this.props.apart._id);
 	},
 	render: function() {
 		var formatMessage = this.props.intl.formatMessage;

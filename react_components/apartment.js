@@ -37,9 +37,7 @@ module.exports = injectIntl(React.createClass({
 	generateLayout: function(apart) {
 		var formatMessage = this.props.intl.formatMessage;
 
-		var layout = React.DOM.div({
-				className: "col-md-6 offset-md-3"
-			},
+		var layout = React.DOM.div(null,
 			React.DOM.div({
 					className: "flexslider carousel"
 				},
@@ -66,12 +64,12 @@ module.exports = injectIntl(React.createClass({
 		this.setState({layout: layout});
 	},
 	componentDidMount: function() {
-		this.context.track("watchApartDetail", this.props.params._id);
+		this.context.track("watchApartDetail", this.props.apartmentId);
 
 		global.jQuery = jQuery;
 		require("flexslider");
 
-		request.get("/api/apart/" + this.props.params._id).end(function(err, res) {
+		request.get("/api/apart/" + this.props.apartmentId).end(function(err, res) {
 			if (err) {
 				console.log(err);
 			} else {

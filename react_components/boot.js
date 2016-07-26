@@ -78,12 +78,12 @@ var Boot = React.createClass({
 					component: require("./app")
 				},
 				React.createElement(IndexRoute, {
-					component: require("./search"),
+					component: require("./apartment-router"),
 					onEnter: this.redirect(null, "/signup")
 				}),
 				React.createElement(Route, {
-					path: "a/:_id",
-					component: require("./apartment")
+					path: "apt/:_id",
+					component: require("./apartment-router")
 				}),
 				React.createElement(Route, {
 					path: "admin",

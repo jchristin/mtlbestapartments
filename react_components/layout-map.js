@@ -24,7 +24,7 @@ module.exports = React.createClass({
 			var marker = new google.maps.Marker({position: position, map: this.map, icon: this.markerIconDot});
 
 			marker.addListener("click", function() {
-				this.context.router.push("/" + this.context.lang + "/a/" + apart._id);
+				this.context.router.push("/" + this.context.lang + "/apt/" + apart._id);
 			}.bind(this));
 
 			return marker;

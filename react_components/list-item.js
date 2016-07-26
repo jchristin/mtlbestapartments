@@ -31,7 +31,7 @@ module.exports = React.createClass({
 		}
 	},
 	handleClick: function() {
-		this.context.router.push("/" + this.context.lang + "/a/" + this.props.apart._id);
+		this.context.router.push("/" + this.context.lang + "/apt/" + this.props.apart._id);
 	},
 	render: function() {
 		var borough = boroughs[this.props.apart.borough];
