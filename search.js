@@ -28,7 +28,7 @@ var enableNotificationIfNotSet = function(user) {
 			console.log(err);
 		}
 	});
-}
+};
 
 var invalidateResult = function(user, callback) {
 	database.searches.updateOne({
