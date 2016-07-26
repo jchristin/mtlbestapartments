@@ -97,6 +97,8 @@ server.post("/api/search/notification/:state", auth.isAuthenticated, search.upda
 
 server.get("/api/search/result", auth.isAuthenticated, search.getResult);
 
+server.get("/api/searches/active", auth.isAuthenticated, search.getActiveSearchCount);
+
 server.delete("/api/search", auth.isAuthenticated, search.remove);
 
 server.get("/api/layout", auth.isAuthenticated, auth.getLayout);

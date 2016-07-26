@@ -1,6 +1,7 @@
 "use strict";
 
-var database = require("./database"),
+var moment = require("moment"),
+	database = require("./database"),
 	match = require("./match");
 
 var updateResult = function(user) {
@@ -45,6 +46,20 @@ var invalidateResult = function(user, callback) {
 		}
 
 		callback();
+	});
+};
+
+var keepSearchActive = function(user) {
+	database.searches.updateOne({
+		user: user._id
+	}, {
+		$set: {
+			lastSeen: new Date()
+		}
+	}, function(err) {
+		if (err) {
+			console.log(err);
+		}
 	});
 };
 
@@ -116,6 +131,8 @@ module.exports.updateNotification = function(req, res, next) {
 };
 
 module.exports.getResult = function(req, res, next) {
+	keepSearchActive(req.user);
+
 	database.searches.findOne({
 		user: req.user._id
 	}, function(err, doc) {
@@ -139,6 +156,18 @@ module.exports.getResult = function(req, res, next) {
 					}
 				});
 			}
+		}
+	});
+};
+
+module.exports.getActiveSearchCount = function(req, res, next) {
+	database.searches.count({
+		lastSeen: { "$gt": moment().subtract(1, "months").toDate() }
+	}, function(err, count) {
+		if (err) {
+			next(err);
+		} else {
+			res.json(count);
 		}
 	});
 };
