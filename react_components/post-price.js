@@ -55,8 +55,9 @@ module.exports = injectIntl(React.createClass({
     return React.DOM.div({
       id: this.props.id
     },
-      React.DOM.hr(null),
-      React.DOM.div(null, formatMessage({
+      React.DOM.h4({
+  			className: "card-title"
+  		}, formatMessage({
 				id: "postapt-price-title"
 			})),
       React.DOM.i(null, formatMessage({

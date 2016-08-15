@@ -28,7 +28,9 @@ module.exports = injectIntl(React.createClass({
 		return React.DOM.div({
 			id: this.props.id,
 			className: "layout"
-		}, React.DOM.div(null, formatMessage({id: "postapt-pics-title"})),
+		}, React.DOM.h4({
+			className: "card-title"
+		}, formatMessage({id: "postapt-pics-title"})),
 		React.createElement(Dropzone, {onDrop: this.onDrop}), React.DOM.div({
 			className: "thumbnail-pics"
 		}, React.createElement(Masonry, {

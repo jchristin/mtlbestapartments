@@ -9,7 +9,7 @@ var React = require("react"),
 	PostPics = require("./post-pics"),
 	injectIntl = require("react-intl").injectIntl;
 
-var stateId = ["#map", "bed", "#price", "#pics"];
+var stateId = ["map", "bed", "price", "pics"];
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
@@ -36,46 +36,62 @@ module.exports = injectIntl(React.createClass({
 		for (var i = 0; i <= this.state.uiIndex; i++) {
 			switch (i) {
 				case 0:
-					content.push(React.createElement(PostMap, {
+					content.push(React.DOM.div({
+						className: "card"
+					}, React.DOM.div({
+						className: "card-block"
+					}, React.createElement(PostMap, {
 						location: this.props.location,
 						callback: this.callback,
 						key: i + 1,
 						id: stateId[i]
-					}));
+					}))));
 					break;
 				case 1:
-					content.push(React.createElement(PostBed, {
+					content.push(React.DOM.div({
+						className: "card"
+					}, React.DOM.div({
+						className: "card-block"
+					}, React.createElement(PostBed, {
 						location: this.props.location,
 						callback: this.callback,
 						key: i + 1,
 						id: stateId[i]
-					}));
+					}))));
 					break;
 				case 2:
-					content.push(React.createElement(PostPrice, {
+					content.push(React.DOM.div({
+						className: "card"
+					}, React.DOM.div({
+						className: "card-block"
+					}, React.createElement(PostPrice, {
 						location: this.props.location,
 						callback: this.callback,
 						key: i + 1,
 						id: stateId[i]
-					}));
+					}))));
 					break;
 				case 3:
-					content.push(React.createElement(PostPics, {
+					content.push(React.DOM.div({
+						className: "card"
+					}, React.DOM.div({
+						className: "card-block"
+					}, React.createElement(PostPics, {
 						location: this.props.location,
 						callback: this.callback,
 						key: i + 1,
 						id: stateId[i]
-					}));
+					}))));
 					break;
 				default:
 					break;
 			}
 		}
 
-		return React.DOM.div({className: "post-apt"},
-			React.DOM.strong(null, formatMessage({id: "postapt-title"})),
-			React.DOM.div(null, content),
-			React.DOM.div({className: "post-apt-empty-end"}, "")
-		);
+		return React.DOM.div({
+			className: "post-apt"
+		}, React.DOM.strong(null, formatMessage({id: "postapt-title"})), React.DOM.div(null, content), React.DOM.div({
+			className: "post-apt-empty-end"
+		}, ""));
 	}
 }));
