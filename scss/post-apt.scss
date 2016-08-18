@@ -3,43 +3,11 @@
 	.post-apt-empty-end {
 		height: 100vh;
 	}
-	.thumbnail {
-		height: 180px;
-		width: 160px;
-		margin-bottom: 14px;
-	}
-	.thumbnail-img-container {
-		position: relative;
-		display: inline-block;
-		overflow: hidden;
-	}
 	.thumbnail-img-container img {
 		width: 100%;
 	}
-	.thumbnail-img-container:hover img {
-		opacity: 0.5;
-	}
-	.thumbnail-img-container:hover a {
-		opacity: 1;
-		top: 0;
-		z-index: 500;
-	}
-	.thumbnail-img-container:hover a span {
-		top: 50%;
-		position: absolute;
-		left: 0;
-		right: 0;
-		transform: translateY(-50%);
-	}
-	.thumbnail-img-container a {
-		display: block;
-		position: absolute;
-		top: -100%;
-		opacity: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-		text-align: center;
-		color: inherit;
+	.thumbnail-option {
+		display: inline-block;
+		width: 33%;
 	}
 }

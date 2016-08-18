@@ -18,8 +18,18 @@ module.exports = injectIntl(React.createClass({
 	onDrop: function (files) {
 		this.setState({files: this.state.files.concat(files)});
 	},
-	handleClick: function (key) {
+	moveLeft: function (key) {
+		if (key > 0) {
+			this.state.files.splice(key - 1, 0, this.state.files.splice(key, 1)[0]);
+			this.forceUpdate();
+		}
+	},
+	handleDelete: function (key) {
 		_.pullAt(this.state.files, key);
+		this.forceUpdate();
+	},
+	moveRight: function (key) {
+		this.state.files.splice(key + 1, 0, this.state.files.splice(key, 1)[0]);
 		this.forceUpdate();
 	},
 	render: function () {
@@ -31,7 +41,7 @@ module.exports = injectIntl(React.createClass({
 		}, React.DOM.h4({
 			className: "card-title"
 		}, formatMessage({id: "postapt-pics-title"})),
-		React.createElement(Dropzone, {onDrop: this.onDrop}), React.DOM.div({
+		React.DOM.div({
 			className: "thumbnail-pics"
 		}, React.createElement(Masonry, {
 			className: "masonry",
@@ -39,19 +49,38 @@ module.exports = injectIntl(React.createClass({
 				gutter: 14
 			},
 			disableImagesLoaded: false
-		}, _.map(this.state.files, _.bind(function (file, key) {
+		},
+		_.map(this.state.files, _.bind(function (file, key) {
 			return React.DOM.div({
-				className: "thumbnail",
+				className: "grid-item card",
 				key: key
 			}, React.DOM.div({
 				className: "thumbnail-img-container"
-			}, React.DOM.img({className: "thumbnail-img", src: file.preview}),
-			React.DOM.a({
-				className: "thumbnail-img-options"
-			}, React.DOM.span({
-				className: "fa fa-trash-o fa-2x",
-				onClick: this.handleClick.bind(this, key)
-			}))));
-		}, this)))));
+			}, React.DOM.img({
+				className: "thumbnail-img",
+				src: file.preview
+			}), React.DOM.div({
+				className: "card-block"
+			}, React.DOM.div({
+				className: "thumbnail-options-container"
+			}, React.DOM.div({
+				className: "thumbnail-option"
+			}, React.DOM.i({
+				className: "fa fa-arrow-left",
+				onClick: this.moveLeft.bind(this, key)
+			})), React.DOM.div({
+				className: "thumbnail-option"
+			}, React.DOM.i({
+				className: "fa fa-times-circle-o",
+				onClick: this.handleDelete.bind(this, key)
+			})),  React.DOM.div({
+				className: "thumbnail-option"
+			}, React.DOM.i({
+				className: "fa fa-arrow-right",
+				onClick: this.moveRight.bind(this, key)
+			}))))));
+		}, this)),
+		React.createElement(Dropzone, {onDrop: this.onDrop})
+	)));
 	}
 }));
