@@ -37,49 +37,49 @@ module.exports = injectIntl(React.createClass({
 			switch (i) {
 				case 0:
 					content.push(React.DOM.div({
-						className: "card"
+						className: "card",
+						key: i + 1,
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostMap, {
 						location: this.props.location,
 						callback: this.callback,
-						key: i + 1,
 						id: stateId[i]
 					}))));
 					break;
 				case 1:
 					content.push(React.DOM.div({
-						className: "card"
+						className: "card",
+						key: i + 1,
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostBed, {
 						location: this.props.location,
 						callback: this.callback,
-						key: i + 1,
 						id: stateId[i]
 					}))));
 					break;
 				case 2:
 					content.push(React.DOM.div({
-						className: "card"
+						className: "card",
+						key: i + 1,
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostPrice, {
 						location: this.props.location,
 						callback: this.callback,
-						key: i + 1,
 						id: stateId[i]
 					}))));
 					break;
 				case 3:
 					content.push(React.DOM.div({
-						className: "card"
+						className: "card",
+						key: i + 1,
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostPics, {
 						location: this.props.location,
 						callback: this.callback,
-						key: i + 1,
 						id: stateId[i]
 					}))));
 					break;
