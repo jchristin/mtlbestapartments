@@ -99,6 +99,10 @@ server.get("/api/search/result", auth.isAuthenticated, search.getResult);
 
 server.get("/api/searches/active", auth.isAuthenticated, search.getActiveSearchCount);
 
+server.get("/api/searches/orphan", auth.isAuthenticated, search.deleteOrphanSearches);
+
+server.get("/api/users/orphan", auth.isAuthenticated, search.usersWithoutSearch);
+
 server.delete("/api/search", auth.isAuthenticated, search.remove);
 
 server.get("/api/layout", auth.isAuthenticated, auth.getLayout);

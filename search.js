@@ -1,6 +1,7 @@
 "use strict";
 
-var moment = require("moment"),
+var _ = require("lodash"),
+	moment = require("moment"),
 	database = require("./database"),
 	match = require("./match");
 
@@ -168,6 +169,46 @@ module.exports.getActiveSearchCount = function(req, res, next) {
 			next(err);
 		} else {
 			res.json(count);
+		}
+	});
+};
+
+module.exports.deleteOrphanSearches = function(req, res, next) {
+	database.users.find().toArray(function(err, users) {
+		if (err) {
+			next(err);
+		} else {
+			database.searches.deleteMany({
+				user: {
+					$nin: _.map(users, "_id")
+				}
+			}, function(err) {
+				if (err) {
+					next(err);
+				} else {
+					res.end();
+				}
+			});
+		}
+	});
+};
+
+module.exports.usersWithoutSearch = function(req, res, next) {
+	database.searches.find().toArray(function(err, searches) {
+		if (err) {
+			next(err);
+		} else {
+			database.users.find({
+				"_id": {
+					$nin: _.map(searches, "user")
+				}
+			}).toArray(function(err, users) {
+				if (err) {
+					next(err);
+				} else {
+					res.json(users);
+				}
+			});
 		}
 	});
 };
