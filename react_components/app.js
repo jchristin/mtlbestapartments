@@ -2,7 +2,8 @@
 
 "use strict";
 
-var React = require("react"),
+var _ = require("lodash"),
+	React = require("react"),
 	Link = require("react-router").Link,
 	moment = require("moment"),
 	LogMenu = require("./logmenu"),
