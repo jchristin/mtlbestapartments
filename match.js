@@ -23,7 +23,7 @@ var computeScore = function(search, apartment) {
 		return criteriaManagers[criterion.type].computeScore(criterion, apartment);
 	});
 
-	return (100/5) * score / search.criteria.length;
+	return 100 / 5 * score / search.criteria.length;
 };
 
 var computeScoreSearch = function(search) {
@@ -34,6 +34,7 @@ var computeScoreSearch = function(search) {
 	}).each(function(err, apartment) {
 		if (err) {
 			console.log(err);
+
 			return false;
 		}
 
@@ -44,9 +45,9 @@ var computeScoreSearch = function(search) {
 				$set: {
 					result: result
 				}
-			}, function(err) {
-				if (err) {
-					console.log(err);
+			}, function(err2) {
+				if (err2) {
+					console.log(err2);
 				}
 			});
 
@@ -54,9 +55,11 @@ var computeScoreSearch = function(search) {
 		}
 
 		var score = computeScore(search, apartment);
-		if(score >= threshold) {
+		if (score >= threshold) {
 			result.push(apartment._id);
 		}
+
+		return true;
 	});
 };
 
@@ -64,6 +67,7 @@ var computeScoreApartement = function(apartment) {
 	database.searches.find().each(function(err, search) {
 		if (err) {
 			console.log(err);
+
 			return false;
 		}
 
@@ -72,23 +76,23 @@ var computeScoreApartement = function(apartment) {
 		}
 
 		var score = computeScore(search, apartment);
-		if(score >= threshold) {
+		if (score >= threshold) {
 			database.searches.updateOne({
 				_id: search._id
 			}, {
 				$addToSet: {
 					result: apartment._id
 				}
-			}, function(err) {
-				if (err) {
-					console.log(err);
-				} else {
-					if(search.notification) {
-						notify(search.user, apartment);
-					}
+			}, function(err2) {
+				if (err2) {
+					console.log(err2);
+				} else if (search.notification) {
+					notify(search.user, apartment);
 				}
 			});
 		}
+
+		return true;
 	});
 };
 

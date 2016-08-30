@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var _ = require("lodash"),
@@ -39,13 +37,21 @@ module.exports = React.createClass({
 			case "en":
 				moment.locale("en");
 				addLocaleData(require("react-intl/locale-data/en"));
-				return {locale: "en", messages: this.getLocaleMessages("en")};
+
+				return {
+					locale: "en",
+					messages: this.getLocaleMessages("en")
+				};
 			default:
 			case "fr":
 				require("moment/locale/fr");
 				moment.locale("fr");
 				addLocaleData(require("react-intl/locale-data/fr"));
-				return {locale: "fr", messages: this.getLocaleMessages("fr")};
+
+				return {
+					locale: "fr",
+					messages: this.getLocaleMessages("fr")
+				};
 		}
 	},
 	render: function() {

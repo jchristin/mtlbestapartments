@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var _ = require("lodash"),

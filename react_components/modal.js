@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var React = require("react");
@@ -10,7 +8,7 @@ module.exports = React.createClass({
 		global.jQuery("#modal").modal("show");
 
 		global.jQuery("#modal").on("hidden.bs.modal", function() {
-			if(this.props.onRequestClose) {
+			if (this.props.onRequestClose) {
 				this.props.onRequestClose();
 			}
 		}.bind(this));
@@ -20,10 +18,10 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return React.DOM.div({
-				className: "modal",
-				id: "modal",
-				tabIndex: "-1",
-				role: "dialog",
+				"className": "modal",
+				"id": "modal",
+				"tabIndex": "-1",
+				"role": "dialog",
 				"aria-labelledby": "modal",
 				"aria-hidden": "true"
 			},

@@ -1,5 +1,3 @@
-/* global document:true */
-
 "use strict";
 
 var React = require("react"),
@@ -17,17 +15,22 @@ var React = require("react"),
 	});
 
 // Intl polyfill (mainly for Safari)
-require('intl');
-require('intl/locale-data/jsonp/en.js');
-require('intl/locale-data/jsonp/fr.js');
+require("intl");
+require("intl/locale-data/jsonp/en.js");
+require("intl/locale-data/jsonp/fr.js");
 
 var Boot = React.createClass({
 	track: function(type, value) {
-		client.addEvent("app", {user: this.state.user, type: type, value: value});
+		client.addEvent("app", {
+			user: this.state.user,
+			type: type,
+			value: value
+		});
 	},
 	redirect: function(pathIfLogged, pathIfNotLogged) {
 		return function(nextState, replace) {
 			var isLogged = this.state.user !== null;
+
 			if (pathIfLogged && isLogged) {
 				replace(pathIfLogged.split("/").join("/" + nextState.params.lang + "/"));
 			}
@@ -66,7 +69,7 @@ var Boot = React.createClass({
 			}.bind(this));
 	},
 	render: function() {
-		if(this.state.user === undefined) {
+		if (this.state.user === undefined) {
 			return React.createElement(Loading);
 		}
 

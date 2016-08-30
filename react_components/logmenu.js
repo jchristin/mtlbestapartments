@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var React = require("react"),
@@ -25,17 +23,19 @@ module.exports = injectIntl(React.createClass({
 					className: "nav-item dropdown"
 				},
 				React.DOM.a({
-						id: "account",
-						href: "#",
+						"id": "account",
+						"href": "#",
 						"data-toggle": "dropdown",
 						"aria-haspopup": true,
 						"aria-expanded": false,
-						className: "nav-link"
+						"className": "nav-link"
 					},
-					formatMessage({id: "logmenu-account"})
+					formatMessage({
+						id: "logmenu-account"
+					})
 				),
 				React.DOM.div({
-						className: "dropdown-menu dropdown-menu-right",
+						"className": "dropdown-menu dropdown-menu-right",
 						"aria-labelledby": "account"
 					},
 					React.DOM.h6({
@@ -47,14 +47,18 @@ module.exports = injectIntl(React.createClass({
 							to: "/" + this.context.lang + "/settings",
 							className: "dropdown-item"
 						},
-						formatMessage({id: "settings-title"})
+						formatMessage({
+							id: "settings-title"
+						})
 					),
 					React.DOM.a({
 							href: "/api/signout",
 							className: "dropdown-item",
 							onClick: this.context.track.bind(null, "signOut", null)
 						},
-						formatMessage({id: "logmenu-signout"})
+						formatMessage({
+							id: "logmenu-signout"
+						})
 					)
 				)
 			)
@@ -68,14 +72,13 @@ module.exports = injectIntl(React.createClass({
 			},
 			React.createElement(LanguageChooser),
 			React.DOM.li({
-					className: "nav-item"
-				}, React.createElement(Link, {
-					to: "/" + this.context.lang + "/signin",
-					className: "nav-link"
-				}, formatMessage({
-					id: "logmenu-signin"
-				}))
-			)
+				className: "nav-item"
+			}, React.createElement(Link, {
+				to: "/" + this.context.lang + "/signin",
+				className: "nav-link"
+			}, formatMessage({
+				id: "logmenu-signin"
+			})))
 		);
 	},
 	render: function() {

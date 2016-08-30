@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var React = require("react"),
@@ -30,12 +28,14 @@ module.exports = injectIntl(React.createClass({
 		request.get("/api/layout").end(function(err, res) {
 			if (err && err.status !== 404) {
 				console.log(err);
+			} else if (res.body === null) {
+				this.setState({
+					layoutType: "card"
+				});
 			} else {
-				if (res.body !== null) {
-					this.setState({ layoutType: res.body });
-				} else {
-					this.setState({ layoutType: "card" });
-				}
+				this.setState({
+					layoutType: res.body
+				});
 			}
 		}.bind(this));
 	},
@@ -58,24 +58,31 @@ module.exports = injectIntl(React.createClass({
 				if (err) {
 					console.log(err);
 				}
-			}.bind(this));
+			});
 	},
 	handleClick: function(type) {
 		this.context.track("changeLayout", type);
-		this.setState({ layoutType: type });
+		this.setState({
+			layoutType: type
+		});
 		this.storeLayoutType(type);
 	},
 	createButton: function(layout, checked) {
 		var formatMessage = this.props.intl.formatMessage;
+
 		return React.DOM.button({
-			key: layout.type,
-			type: "button",
-			onClick: this.handleClick.bind(this, layout.type),
-			className: "btn btn-secondary" + (checked ? " active" : "")
-		}, formatMessage({id: layout.id}));
+				key: layout.type,
+				type: "button",
+				onClick: this.handleClick.bind(this, layout.type),
+				className: "btn btn-secondary" + (checked ? " active" : "")
+			},
+			formatMessage({
+				id: layout.id
+			})
+		);
 	},
 	render: function() {
-		var content;
+		var content = null;
 
 		switch (this.state.layoutType) {
 			case "card":
@@ -122,7 +129,9 @@ module.exports = injectIntl(React.createClass({
 			this.state.currentApartmentId ? React.createElement(Modal, {
 					onRequestClose: this.handleModalClose
 				},
-				React.createElement(Apartment, { apartmentId: this.state.currentApartmentId })
+				React.createElement(Apartment, {
+					apartmentId: this.state.currentApartmentId
+				})
 			) : null
 		);
 	}

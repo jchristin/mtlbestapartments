@@ -29,7 +29,10 @@ module.exports = injectIntl(React.createClass({
 	updateUi: function(event) {
 		this.props.criterion.min = event[0];
 		this.props.criterion.max = event[1];
-		this.context.track("setPrice", {min: this.props.criterion.min, max: this.props.criterion.max});
+		this.context.track("setPrice", {
+			min: this.props.criterion.min,
+			max: this.props.criterion.max
+		});
 		this.forceUpdate();
 	},
 	render: function() {
@@ -37,10 +40,18 @@ module.exports = injectIntl(React.createClass({
 
 		return React.DOM.div(null,
 			React.DOM.div(null,
-				React.DOM.span(null, formatMessage({ id: "price-between" })),
-				React.createElement(priceFormater, {price: this.props.criterion.min}),
-				React.DOM.span(null, formatMessage({ id: "price-and" })),
-				React.createElement(priceFormater, {price: this.props.criterion.max})
+				React.DOM.span(null, formatMessage({
+					id: "price-between"
+				})),
+				React.createElement(priceFormater, {
+					price: this.props.criterion.min
+				}),
+				React.DOM.span(null, formatMessage({
+					id: "price-and"
+				})),
+				React.createElement(priceFormater, {
+					price: this.props.criterion.max
+				})
 			),
 			React.DOM.input({
 				type: "text",

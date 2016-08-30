@@ -8,11 +8,12 @@
     "npm": "3.x"
   },
   "scripts": {
+    "lint": "eslint '**/*.js'",
     "sass": "node-sass --include-path scss scss/index.scss public/bundle.css",
     "browserify": "browserify react_components/boot.js -t envify -o public/bundle.js",
     "uglifyjs": "uglifyjs public/bundle.js -m -o public/bundle.js",
     "cleancss": "cleancss -o public/bundle.css public/bundle.css",
-    "build": "npm run browserify && npm run sass",
+    "build": "npm run lint && npm run browserify && npm run sass",
     "release": "npm run build && npm run uglifyjs && npm run cleancss",
     "test": "mocha --recursive --require should",
     "start": "node index.js"
@@ -71,6 +72,7 @@
     "uglify-js": "^2.4.24"
   },
   "devDependencies": {
+    "eslint": "^3.3.1",
     "mocha": "^2.5.3",
     "should": "^9.0.2",
     "supertest": "^1.2.0"

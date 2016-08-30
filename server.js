@@ -15,6 +15,7 @@ var path = require("path"),
 	apart = require("./apart"),
 	fs = require("fs"),
 	_ = require("lodash"),
+	// eslint-disable-next-line no-sync
 	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, "/public/index.tpl"), {
 		encoding: "utf8"
 	})),
@@ -60,8 +61,7 @@ server.use(function(req, res, next) {
 	if (urlObj.pathname.match(regexpAPI)) {
 		// If the request comes to the /api, don't redirect it
 		next();
-	}
-	else if (urlObj.pathname.match(regexp)) {
+	} else if (urlObj.pathname.match(regexp)) {
 		// If we have the locale param in the URL, pass the request along
 		next();
 	} else {
@@ -117,7 +117,7 @@ server.get("*", function(req, res) {
 });
 
 // Unhandled exception handler.
-server.use(function(err, req, res, next) {
+server.use(function(err, req, res) {
 	console.log(err);
 	res.sendStatus(500);
 });

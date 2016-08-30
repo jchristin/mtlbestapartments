@@ -17,7 +17,9 @@ module.exports = injectIntl(React.createClass({
 
 		return React.DOM.div(null, React.DOM.input({
 			className: "form-control",
-			placeholder: formatMessage({ id: "keyword-placeholder" }),
+			placeholder: formatMessage({
+				id: "keyword-placeholder"
+			}),
 			defaultValue: this.props.criterion.keywords,
 			onChange: this.handleChange
 		}));

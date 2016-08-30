@@ -17,28 +17,28 @@ module.exports = injectIntl(React.createClass({
 		switch (this.props.apart.bedroom) {
 			case 0:
 				return formatMessage({
-						id: "grid-item-bedroom-0"
-					});
+					id: "grid-item-bedroom-0"
+				});
 
 			case 1:
 				return formatMessage({
-						id: "grid-item-bedroom-1"
-					});
+					id: "grid-item-bedroom-1"
+				});
 
 			case 2:
 				return formatMessage({
-						id: "grid-item-bedroom-2"
-					});
+					id: "grid-item-bedroom-2"
+				});
 
 			case 3:
 				return formatMessage({
-						id: "grid-item-bedroom-3"
-					});
+					id: "grid-item-bedroom-3"
+				});
 
 			case 4:
 				return formatMessage({
-						id: "grid-item-bedroom-4+"
-					});
+					id: "grid-item-bedroom-4+"
+				});
 
 			default:
 				return "";
@@ -64,9 +64,8 @@ module.exports = injectIntl(React.createClass({
 					className: "card-block"
 				},
 				React.createElement(priceFormater, {
-						price: this.props.apart.price
-					}
-				),
+					price: this.props.apart.price
+				}),
 				React.DOM.div(null, this.getBedroomString()),
 				React.DOM.div(null, boroughName),
 				React.DOM.div({
@@ -75,7 +74,9 @@ module.exports = injectIntl(React.createClass({
 					React.DOM.small({
 							className: "text-muted"
 						},
-						formatMessage({id: "grid-item-posted"}) + " " + moment(this.props.apart.date).fromNow()
+						formatMessage({
+							id: "grid-item-posted"
+						}) + " " + moment(this.props.apart.date).fromNow()
 					)
 				)
 			)

@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var React = require("react"),
@@ -18,8 +16,7 @@ module.exports = injectIntl(React.createClass({
 			notification: null
 		};
 	},
-	createNotification: function(message)
-	{
+	createNotification: function(message) {
 		return React.DOM.div({
 				className: "alert alert-danger",
 				role: "alert"
@@ -42,8 +39,9 @@ module.exports = injectIntl(React.createClass({
 					});
 				} else {
 					var parsed = queryString.parse(this.props.location.search);
+
 					this.context.track("signInSucceeded", parsed.next);
-					if(parsed.next) {
+					if (parsed.next) {
 						window.location = parsed.next;
 					} else {
 						window.location = "/" + this.context.lang + "/";

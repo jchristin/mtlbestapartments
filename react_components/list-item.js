@@ -38,20 +38,30 @@ module.exports = React.createClass({
 		var boroughName = borough ? borough.name : "Montreal";
 
 		return React.DOM.div({
-			className: "list-group-item",
-			key: this.props.apart._id,
-			onClick: this.handleClick
-		}, React.DOM.div({
-			className: "list-img"
-		}, React.DOM.img({
-			className: "list-img-content",
-			src: this.props.apart.images[0]
-		})), React.DOM.div({
-			className: "list-item-price"
-		}, React.createElement(priceFormater, {price: this.props.apart.price})), React.DOM.div({
-			className: "list-item-bedroom"
-		}, this.getBedroomString()), React.DOM.div({
-			className: "list-item-borough"
-		}, boroughName));
+				className: "list-group-item",
+				key: this.props.apart._id,
+				onClick: this.handleClick
+			},
+			React.DOM.div({
+					className: "list-img"
+				},
+				React.DOM.img({
+					className: "list-img-content",
+					src: this.props.apart.images[0]
+				})),
+			React.DOM.div({
+					className: "list-item-price"
+				},
+				React.createElement(priceFormater, {
+					price: this.props.apart.price
+				})),
+			React.DOM.div({
+					className: "list-item-bedroom"
+				},
+				this.getBedroomString()),
+			React.DOM.div({
+					className: "list-item-borough"
+				},
+				boroughName));
 	}
 });

@@ -1,5 +1,3 @@
-/* global window */
-
 "use strict";
 
 var React = require("react"),
@@ -13,7 +11,7 @@ module.exports = React.createClass({
 		track: React.PropTypes.func,
 		lang: React.PropTypes.string
 	},
-	createLink: function () {
+	createLink: function() {
 		// Find the currently displayed language
 		var currentLangIndex = langs.indexOf(this.context.lang);
 		// Increment index for the next one
@@ -30,7 +28,7 @@ module.exports = React.createClass({
 
 		return (
 			React.createElement(Link, {
-				to: url ,
+				to: url,
 				className: "nav-link",
 				onClick: this.context.track.bind(null, "changeLanguage", langs[nextLangIndex])
 			}, title)

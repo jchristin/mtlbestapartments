@@ -1,11 +1,11 @@
-/* global module:true, window:true, ga:true */
+/* global ga */
 
 "use strict";
 
 var React = require("react"),
 	Link = require("react-router").Link,
 	request = require("superagent"),
-	queryString = require('query-string'),
+	queryString = require("query-string"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
@@ -18,13 +18,11 @@ module.exports = injectIntl(React.createClass({
 			notification: null
 		};
 	},
-	createNotification: function(message)
-	{
+	createNotification: function(message) {
 		return React.DOM.div({
-				className: "alert alert-danger",
-				role: "alert"
-			}, message
-		);
+			className: "alert alert-danger",
+			role: "alert"
+		}, message);
 	},
 	handleSubmit: function(e) {
 		e.preventDefault();
@@ -44,8 +42,9 @@ module.exports = injectIntl(React.createClass({
 				} else {
 					ga("send", "pageview", "/signup-success");
 					var parsed = queryString.parse(this.props.location.search);
+
 					this.context.track("signUpSucceeded", parsed.next);
-					if(parsed.next) {
+					if (parsed.next) {
 						window.location = parsed.next;
 					} else {
 						window.location = "/" + this.context.lang + "/";
@@ -65,10 +64,12 @@ module.exports = injectIntl(React.createClass({
 					className: "col-xs-center"
 				},
 				React.DOM.h2({
-					className: "text-xs-center"
-				}, formatMessage({
+						className: "text-xs-center"
+					},
+					formatMessage({
 						id: "signup-create-an-account"
-					})),
+					})
+				),
 				this.state.notification,
 				React.DOM.div({
 						className: "card"
@@ -84,9 +85,11 @@ module.exports = injectIntl(React.createClass({
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, formatMessage({
+								React.DOM.label(null,
+									formatMessage({
 										id: "signup-name"
-									})),
+									})
+								),
 								React.DOM.input({
 									className: "form-control",
 									type: "text",
@@ -98,23 +101,27 @@ module.exports = injectIntl(React.createClass({
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, formatMessage({
+								React.DOM.label(null,
+									formatMessage({
 										id: "signup-email"
-									})),
+									})
+								),
 								React.DOM.input({
 									className: "form-control",
 									type: "text",
 									ref: "email",
 									name: "email",
-									required: true,
+									required: true
 								})
 							),
 							React.DOM.div({
 									className: "form-group"
 								},
-								React.DOM.label(null, formatMessage({
+								React.DOM.label(null,
+									formatMessage({
 										id: "signup-password"
-									})),
+									})
+								),
 								React.DOM.input({
 									className: "form-control",
 									type: "password",
@@ -124,11 +131,13 @@ module.exports = injectIntl(React.createClass({
 								})
 							),
 							React.DOM.button({
-								className: "btn btn-lg btn-primary btn-block",
-								type: "submit"
-							}, formatMessage({
+									className: "btn btn-lg btn-primary btn-block",
+									type: "submit"
+								},
+								formatMessage({
 									id: "signup-signup"
-								}))
+								})
+							)
 						)
 					)
 				),
@@ -139,10 +148,12 @@ module.exports = injectIntl(React.createClass({
 							className: "card-block"
 						},
 						React.createElement(Link, {
-							to: "/" + this.context.lang + "/signin" + this.props.location.search
-						}, formatMessage({
+								to: "/" + this.context.lang + "/signin" + this.props.location.search
+							},
+							formatMessage({
 								id: "signup-already-have-account"
-							}))
+							})
+						)
 					)
 				)
 			)

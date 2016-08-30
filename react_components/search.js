@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var React = require("react"),
@@ -22,29 +20,28 @@ module.exports = injectIntl(React.createClass({
 				} else {
 					console.log(err);
 				}
-			} else {
-				if (this.isMounted) {
-					if (res.body === null) {
-						// Refresh every seconds to check if matching is done.
-						this.timer = setTimeout(this.getResult, 1000);
-						this.context.track("getResult", null);
-					} else {
-						// Refresh every 5 seconds to check for new result.
-						this.timer = setTimeout(this.getResult, 5000);
-						this.context.track("getResult", res.body.length);
-					}
-
-					this.setState({
-						apartments: res.body.apartments,
-						notification: res.body.notification
-					});
+			} else if (this.isMounted) {
+				if (res.body === null) {
+					// Refresh every seconds to check if matching is done.
+					this.timer = setTimeout(this.getResult, 1000);
+					this.context.track("getResult", null);
+				} else {
+					// Refresh every 5 seconds to check for new result.
+					this.timer = setTimeout(this.getResult, 5000);
+					this.context.track("getResult", res.body.length);
 				}
+
+				this.setState({
+					apartments: res.body.apartments,
+					notification: res.body.notification
+				});
 			}
 		}.bind(this));
 	},
-	handleChangeNotification: function(e) {
+	handleChangeNotification: function() {
 		var state = this.state.notification ? "off" : "on";
-		request.post("/api/search/notification/" + state).end(function(err, res) {
+
+		request.post("/api/search/notification/" + state).end(function(err) {
 			if (err) {
 				console.log(err);
 			}
@@ -57,11 +54,13 @@ module.exports = injectIntl(React.createClass({
 		});
 	},
 	createLoading: function() {
-		if(this.state.apartments === null) {
+		if (this.state.apartments === null) {
 			return React.DOM.i({
 				className: "fa fa-refresh fa-spin"
 			});
 		}
+
+		return null;
 	},
 	getInitialState: function() {
 		return {
@@ -78,12 +77,14 @@ module.exports = injectIntl(React.createClass({
 		this.isMounted = false;
 	},
 	render: function() {
-		var content,
+		var content = null,
 			formatMessage = this.props.intl.formatMessage;
 
 		if (this.state.apartments !== null) {
 			if (this.state.apartments.length === 0) {
-				content = React.DOM.div(null, formatMessage({id: "search-no-match-found"}));
+				content = React.DOM.div(null, formatMessage({
+					id: "search-no-match-found"
+				}));
 			} else {
 				content = React.createElement(Layout, {
 					apartments: this.state.apartments,
@@ -95,12 +96,16 @@ module.exports = injectIntl(React.createClass({
 		return React.DOM.div(null,
 			React.DOM.h1({
 				className: "m-t-1"
-			}, formatMessage({id: "search-result"}), this.createLoading()),
+			}, formatMessage({
+				id: "search-result"
+			}), this.createLoading()),
 			React.createElement(Link, {
 				to: "/" + this.context.lang + "/search/edit",
 				className: "btn btn-primary",
 				role: "button"
-			}, formatMessage({id: "search-edit"})),
+			}, formatMessage({
+				id: "search-edit"
+			})),
 			React.DOM.label({
 					className: "custom-control custom-checkbox m-l-1"
 				},
@@ -113,7 +118,9 @@ module.exports = injectIntl(React.createClass({
 				React.DOM.span({
 					className: "custom-control-indicator"
 				}),
-				formatMessage({id: "search-email-notification"})
+				formatMessage({
+					id: "search-email-notification"
+				})
 			),
 			content
 		);

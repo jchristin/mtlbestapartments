@@ -1,5 +1,3 @@
-/* global  module:true */
-
 "use strict";
 
 var _ = require("lodash"),
@@ -15,24 +13,32 @@ module.exports = injectIntl(React.createClass({
 		track: React.PropTypes.func
 	},
 	getInitialState: function() {
-		return {layout: ""};
+		return {
+			layout: ""
+		};
 	},
 	getBedroomString: function(bedroom) {
 		if (bedroom) {
 			var formatMessage = this.props.intl.formatMessage;
 
 			return bedroom + " " + formatMessage({
-					id: "apartment-bedroom"
-				});
+				id: "apartment-bedroom"
+			});
 		}
+
+		return "";
 	},
 	generateSlide: function(image, index) {
 		return React.DOM.li({
 			key: index
-		}, React.DOM.img({src: image}));
+		}, React.DOM.img({
+			src: image
+		}));
 	},
 	getDescription: function(description) {
-		return {__html: description};
+		return {
+			__html: description
+		};
 	},
 	generateLayout: function(apart) {
 		var formatMessage = this.props.intl.formatMessage;
@@ -42,10 +48,14 @@ module.exports = injectIntl(React.createClass({
 					className: "flexslider carousel"
 				},
 				React.DOM.ul({
-					className: "slides"
-				}, _.map(apart.images, this.generateSlide))
+						className: "slides"
+					},
+					_.map(apart.images, this.generateSlide)
+				)
 			),
-			React.DOM.h6(null, React.createElement(priceFormater, {price: apart.price})),
+			React.DOM.h6(null, React.createElement(priceFormater, {
+				price: apart.price
+			})),
 			React.DOM.h6(null, this.getBedroomString(apart.bedroom)),
 			React.DOM.p({
 				dangerouslySetInnerHTML: this.getDescription(apart.description)
@@ -56,12 +66,18 @@ module.exports = injectIntl(React.createClass({
 					onClick: this.context.track.bind(null, "clickKijijiLink", apart.url),
 					target: "_blank"
 				},
-				formatMessage({ id: "apartment-kijiji-link" })
+				formatMessage({
+					id: "apartment-kijiji-link"
+				})
 			),
-			React.createElement(miniMap, {coord: apart.coord})
+			React.createElement(miniMap, {
+				coord: apart.coord
+			})
 		);
 
-		this.setState({layout: layout});
+		this.setState({
+			layout: layout
+		});
 	},
 	componentDidMount: function() {
 		this.context.track("watchApartDetail", this.props.apartmentId);
@@ -81,8 +97,8 @@ module.exports = injectIntl(React.createClass({
 		jQuery(".flexslider").flexslider({
 			animation: "slide",
 			slideshow: false,
-			smoothHeight: true}
-		);
+			smoothHeight: true
+		});
 	},
 	render: function() {
 		return React.DOM.div({

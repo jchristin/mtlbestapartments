@@ -1,5 +1,3 @@
-/* global module:true, window: true */
-
 "use strict";
 
 var React = require("react"),

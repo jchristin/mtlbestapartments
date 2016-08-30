@@ -1,5 +1,3 @@
-/* global module:true */
-
 "use strict";
 
 var React = require("react"),
@@ -8,7 +6,9 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	getInitialState: function() {
-		return {apartments: []};
+		return {
+			apartments: []
+		};
 	},
 	componentWillMount: function() {
 		request
@@ -17,16 +17,20 @@ module.exports = React.createClass({
 				if (err) {
 					console.log(err);
 				} else {
-					this.setState({apartments: res.body});
+					this.setState({
+						apartments: res.body
+					});
 				}
-			}.bind(this)
-		);
+			}.bind(this));
 	},
 	render: function() {
 		return React.DOM.div({
-			className: "row"
-		},
-		React.createElement("h1", null, "Recently added"),
-		React.createElement(Layout, {apartments: this.state.apartments}));
+				className: "row"
+			},
+			React.createElement("h1", null, "Recently added"),
+			React.createElement(Layout, {
+				apartments: this.state.apartments
+			})
+		);
 	}
 });

@@ -20,7 +20,9 @@ var updateResult = function(user) {
 var enableNotificationIfNotSet = function(user) {
 	database.searches.updateOne({
 		user: user._id,
-		notification: {$exists: false}
+		notification: {
+			$exists: false
+		}
 	}, {
 		$set: {
 			notification: true
@@ -70,12 +72,10 @@ module.exports.getCriteria = function(req, res, next) {
 	}, function(err, doc) {
 		if (err) {
 			next(err);
+		} else if (doc === null) {
+			res.sendStatus(404);
 		} else {
-			if (doc === null) {
-				res.sendStatus(404);
-			} else {
-				res.json(doc.criteria);
-			}
+			res.json(doc.criteria);
 		}
 	});
 };
@@ -139,31 +139,42 @@ module.exports.getResult = function(req, res, next) {
 	}, function(err, doc) {
 		if (err) {
 			next(err);
+		} else if (doc === null) {
+			res.sendStatus(404);
+		} else if (doc.result === null) {
+			res.json(null);
 		} else {
-			if (doc === null) {
-				res.sendStatus(404);
-			} else if (doc.result === null) {
-				res.json(null);
-			} else {
-				database.apartments.find({
+			database.apartments
+				.find({
 					_id: {
 						$in: doc.result
 					}
-				}).sort({date: -1}).limit(50).toArray(function(err, docs) {
-					if (err) {
-						next(err);
+				})
+				.sort({
+					date: -1
+				})
+				.limit(50)
+				.toArray(function(err2, docs) {
+					if (err2) {
+						next(err2);
 					} else {
-						res.json({apartments: docs, notification: doc.notification});
+						res.json({
+							apartments: docs,
+							notification: doc.notification
+						});
 					}
 				});
-			}
 		}
 	});
 };
 
 module.exports.getActiveSearchCount = function(req, res, next) {
 	database.searches.count({
-		lastSeen: { "$gt": moment().subtract(1, "months").toDate() }
+		lastSeen: {
+			$gt: moment()
+				.subtract(1, "months")
+				.toDate()
+		}
 	}, function(err, count) {
 		if (err) {
 			next(err);
@@ -182,9 +193,9 @@ module.exports.deleteOrphanSearches = function(req, res, next) {
 				user: {
 					$nin: _.map(users, "_id")
 				}
-			}, function(err) {
-				if (err) {
-					next(err);
+			}, function(err2) {
+				if (err2) {
+					next(err2);
 				} else {
 					res.end();
 				}
@@ -199,12 +210,12 @@ module.exports.usersWithoutSearch = function(req, res, next) {
 			next(err);
 		} else {
 			database.users.find({
-				"_id": {
+				_id: {
 					$nin: _.map(searches, "user")
 				}
-			}).toArray(function(err, users) {
-				if (err) {
-					next(err);
+			}).toArray(function(err2, users) {
+				if (err2) {
+					next(err2);
 				} else {
 					res.json(users);
 				}

@@ -1,5 +1,3 @@
-/* global  module:true */
-
 "use strict";
 
 var React = require("react"),
@@ -11,7 +9,7 @@ module.exports = React.createClass({
 		this.isMounted = true;
 	},
 	render: function() {
-		if(this.isMounted === true || !this.props.params._id) {
+		if (this.isMounted === true || !this.props.params._id) {
 			return React.createElement(Search, {
 				apartmentId: this.props.params._id
 			});

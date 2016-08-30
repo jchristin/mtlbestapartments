@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = {
 	borough: require("./borough"),
 	bedroom: require("./bedroom"),

@@ -1,4 +1,4 @@
-/* global module:true, google, document */
+/* global google */
 
 "use strict";
 
@@ -21,7 +21,11 @@ module.exports = React.createClass({
 
 			this.bounds.extend(position);
 
-			var marker = new google.maps.Marker({position: position, map: this.map, icon: this.markerIconDot});
+			var marker = new google.maps.Marker({
+				position: position,
+				map: this.map,
+				icon: this.markerIconDot
+			});
 
 			marker.addListener("click", function() {
 				this.context.router.push("/" + this.context.lang + "/apt/" + apart._id);
@@ -46,10 +50,12 @@ module.exports = React.createClass({
 		// Create the map.
 		this.map = new google.maps.Map(
 			document.getElementById("map-canvas-full"),
-			mapSettings.options);
+			mapSettings.options
+		);
 
 		// Apply style to the map.
 		var styledMap = new google.maps.StyledMapType(require("./map-style"));
+
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
 
@@ -59,6 +65,8 @@ module.exports = React.createClass({
 		this.placeMarker();
 	},
 	render: function() {
-		return React.DOM.div({id: "map-canvas-full"});
+		return React.DOM.div({
+			id: "map-canvas-full"
+		});
 	}
 });

@@ -8,7 +8,10 @@ module.exports = React.createClass({
 	},
 	handleClick: function(number, checked) {
 		this.props.criterion.bedrooms[number] = checked;
-		this.context.track("setBedroom", {number: number, checked: checked});
+		this.context.track("setBedroom", {
+			number: number,
+			checked: checked
+		});
 		this.forceUpdate();
 	},
 	createButton: function(number, label) {
