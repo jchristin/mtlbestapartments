@@ -12,7 +12,7 @@ describe("boroughs", function() {
 	});
 
 	it("should have closed boroughs", function() {
-		_.forEach(boroughs, function (value) {
+		_.forEach(boroughs, function(value) {
 			_.head(value.coord).should.be.eql(_.last(value.coord));
 		});
 	});

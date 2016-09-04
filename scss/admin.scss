@@ -1,0 +1,23 @@
+$days: 7;
+$seconds: $days * 24 * 3600;
+$period-size: $seconds * 3;
+$header-width: 250px;
+
+#chart {
+	overflow: auto;
+
+	.chart-row {
+		width: calc(#{$period-size}px + #{$header-width});
+		border-bottom: 1px solid gray;
+	}
+
+	.chart-header {
+		width: 250px;
+		float: left;
+	}
+
+	svg {
+		width: #{$period-size}px;
+		height: 24px;
+	}
+}

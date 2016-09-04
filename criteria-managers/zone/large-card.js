@@ -41,7 +41,10 @@ module.exports = React.createClass({
 		//
 		// Draw polygon.
 		//
-		var polygon = new google.maps.Polygon({path: path, map: this.map});
+		var polygon = new google.maps.Polygon({
+			path: path,
+			map: this.map
+		});
 
 		polygon.zoneSelected = false;
 

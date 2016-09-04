@@ -1,27 +1,18 @@
 {
-	"app-account": "Account",
-	"app-sign-in": "Sign in",
-	"app-sign-out": "Sign out",
-
 	"layout-list-price": "Price",
 	"layout-list-bedroom": "Bedroom(s)",
 	"layout-list-borough": "Borough",
 
-	"apt-detail-kijiji-link": "Kijiji link",
-	"apt-detail-bedroom": "bedroom(s)",
+	"apartment-kijiji-link": "Kijiji link",
+	"apartment-bedroom": "bedroom(s)",
 
 	"search-result": "Search result ",
 	"search-no-match-found": "No match found",
 	"search-edit": "Edit criteria",
+	"search-email-notification": "Email notification",
 
 	"edit-search-criteria": "Search criteria ",
 	"edit-search-validate": "Validate",
-
-	"favorite-title": "Favorite",
-
-	"home-title": "Home",
-	"home-sign-in": "Sign In",
-	"home-sign-up": "Sign Up",
 
 	"grid-item-bedroom-0": "Studio",
 	"grid-item-bedroom-1": "1 bedroom",
@@ -36,21 +27,16 @@
 	"layout-index-list": "List",
 
 	"posted-title": "Posted",
-
 	"postapt-title": "Post a new appartement",
 	"postapt-button": "Validate",
-
 	"postapt-map-title": "Enter your address",
 	"postapt-map-input-caption": "Enter your address",
-
 	"postapt-bed-title": "Number of bedrooms",
-
 	"postapt-price-title": "Enter the price",
 	"postapt-price-caption": "Price is ",
-
 	"postapt-pics-title": "Add picture(s)",
 
-	"settings-title":	"Settings",
+	"settings-title": "Settings",
 	"settings-delete-account": "Delete account",
 
 	"navbar-favorite": "Favorite",
@@ -59,24 +45,19 @@
 
 	"signin-sign-in-to-fleub": "Sign in to Fleub",
 	"signin-email": "Email",
-	"signin-name-username": "username",
 	"signin-password": "Password",
-	"signin-name-password": "password",
 	"signin-signin": "Sign in",
 	"signin-new-to-fleub": "New to Fleub? ",
 	"signin-create-an-account": "Create an account",
 
 	"signup-create-an-account": "Create an account",
 	"signup-name": "Name",
-	"signup-name-name": "name",
 	"signup-email": "Email",
-	"signup-name-email": "email",
 	"signup-password": "Password",
-	"signup-name-password": "password",
 	"signup-signup": "Sign up",
 	"signup-already-have-account": "I already have an account.",
 
 	"logmenu-account": "Account",
 	"logmenu-signin": "Sign in",
-	"logmenu-signout": "Sign out",
+	"logmenu-signout": "Sign out"
 }

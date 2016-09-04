@@ -1,5 +1,3 @@
-/* global document:true */
-
 "use strict";
 
 var React = require("react"),
@@ -9,17 +7,30 @@ var React = require("react"),
 	IndexRoute = require("react-router").IndexRoute,
 	browserHistory = require("react-router").browserHistory,
 	request = require("superagent"),
-	Loading = require("./loading");
+	Loading = require("./loading"),
+	Keen = require("keen-js"),
+	client = new Keen({
+		projectId: process.env.KEEN_PROJECT_ID,
+		writeKey: process.env.KEEN_WRITE_KEY
+	});
 
 // Intl polyfill (mainly for Safari)
-require('intl');
-require('intl/locale-data/jsonp/en.js');
-require('intl/locale-data/jsonp/fr.js');
+require("intl");
+require("intl/locale-data/jsonp/en.js");
+require("intl/locale-data/jsonp/fr.js");
 
 var Boot = React.createClass({
+	track: function(type, value) {
+		client.addEvent("app", {
+			user: this.state.user,
+			type: type,
+			value: value
+		});
+	},
 	redirect: function(pathIfLogged, pathIfNotLogged) {
 		return function(nextState, replace) {
 			var isLogged = this.state.user !== null;
+
 			if (pathIfLogged && isLogged) {
 				replace(pathIfLogged.split("/").join("/" + nextState.params.lang + "/"));
 			}
@@ -35,11 +46,13 @@ var Boot = React.createClass({
 		};
 	},
 	childContextTypes: {
-		user: React.PropTypes.object
+		user: React.PropTypes.object,
+		track: React.PropTypes.func
 	},
 	getChildContext: function() {
 		return {
-			user: this.state.user
+			user: this.state.user,
+			track: this.track
 		};
 	},
 	componentWillMount: function() {
@@ -56,7 +69,7 @@ var Boot = React.createClass({
 			}.bind(this));
 	},
 	render: function() {
-		if(this.state.user === undefined) {
+		if (this.state.user === undefined) {
 			return React.createElement(Loading);
 		}
 
@@ -68,12 +81,17 @@ var Boot = React.createClass({
 					component: require("./app")
 				},
 				React.createElement(IndexRoute, {
-					component: require("./search"),
+					component: require("./apartment-router"),
 					onEnter: this.redirect(null, "/signup")
 				}),
 				React.createElement(Route, {
-					path: "a/:_id",
-					component: require("./apt-detail")
+					path: "apt/:_id",
+					component: require("./apartment-router")
+				}),
+				React.createElement(Route, {
+					path: "admin",
+					component: require("./admin"),
+					onEnter: this.redirect(null, "/signin?next=/admin")
 				}),
 				React.createElement(Route, {
 					path: "posted",

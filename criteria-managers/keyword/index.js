@@ -2,8 +2,8 @@
 
 var _ = require("lodash");
 
-function computeScore(criterion, apartment) {
-	if(criterion.keywords.length === 0) {
+var computeScore = function(criterion, apartment) {
+	if (criterion.keywords.length === 0) {
 		return 5;
 	}
 
@@ -12,7 +12,7 @@ function computeScore(criterion, apartment) {
 	return _.every(criterion.keywords, function(keyword) {
 		return description.includes(_.deburr(_.toLower(keyword)));
 	}) ? 5 : 0;
-}
+};
 
 module.exports = {
 	Card: require("./card"),
@@ -20,5 +20,9 @@ module.exports = {
 	computeScore: computeScore,
 	default: require("./default"),
 	icon: "fa-terminal",
-	name: "Keyword"
+	name: "keyword-name",
+	locale: {
+		en: require("./locale/en"),
+		fr: require("./locale/fr")
+	}
 };

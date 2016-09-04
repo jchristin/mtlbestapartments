@@ -51,9 +51,10 @@ module.exports = React.createClass({
 
 		polygon.setOptions(mapSettings.polygon.selected);
 
+		// eslint-disable-next-line no-new
 		new google.maps.Marker({
 			position: this.bounds.getCenter(),
-			map: this.map,
+			map: this.map
 		});
 	},
 	render: function() {

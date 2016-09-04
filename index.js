@@ -13,7 +13,7 @@ co(function*() {
 	console.log("Database connected.");
 
 	// Run server.
-	require("./server").listen(process.env.PORT || 5000);
+	require("./server").listen(process.env.PORT);
 	console.log("Server listening...");
 }).catch(function(err) {
 	console.log(err);

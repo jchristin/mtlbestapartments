@@ -8,6 +8,9 @@ var _ = require("lodash"),
 	mapSettings = require("../map-settings");
 
 module.exports = React.createClass({
+	contextTypes: {
+		track: React.PropTypes.func
+	},
 	componentDidMount: function() {
 		this.map = new google.maps.Map(
 			document.getElementById("map-canvas-full"),
@@ -35,9 +38,12 @@ module.exports = React.createClass({
 		}, this));
 
 		// Draw polygon.
-		var polygon = new google.maps.Polygon({path: path, map: this.map});
+		var polygon = new google.maps.Polygon({
+			path: path,
+			map: this.map
+		});
 
-		polygon.zoneSelected = this.props.criterion.boroughs.indexOf(id) != -1;
+		polygon.zoneSelected = this.props.criterion.boroughs.indexOf(id) !== -1;
 		if (polygon.zoneSelected) {
 			polygon.setOptions(mapSettings.polygon.selected);
 		} else {
@@ -66,6 +72,11 @@ module.exports = React.createClass({
 				polygon.zoneSelected = true;
 				this.props.criterion.boroughs.push(id);
 			}
+
+			this.context.track("setBorough", {
+				id: id,
+				checked: polygon.zoneSelected
+			});
 		}.bind(this));
 	},
 	render: function() {

@@ -15,6 +15,7 @@ var path = require("path"),
 	apart = require("./apart"),
 	fs = require("fs"),
 	_ = require("lodash"),
+	// eslint-disable-next-line no-sync
 	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, "/public/index.tpl"), {
 		encoding: "utf8"
 	})),
@@ -60,13 +61,12 @@ server.use(function(req, res, next) {
 	if (urlObj.pathname.match(regexpAPI)) {
 		// If the request comes to the /api, don't redirect it
 		next();
-	}
-	else if (urlObj.pathname.match(regexp)) {
+	} else if (urlObj.pathname.match(regexp)) {
 		// If we have the locale param in the URL, pass the request along
 		next();
 	} else {
-		// If not, redirect the request to /en
-		urlObj.pathname = "/en" + urlObj.pathname;
+		// If not, redirect the request to /fr
+		urlObj.pathname = "/fr" + urlObj.pathname;
 		res.redirect(301, url.format(urlObj));
 	}
 });
@@ -93,7 +93,15 @@ server.get("/api/search/criteria", auth.isAuthenticated, search.getCriteria);
 
 server.post("/api/search/criteria", auth.isAuthenticated, search.createOrUpdateCriteria);
 
+server.post("/api/search/notification/:state", auth.isAuthenticated, search.updateNotification);
+
 server.get("/api/search/result", auth.isAuthenticated, search.getResult);
+
+server.get("/api/searches/active", auth.isAuthenticated, search.getActiveSearchCount);
+
+server.get("/api/searches/orphan", auth.isAuthenticated, search.deleteOrphanSearches);
+
+server.get("/api/users/orphan", auth.isAuthenticated, search.usersWithoutSearch);
 
 server.delete("/api/search", auth.isAuthenticated, search.remove);
 
@@ -101,62 +109,15 @@ server.get("/api/layout", auth.isAuthenticated, auth.getLayout);
 
 server.post("/api/layout", auth.isAuthenticated, auth.updateLayout);
 
-server.get("/api/stations/:city", function(req, res) {
-	if (req.params.city === "montreal") {
-		var stations = [{
-			key: "green",
-			color: "#00CC00",
-			data: require("./metro/green-line.json"),
-		}, {
-			key: "orange",
-			color: "#D62D20",
-			data: require("./metro/orange-line.json"),
-		}, {
-			key: "yellow",
-			color: "#f4ea03",
-			data: require("./metro/yellow-line.json"),
-		}, {
-			key: "blue",
-			color: "#0099CC",
-			data: require("./metro/blue-line.json"),
-		}];
-
-		res.json(stations);
-	} else {
-		res.status(404).send("Invalid city.");
-	}
-});
-
-server.get("/api/polygon", function(req, res) {
-	if ((typeof req.query.traveltype === "undefined") ||
-		(typeof req.query.timeinmin === "undefined") ||
-		(typeof req.query.lat === "undefined") ||
-		(typeof req.query.long === "undefined")) {
-		res.json({
-			"status": "error",
-			"data": null,
-			/* or optional error payload */
-			"message": "Wrong parameters to polygon"
-		});
-	}
-
-	// Compute distance in meter, according to the travel type and the time.
-	//var distmeter = Math.ComputeDistance(
-	//	req.query.traveltype,
-	//	req.query.timeinmin
-	//);
-
-	//var hull = polygon(graph, distmeter, req.query.lat, req.query.long);
-	//res.json(hull);
-	res.end();
-});
-
 server.get("*", function(req, res) {
-	res.send(indexTemplate({lang: req.params.lang}));
+	res.send(indexTemplate({
+		lang: req.params.lang,
+		googleMapApiKey: process.env.GOOGLE_MAP_API_KEY
+	}));
 });
 
 // Unhandled exception handler.
-server.use(function(err, req, res, next) {
+server.use(function(err, req, res) {
 	console.log(err);
 	res.sendStatus(500);
 });

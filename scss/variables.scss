@@ -3,3 +3,5 @@ $fleub-color-primary: #e73f3c;
 $fleub-color-white: #ffffff;
 
 $brand-primary: $fleub-color-primary;
+$custom-control-checked-indicator-bg: $fleub-color-primary;
+$custom-control-focus-indicator-box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem $fleub-color-primary !default;

@@ -5,13 +5,13 @@ var _ = require("lodash"),
 	polygon = require("turf-polygon"),
 	inside = require("turf-inside");
 
-function computeScore(criterion, apartment) {
+var computeScore = function(criterion, apartment) {
 	if (criterion.polygon.length === 0) {
 		return 0;
 	}
 
-	var points = _.map(criterion.polygon, function(point) {
-		return [point.lng, point.lat];
+	var points = _.map(criterion.polygon, function(p) {
+		return [p.lng, p.lat];
 	});
 
 	if (inside(point(apartment.coord), polygon([points]))) {
@@ -19,7 +19,7 @@ function computeScore(criterion, apartment) {
 	}
 
 	return 0;
-}
+};
 
 module.exports = {
 	Card: require("./card"),
@@ -27,5 +27,9 @@ module.exports = {
 	computeScore: computeScore,
 	default: require("./default"),
 	icon: "fa-globe",
-	name: "Zone"
+	name: "zone-name",
+	locale: {
+		en: require("./locale/en"),
+		fr: require("./locale/fr")
+	}
 };

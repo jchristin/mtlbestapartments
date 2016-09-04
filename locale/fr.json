@@ -1,27 +1,18 @@
 {
-	"app-account": "Compte",
-	"app-sign-in": "Se connecter",
-	"app-sign-out": "Se deconnecter",
-
 	"layout-list-price": "Prix",
 	"layout-list-bedroom": "Chambre(s)",
 	"layout-list-borough": "Quartier",
 
-	"apt-detail-kijiji-link": "Lien Kijiji",
-	"apt-detail-bedroom": "chambre(s)",
+	"apartment-kijiji-link": "Lien Kijiji",
+	"apartment-bedroom": "chambre(s)",
 
-	"search-result": "Resultat de recherche ",
+	"search-result": "Résultat de recherche ",
 	"search-no-match-found": "Pas de correspondance trouvé",
 	"search-edit": "Editer les critères",
+	"search-email-notification": "Notification par email",
 
 	"edit-search-criteria": "Critères de recherche ",
 	"edit-search-validate": "Valider",
-
-	"favorite-title": "Favoris",
-
-	"home-title": "Accueil",
-	"home-sign-in": "Se connecter",
-	"home-sign-up": "Créer un compte",
 
 	"grid-item-bedroom-0": "Studio",
 	"grid-item-bedroom-1": "1 chambre",
@@ -29,7 +20,7 @@
 	"grid-item-bedroom-3": "3 chambres",
 	"grid-item-bedroom-4+": "4+ chambres",
 
-	"grid-item-posted": "Postés",
+	"grid-item-posted": "Posté",
 
 	"layout-index-map": "Plan",
 	"layout-index-card": "Carte",
@@ -50,33 +41,27 @@
 
 	"postapt-pics-title": "Ajouter des photo(s)",
 
-	"settings-title":	"Paramètres",
+	"settings-title": "Paramètres",
 	"settings-delete-account": "Supprimer le compte",
 
-	"navbar-favorite": "Favoris",
 	"navbar-search": "Recherche",
 	"navbar-posted-apt": "Appartements postés",
 
 	"signin-sign-in-to-fleub": "Se connecter à Fleub",
 	"signin-email": "Courriel",
-	"signin-name-username": "nom d'utilisateur",
 	"signin-password": "Mot de passe",
-	"signin-name-password": "mot de passe",
 	"signin-signin": "Se connecter",
 	"signin-new-to-fleub": "Nouveau sur Fleub? ",
 	"signin-create-an-account": "Créer un compte",
 
 	"signup-create-an-account": "Créer un compte",
 	"signup-name": "Nom",
-	"signup-name-name": "nom",
 	"signup-email": "Courriel",
-	"signup-name-email": "courriel",
 	"signup-password": "Mot de passe",
-	"signup-name-password": "mot de passe",
 	"signup-signup": "S'inscrire",
 	"signup-already-have-account": "J'ai déjà un compte.",
 
 	"logmenu-account": "Compte",
 	"logmenu-signin": "S'inscrire",
-	"logmenu-signout": "Se deconnecter",
+	"logmenu-signout": "Se deconnecter"
 }

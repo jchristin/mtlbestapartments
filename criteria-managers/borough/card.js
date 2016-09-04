@@ -19,7 +19,7 @@ module.exports = React.createClass({
 		);
 
 		var bounds = new google.maps.LatLngBounds();
-		
+
 		// Draw the boroughs.
 		_.forEach(this.props.criterion.boroughs, _.bind(function(borough) {
 			var path = [];

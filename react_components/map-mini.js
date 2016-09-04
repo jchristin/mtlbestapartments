@@ -1,4 +1,4 @@
-/* global google, document */
+/* global google */
 
 "use strict";
 
@@ -25,13 +25,14 @@ module.exports = React.createClass({
 
 		// Apply style to the map.
 		var styledMap = new google.maps.StyledMapType(require("./map-style"));
+
 		this.map.mapTypes.set("map-style", styledMap);
 		this.map.setMapTypeId("map-style");
 
 		// Place marker.
 		this.marker = new google.maps.Marker({
 			position: center,
-			map: this.map,
+			map: this.map
 		});
 	},
 	render: function() {

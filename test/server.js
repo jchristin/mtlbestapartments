@@ -19,7 +19,9 @@ describe.skip("database", function() {
 		it("should reject apart outside Montreal", function(done) {
 			request(server)
 				.post("/api/apart")
-				.send({address: "211 Boulevard Churchill, Greenfield Park, QC J4V 2M5"})
+				.send({
+					address: "211 Boulevard Churchill, Greenfield Park, QC J4V 2M5"
+				})
 				.expect(400, done);
 		});
 	});

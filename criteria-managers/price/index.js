@@ -1,12 +1,12 @@
 "use strict";
 
-function computeScore(criterion, apartment) {
+var computeScore = function(criterion, apartment) {
 	if (apartment.price >= criterion.min && apartment.price <= criterion.max) {
 		return 5;
 	}
 
 	return 0;
-}
+};
 
 module.exports = {
 	Card: require("./card"),
@@ -14,5 +14,9 @@ module.exports = {
 	computeScore: computeScore,
 	default: require("./default"),
 	icon: "fa-usd",
-	name: "Price"
+	name: "price-name",
+	locale: {
+		en: require("./locale/en"),
+		fr: require("./locale/fr")
+	}
 };
