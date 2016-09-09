@@ -8,7 +8,7 @@ _ = require("lodash");
 
 module.exports = injectIntl(React.createClass({
   contextTypes: {
-    router: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object.isRequired
   },
   getInitialState: function() {
     this.bedrooms = [];
@@ -23,7 +23,6 @@ module.exports = injectIntl(React.createClass({
     };
  },
   handleChange: function(number, checked) {
-
     for (var i = 0; i < 5; i++) {
         this.bedrooms[i] = false;
     }
@@ -36,9 +35,8 @@ module.exports = injectIntl(React.createClass({
 
     this.setState({
       buttondisable: !bedSelected,
-      checked: this.bedrooms,
+      checked: this.bedrooms
     });
-
 	},
 	createButton: function(number, label) {
 		var checked = this.state.checked[number];
@@ -69,11 +67,11 @@ module.exports = injectIntl(React.createClass({
       id: this.props.id
     },
       React.DOM.h4({
-  			className: "card-title"
-  		}, formatMessage({
+          className: "card-title"
+      }, formatMessage({
 				id: "postapt-bed-title"
-			})), React.DOM.div({
-				className: "btn-group",
+            })), React.DOM.div({
+                className: "btn-group",
 				"data-toggle": "buttons"
 			},
 			this.createButton(0, "Studio"),

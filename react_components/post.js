@@ -13,32 +13,32 @@ var stateId = ["map", "bed", "price", "pics"];
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired,
+		router: React.PropTypes.object.isRequired
 	},
-	getInitialState: function () {
-		return {uiIndex: 0};
+	getInitialState: function() {
+		return {
+uiIndex: 0
+};
 	},
-	callback: function () {
-
-		if ((this.state.uiIndex + 1) < stateId.length) {
+	callback: function() {
+		if (this.state.uiIndex + 1 < stateId.length) {
 			this.setState({
 				uiIndex: this.state.uiIndex + 1
 			});
 		} else {
 			console.log("last state reached");
 		}
-
 	},
-	render: function () {
+	render: function() {
 		var formatMessage = this.props.intl.formatMessage;
 		var content = [];
 
-		for (var i = 0; i <= this.state.uiIndex; i++) {
+		for (var i = 0; i <= this.state.uiIndex; ++i) {
 			switch (i) {
 				case 0:
 					content.push(React.DOM.div({
 						className: "card",
-						key: i + 1,
+						key: i + 1
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostMap, {
@@ -50,7 +50,7 @@ module.exports = injectIntl(React.createClass({
 				case 1:
 					content.push(React.DOM.div({
 						className: "card",
-						key: i + 1,
+						key: i + 1
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostBed, {
@@ -62,7 +62,7 @@ module.exports = injectIntl(React.createClass({
 				case 2:
 					content.push(React.DOM.div({
 						className: "card",
-						key: i + 1,
+						key: i + 1
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostPrice, {
@@ -74,7 +74,7 @@ module.exports = injectIntl(React.createClass({
 				case 3:
 					content.push(React.DOM.div({
 						className: "card",
-						key: i + 1,
+						key: i + 1
 					}, React.DOM.div({
 						className: "card-block"
 					}, React.createElement(PostPics, {
@@ -90,7 +90,9 @@ module.exports = injectIntl(React.createClass({
 
 		return React.DOM.div({
 			className: "post-apt"
-		}, React.DOM.strong(null, formatMessage({id: "postapt-title"})), React.DOM.div(null, content), React.DOM.div({
+		}, React.DOM.strong(null, formatMessage({
+id: "postapt-title"
+})), React.DOM.div(null, content), React.DOM.div({
 			className: "post-apt-empty-end"
 		}, ""));
 	}

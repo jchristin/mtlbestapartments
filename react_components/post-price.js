@@ -8,9 +8,9 @@ priceFormater = require("./price-formater");
 
 module.exports = injectIntl(React.createClass({
   contextTypes: {
-    router: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object.isRequired
   },
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       price: 2000,
       buttondisable: false
@@ -33,11 +33,10 @@ module.exports = injectIntl(React.createClass({
 		this.slider.on("slideStop", function(event) {
 			this.updateUi(event);
 		}.bind(this));
-
 	},
 	updateUi: function(event) {
     this.setState({
-      price: event,
+      price: event
     });
 	},
   handleValidate: function() {
@@ -56,19 +55,21 @@ module.exports = injectIntl(React.createClass({
       id: this.props.id
     },
       React.DOM.h4({
-  			className: "card-title"
-  		}, formatMessage({
+          className: "card-title"
+      }, formatMessage({
 				id: "postapt-price-title"
 			})),
       React.DOM.i(null, formatMessage({
 				id: "postapt-price-caption"
 			})),
-      React.createElement(priceFormater, {price: this.state.price}),
+      React.createElement(priceFormater, {
+price: this.state.price
+}),
       React.DOM.div(null,
         React.DOM.input({
           type: "text",
-				  id: "slider-price"
-			  })
+          id: "slider-price"
+      })
       ),
       React.DOM.div(null,
         React.DOM.button({
