@@ -1,14 +1,24 @@
 "use strict";
 
 var React = require("react"),
-injectIntl = require("react-intl").injectIntl;
+	Request = require("superagent");
 
-module.exports = injectIntl(React.createClass({
+module.exports = React.createClass({
+	handleChange: function() {
+		Request.post("/api/upload/img0001")
+			.set("Content-Type", "application/octet-stream")
+			.send(this.refs.file.files[0])
+			.end(function(err) {
+				if (err) {
+					console.log(err);
+				}
+			});
+	},
 	render: function() {
-		var formatMessage = this.props.intl.formatMessage;
-
-		return React.DOM.div(null, formatMessage({
-				id: "posted-title"
-			}));
+		return React.DOM.input({
+			ref: "file",
+			type: "file",
+			onChange: this.handleChange
+		});
 	}
-}));
+});

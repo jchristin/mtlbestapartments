@@ -28,6 +28,7 @@
   ],
   "license": "Proprietary",
   "dependencies": {
+    "aws-sdk": "^2.5.5",
     "body-parser": "^1.15.1",
     "bootstrap": "github:twbs/bootstrap#v4-dev",
     "bootstrap-slider": "^7.1.0",

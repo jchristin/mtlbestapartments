@@ -19,7 +19,14 @@ var path = require("path"),
 	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, "/public/index.tpl"), {
 		encoding: "utf8"
 	})),
-	url = require("url");
+	url = require("url"),
+	AWS = require("aws-sdk");
+
+AWS.config.update({
+	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+	region: process.env.AWS_REGION,
+	secretAccessKey: process.env.AWS_SECRET_KEY
+});
 
 // Server setup.
 server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
@@ -27,6 +34,8 @@ server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
 }));
 
 server.use(express.query());
+
+server.use(bodyParser.raw());
 
 server.use(bodyParser.json());
 
@@ -108,6 +117,24 @@ server.delete("/api/search", auth.isAuthenticated, search.remove);
 server.get("/api/layout", auth.isAuthenticated, auth.getLayout);
 
 server.post("/api/layout", auth.isAuthenticated, auth.updateLayout);
+
+server.post("/api/upload/:key", function(req, res, next) {
+	var params = {
+		ACL: "public-read",
+		Bucket: "fleub",
+		Key: req.params.key,
+		Body: req.body
+	};
+
+	var s3 = new AWS.S3();
+	s3.upload(params, function(err) {
+		if (err) {
+			next(err);
+		} else {
+			res.end();
+		}
+	});
+});
 
 server.get("*", function(req, res) {
 	res.send(indexTemplate({
