@@ -73,7 +73,7 @@ country: "ca"
       var address = "";
       if (place.address_components) {
         address = [
-          (place.address_components[0] && place.address_components[0].short_name) || "",
+          place.address_components[0] && place.address_components[0].short_name || "",
           place.address_components[1] && place.address_components[1].short_name || "",
           place.address_components[4] && place.address_components[4].short_name || "",
           place.address_components[6] && place.address_components[6].short_name || "",

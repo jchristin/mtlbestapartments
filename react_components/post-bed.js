@@ -63,15 +63,15 @@ module.exports = injectIntl(React.createClass({
     var disabled = this.state.buttondisable ? " disabled" : "";
     var style = this.state.buttondisable ? " btn-default" : " btn-success";
 
-		return React.DOM.div({
+   return React.DOM.div({
       id: this.props.id
     },
       React.DOM.h4({
           className: "card-title"
       }, formatMessage({
 				id: "postapt-bed-title"
-            })), React.DOM.div({
-                className: "btn-group",
+			})), React.DOM.div({
+				className: "btn-group",
 				"data-toggle": "buttons"
 			},
 			this.createButton(0, "Studio"),
