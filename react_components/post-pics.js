@@ -14,13 +14,13 @@ module.exports = injectIntl(React.createClass({
 	},
 	getInitialState: function() {
 		return {
-files: []
-};
+			files: []
+		};
 	},
 	onDrop: function(files) {
 		this.setState({
-files: this.state.files.concat(files)
-});
+			files: this.state.files.concat(files)
+		});
 	},
 	moveLeft: function(key) {
 		if (key > 0) {
@@ -45,9 +45,8 @@ files: this.state.files.concat(files)
 		}, React.DOM.h4({
 			className: "card-title"
 		}, formatMessage({
-id: "postapt-pics-title"
-})),
-		React.DOM.div({
+			id: "postapt-pics-title"
+		})), React.DOM.div({
 			className: "thumbnail-pics"
 		}, React.createElement(Masonry, {
 			className: "masonry",
@@ -55,8 +54,7 @@ id: "postapt-pics-title"
 				gutter: 14
 			},
 			disableImagesLoaded: false
-		},
-		_.map(this.state.files, _.bind(function(file, key) {
+		}, _.map(this.state.files, _.bind(function(file, key) {
 			return React.DOM.div({
 				className: "grid-item card",
 				key: key
@@ -85,10 +83,13 @@ id: "postapt-pics-title"
 				className: "fa fa-arrow-right",
 				onClick: this.moveRight.bind(this, key)
 			}))))));
-		}, this)),
-		React.createElement(Dropzone, {
-onDrop: this.onDrop
-})
-	)));
+		}, this)), React.createElement(Dropzone, {
+			onDrop: this.onDrop,
+			accept: "image/*"
+		}))), React.DOM.div(null, React.DOM.button({
+			className: "btn btn-success"
+		}, formatMessage({
+			id: "postapt-button"
+		}))));
 	}
 }));
