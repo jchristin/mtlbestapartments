@@ -33,7 +33,7 @@ uiIndex: 0
 		var formatMessage = this.props.intl.formatMessage;
 		var content = [];
 
-		for (var i = 0; i <= this.state.uiIndex; ++i) {
+		for (var i = 0; i <= this.state.uiIndex; i += 1) {
 			switch (i) {
 				case 0:
 					content.push(React.DOM.div({

@@ -13,7 +13,7 @@ module.exports = injectIntl(React.createClass({
   getInitialState: function() {
     this.bedrooms = [];
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 5; i += 1) {
 				this.bedrooms.push(false);
     }
 
@@ -23,7 +23,7 @@ module.exports = injectIntl(React.createClass({
     };
  },
   handleChange: function(number, checked) {
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 5; i += 1) {
         this.bedrooms[i] = false;
     }
 
