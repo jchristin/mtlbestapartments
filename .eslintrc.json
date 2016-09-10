@@ -16,7 +16,6 @@
 		"global-require": "off",
 		"id-length": "off",
 		"indent": ["off", "tab"],
-		"linebreak-style": "off",
 		"max-len": "off",
 		"max-statements": "off",
 		"multiline-ternary": "off",
