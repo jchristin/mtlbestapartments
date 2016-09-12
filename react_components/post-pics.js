@@ -6,7 +6,8 @@ var React = require("react"),
 	injectIntl = require("react-intl").injectIntl,
 	Dropzone = require("react-dropzone"),
 	_ = require("lodash"),
-	Masonry = require("react-masonry-component");
+	Masonry = require("react-masonry-component"),
+	Request = require("superagent");
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
@@ -31,6 +32,18 @@ module.exports = injectIntl(React.createClass({
 	handleDelete: function(key) {
 		_.pullAt(this.state.files, key);
 		this.forceUpdate();
+	},
+	uploadFile: function() {
+		_.forEach(this.state.files, function(file) {
+			Request.post("/api/upload/" + file.name)
+				.set("Content-Type", "application/octet-stream")
+				.send(file)
+				.end(function(err) {
+					if (err) {
+						console.log(err);
+					}
+				});
+			});
 	},
 	moveRight: function(key) {
 		this.state.files.splice(key + 1, 0, this.state.files.splice(key, 1)[0]);
@@ -87,7 +100,8 @@ module.exports = injectIntl(React.createClass({
 			onDrop: this.onDrop,
 			accept: "image/*"
 		}))), React.DOM.div(null, React.DOM.button({
-			className: "btn btn-success"
+			className: "btn btn-success",
+			onClick: this.uploadFile
 		}, formatMessage({
 			id: "postapt-button"
 		}))));
