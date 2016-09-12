@@ -19,7 +19,15 @@ var path = require("path"),
 	indexTemplate = _.template(fs.readFileSync(path.join(__dirname, "/public/index.tpl"), {
 		encoding: "utf8"
 	})),
+	aws = require("aws-sdk"),
 	url = require("url");
+
+// AWS configuration.
+aws.config.update({
+	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+	secretAccessKey: process.env.AWS_SECRET_KEY,
+	region: process.env.AWS_REGION
+});
 
 // Server setup.
 server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
@@ -27,6 +35,8 @@ server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
 }));
 
 server.use(express.query());
+
+server.use(bodyParser.raw());
 
 server.use(bodyParser.json());
 
@@ -84,6 +94,24 @@ server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 server.get("/api/apart/:id", apart.getApart);
 
 server.post("/api/apart", apart.addOrUpdateApart);
+
+server.post("/api/upload/:key", function(req, res, next) {
+	var params = {
+		ACL: "public-read",
+		Bucket: "fleub",
+		Key: req.params.key,
+		Body: req.body
+	};
+
+	var s3 = new aws.S3();
+	s3.upload(params, function(err) {
+		if (err) {
+			next(err);
+		} else {
+			res.end();
+		}
+	});
+});
 
 server.delete("/api/apart", apart.deactivateApart);
 
