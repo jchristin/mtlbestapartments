@@ -9,6 +9,7 @@ module.exports = injectIntl(React.createClass({
 		return React.createElement(FormattedNumber, {
 			value: this.props.price || 0,
 			style: "currency",
+			maximumFractionDigits: 0,
 			currency: "CAD"
 		});
 	}
