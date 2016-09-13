@@ -172,7 +172,7 @@ module.exports.getActiveSearchCount = function(req, res, next) {
 	database.searches.count({
 		lastSeen: {
 			$gt: moment()
-				.subtract(1, "months")
+				.subtract(2, "weeks")
 				.toDate()
 		}
 	}, function(err, count) {
