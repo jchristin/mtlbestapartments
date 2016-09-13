@@ -33,6 +33,20 @@ module.exports = React.createClass({
 						className: "modal-content"
 					},
 					React.DOM.div({
+							className: "modal-header"
+						},
+						React.DOM.button({
+								"type": "button",
+								"className": "close",
+								"data-dismiss": "modal",
+								"aria-label": "Close"
+							},
+							React.DOM.span({
+								"aria-hidden": "true"
+							}, "×")
+						)
+					),
+					React.DOM.div({
 							className: "modal-body"
 						},
 						React.DOM.div({
