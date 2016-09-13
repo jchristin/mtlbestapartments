@@ -7,9 +7,9 @@ var _ = require("lodash"),
 	ObjectID = require("mongodb").ObjectID,
 	database = require("./database");
 
-passport.use(new LocalStrategy(function(email, password, done) {
+passport.use(new LocalStrategy(function(username, password, done) {
 	database.users.findOne({
-		email: email
+		email: username
 	}, function(err, doc) {
 		if (err) {
 			console.log(err);
@@ -59,7 +59,7 @@ module.exports.isAuthenticated = function(req, res, next) {
 
 module.exports.signUp = function(req, res, next) {
 	database.users.findOne({
-		email: req.body.email
+		email: req.body.username
 	}, function(err, doc) {
 		if (err) {
 			next(err);

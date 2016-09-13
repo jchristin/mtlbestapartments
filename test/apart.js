@@ -4,7 +4,7 @@
 
 var Apart = require("../apart");
 
-describe("Apart", function() {
+describe.skip("Apart", function() {
 	this.timeout(0);
 	it("should normalize apartement", function(done) {
 		var apartements = [{

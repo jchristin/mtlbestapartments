@@ -28,7 +28,7 @@ module.exports = injectIntl(React.createClass({
 		request
 			.post("/api/signin")
 			.send({
-				username: this.refs.username.value.trim(),
+				username: this.refs.username.value.trim().toLowerCase(),
 				password: this.refs.password.value.trim()
 			})
 			.end(function(err, res) {
