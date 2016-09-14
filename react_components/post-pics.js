@@ -22,6 +22,10 @@ module.exports = injectIntl(React.createClass({
 		this.setState({
 			files: this.state.files.concat(files)
 		});
+
+		_.forEach(files, _.bind(function(file) {
+			this.uploadFile(file);
+		}, this));
 	},
 	moveLeft: function(key) {
 		if (key > 0) {
@@ -33,17 +37,19 @@ module.exports = injectIntl(React.createClass({
 		_.pullAt(this.state.files, key);
 		this.forceUpdate();
 	},
-	uploadFile: function() {
-		_.forEach(this.state.files, function(file) {
-			Request.post("/api/upload/" + file.name)
-				.set("Content-Type", "application/octet-stream")
-				.send(file)
-				.end(function(err) {
-					if (err) {
-						console.log(err);
-					}
-				});
-			});
+	uploadFile: function(file) {
+		Request.post("/api/upload/" + file.name)
+			.set("Content-Type", "application/octet-stream")
+			.send(file)
+			.end(function(err) {
+				if (err) {
+					console.log(err);
+					file.uploaded = false;
+				} else {
+					file.uploaded = true;
+					this.forceUpdate();
+				}
+			}.bind(this));
 	},
 	moveRight: function(key) {
 		this.state.files.splice(key + 1, 0, this.state.files.splice(key, 1)[0]);
@@ -72,11 +78,16 @@ module.exports = injectIntl(React.createClass({
 				className: "grid-item card",
 				key: key
 			}, React.DOM.div({
-				className: "thumbnail-img-container"
+				className: "thumbnail-img-container",
+				id: (file.uploaded || false) ? "uploaded" : "loading"
 			}, React.DOM.img({
 				className: "thumbnail-img",
 				src: file.preview
-			}), React.DOM.div({
+			}), React.DOM.a({
+				className: "thumbnail-img-options"
+			}, React.DOM.span({
+				className: "fa fa-refresh fa-spin fa-2x"
+			})), React.DOM.div({
 				className: "card-block"
 			}, React.DOM.div({
 				className: "thumbnail-options-container"
@@ -100,8 +111,7 @@ module.exports = injectIntl(React.createClass({
 			onDrop: this.onDrop,
 			accept: "image/*"
 		}))), React.DOM.div(null, React.DOM.button({
-			className: "btn btn-success",
-			onClick: this.uploadFile
+			className: "btn btn-success"
 		}, formatMessage({
 			id: "postapt-button"
 		}))));
