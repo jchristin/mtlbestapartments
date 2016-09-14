@@ -22,7 +22,7 @@ var path = require("path"),
 	url = require("url");
 
 // Server setup.
-server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
+server.use(favicon(path.join(__dirname, "public/img/favicon.png"), {
 	maxAge: cacheMaxAge
 }));
 
