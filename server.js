@@ -119,15 +119,12 @@ server.post("/api/upload/", function(req, res, next) {
 		}
 	});
 
-	var params = {
+	s3.upload({
 		ACL: "public-read",
 		Bucket: subBucket,
 		Key: urlQuery.key,
 		Body: req.body
-	};
-
-
-	s3.upload(params, function(err) {
+	}, function(err) {
 		if (err) {
 			next(err);
 		} else {
