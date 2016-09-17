@@ -11,7 +11,8 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		user: React.PropTypes.object
 	},
 	getInitialState: function() {
 		return {
@@ -38,7 +39,8 @@ module.exports = injectIntl(React.createClass({
 		this.forceUpdate();
 	},
 	uploadFile: function(file) {
-		Request.post("/api/upload/" + file.name)
+		file.subbucket = this.context.user._id;
+		Request.post("/api/upload/?subbucket=" + this.context.user._id + "&key=" + file.name)
 			.set("Content-Type", "application/octet-stream")
 			.send(file)
 			.end(function(err) {
@@ -79,7 +81,7 @@ module.exports = injectIntl(React.createClass({
 				key: key
 			}, React.DOM.div({
 				className: "thumbnail-img-container",
-				id: (file.uploaded || false) ? "uploaded" : "loading"
+				id: file.uploaded || false ? "uploaded" : "loading"
 			}, React.DOM.img({
 				className: "thumbnail-img",
 				src: file.preview

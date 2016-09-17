@@ -95,15 +95,38 @@ server.get("/api/apart/:id", apart.getApart);
 
 server.post("/api/apart", apart.addOrUpdateApart);
 
-server.post("/api/upload/:key", function(req, res, next) {
+server.post("/api/upload/", function(req, res, next) {
+	var urlQuery = url.parse(req.url, true).query,
+		subBucket = "fleub/" + urlQuery.subbucket,
+		s3 = new aws.S3();
+
+	// Check if bucket exist.
+	s3.headBucket({
+		Bucket: subBucket
+	}, function(errHead) {
+		if (errHead) {
+			// bucket does not exist, create it
+			s3.createBucket({
+				ACL: "public-read",
+				Bucket: subBucket
+			}, function(errCreate) {
+				if (errCreate) {
+					// Cannot create the sub bucket.
+					res.sendStatus(500);
+					return;
+				}
+			});
+		}
+	});
+
 	var params = {
 		ACL: "public-read",
-		Bucket: "fleub",
-		Key: req.params.key,
+		Bucket: subBucket,
+		Key: urlQuery.key,
 		Body: req.body
 	};
 
-	var s3 = new aws.S3();
+
 	s3.upload(params, function(err) {
 		if (err) {
 			next(err);
