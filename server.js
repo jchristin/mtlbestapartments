@@ -133,6 +133,24 @@ server.post("/api/upload/", function(req, res, next) {
 	});
 });
 
+server.delete("/api/upload/", function(req, res, next) {
+	var urlQuery = url.parse(req.url, true).query,
+		subBucket = "fleub/" + urlQuery.subbucket,
+		s3 = new aws.S3();
+
+	s3.deleteObject({
+		Bucket: subBucket,
+		Key: urlQuery.key
+	}, function(err) {
+		if (err) {
+			next(err);
+		} else {
+			res.end();
+		}
+	});
+});
+
+
 server.delete("/api/apart", apart.deactivateApart);
 
 server.get("/api/latest", apart.getLatest);

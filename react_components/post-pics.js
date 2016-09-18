@@ -36,6 +36,9 @@ module.exports = injectIntl(React.createClass({
 	},
 	handleDelete: function(key) {
 		var file = this.state.files[key];
+		file.id = "changing";
+		file.icon = "fa-trash";
+		this.forceUpdate();
 		Request.del("/api/upload/?subbucket=" + this.context.user._id + "&key=" + file.name)
 			.end(function(err) {
 				if (err) {
@@ -47,15 +50,17 @@ module.exports = injectIntl(React.createClass({
 			}.bind(this));
 	},
 	uploadFile: function(file) {
+		file.id = "changing";
+		file.icon = "fa-refresh";
+		this.forceUpdate();
 		Request.post("/api/upload/?subbucket=" + this.context.user._id + "&key=" + file.name)
 			.set("Content-Type", "application/octet-stream")
 			.send(file)
 			.end(function(err) {
 				if (err) {
 					console.log(err);
-					file.uploaded = false;
 				} else {
-					file.uploaded = true;
+					file.id = "";
 					this.forceUpdate();
 				}
 			}.bind(this));
@@ -88,14 +93,14 @@ module.exports = injectIntl(React.createClass({
 				key: key
 			}, React.DOM.div({
 				className: "thumbnail-img-container",
-				id: file.uploaded || false ? "uploaded" : "loading"
+				id: file.id || ""
 			}, React.DOM.img({
 				className: "thumbnail-img",
 				src: file.preview
 			}), React.DOM.a({
 				className: "thumbnail-img-options"
 			}, React.DOM.span({
-				className: "fa fa-refresh fa-spin fa-2x"
+				className: "fa " + file.icon + " fa-spin fa-2x"
 			})), React.DOM.div({
 				className: "card-block"
 			}, React.DOM.div({
