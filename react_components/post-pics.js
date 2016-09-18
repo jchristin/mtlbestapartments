@@ -35,11 +35,18 @@ module.exports = injectIntl(React.createClass({
 		}
 	},
 	handleDelete: function(key) {
-		_.pullAt(this.state.files, key);
-		this.forceUpdate();
+		var file = this.state.files[key];
+		Request.del("/api/upload/?subbucket=" + this.context.user._id + "&key=" + file.name)
+			.end(function(err) {
+				if (err) {
+					console.log(err);
+				} else {
+					_.pullAt(this.state.files, key);
+					this.forceUpdate();
+				}
+			}.bind(this));
 	},
 	uploadFile: function(file) {
-		file.subbucket = this.context.user._id;
 		Request.post("/api/upload/?subbucket=" + this.context.user._id + "&key=" + file.name)
 			.set("Content-Type", "application/octet-stream")
 			.send(file)
