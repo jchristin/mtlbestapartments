@@ -17,8 +17,8 @@ module.exports = injectIntl(React.createClass({
 	},
 	getInitialState: function() {
 		return {
-uiIndex: 0
-};
+			uiIndex: 0
+		};
 	},
 	callback: function() {
 		if (this.state.uiIndex + 1 < stateId.length) {
@@ -91,8 +91,8 @@ uiIndex: 0
 		return React.DOM.div({
 			className: "post-apt"
 		}, React.DOM.strong(null, formatMessage({
-id: "postapt-title"
-})), React.DOM.div(null, content), React.DOM.div({
+			id: "postapt-title"
+		})), React.DOM.div(null, content), React.DOM.div({
 			className: "post-apt-empty-end"
 		}, ""));
 	}
