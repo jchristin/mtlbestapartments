@@ -65,7 +65,7 @@ module.exports = React.createClass({
 					React.createElement(Link, {
 						to: "/" + this.props.params.lang + "/",
 						className: "navbar-brand"
-					}, "Fleub"),
+					}, "MTL Best Apartments"),
 					React.createElement(LogMenu, {
 						lang: this.props.params.lang
 					})
