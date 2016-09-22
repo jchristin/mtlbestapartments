@@ -103,8 +103,7 @@ module.exports = injectIntl(React.createClass({
 	componentDidUpdate: function() {
 		jQuery(".flexslider").flexslider({
 			animation: "slide",
-			slideshow: false,
-			smoothHeight: true
+			slideshow: false
 		});
 	},
 	render: function() {
