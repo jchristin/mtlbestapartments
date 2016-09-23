@@ -9,7 +9,7 @@ var notify = function(user) {
 	personalization.addTo(new helper.Email(user.email, user.name));
 
 	var mail = new helper.Mail();
-	mail.setFrom(new helper.Email("notification@fleub.com"));
+	mail.setFrom(new helper.Email("notification@mtlbestapartments.com"));
 	mail.addPersonalization(personalization);
 	mail.addContent(new helper.Content("text/plain", "new apartment"));
 	mail.addContent(new helper.Content("text/html", "new apartment"));
