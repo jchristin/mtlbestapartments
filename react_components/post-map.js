@@ -99,11 +99,12 @@ module.exports = injectIntl(React.createClass({
     });
   },
   handleValidateAddress: function() {
-    this.setState({
-      buttondisable: true
-    });
-
-    this.props.callback(this.props.id);
+      if (!this.state.buttondisable) {
+          this.setState({
+              buttondisable: true
+          });
+          this.props.callback(this.props.id);
+      }
   },
   render: function() {
       var formatMessage = this.props.intl.formatMessage;

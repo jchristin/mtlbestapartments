@@ -41,22 +41,20 @@ module.exports = injectIntl(React.createClass({
     createButton: function(number, label) {
         var checked = this.state.checked[number];
 
-        return React.DOM.label({
-            className: "btn btn-secondary" + (checked ? " active" : "")
-        },
-        React.DOM.input({
-            type: "checkbox",
-            autoComplete: "off",
-            onChange: this.handleChange.bind(this, number, !checked)
-        }), label
+        return React.DOM.button({
+            type: "button",
+            className: "btn btn-secondary" + (checked ? " active" : ""),
+            onClick: this.handleChange.bind(this, number, !checked)
+        }, label
     );
     },
     handleValidateBed: function() {
-        this.setState({
-            buttondisable: true
-        });
-
-        this.props.callback(this.props.id);
+        if (!this.state.buttondisable) {
+            this.setState({
+                buttondisable: true
+            });
+            this.props.callback(this.props.id);
+        }
     },
     render: function() {
         var formatMessage = this.props.intl.formatMessage;
@@ -72,7 +70,7 @@ module.exports = injectIntl(React.createClass({
             id: "postapt-bed-title"
         })), React.DOM.div({
             className: "btn-group",
-            "data-toggle": "buttons"
+            role: "group"
         },
         this.createButton(0, "Studio"),
         this.createButton(1, "1"),
