@@ -180,4 +180,54 @@ module.exports.getLatest = function(req, res) {
 		});
 };
 
+/**
+ * Route handler: GET /api/apart/duplicate
+ * Removes apartment duplicates based on Kijiji id in url.
+ * Mainly used for maintenance purposes.
+ * @arg {object} req The first number.
+ * @arg {object} res The second number.
+ * @arg {function} next The next callback handler.
+ * @return {void}
+ */
+module.exports.removeDuplicate = function(req, res, next) {
+	database.apartments.find({
+		active: true
+	}).toArray(function(err, docs) {
+		if (err) {
+			next(err);
+		} else {
+			var count = 0;
+			var regexp = /http:\/\/www.kijiji.ca\/.*(?=\/)\/(\d+)/;
+			var kids = {};
+
+			docs.forEach(function(apartment) {
+				var result = regexp.exec(apartment.url);
+				if (result) {
+					var list = kids[result[1]];
+					if (list) {
+						list.push(apartment);
+					} else {
+						kids[result[1]] = [apartment];
+					}
+				}
+			});
+
+			_.forEach(kids, function(list) {
+				_.dropRight(_.sortBy(list, ["date"])).forEach(function(apartment) {
+					count += 1;
+					database.apartments.deleteOne({
+						_id: apartment._id
+					}, function(err2) {
+						if (err2) {
+							console.log(err2);
+						}
+					});
+				});
+			});
+
+			res.send(count + " duplicates removed.");
+		}
+	});
+};
+
 module.exports.normalizeApart = normalizeApart;
