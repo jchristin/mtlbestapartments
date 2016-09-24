@@ -162,7 +162,7 @@ module.exports.getApart = function(req, res) {
 	});
 };
 
-module.exports.getLatest = function(req, res) {
+module.exports.getLatest = function(req, res, next) {
 	database.apartments
 		.find({
 			active: true
@@ -173,7 +173,7 @@ module.exports.getLatest = function(req, res) {
 		.limit(50)
 		.toArray(function(err, docs) {
 			if (err) {
-				console.log(err);
+				next(err);
 			} else {
 				res.json(docs);
 			}
