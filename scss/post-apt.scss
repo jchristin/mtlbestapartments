@@ -1,6 +1,14 @@
 .post-apt {
 	text-align: center;
 
+	.post-show {
+		visibility: visible;
+	}
+
+	.post-hide {
+		visibility: hidden;
+	}
+
 	.post-apt-empty-end {
 		height: 100vh;
 	}

@@ -44,7 +44,7 @@ module.exports = injectIntl(React.createClass({
       buttondisable: true
     });
 
-    this.props.callback();
+    this.props.callback(this.props.id);
   },
   render: function() {
     var formatMessage = this.props.intl.formatMessage;

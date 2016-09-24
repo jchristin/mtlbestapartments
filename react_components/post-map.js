@@ -42,10 +42,10 @@ module.exports = injectIntl(React.createClass({
     // location types.
     this.input = document.getElementById("autocomplete");
     var options = {
-      types: ["geocode"],
-      componentRestrictions: {
-country: "ca"
-}
+        types: ["geocode"],
+        componentRestrictions: {
+            country: "ca"
+        }
     };
 
     this.autocomplete = new google.maps.places.Autocomplete(this.input, options);
@@ -103,42 +103,42 @@ country: "ca"
       buttondisable: true
     });
 
-    this.props.callback();
+    this.props.callback(this.props.id);
   },
-	render: function() {
-		var formatMessage = this.props.intl.formatMessage;
-    var disabled = this.state.buttondisable ? " disabled" : "";
-    var style = this.state.buttondisable ? " btn-default" : " btn-success";
+  render: function() {
+      var formatMessage = this.props.intl.formatMessage;
+      var disabled = this.state.buttondisable ? " disabled" : "";
+      var style = this.state.buttondisable ? " btn-default" : " btn-success";
 
-		return React.DOM.div({
-      id: this.props.id
-    },
+      return React.DOM.div({
+          id: this.props.id
+      },
       React.DOM.h4({
           className: "card-title"
       }, formatMessage({
-				id: "postapt-map-title"
-			})),
+          id: "postapt-map-title"
+      })),
       React.DOM.input({
-        id: "autocomplete",
-        className: "form-control",
-        placeholder: formatMessage({
-            id: "postapt-map-input-caption"
+          id: "autocomplete",
+          className: "form-control",
+          placeholder: formatMessage({
+              id: "postapt-map-input-caption"
           }),
-        type: "text",
-        name: formatMessage({
-            id: "postapt-map-input-caption"
+          type: "text",
+          name: formatMessage({
+              id: "postapt-map-input-caption"
           }),
-        onChange: this.handleInputChange
+          onChange: this.handleInputChange
       }),
       React.DOM.div({
           id: "map-canvas"
       }),
       React.DOM.button({
-        className: "btn" + disabled + style,
-        onClick: this.handleValidateAddress
-			}, formatMessage({
-					id: "postapt-button"
-				})
-    ));
-	}
+          className: "btn" + disabled + style,
+          onClick: this.handleValidateAddress
+      }, formatMessage({
+          id: "postapt-button"
+      })
+  ));
+    }
 }));

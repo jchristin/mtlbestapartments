@@ -69,6 +69,9 @@ module.exports = injectIntl(React.createClass({
 		this.state.files.splice(key + 1, 0, this.state.files.splice(key, 1)[0]);
 		this.forceUpdate();
 	},
+	handleValidate: function() {
+      this.props.callback(this.props.id);
+    },
 	render: function() {
 		var formatMessage = this.props.intl.formatMessage;
 
@@ -125,7 +128,8 @@ module.exports = injectIntl(React.createClass({
 			onDrop: this.onDrop,
 			accept: "image/*"
 		}))), React.DOM.div(null, React.DOM.button({
-			className: "btn btn-success"
+			className: "btn btn-success",
+			onClick: this.handleValidate
 		}, formatMessage({
 			id: "postapt-button"
 		}))));
