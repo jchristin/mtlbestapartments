@@ -26,6 +26,7 @@ module.exports = injectIntl(React.createClass({
 		});
 
 		_.forEach(files, _.bind(function(file) {
+			file.userid = this.context.user._id;
 			file.uuid = Uuid.v1();
 			this.uploadFile(file);
 		}, this));
