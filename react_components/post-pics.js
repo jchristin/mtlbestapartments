@@ -7,7 +7,8 @@ var React = require("react"),
 	Dropzone = require("react-dropzone"),
 	_ = require("lodash"),
 	Masonry = require("react-masonry-component"),
-	Request = require("superagent");
+	Request = require("superagent"),
+	Uuid = require("node-uuid");
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
@@ -25,6 +26,7 @@ module.exports = injectIntl(React.createClass({
 		});
 
 		_.forEach(files, _.bind(function(file) {
+			file.uuid = Uuid.v1();
 			this.uploadFile(file);
 		}, this));
 	},
