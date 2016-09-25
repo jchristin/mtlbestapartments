@@ -89,9 +89,62 @@ var normalizeAddress = co.wrap(function*(address) {
 	return result;
 });
 
+/**
+* Gets the Kijiji id of the apart parameter.
+* @param {object} apart - The apartment to get the id from.
+* @return {string} The Kijiji id of the apart parameter.
+*/
+var getKid = function(apart) {
+	var regexpResult = (/http:\/\/www.kijiji.ca\/.*(?=\/)\/(\d+)/).exec(apart.url);
+	if (regexpResult) {
+		return regexpResult[1];
+	}
+
+	return null;
+};
+
+/**
+ * Finds a potential duplicate apartment in database.
+ * @param {object} apart - The apartment used to find its duplicate.
+ * @return {object} The duplicate apartment or null if no duplicates found.
+ */
+var findKijijiDuplicate = function(apart) {
+	return function(done) {
+		var kid = getKid(apart);
+		if (kid === null) {
+			done(null, null);
+		} else {
+			database.apartments.findOne({
+				kid: kid
+			}, function(err, doc) {
+				if (err) {
+					done(err);
+				} else {
+					done(null, doc);
+				}
+			});
+		}
+	};
+};
+
 var normalizeApart = co.wrap(function*(apart) {
-	apart._id = new ObjectID(apart._id);
-	apart.date = apart.date ? new Date(apart.date) : new Date();
+	if (apart._id) {
+		// Update.
+		apart._id = new ObjectID(apart._id);
+		apart.date = new Date(apart.date);
+	} else {
+		var duplicate = yield findKijijiDuplicate(apart);
+		if (duplicate) {
+			// Duplicate.
+			apart._id = new ObjectID(duplicate._id);
+			apart.date = new Date(duplicate.date);
+		} else {
+			// New.
+			apart._id = new ObjectID();
+			apart.date = new Date();
+			apart.kid = getKid(apart);
+		}
+	}
 
 	apart.coord = null;
 	var result = yield normalizeAddress(apart.address);
@@ -162,7 +215,7 @@ module.exports.getApart = function(req, res) {
 	});
 };
 
-module.exports.getLatest = function(req, res) {
+module.exports.getLatest = function(req, res, next) {
 	database.apartments
 		.find({
 			active: true
@@ -173,11 +226,61 @@ module.exports.getLatest = function(req, res) {
 		.limit(50)
 		.toArray(function(err, docs) {
 			if (err) {
-				console.log(err);
+				next(err);
 			} else {
 				res.json(docs);
 			}
 		});
+};
+
+/**
+ * Route handler: GET /api/apart/duplicate
+ * Removes apartment duplicates based on Kijiji id in url.
+ * Mainly used for maintenance purposes.
+ * @arg {object} req The first number.
+ * @arg {object} res The second number.
+ * @arg {function} next The next callback handler.
+ * @return {void}
+ */
+module.exports.removeDuplicate = function(req, res, next) {
+	database.apartments.find({
+		active: true
+	}).toArray(function(err, docs) {
+		if (err) {
+			next(err);
+		} else {
+			var count = 0;
+			var regexp = /http:\/\/www.kijiji.ca\/.*(?=\/)\/(\d+)/;
+			var kids = {};
+
+			docs.forEach(function(apartment) {
+				var result = regexp.exec(apartment.url);
+				if (result) {
+					var list = kids[result[1]];
+					if (list) {
+						list.push(apartment);
+					} else {
+						kids[result[1]] = [apartment];
+					}
+				}
+			});
+
+			_.forEach(kids, function(list) {
+				_.dropRight(_.sortBy(list, ["date"])).forEach(function(apartment) {
+					count += 1;
+					database.apartments.deleteOne({
+						_id: apartment._id
+					}, function(err2) {
+						if (err2) {
+							console.log(err2);
+						}
+					});
+				});
+			});
+
+			res.send(count + " duplicates removed.");
+		}
+	});
 };
 
 module.exports.normalizeApart = normalizeApart;

@@ -81,6 +81,8 @@ server.get("/api/user", auth.getUserInfo);
 
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
 
+server.get("/api/apart/duplicate", apart.removeDuplicate);
+
 server.get("/api/apart/:id", apart.getApart);
 
 server.post("/api/apart", apart.addOrUpdateApart);
