@@ -89,9 +89,62 @@ var normalizeAddress = co.wrap(function*(address) {
 	return result;
 });
 
+/**
+* Gets the Kijiji id of the apart parameter.
+* @param {object} apart - The apartment to get the id from.
+* @return {string} The Kijiji id of the apart parameter.
+*/
+var getKid = function(apart) {
+	var regexpResult = (/http:\/\/www.kijiji.ca\/.*(?=\/)\/(\d+)/).exec(apart.url);
+	if (regexpResult) {
+		return regexpResult[1];
+	}
+
+	return null;
+};
+
+/**
+ * Finds a potential duplicate apartment in database.
+ * @param {object} apart - The apartment used to find its duplicate.
+ * @return {object} The duplicate apartment or null if no duplicates found.
+ */
+var findKijijiDuplicate = function(apart) {
+	return function(done) {
+		var kid = getKid(apart);
+		if (kid === null) {
+			done(null, null);
+		} else {
+			database.apartments.findOne({
+				kid: kid
+			}, function(err, doc) {
+				if (err) {
+					done(err);
+				} else {
+					done(null, doc);
+				}
+			});
+		}
+	};
+};
+
 var normalizeApart = co.wrap(function*(apart) {
-	apart._id = new ObjectID(apart._id);
-	apart.date = apart.date ? new Date(apart.date) : new Date();
+	if (apart._id) {
+		// Update.
+		apart._id = new ObjectID(apart._id);
+		apart.date = new Date(apart.date);
+	} else {
+		var duplicate = yield findKijijiDuplicate(apart);
+		if (duplicate) {
+			// Duplicate.
+			apart._id = new ObjectID(duplicate._id);
+			apart.date = new Date(duplicate.date);
+		} else {
+			// New.
+			apart._id = new ObjectID();
+			apart.date = new Date();
+			apart.kid = getKid(apart);
+		}
+	}
 
 	apart.coord = null;
 	var result = yield normalizeAddress(apart.address);
