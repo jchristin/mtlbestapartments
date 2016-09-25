@@ -70,9 +70,9 @@ module.exports = injectIntl(React.createClass({
       this.marker.setPosition(place.geometry.location);
       this.marker.setVisible(true);
 
-      var address = "";
+      this.address = "";
       if (place.address_components) {
-        address = [
+        this.address = [
           place.address_components[0] && place.address_components[0].short_name || "",
           place.address_components[1] && place.address_components[1].short_name || "",
           place.address_components[4] && place.address_components[4].short_name || "",
@@ -84,10 +84,10 @@ module.exports = injectIntl(React.createClass({
 
       this.setState({
         buttondisable: false,
-        selectedAddress: address
+        selectedAddress: this.address
       });
 
-      this.infowindow.setContent("<div><strong>Address selected</strong><br>" + address);
+      this.infowindow.setContent("<div><strong>Address selected</strong><br>" + this.address);
       this.infowindow.open(this.map, this.marker);
     }.bind(this));
   },
@@ -103,7 +103,7 @@ module.exports = injectIntl(React.createClass({
           this.setState({
               buttondisable: true
           });
-          this.props.callback(this.props.id);
+          this.props.callback(this.address);
       }
   },
   render: function() {

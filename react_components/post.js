@@ -13,6 +13,12 @@ module.exports = injectIntl(React.createClass({
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
 	},
+	componentDidMount: function() {
+		this.address = "";
+		this.bed = 0;
+		this.price = 0;
+		this.pictures = [];
+	},
 	getInitialState: function() {
 		return {
 			showMap: true,
@@ -21,36 +27,26 @@ module.exports = injectIntl(React.createClass({
 			showPics: false
 		};
 	},
-	callback: function(state) {
-		switch (state) {
-			case "map":
-				this.setState({
-					showBed: true
-				});
-				break;
-			case "bed":
-				this.setState({
-					showPrice: true
-				});
-				break;
-			case "price":
-				this.setState({
-					showPics: true
-				});
-				break;
-			default:
-				break;
-		}
+	callbackMap: function(address) {
+		this.address = address;
+		this.setState({
+			showBed: true
+		});
 	},
-	createCard: function(element, id) {
-		return React.DOM.div({
-			className: "card"
-		}, React.DOM.div({
-			className: "card-block"
-		}, React.createElement(element, {
-			id: id,
-			callback: this.callback
-		})));
+	callbackBed: function(bed) {
+		this.bed = bed;
+		this.setState({
+			showPrice: true
+		});
+	},
+	callbackPrice: function(price) {
+		this.price = price;
+		this.setState({
+			showPics: true
+		});
+	},
+	callbackPics: function(pictures) {
+		this.pictures = pictures;
 	},
 	render: function() {
 		var formatMessage = this.props.intl.formatMessage;
@@ -64,19 +60,47 @@ module.exports = injectIntl(React.createClass({
 			React.DOM.div({
 				className: this.state.showMap ? "post-show" : "post-hide"
 			},
-			this.createCard(PostMap, "map")),
+			React.DOM.div({
+				className: "card"
+			}, React.DOM.div({
+				className: "card-block"
+			}, React.createElement(PostMap, {
+				id: "map",
+				callback: this.callbackMap
+			})))),
 			React.DOM.div({
 				className: this.state.showBed ? "post-show" : "post-hide"
 			},
-			this.createCard(PostBed, "bed")),
+			React.DOM.div({
+				className: "card"
+			}, React.DOM.div({
+				className: "card-block"
+			}, React.createElement(PostBed, {
+				id: "bed",
+				callback: this.callbackBed
+			})))),
 			React.DOM.div({
 				className: this.state.showPrice ? "post-show" : "post-hide"
 			},
-			this.createCard(PostPrice, "price")),
+			React.DOM.div({
+				className: "card"
+			}, React.DOM.div({
+				className: "card-block"
+			}, React.createElement(PostPrice, {
+				id: "price",
+				callback: this.callbackPrice
+			})))),
 			React.DOM.div({
 				className: this.state.showPics ? "post-show" : "post-hide"
 			},
-			this.createCard(PostPics, "pics")),
+			React.DOM.div({
+				className: "card"
+			}, React.DOM.div({
+				className: "card-block"
+			}, React.createElement(PostPics, {
+				id: "pics",
+				callback: this.callbackPics
+			})))),
 			React.DOM.div({
 				className: "post-apt-empty-end"
 			}, "")

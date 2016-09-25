@@ -70,7 +70,7 @@ module.exports = injectIntl(React.createClass({
 		this.forceUpdate();
 	},
 	handleValidate: function() {
-      this.props.callback(this.props.id);
+      this.props.callback(this.state.files);
     },
 	render: function() {
 		var formatMessage = this.props.intl.formatMessage;

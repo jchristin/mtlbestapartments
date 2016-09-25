@@ -10,6 +10,9 @@ module.exports = injectIntl(React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired
     },
+    componentDidMount: function() {
+        this.bed = 0;
+    },
     getInitialState: function() {
         this.bedrooms = [];
 
@@ -33,6 +36,12 @@ module.exports = injectIntl(React.createClass({
             return bedroom === true;
         });
 
+        if (bedSelected && checked) {
+            this.bed = number;
+        } else {
+            this.bed = 0;
+        }
+
         this.setState({
             buttondisable: !bedSelected,
             checked: this.bedrooms
@@ -53,7 +62,7 @@ module.exports = injectIntl(React.createClass({
             this.setState({
                 buttondisable: true
             });
-            this.props.callback(this.props.id);
+            this.props.callback(this.bed);
         }
     },
     render: function() {
