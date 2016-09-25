@@ -98,7 +98,8 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 			console.log(err);
 		} else {
 			updateResult(req.user);
-			enableNotificationIfNotSet(req.user);
+			// TODO: Re-enable when notification system is more customizable.
+			// enableNotificationIfNotSet(req.user);
 		}
 	});
 };
