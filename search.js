@@ -17,23 +17,6 @@ var updateResult = function(user) {
 	});
 };
 
-var enableNotificationIfNotSet = function(user) {
-	database.searches.updateOne({
-		user: user._id,
-		notification: {
-			$exists: false
-		}
-	}, {
-		$set: {
-			notification: true
-		}
-	}, function(err) {
-		if (err) {
-			console.log(err);
-		}
-	});
-};
-
 var invalidateResult = function(user, callback) {
 	database.searches.updateOne({
 		user: user._id
@@ -98,8 +81,6 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 			console.log(err);
 		} else {
 			updateResult(req.user);
-			// TODO: Re-enable when notification system is more customizable.
-			// enableNotificationIfNotSet(req.user);
 		}
 	});
 };
