@@ -7,7 +7,6 @@ var React = require("react"),
 	Dropzone = require("react-dropzone"),
 	_ = require("lodash"),
 	Masonry = require("react-masonry-component"),
-	Request = require("superagent"),
 	Uuid = require("node-uuid");
 
 module.exports = injectIntl(React.createClass({
@@ -20,6 +19,9 @@ module.exports = injectIntl(React.createClass({
 			files: []
 		};
 	},
+	getFileExtension: function(file) {
+		return (/[.]/).exec(file.name) ? (/[^.]+$/).exec(file.name) : undefined;
+	},
 	onDrop: function(files) {
 		this.setState({
 			files: this.state.files.concat(files)
@@ -27,8 +29,7 @@ module.exports = injectIntl(React.createClass({
 
 		_.forEach(files, _.bind(function(file) {
 			file.userid = this.context.user._id;
-			file.uuid = Uuid.v1();
-			this.uploadFile(file);
+			file.uuid = Uuid.v1() + "." + this.getFileExtension(file);
 		}, this));
 	},
 	moveLeft: function(key) {
@@ -38,35 +39,8 @@ module.exports = injectIntl(React.createClass({
 		}
 	},
 	handleDelete: function(key) {
-		var file = this.state.files[key];
-		file.id = "changing";
-		file.icon = "fa-trash";
+		_.pullAt(this.state.files, key);
 		this.forceUpdate();
-		Request.del("/api/upload/?subbucket=" + this.context.user._id + "&key=" + file.name)
-			.end(function(err) {
-				if (err) {
-					console.log(err);
-				} else {
-					_.pullAt(this.state.files, key);
-					this.forceUpdate();
-				}
-			}.bind(this));
-	},
-	uploadFile: function(file) {
-		file.id = "changing";
-		file.icon = "fa-refresh";
-		this.forceUpdate();
-		Request.post("/api/upload/?subbucket=" + this.context.user._id + "&key=" + file.name)
-			.set("Content-Type", "application/octet-stream")
-			.send(file)
-			.end(function(err) {
-				if (err) {
-					console.log(err);
-				} else {
-					file.id = "";
-					this.forceUpdate();
-				}
-			}.bind(this));
 	},
 	moveRight: function(key) {
 		this.state.files.splice(key + 1, 0, this.state.files.splice(key, 1)[0]);

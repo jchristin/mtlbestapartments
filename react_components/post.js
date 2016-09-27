@@ -7,6 +7,8 @@ var React = require("react"),
 	PostBed = require("./post-bed"),
 	PostPrice = require("./post-price"),
 	PostPics = require("./post-pics"),
+	_ = require("lodash"),
+	Request = require("superagent"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
@@ -17,14 +19,14 @@ module.exports = injectIntl(React.createClass({
 		this.address = "";
 		this.bed = 0;
 		this.price = 0;
-		this.pictures = [];
+		this.imageslink = [];
 	},
 	getInitialState: function() {
 		return {
 			showMap: true,
-			showBed: false,
-			showPrice: false,
-			showPics: false
+			showBed: true,
+			showPrice: true,
+			showPics: true
 		};
 	},
 	callbackMap: function(address) {
@@ -46,7 +48,43 @@ module.exports = injectIntl(React.createClass({
 		});
 	},
 	callbackPics: function(pictures) {
-		this.pictures = pictures;
+		_.forEach(pictures, _.bind(function(picture) {
+			this.imageslink.push("https://fleub.s3.amazonaws.com/" + picture.uuid);
+		}, this));
+
+		// Upload pictures to S3 repo.
+		var data = pictures.length;
+		_.forEach(pictures, _.bind(function(picture) {
+			Request.post("/api/upload/" + picture.uuid)
+				.set("Content-Type", "application/octet-stream")
+				.send(picture)
+				.end(function(err) {
+					if (err) {
+						console.log(err);
+					}
+
+					data -= 1;
+					if (data === 0) {
+						this.postApt();
+					}
+				}.bind(this));
+		}, this));
+	},
+	postApt: function() {
+		Request.post("/api/apart/")
+		.send({
+			address: this.address,
+			price: this.price,
+			room: this.bed,
+			images: this.imageslink,
+			source: "mtlbestapartments",
+			url: null
+		})
+		.end(function(err) {
+			if (err) {
+				console.log(err);
+			}
+		});
 	},
 	render: function() {
 		var formatMessage = this.props.intl.formatMessage;

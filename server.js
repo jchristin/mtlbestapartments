@@ -95,36 +95,16 @@ server.get("/api/apart/:id", apart.getApart);
 
 server.post("/api/apart", apart.addOrUpdateApart);
 
-server.post("/api/upload/", function(req, res, next) {
-	var urlQuery = url.parse(req.url, true).query,
-		subBucket = "fleub/" + urlQuery.subbucket,
-		s3 = new aws.S3();
-
-	// Check if bucket exist.
-	s3.headBucket({
-		Bucket: subBucket
-	}, function(errHead) {
-		if (errHead) {
-			// bucket does not exist, create it
-			s3.createBucket({
-				ACL: "public-read",
-				Bucket: subBucket
-			}, function(errCreate) {
-				if (errCreate) {
-					// Cannot create the sub bucket.
-					res.sendStatus(500);
-					return;
-				}
-			});
-		}
-	});
-
-	s3.upload({
+server.post("/api/upload/:key", function(req, res, next) {
+	var params = {
 		ACL: "public-read",
-		Bucket: subBucket,
-		Key: urlQuery.key,
+		Bucket: "fleub",
+		Key: req.params.key,
 		Body: req.body
-	}, function(err) {
+	};
+
+	var s3 = new aws.S3();
+	s3.upload(params, function(err) {
 		if (err) {
 			next(err);
 		} else {
@@ -132,24 +112,6 @@ server.post("/api/upload/", function(req, res, next) {
 		}
 	});
 });
-
-server.delete("/api/upload/", function(req, res, next) {
-	var urlQuery = url.parse(req.url, true).query,
-		subBucket = "fleub/" + urlQuery.subbucket,
-		s3 = new aws.S3();
-
-	s3.deleteObject({
-		Bucket: subBucket,
-		Key: urlQuery.key
-	}, function(err) {
-		if (err) {
-			next(err);
-		} else {
-			res.end();
-		}
-	});
-});
-
 
 server.delete("/api/apart", apart.deactivateApart);
 
