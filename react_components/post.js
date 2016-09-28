@@ -24,9 +24,9 @@ module.exports = injectIntl(React.createClass({
 	getInitialState: function() {
 		return {
 			showMap: true,
-			showBed: true,
-			showPrice: true,
-			showPics: true
+			showBed: false,
+			showPrice: false,
+			showPics: false
 		};
 	},
 	callbackMap: function(address) {
