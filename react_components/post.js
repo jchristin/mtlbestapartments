@@ -13,7 +13,8 @@ var React = require("react"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
-		router: React.PropTypes.object.isRequired
+		router: React.PropTypes.object.isRequired,
+		user: React.PropTypes.object
 	},
 	componentDidMount: function() {
 		this.address = "";
@@ -78,7 +79,8 @@ module.exports = injectIntl(React.createClass({
 			room: this.bed,
 			images: this.imageslink,
 			source: "mtlbestapartments",
-			url: null
+			url: null,
+			user: this.context.user._id
 		})
 		.end(function(err) {
 			if (err) {
