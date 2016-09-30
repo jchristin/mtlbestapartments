@@ -1,14 +1,39 @@
 "use strict";
 
 var React = require("react"),
-injectIntl = require("react-intl").injectIntl;
+	Layout = require("./layout"),
+	request = require("superagent");
 
-module.exports = injectIntl(React.createClass({
+module.exports = React.createClass({
+	contextTypes: {
+		user: React.PropTypes.object
+	},
+	getInitialState: function() {
+		return {
+			apartments: []
+		};
+	},
+	componentWillMount: function() {
+		request
+			.get("/api/posted/" + this.context.user._id)
+			.end(function(err, res) {
+				if (err) {
+					console.log(err);
+				} else {
+					this.setState({
+						apartments: res.body
+					});
+				}
+			}.bind(this));
+	},
 	render: function() {
-		var formatMessage = this.props.intl.formatMessage;
-
-		return React.DOM.div(null, formatMessage({
-				id: "posted-title"
-			}));
+		return React.DOM.div({
+				className: "row"
+			},
+			React.createElement("h1", null, "Posted apartments"),
+			React.createElement(Layout, {
+				apartments: this.state.apartments
+			})
+		);
 	}
-}));
+});

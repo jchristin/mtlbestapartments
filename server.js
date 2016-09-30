@@ -117,6 +117,8 @@ server.delete("/api/apart", apart.deactivateApart);
 
 server.get("/api/latest", apart.getLatest);
 
+server.get("/api/posted/:user", apart.getPosted);
+
 server.get("/api/search/criteria", auth.isAuthenticated, search.getCriteria);
 
 server.post("/api/search/criteria", auth.isAuthenticated, search.createOrUpdateCriteria);

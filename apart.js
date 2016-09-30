@@ -180,4 +180,21 @@ module.exports.getLatest = function(req, res) {
 		});
 };
 
+module.exports.getPosted = function(req, res) {
+	database.apartments
+		.find({
+			user: req.params.user
+		})
+		.sort({
+			date: -1
+		})
+		.toArray(function(err, docs) {
+			if (err) {
+				console.log(err);
+			} else {
+				res.json(docs);
+			}
+		});
+};
+
 module.exports.normalizeApart = normalizeApart;
