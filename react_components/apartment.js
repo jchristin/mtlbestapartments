@@ -40,9 +40,25 @@ module.exports = injectIntl(React.createClass({
 			__html: description
 		};
 	},
-	generateLayout: function(apart) {
+	generateLink: function(apart) {
+		if (apart.source === "mtlbestapartments") {
+			return null;
+		}
+
 		var formatMessage = this.props.intl.formatMessage;
 
+		return React.DOM.a({
+				className: "apartment-link",
+				href: apart.url,
+				onClick: this.context.track.bind(null, "clickKijijiLink", apart.url),
+				target: "_blank"
+			},
+			formatMessage({
+				id: "apartment-kijiji-link"
+			})
+		);
+	},
+	generateLayout: function(apart) {
 		var layout = React.DOM.div(null,
 			React.DOM.div({
 					className: "flexslider carousel"
@@ -60,16 +76,7 @@ module.exports = injectIntl(React.createClass({
 			React.DOM.p({
 				dangerouslySetInnerHTML: this.getDescription(apart.description)
 			}),
-			React.DOM.a({
-					className: "apartment-link",
-					href: apart.url,
-					onClick: this.context.track.bind(null, "clickKijijiLink", apart.url),
-					target: "_blank"
-				},
-				formatMessage({
-					id: "apartment-kijiji-link"
-				})
-			),
+			this.generateLink(apart),
 			React.createElement(miniMap, {
 				coord: apart.coord
 			})
