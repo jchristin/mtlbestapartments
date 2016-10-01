@@ -3,6 +3,7 @@
 var React = require("react"),
 	Layout = require("./layout"),
 	request = require("superagent"),
+	_ = require("lodash"),
 	injectIntl = require("react-intl").injectIntl;
 
 module.exports = injectIntl(React.createClass({
@@ -22,7 +23,9 @@ module.exports = injectIntl(React.createClass({
 					console.log(err);
 				} else {
 					this.setState({
-						apartments: res.body
+						apartments: _.filter(res.body, function(apartment) {
+							return apartment.active === undefined ? true : apartment.active;
+						})
 					});
 				}
 			}.bind(this));
