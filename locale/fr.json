@@ -26,19 +26,15 @@
 	"layout-index-card": "Carte",
 	"layout-index-list": "Liste",
 
-	"posted-title": "Posté(s)",
+	"posted-apt": "Appartment(s) posté(s)",
 
 	"postapt-title": "Poster un nouvel appartement",
 	"postapt-button": "Valider",
-
 	"postapt-map-title": "Entrer votre adresse",
 	"postapt-map-input-caption": "Entrer votre adresse",
-
 	"postapt-bed-title": "Nombre de chambres",
-
 	"postapt-price-title": "Entrer le prix",
 	"postapt-price-caption": "Le prix est ",
-
 	"postapt-pics-title": "Ajouter des photo(s)",
 
 	"settings-title": "Paramètres",

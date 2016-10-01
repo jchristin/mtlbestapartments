@@ -2,15 +2,16 @@
 
 var React = require("react"),
 	Layout = require("./layout"),
-	request = require("superagent");
+	request = require("superagent"),
+	injectIntl = require("react-intl").injectIntl;
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
 	contextTypes: {
 		user: React.PropTypes.object
 	},
 	getInitialState: function() {
 		return {
-			apartments: []
+			apartments: null
 		};
 	},
 	componentWillMount: function() {
@@ -26,14 +27,32 @@ module.exports = React.createClass({
 				}
 			}.bind(this));
 	},
+	createLoading: function() {
+		if (this.state.apartments === null) {
+			return React.DOM.i({
+				className: "fa fa-refresh fa-spin"
+			});
+		}
+
+		return null;
+	},
 	render: function() {
+		var formatMessage = this.props.intl.formatMessage;
+
 		return React.DOM.div({
 				className: "row"
 			},
-			React.createElement("h1", null, "Posted apartments"),
+			React.DOM.h1({
+					className: "m-t-1"
+				},
+				formatMessage({
+					id: "posted-apt"
+				}),
+				this.createLoading()
+			),
 			React.createElement(Layout, {
 				apartments: this.state.apartments
 			})
 		);
 	}
-});
+}));
