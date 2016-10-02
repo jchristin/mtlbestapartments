@@ -10,7 +10,8 @@ var _ = require("lodash"),
 
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
-		track: React.PropTypes.func
+		track: React.PropTypes.func,
+		user: React.PropTypes.object
 	},
 	getInitialState: function() {
 		return {
@@ -58,6 +59,24 @@ module.exports = injectIntl(React.createClass({
 			})
 		);
 	},
+	generateButton: function(apart) {
+		var formatMessage = this.props.intl.formatMessage;
+
+		if (this.context.user._id === apart.user) {
+			return React.DOM.div({
+				className: "btn-delete"
+			},
+				React.DOM.button({
+					className: "btn btn-danger",
+					onClick: this.handleDelete.bind(this, apart)
+				}, formatMessage({
+					id: "posted-apt-delete"
+				})
+			));
+		}
+
+		return null;
+	},
 	generateLayout: function(apart) {
 		var layout = React.DOM.div(null,
 			React.DOM.div({
@@ -79,13 +98,24 @@ module.exports = injectIntl(React.createClass({
 			this.generateLink(apart),
 			React.createElement(miniMap, {
 				coord: apart.coord
-			})
+			}),
+			this.generateButton(apart)
 		);
 
 		this.setState({
 			layout: layout
 		});
 	},
+	handleDelete: function(apartment) {
+		request
+			.del("/api/apart/")
+			.send(apartment)
+			.end(function(err) {
+			if (err) {
+				console.log(err);
+			}
+		});
+    },
 	componentDidMount: function() {
 		this.context.track("watchApartDetail", this.props.apartmentId);
 

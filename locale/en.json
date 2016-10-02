@@ -27,7 +27,8 @@
 	"layout-index-list": "List",
 
 	"posted-apt": "Posted apartments",
-	
+	"posted-apt-delete": "Delete apartment",
+
 	"postapt-title": "Post a new appartement",
 	"postapt-button": "Validate",
 	"postapt-map-title": "Enter your address",
