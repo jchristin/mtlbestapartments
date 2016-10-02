@@ -11,7 +11,8 @@ var _ = require("lodash"),
 module.exports = injectIntl(React.createClass({
 	contextTypes: {
 		track: React.PropTypes.func,
-		user: React.PropTypes.object
+		user: React.PropTypes.object,
+		lang: React.PropTypes.string
 	},
 	getInitialState: function() {
 		return {
@@ -113,8 +114,10 @@ module.exports = injectIntl(React.createClass({
 			.end(function(err) {
 			if (err) {
 				console.log(err);
+			} else {
+				window.location = "/" + this.context.lang + "/";
 			}
-		});
+		}.bind(this));
     },
 	componentDidMount: function() {
 		this.context.track("watchApartDetail", this.props.apartmentId);
