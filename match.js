@@ -1,10 +1,25 @@
 "use strict";
 
 var _ = require("lodash"),
+	moment = require("moment"),
 	database = require("./database"),
 	notification = require("./notification"),
 	criteriaManagers = require("./criteria-managers"),
 	threshold = 99.9;
+
+var keepSearchActive = function(search) {
+	database.searches.updateOne({
+		_id: search._id
+	}, {
+		$set: {
+			lastSeen: new Date()
+		}
+	}, function(err) {
+		if (err) {
+			console.log(err);
+		}
+	});
+};
 
 var notify = function(userId, apartment) {
 	database.users.findOne({
@@ -27,6 +42,8 @@ var computeScore = function(search, apartment) {
 };
 
 var computeScoreSearch = function(search) {
+	keepSearchActive(search);
+
 	var result = [];
 
 	database.apartments.find({
@@ -64,7 +81,13 @@ var computeScoreSearch = function(search) {
 };
 
 var computeScoreApartement = function(apartment) {
-	database.searches.find().each(function(err, search) {
+	database.searches.find({
+		lastSeen: {
+			$gt: moment()
+				.subtract(2, "weeks")
+				.toDate()
+		}
+	}).each(function(err, search) {
 		if (err) {
 			console.log(err);
 

@@ -30,7 +30,7 @@ aws.config.update({
 });
 
 // Server setup.
-server.use(favicon(path.join(__dirname, "public/img/favicon-32x32.png"), {
+server.use(favicon(path.join(__dirname, "public/img/favicon.png"), {
 	maxAge: cacheMaxAge
 }));
 
@@ -90,6 +90,8 @@ server.get("/api/signout", auth.signOut);
 server.get("/api/user", auth.getUserInfo);
 
 server.delete("/api/user", auth.isAuthenticated, auth.deleteUser);
+
+server.get("/api/apart/duplicate", apart.removeDuplicate);
 
 server.get("/api/apart/:id", apart.getApart);
 

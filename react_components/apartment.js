@@ -42,7 +42,11 @@ module.exports = injectIntl(React.createClass({
 			__html: description
 		};
 	},
-	generateLink: function(apart) {
+	createLink: function(apart) {
+		if (!apart.url) {
+			return null;
+		}
+
 		if (apart.source === "mtlbestapartments") {
 			return null;
 		}
@@ -96,7 +100,7 @@ module.exports = injectIntl(React.createClass({
 			React.DOM.p({
 				dangerouslySetInnerHTML: this.getDescription(apart.description)
 			}),
-			this.generateLink(apart),
+			this.createLink(apart),
 			React.createElement(miniMap, {
 				coord: apart.coord
 			}),

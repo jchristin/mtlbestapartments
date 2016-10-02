@@ -6,10 +6,10 @@ var React = require("react"),
 
 module.exports = React.createClass({
 	componentDidMount: function() {
-		this.isMounted = true;
+		this.mounted = true;
 	},
 	render: function() {
-		if (this.isMounted === true || !this.props.params._id) {
+		if (this.mounted === true || !this.props.params._id) {
 			return React.createElement(Search, {
 				apartmentId: this.props.params._id
 			});

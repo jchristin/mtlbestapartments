@@ -2,14 +2,14 @@
 
 var helper = require("sendgrid").mail,
 	// eslint-disable-next-line new-cap
-	sg = require("sendgrid").SendGrid(process.env.SENDGRID_API_KEY);
+	sg = require("sendgrid")(process.env.SENDGRID_API_KEY);
 
 var notify = function(user) {
 	var personalization = new helper.Personalization();
 	personalization.addTo(new helper.Email(user.email, user.name));
 
 	var mail = new helper.Mail();
-	mail.setFrom(new helper.Email("notification@fleub.com"));
+	mail.setFrom(new helper.Email("notification@mtlbestapartments.com"));
 	mail.addPersonalization(personalization);
 	mail.addContent(new helper.Content("text/plain", "new apartment"));
 	mail.addContent(new helper.Content("text/html", "new apartment"));
@@ -21,7 +21,11 @@ var notify = function(user) {
 	request.body = mail.toJSON();
 
 	// eslint-disable-next-line new-cap
-	sg.API(request, function(response) {
+	sg.API(request, function(error, response) {
+		if (error) {
+			console.log(error);
+		}
+
 		if (response.statusCode !== 202) {
 			console.log(response.statusCode);
 			console.log(response.body);

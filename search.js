@@ -17,23 +17,6 @@ var updateResult = function(user) {
 	});
 };
 
-var enableNotificationIfNotSet = function(user) {
-	database.searches.updateOne({
-		user: user._id,
-		notification: {
-			$exists: false
-		}
-	}, {
-		$set: {
-			notification: true
-		}
-	}, function(err) {
-		if (err) {
-			console.log(err);
-		}
-	});
-};
-
 var invalidateResult = function(user, callback) {
 	database.searches.updateOne({
 		user: user._id
@@ -98,7 +81,6 @@ module.exports.createOrUpdateCriteria = function(req, res) {
 			console.log(err);
 		} else {
 			updateResult(req.user);
-			enableNotificationIfNotSet(req.user);
 		}
 	});
 };
@@ -172,7 +154,7 @@ module.exports.getActiveSearchCount = function(req, res, next) {
 	database.searches.count({
 		lastSeen: {
 			$gt: moment()
-				.subtract(1, "months")
+				.subtract(2, "weeks")
 				.toDate()
 		}
 	}, function(err, count) {

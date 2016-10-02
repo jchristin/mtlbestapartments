@@ -30,7 +30,7 @@ module.exports = injectIntl(React.createClass({
 			.post("/api/signup")
 			.send({
 				name: this.refs.name.value.trim(),
-				username: this.refs.email.value.trim(),
+				username: this.refs.email.value.trim().toLowerCase(),
 				password: this.refs.password.value.trim()
 			})
 			.end(function(err, res) {

@@ -4,9 +4,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-	<title>Fleub</title>
+	<title>MTL Best Apartments</title>
 
 	<link rel="stylesheet" href="/bundle.css">
+	<link rel="icon" href="/favicon.ico?v=2" />
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapApiKey %>&libraries=geometry&v=3.exp&libraries=places"></script>
 

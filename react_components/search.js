@@ -20,7 +20,7 @@ module.exports = injectIntl(React.createClass({
 				} else {
 					console.log(err);
 				}
-			} else if (this.isMounted) {
+			} else if (this.mounted) {
 				if (res.body === null) {
 					// Refresh every seconds to check if matching is done.
 					this.timer = setTimeout(this.getResult, 1000);
@@ -69,12 +69,12 @@ module.exports = injectIntl(React.createClass({
 		};
 	},
 	componentDidMount: function() {
-		this.isMounted = true;
+		this.mounted = true;
 		this.getResult();
 	},
 	componentWillUnmount: function() {
 		clearTimeout(this.timer);
-		this.isMounted = false;
+		this.mounted = false;
 	},
 	render: function() {
 		var content = null,
