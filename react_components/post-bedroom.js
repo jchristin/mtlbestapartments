@@ -14,61 +14,55 @@ module.exports = injectIntl(React.createClass({
         this.bed = 0;
     },
     getInitialState: function() {
-        this.bedrooms = [];
-
-        for (var i = 0; i < 5; i += 1) {
-            this.bedrooms.push(false);
-        }
-
         return {
-            checked: this.bedrooms,
-            buttondisable: true
+            NbOfBedroom: _.fill(Array(5), false),
+            buttonDisable: true
         };
     },
-    handleChange: function(number, checked) {
+    handleChange: function(number, NbOfBedroom) {
         for (var i = 0; i < 5; i += 1) {
             this.bedrooms[i] = false;
         }
 
-        this.bedrooms[number] = checked;
+        this.bedrooms[number] = NbOfBedroom;
 
         var bedSelected = _.some(this.bedrooms, function(bedroom) {
             return bedroom === true;
         });
 
-        if (bedSelected && checked) {
+        if (bedSelected && NbOfBedroom) {
             this.bed = number;
         } else {
             this.bed = 0;
         }
 
         this.setState({
-            buttondisable: !bedSelected,
-            checked: this.bedrooms
+            buttonDisable: !bedSelected,
+            NbOfBedroom: this.bedrooms
         });
     },
     createButton: function(number, label) {
-        var checked = this.state.checked[number];
+        var NbOfBedroom = this.state.NbOfBedroom[number];
 
         return React.DOM.button({
             type: "button",
-            className: "btn btn-secondary" + (checked ? " active" : ""),
-            onClick: this.handleChange.bind(this, number, !checked)
+            className: "btn btn-secondary" + (NbOfBedroom ? " active" : ""),
+            onClick: this.handleChange.bind(this, number, !NbOfBedroom)
         }, label
     );
     },
     handleValidateBed: function() {
-        if (!this.state.buttondisable) {
+        if (!this.state.buttonDisable) {
             this.setState({
-                buttondisable: true
+                buttonDisable: true
             });
             this.props.callback(this.bed);
         }
     },
     render: function() {
         var formatMessage = this.props.intl.formatMessage;
-        var disabled = this.state.buttondisable ? " disabled" : "";
-        var style = this.state.buttondisable ? " btn-default" : " btn-success";
+        var disabled = this.state.buttonDisable ? " disabled" : "";
+        var style = this.state.buttonDisable ? " btn-default" : " btn-success";
 
         return React.DOM.div({
             id: this.props.id
@@ -92,7 +86,6 @@ module.exports = injectIntl(React.createClass({
             className: "btn" + disabled + style,
             onClick: this.handleValidateBed
         }, formatMessage({
-            id: "postapt-button"
         })
     )));
     }

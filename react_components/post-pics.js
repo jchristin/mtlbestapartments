@@ -108,7 +108,7 @@ module.exports = injectIntl(React.createClass({
 			className: "btn btn-success",
 			onClick: this.handleValidate
 		}, formatMessage({
-			id: "postapt-button"
+			id: "post-validate"
 		}))));
 	}
 }));

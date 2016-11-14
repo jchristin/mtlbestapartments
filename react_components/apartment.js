@@ -64,7 +64,7 @@ module.exports = injectIntl(React.createClass({
 			})
 		);
 	},
-	generateButton: function(apart) {
+	createButton: function(apart) {
 		var formatMessage = this.props.intl.formatMessage;
 
 		if (this.context.user._id === apart.user) {
@@ -82,7 +82,7 @@ module.exports = injectIntl(React.createClass({
 
 		return null;
 	},
-	generateLayout: function(apart) {
+	createLayout: function(apart) {
 		var layout = React.DOM.div(null,
 			React.DOM.div({
 					className: "flexslider carousel"
@@ -104,7 +104,7 @@ module.exports = injectIntl(React.createClass({
 			React.createElement(miniMap, {
 				coord: apart.coord
 			}),
-			this.generateButton(apart)
+			this.createButton(apart)
 		);
 
 		this.setState({
@@ -133,7 +133,7 @@ module.exports = injectIntl(React.createClass({
 			if (err) {
 				console.log(err);
 			} else {
-				this.generateLayout(res.body);
+				this.createLayout(res.body);
 			}
 		}.bind(this));
 	},

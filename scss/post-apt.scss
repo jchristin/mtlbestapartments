@@ -1,12 +1,8 @@
 .post-apt {
 	text-align: center;
 
-	.post-show {
-		visibility: visible;
-	}
-
-	.post-hide {
-		visibility: hidden;
+	.invisible {
+  		visibility: hidden;
 	}
 
 	.post-apt-empty-end {

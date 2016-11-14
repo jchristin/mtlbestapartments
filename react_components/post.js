@@ -4,7 +4,7 @@
 
 var React = require("react"),
 	PostMap = require("./post-map"),
-	PostBed = require("./post-bed"),
+	PostBedroom = require("./post-bedroom"),
 	PostPrice = require("./post-price"),
 	PostPics = require("./post-pics"),
 	_ = require("lodash"),
@@ -54,7 +54,7 @@ module.exports = injectIntl(React.createClass({
 		}, this));
 
 		// Upload pictures to S3 repo.
-		var data = pictures.length;
+		var numOfPictureLeft = pictures.length;
 		_.forEach(pictures, _.bind(function(picture) {
 			Request.post("/api/upload/" + picture.uuid)
 				.set("Content-Type", "application/octet-stream")
@@ -64,8 +64,8 @@ module.exports = injectIntl(React.createClass({
 						console.log(err);
 					}
 
-					data -= 1;
-					if (data === 0) {
+					numOfPictureLeft -= 1;
+					if (numOfPictureLeft === 0) {
 						this.postApt();
 					}
 				}.bind(this));
@@ -98,7 +98,7 @@ module.exports = injectIntl(React.createClass({
 		})),
 		React.DOM.div(null,
 			React.DOM.div({
-				className: this.state.showMap ? "post-show" : "post-hide"
+				className: this.state.showMap ? "post-map" : "invisible"
 			},
 			React.DOM.div({
 				className: "card"
@@ -109,18 +109,18 @@ module.exports = injectIntl(React.createClass({
 				callback: this.callbackMap
 			})))),
 			React.DOM.div({
-				className: this.state.showBed ? "post-show" : "post-hide"
+				className: this.state.showBed ? "post-bed" : "invisible"
 			},
 			React.DOM.div({
 				className: "card"
 			}, React.DOM.div({
 				className: "card-block"
-			}, React.createElement(PostBed, {
+			}, React.createElement(PostBedroom, {
 				id: "bed",
 				callback: this.callbackBed
 			})))),
 			React.DOM.div({
-				className: this.state.showPrice ? "post-show" : "post-hide"
+				className: this.state.showPrice ? "post-price" : "invisible"
 			},
 			React.DOM.div({
 				className: "card"
@@ -131,7 +131,7 @@ module.exports = injectIntl(React.createClass({
 				callback: this.callbackPrice
 			})))),
 			React.DOM.div({
-				className: this.state.showPics ? "post-show" : "post-hide"
+				className: this.state.showPics ? "post-pics" : "invisible"
 			},
 			React.DOM.div({
 				className: "card"

@@ -30,7 +30,7 @@
 	"posted-apt-delete": "Delete apartment",
 
 	"postapt-title": "Post a new appartement",
-	"postapt-button": "Validate",
+	"post-validate": "Validate",
 	"postapt-map-title": "Enter your address",
 	"postapt-map-input-caption": "Enter your address",
 	"postapt-bed-title": "Number of bedrooms",

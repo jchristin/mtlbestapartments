@@ -100,7 +100,7 @@ server.post("/api/apart", apart.addOrUpdateApart);
 server.post("/api/upload/:key", function(req, res, next) {
 	var params = {
 		ACL: "public-read",
-		Bucket: "fleub",
+		Bucket: "mtlbestapartments",
 		Key: req.params.key,
 		Body: req.body
 	};

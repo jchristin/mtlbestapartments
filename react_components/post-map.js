@@ -11,12 +11,12 @@ module.exports = injectIntl(React.createClass({
   },
   getInitialState: function() {
     return {
-      buttondisable: true,
+      isButtonDisabled: true,
       selectedAddress: null
     };
   },
   componentDidMount: function() {
-    this.infowindow = new google.maps.InfoWindow();
+    this.InfoWindow = new google.maps.InfoWindow();
     var center = new google.maps.LatLng(45.501689, -73.567256);
 
     var mapOptions = {
@@ -53,7 +53,7 @@ module.exports = injectIntl(React.createClass({
     // When the user selects an address from the dropdown, populate the address
     // fields in the form.
     this.autocomplete.addListener("place_changed", function() {
-      this.infowindow.close();
+      this.InfoWindow.close();
       // Get the place details from the autocomplete object.
       var place = this.autocomplete.getPlace();
 
@@ -83,33 +83,33 @@ module.exports = injectIntl(React.createClass({
       }
 
       this.setState({
-        buttondisable: false,
+        isButtonDisabled: false,
         selectedAddress: this.address
       });
 
-      this.infowindow.setContent("<div><strong>Address selected</strong><br>" + this.address);
-      this.infowindow.open(this.map, this.marker);
+      this.InfoWindow.setContent("<div><strong>Address selected</strong><br>" + this.address);
+      this.InfoWindow.open(this.map, this.marker);
     }.bind(this));
   },
   handleInputChange: function() {
-    this.infowindow.close();
+    this.InfoWindow.close();
     this.setState({
-      buttondisable: true,
+      isButtonDisabled: true,
       selectedAddress: null
     });
   },
   handleValidateAddress: function() {
-      if (!this.state.buttondisable) {
+      if (!this.state.isButtonDisabled) {
           this.setState({
-              buttondisable: true
+              isButtonDisabled: true
           });
           this.props.callback(this.address);
       }
   },
   render: function() {
       var formatMessage = this.props.intl.formatMessage;
-      var disabled = this.state.buttondisable ? " disabled" : "";
-      var style = this.state.buttondisable ? " btn-default" : " btn-success";
+      var disabled = this.state.isButtonDisabled ? " disabled" : "";
+      var style = this.state.isButtonDisabled ? " btn-default" : " btn-success";
 
       return React.DOM.div({
           id: this.props.id
@@ -138,7 +138,7 @@ module.exports = injectIntl(React.createClass({
           className: "btn" + disabled + style,
           onClick: this.handleValidateAddress
       }, formatMessage({
-          id: "postapt-button"
+          id: "post-validate"
       })
   ));
     }

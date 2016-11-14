@@ -30,13 +30,13 @@
 	"posted-apt-delete": "Supprimer l'appartement",
 
 	"postapt-title": "Poster un nouvel appartement",
-	"postapt-button": "Valider",
+	"post-validate": "Valider",
 	"postapt-map-title": "Entrer votre adresse",
 	"postapt-map-input-caption": "Entrer votre adresse",
 	"postapt-bed-title": "Nombre de chambres",
 	"postapt-price-title": "Entrer le prix",
 	"postapt-price-caption": "Le prix est ",
-	"postapt-pics-title": "Ajouter des photo(s)",
+	"postapt-pics-title": "Ajouter des photos",
 
 	"settings-title": "Paramètres",
 	"settings-delete-account": "Supprimer le compte",
